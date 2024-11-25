@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 
+
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -10,5 +12,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'mi-nuevo-proyecto-angular-18';
+  title = 'grtc-client';
 }
