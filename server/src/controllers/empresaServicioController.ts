@@ -31,8 +31,6 @@ class EmpresaServicioController{
     
     public async listarEmpresasServicios(req:Request, res:Response):Promise<any>{
         try {
-            //devuelve todas las empresas que estan registradas como servicio, juntamente con su estado de acuerdo a la fecha inicial de apertura
-            // --empresas activas, inactivas y encondicion de alerta (empresa, id_tipo_servicio, tipo_servicio, fecha_activacion, fecha_vencimiento)
             const consulta = `
                             SELECT
                                 es.id_empresa_servicio,
@@ -72,7 +70,7 @@ class EmpresaServicioController{
 
     public async ObtenerDetalleEmpresaServicio(req: Request, res: Response): Promise<void> {
         try {
-            const { id } = req.params;
+            const { id_empresa_servicio } = req.params;
             const consulta = `
                             SELECT 
                                 tes.id_empresa_servicio,
@@ -98,7 +96,7 @@ class EmpresaServicioController{
                             JOIN t_persona AS pe ON te.id_representante_legal=pe.id_persona
                             WHERE tes.id_empresa_servicio =$1;
             `;
-            const empresaServicio = await db.query(consulta,[id]);
+            const empresaServicio = await db.query(consulta,[id_empresa_servicio]);
 
             if (empresaServicio && empresaServicio['rows'].length > 0) {
                 res.json(empresaServicio['rows']);

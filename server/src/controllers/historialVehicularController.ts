@@ -48,6 +48,32 @@ class HistorialVehicularController{
             res.status(500).json({ error: 'Error interno del servidor' });
         }
     }
+
+    public async ObtenerHistorialVehicularPorPlaca(req: Request, res: Response): Promise<void> {
+        try {
+            const { placa } = req.params;
+            const consulta = `
+                        SELECT ehv.*,
+                            es.id_empresa AS id_empresa_servicio,
+                            e.razon_social AS nombre_empresa
+                        FROM r_empre_histo_vehiculo ehv
+                        INNER JOIN t_empresa_servicio es ON ehv.id_empresa_servicio = es.id_empresa_servicio
+                        INNER JOIN t_empresa e ON es.id_empresa = e.id_empresa
+                        WHERE ehv.placa=$1
+                        ORDER BY ehv.create_at`;
+            const vehiculo = await db.query(consulta,[placa]);
+
+            if (vehiculo && vehiculo['rows'].length > 0) {
+                res.json(vehiculo['rows']);
+            } else {
+                res.status(404).json({ text: 'El historial vehicular no existe' });
+            }
+
+        } catch (error) {
+            console.error('Error al obtener historial vehicular:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+    }
     
 }
 const historialVehicularController = new HistorialVehicularController();

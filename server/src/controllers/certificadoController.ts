@@ -57,14 +57,14 @@ class CertificadoController {
 
     public async ObtnerCertificadosDeInfraestructura(req: Request, res: Response): Promise<void> {
         try {
-            const { id } = req.params;
+            const { id_infraestructura } = req.params;
             const consulta = `
                     SELECT ce.*
                         FROM d_certificado ce
                         JOIN t_infraestructura_certificados ir ON ce.id_certificado = ir.id_certificado
                     WHERE ir.id_infraestructura =$1
                     ORDER BY ce.fecha_certificado`;
-            const tuc = await db.query(consulta, [id]);
+            const tuc = await db.query(consulta, [id_infraestructura]);
 
             if (tuc && tuc['rows'].length > 0) {
                 res.json(tuc['rows']);
@@ -84,7 +84,7 @@ class CertificadoController {
             const consulta = `
                 INSERT INTO t_infraestructura_certificados(
                     id_infraestructura,id_certificado)
-                    VALUES ($1, $2);`;
+                VALUES ($1, $2);`;
 
             const valores = [id_infraestructura, id_certificado];
 

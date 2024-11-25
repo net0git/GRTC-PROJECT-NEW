@@ -169,7 +169,7 @@ class ResoucionController {
 
     public async ModificarResolucion(req: Request, res: Response): Promise<void> {
         try {
-            const { id } = req.params;
+            const { id_resolucion } = req.params;
             const { nro_resolucion, anio_resolucion, fecha_resolucion, nombre_resolucion, tomo_resolucion, documento, descripcion } = req.body;
 
             const consulta = `
@@ -177,7 +177,7 @@ class ResoucionController {
                     SET nro_resolucion= $1, anio_resolucion= $2, fecha_resolucion= $3, nombre_resolucion= $4, tomo_resolucion= $5, documento= $6, descripcion=$7
                 WHERE id_resolucion=$8
                 `;
-            const valores = [nro_resolucion, anio_resolucion, fecha_resolucion, nombre_resolucion, tomo_resolucion, documento, descripcion, id];
+            const valores = [nro_resolucion, anio_resolucion, fecha_resolucion, nombre_resolucion, tomo_resolucion, documento, descripcion, id_resolucion];
 
             db.query(consulta, valores, (error) => {
                 if (error) {

@@ -265,6 +265,168 @@ class ReporteController{
         }
 
     }
+
+    public async listarVehiculosPorRuta(req:Request, res:Response):Promise<any>{
+        try {
+            const consulta = ` 
+                            SELECT DISTINCT
+                                tdr.origen AS origen_ruta,
+                                tdr.destino AS destino_ruta,
+                                tv.placa AS placa_vehiculo,
+                                tv.modalidad AS modalidad_vehiculo,
+                                te.razon_social AS nombre_empresa
+                            FROM 
+                                t_detalle_ruta_itinerario AS tdr
+                            JOIN 
+                                t_vehiculo AS tv ON tdr.id_detalle_ruta_itinerario = tv.id_detalle_ruta_itinerario
+                            JOIN 
+                                t_empresa_servicio AS tes ON tv.id_empresa_servicio = tes.id_empresa_servicio
+                            JOIN 
+                                t_empresa AS te ON tes.id_empresa = te.id_empresa;`;
+            const vehiculos=await db.query(consulta)
+            res.json(vehiculos['rows']);
+        } catch (error) {
+            console.error('Error al obtener vehiculos por ruta:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        
+
+    }
+
+    public async listarVehiculosPorRutaOrigen(req:Request, res:Response):Promise<any>{
+        try {
+            const { origen } = req.params;
+            const consulta = ` 
+                            SELECT DISTINCT 
+                                dr.origen AS origen_ruta,
+                                dr.destino AS destino_ruta,
+                                v.placa AS placa_vehiculo,
+                                v.modalidad AS modalidad_vehiculo,
+                                te.razon_social AS nombre_empresa
+                            FROM t_detalle_ruta_itinerario AS dr
+                            INNER JOIN t_vehiculo AS v ON dr.id_detalle_ruta_itinerario = v.id_detalle_ruta_itinerario
+                            INNER JOIN t_empresa_servicio AS tes ON v.id_empresa_servicio = tes.id_empresa_servicio
+                            INNER JOIN t_empresa AS te ON tes.id_empresa = te.id_empresa
+                            WHERE dr.origen = $1 
+                             `;
+            const vehiculos=await db.query(consulta,[origen])
+            res.json(vehiculos['rows']);
+        } catch (error) {
+            console.error('Error al obtener vehiculos por origen de ruta:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        
+    }
+
+    public async listarVehiculosPorDestinoRuta(req:Request, res:Response):Promise<any>{
+        try {
+            const { destino } = req.params;
+            const consulta = ` 
+                                SELECT DISTINCT 
+                                    dr.origen AS origen_ruta,
+                                    dr.destino AS destino_ruta,
+                                    v.placa AS placa_vehiculo,
+                                    v.modalidad AS modalidad_vehiculo,
+                                    te.razon_social AS nombre_empresa
+                                FROM t_detalle_ruta_itinerario AS dr
+                                INNER JOIN t_vehiculo AS v ON dr.id_detalle_ruta_itinerario = v.id_detalle_ruta_itinerario
+                                INNER JOIN t_empresa_servicio AS tes ON v.id_empresa_servicio = tes.id_empresa_servicio
+                                INNER JOIN t_empresa AS te ON tes.id_empresa = te.id_empresa
+                                WHERE  dr.destino = $1;
+                             `;
+            const vehiculos=await db.query(consulta,[destino])
+            res.json(vehiculos['rows']);
+        } catch (error) {
+            console.error('Error al obtener vehiculos por destino de ruta:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        
+    }
+
+    public async obtenerVehiculosPorRutaOrigenDestino(req:Request, res:Response):Promise<any>{
+        try {
+            const { origen,destino } = req.params;
+            const consulta = ` 
+                                    SELECT DISTINCT 
+                                        dr.origen AS origen_ruta,
+                                        dr.destino AS destino_ruta,
+                                        v.placa AS placa_vehiculo,
+                                        v.modalidad AS modalidad_vehiculo,
+                                        te.razon_social AS nombre_empresa
+                                    FROM t_detalle_ruta_itinerario AS dr
+                                    INNER JOIN t_vehiculo AS v ON dr.id_detalle_ruta_itinerario = v.id_detalle_ruta_itinerario
+                                    INNER JOIN t_empresa_servicio AS tes ON v.id_empresa_servicio = tes.id_empresa_servicio
+                                    INNER JOIN t_empresa AS te ON tes.id_empresa = te.id_empresa
+                                    WHERE dr.origen = $1 AND dr.destino = $2;
+                             `;
+            const vehiculos=await db.query(consulta,[origen,destino])
+            res.json(vehiculos['rows']);
+        } catch (error) {
+            console.error('Error al obtener vehiculos por origen y destino de ruta:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        
+    }
+
+    public async CantidadVehiculosPorTipoServicio(req:Request, res:Response):Promise<any>{
+        try {
+            const consulta = `
+                            SELECT
+                                ts.denominacion AS tipo_servicio,
+                                COUNT(tv.id_vehiculo) AS cantidad_vehiculos
+                            FROM 
+                                d_tipo_servicio AS ts
+                            LEFT JOIN 
+                                t_empresa_servicio AS tes ON ts.id_tipo_servicio = tes.id_tipo_servicio
+                            LEFT JOIN 
+                                t_vehiculo AS tv ON tes.id_empresa_servicio = tv.id_empresa_servicio
+                            GROUP BY tipo_servicio
+                            
+                            UNION ALL
+                            
+                            -- Consulta para obtener el total general de vehículos
+                            SELECT
+                                'Total General' AS tipo_servicio,
+                                COUNT(tv.id_vehiculo) AS cantidad_vehiculos
+                            FROM 
+                                t_vehiculo AS tv
+                            where 
+                                tv.id_empresa_servicio is not null`;
+            const vehiculos=await db.query(consulta)
+            res.json(vehiculos['rows']);
+        } catch (error) {
+            console.error('Error al obtener cantidades de vehiculos por tipo de sercio:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        
+    }
+
+    public async CantidadVehiculosPorRuta(req:Request, res:Response):Promise<any>{
+        try {
+            const consulta = ` 
+                            SELECT
+                                tdr.origen AS origen_ruta,
+                                tdr.destino AS destino_ruta,
+                                COUNT(DISTINCT tv.placa) AS cantidad_vehiculos
+                            FROM 
+                                t_detalle_ruta_itinerario AS tdr
+                            JOIN 
+                                t_vehiculo AS tv ON tdr.id_detalle_ruta_itinerario = tv.id_detalle_ruta_itinerario
+                            JOIN 
+                                t_empresa_servicio AS tes ON tv.id_empresa_servicio = tes.id_empresa_servicio
+                            JOIN 
+                                t_empresa AS te ON tes.id_empresa = te.id_empresa
+                            GROUP BY
+                                tdr.origen, tdr.destino;
+                             `;
+            const vehiculos=await db.query(consulta)
+            res.json(vehiculos['rows']);
+        } catch (error) {
+            console.error('Error al obtener cantidad de vehiculos por ruta:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        
+    }
 }
 const reporteController = new ReporteController();
 export default reporteController;

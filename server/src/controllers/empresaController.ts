@@ -68,9 +68,9 @@ class EmpresaController {
 
     public async ObtenerEmpresaPorRuc(req: Request, res: Response): Promise<void> {
         try {
-            const { ruc } = req.params;
+            const { ruc_empresa } = req.params;
             const consulta = 'select * from t_empresa where ruc = $1';
-            const empresa = await db.query(consulta, [ruc]);
+            const empresa = await db.query(consulta, [ruc_empresa]);
 
             if (empresa && empresa['rows'].length > 0) {
                 res.json(empresa['rows']);
@@ -86,16 +86,16 @@ class EmpresaController {
 
     public async ModificarEmpresa(req: Request, res: Response): Promise<void> {
         try {
-            const { id } = req.params;
+            const { id_empresa } = req.params;
             const { razon_social, ruc, direccion, correo, telefono, distrito, provincia, departamento, id_representante_legal, nota } = req.body;
 
             const consulta = `
                 UPDATE t_empresa
                     SET razon_social= $1, ruc= $2, direccion= $3, correo= $4, telefono= $5, distrito= $6 ,provincia=$7 , departamento=$8 ,id_representante_legal=$9, nota=$10
                 WHERE id_empresa=$11`;
-            const valores = [razon_social, ruc, direccion, correo, telefono, distrito, provincia, departamento, id_representante_legal, nota, id];
+            const valores = [razon_social, ruc, direccion, correo, telefono, distrito, provincia, departamento, id_representante_legal, nota, id_empresa];
 
-            db.query(consulta, valores, (error, resultado) => {
+            db.query(consulta, valores, (error) => {
                 if (error) {
                     console.error('Error al modificar empresa:', error);
                 } else {
