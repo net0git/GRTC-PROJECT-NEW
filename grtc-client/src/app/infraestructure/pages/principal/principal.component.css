@@ -1,0 +1,36 @@
+
+
+/* .panel::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/logo/logo_fondo2.png') ;
+    background-repeat: repeat;
+    background-size: 6%;
+    filter: grayscale(80%);
+    opacity: 0.02;
+    z-index: -1;    
+} */
+
+
+/* modificamos la letra y el cursor */
+
+
+.presentacion_system{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    margin-top: 50px;
+    margin-bottom: 30px;
+     
+    
+}
+
+.tarjeta .card:hover{
+    border-bottom: 1px solid #17609179 ;
+    border-left:1px solid #17609179 ;
+    box-shadow: -8px 8px 12px   #1760915b !important; 
+}

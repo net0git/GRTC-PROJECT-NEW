@@ -48,6 +48,7 @@ export class LoginService {
             nombre_usuario: response.nombre_usuario,
             rol: response.rol,
           };
+          console.log(this.credencialesService.credenciales);
           this.isAuthenticated = true;
           return true;
         }

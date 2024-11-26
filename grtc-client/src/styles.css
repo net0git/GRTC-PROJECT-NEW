@@ -1,3 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
-/* modificaciones pendientes en torno a todo el sistema */
-/* pendiente para modificar */
+.panel{
+
+    height: 100vh;
+    overflow-y: hidden;
+    
+ }
+
+.icon-custom {
+    
+    color:rgba(49, 49, 49, 0.452);/* Establece el color del texto en blanco */
+    cursor: pointer; /* Cambiar el cursor a una manito cuando el ratón está sobre el icono */
+    font-weight: bold; 
+    font-size: 50px;
+    
+}
+
+.titulo_menu{
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: #26547ae0;
+    
+}
+
+.subtitulo_menu{
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #284761e7;
+}
+
+.hand_cursor{
+    cursor: pointer; /*  convierte el cursor en una mano */
+    font-weight: bold;
+}
+
+

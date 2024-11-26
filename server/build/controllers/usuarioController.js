@@ -132,7 +132,7 @@ class UsuarioController {
                     return;
                 }
                 // Verificar si el usuario existe
-                const usuarioQuery = 'SELECT id_usuario, password, rol, estado FROM t_usuario WHERE nombre_usuario = $1';
+                const usuarioQuery = 'SELECT id_usuario, password, nombre_usuario, rol, estado FROM t_usuario WHERE nombre_usuario = $1';
                 const usuarioResult = yield database_1.default.query(usuarioQuery, [nombre_usuario]);
                 if (usuarioResult.rows.length !== 1) {
                     res.status(404).json({ error: 'Usuario no encontrado.' });

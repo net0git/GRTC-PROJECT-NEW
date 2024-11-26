@@ -1,7 +1,5 @@
 .section-login{
-    background-color: #eeeeeec0;
-    
-    
+    background-color: #eeeeeec0;  
 }
 .card{
     box-shadow: 0 0 10px rgba(70, 69, 69, 0.13);
@@ -19,18 +17,13 @@
     background-size: 10%;
     filter: grayscale(50%);
     opacity: 0.05;
-
-    z-index: -1;
-   
-    
+    z-index: -1;    
 }
 
 .gradient-custom-2 {
     transition: background-image 0.5s ease-in-out;
     background-size: cover;
-    background-position: center;
-    
-    
+    background-position: center;   
 }
 
 @media (min-width: 768px) {
