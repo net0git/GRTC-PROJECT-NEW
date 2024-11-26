@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const morgan_1 = __importDefault(require("morgan"));
+const usuarioRoutes_1 = __importDefault(require("./routes/usuarioRoutes"));
+const personaRoutes_1 = __importDefault(require("./routes/personaRoutes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -20,10 +22,8 @@ class Server {
         this.app.use(express_1.default.urlencoded({ limit: '100mb', extended: true }));
     }
     ruotes() {
-        // this.app.use('/',personaRoutes);
-        this.app.get('/', (req, res) => {
-            res.send('Hola mundo');
-        });
+        this.app.use('/', usuarioRoutes_1.default);
+        this.app.use('/', personaRoutes_1.default);
     }
     star() {
         this.app.listen(this.app.get('port'), () => {

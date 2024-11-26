@@ -141,6 +141,7 @@ class UsuarioController {
             res.json({
                 success: true,
                 id_usuario: usuario.id_usuario,
+                nombre_usuario: usuario.nombre_usuario,
                 rol: usuario.rol,
             });
 

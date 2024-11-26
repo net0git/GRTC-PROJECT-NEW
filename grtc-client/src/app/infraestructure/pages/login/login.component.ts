@@ -1,6 +1,8 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LoginRequest } from '../../../domain/dto/LoginRequest.dto';
+import { LoginService } from '../../services/remoto/login/login.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +14,7 @@ import { LoginRequest } from '../../../domain/dto/LoginRequest.dto';
 export class LoginComponent implements OnInit {
 
   credentials: LoginRequest = {
-    username: '',
+    nombre_usuario: '',
     password: ''
   };
    
@@ -27,7 +29,7 @@ export class LoginComponent implements OnInit {
     '/img/portada_login/portada8.jpg',
     // Agrega más rutas de imágenes según sea necesario
   ];
-  constructor( private renderer: Renderer2) { }
+  constructor( private renderer: Renderer2, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.changeBackgroundImage()
@@ -47,25 +49,44 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
-    // console.log(this.credentials)
-    // try {
-    //   const authResponse = await this.authService.login(this.credentials); //el valor que devuelve login es verdadero o falso
-    //       this.datosCompartidosService.credentials.nombre_usuario=this.credentials.nombre_usuario;//pasamos los valosres del usuairo a datos compartidos
-    //       this.datosCompartidosService.credentials.password=this.credentials.password; //pasamos los valores a datos compartidos
-        
+    console.log(this.credentials);
+  
+    try {
+      // Convertimos el observable en una promesa
+      const authResponse = await firstValueFrom(this.loginService.login(this.credentials));
+  
+      if (authResponse) {
+        console.log('Se logueó correctamente: ' + this.loginService.isAuthenticatedUser());
+        // Navegar a la página principal
+        // this.router.navigate(['principal']);
+      } else {
+        alert('Credenciales incorrectas');
+        console.log('Estamos dentro del else de login');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Error al intentar autenticar');
+    }
+  }
 
-    //   if (authResponse) {
-    //     console.log('se logueo corectamente:'+this.authService.isAuthenticatedUser())
-    //     this.router.navigate(['principal']);
-    //   } else {
-    //     alert('Credenciales incorrectas');
-    //     console.log('estamos dentro del else de login:')
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    //   alert('Error al intentar autenticar');
-    // }
-   }
+  // async login() {
+  //   console.log(this.credentials)
+  //   try {
+  //     const authResponse = this.loginService.login(this.credentials); //el valor que devuelve login es verdadero o falso
+  //         // this.datosCompartidosService.credentials.nombre_usuario=this.credentials.nombre_usuario;//pasamos los valosres del usuairo a datos compartidos
+  //         // this.datosCompartidosService.credentials.password=this.credentials.password; //pasamos los valores a datos compartidos
+  //     if (authResponse) {
+  //       console.log('se logueo corectamente:'+this.loginService.isAuthenticatedUser())
+  //       // this.router.navigate(['principal']);
+  //     } else {
+  //       alert('Credenciales incorrectas');
+  //       console.log('estamos dentro del else de login:')
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     alert('Error al intentar autenticar');
+  //   }
+  //  }
   
   preloadImages(imageSrcList: string[]): void {
     imageSrcList.forEach(src => {
