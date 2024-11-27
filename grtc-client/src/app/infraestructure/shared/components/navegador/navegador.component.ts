@@ -4,13 +4,13 @@ import Swal from 'sweetalert2';
 import { LoginService } from '../../../services/remoto/login/login.service';
 import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
 import { UsuarioModel } from '../../../../domain/models/usuario.model';
-
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-navegador',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './navegador.component.html',
   styleUrl: './navegador.component.css'
 })
@@ -24,7 +24,6 @@ export class NavegadorComponent {
 
   constructor( private router:Router, private loginService: LoginService, private credencialesService: CredencialesService) {
      this.credenciales=this.credencialesService.credenciales
-     console.log(this.credenciales)
    }
   
 

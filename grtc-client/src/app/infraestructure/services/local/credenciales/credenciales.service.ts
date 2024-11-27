@@ -8,8 +8,8 @@ export class CredencialesService {
 
   private usuario: UsuarioModel = {
     id_usuario: 0,
-    nombre_usuario: '',
-    rol: '',
+    nombre_usuario: 'ADMIN',
+    rol: 'ADMINISTRADOR',
   };
 
   constructor() { }

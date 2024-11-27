@@ -1,0 +1,53 @@
+.vertical-center {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    height: 100%;
+    margin: auto;
+    padding: auto;
+}
+
+/* contenedor */
+.contenedor{
+    margin: 0px 10%;
+}
+
+
+/* animacion para la barra de progreso  */
+.progress-container {
+    width: 100%;
+    background-color: #f0f0f0;
+    height: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    width: 0;
+    background-color: #4caf50;
+    transition: width 0.3s ease;
+  }
+
+  /* contenedor de la barra de progreso */
+  .contenedor-barra-progreso{
+  
+    text-align: center;
+    justify-content: center;
+    padding: 0px 20%;
+  }
+  /* titulo de cada paso */
+  .titleStep{
+    display: flex;
+    justify-content: center;
+  }
+
+  /* texto en minuscula */
+  .texto-form-minuscula{
+    text-transform: lowercase !important;
+    color: #2686c6;
+  }
+
+  /* form control en mayusculas */
+  .form-control{
+    text-transform:uppercase;
+  }

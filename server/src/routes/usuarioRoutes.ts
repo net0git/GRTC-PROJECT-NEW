@@ -12,7 +12,7 @@ class UsuariosRoutes{
         
     }
     config():void{
-        //consultas para las tuc - 
+  
          this.router.get('/api/usuario',usuarioController.listarUsuarios)
          this.router.get('/api/usuario/detalle',usuarioController.listarUsuariosDetalle)
          this.router.get('/api/usuario/:id_usuario',usuarioController.ObtenerUsuario)
