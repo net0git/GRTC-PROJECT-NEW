@@ -1,9 +1,15 @@
+
+
 .panel{
 
     height: 100vh;
     /* overflow-y: hidden; */
     display: flex;
     flex-direction: column;
+
+
+        
+  
     
  }
 
@@ -64,7 +70,7 @@ img{
 .icon-custom-encabezado {
     
     font-weight: bold; 
-    font-size: 4rem;
+    font-size: 3.5rem;
     color: #929FB1;
     margin-right: 10px;
 

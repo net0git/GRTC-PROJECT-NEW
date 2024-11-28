@@ -1,3 +1,6 @@
+.panel{
+    background-color:  #f8f9fa !important;
+}
 .vertical-center {
     display: flex;
     align-items: center;
@@ -13,41 +16,81 @@
 }
 
 
-/* animacion para la barra de progreso  */
+
+
+  .card{
+    box-shadow: 0  .125rem .25rem   rgba(0, 0, 0, .075) !important;
+    
+  }
+
+
+
+
+  /* progress bar */
+/* ------------------------------------- */
+.panel_stepper {
+    margin-top: 5px;
+    margin-bottom: 60px;
+    padding: 15px;
+}
+
 .progress-container {
-    width: 100%;
-    background-color: #f0f0f0;
+    position: relative;
+    width: 65%;
+    /* Ajusta el ancho según tus necesidades */
     height: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .progress-bar {
+    /* Espacio suficiente para la barra y los círculos */
+}
+
+.progress {
+    width: 100%;
+    height:8px;
+    background-color: #e0e0e0;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar {
     height: 100%;
-    width: 0;
-    background-color: #4caf50;
-    transition: width 0.3s ease;
-  }
+}
 
-  /* contenedor de la barra de progreso */
-  .contenedor-barra-progreso{
-  
+.item {
+    position: absolute;
+    top: 210%;
+    /* Centrado vertical en el contenedor */
+    transform: translate(-50%, -50%);
+    /* Ajusta al centro vertical y horizontalmente */
     text-align: center;
-    justify-content: center;
-    padding: 0px 20%;
-  }
-  /* titulo de cada paso */
-  .titleStep{
-    display: flex;
-    justify-content: center;
-  }
+    /* Centra el texto */
+}
 
-  /* texto en minuscula */
-  .texto-form-minuscula{
-    text-transform: lowercase !important;
-    color: #2686c6;
-  }
+.step-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #ddd;
+    border: 2px solid #e0e0e0;
+    margin: 0 auto;
+    /* Centra el círculo dentro del item */
+}
 
-  /* form control en mayusculas */
-  .form-control{
-    text-transform:uppercase;
-  }
+
+
+.item p {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #28476169;
+   
+}
+
+
+/* 
+ */
+
+ /* .progress-bar{
+    background-color: #86d993 !important;
+ } */
