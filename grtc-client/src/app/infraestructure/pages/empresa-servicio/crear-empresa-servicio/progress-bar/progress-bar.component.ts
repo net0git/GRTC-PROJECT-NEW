@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './progress-bar.component.html',
-  styleUrls: ['./crear-empresa-servicio.component.css']
+  styleUrls: ['./progress-bar.component.css']
 })
 export class ProgressBarComponent  {
   @Input() currentStep: number = 0; // Valor inicial

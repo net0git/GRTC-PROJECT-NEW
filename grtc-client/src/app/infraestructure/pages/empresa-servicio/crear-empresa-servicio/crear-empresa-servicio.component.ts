@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Importar CommonModule
 import { NavegadorComponent } from '../../../shared/components/navegador/navegador.component';
 import { SubnavegadorComponent } from '../../../shared/components/subnavegador/subnavegador.component';
-import { ProgressBarComponent } from './progress-bar.component';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
