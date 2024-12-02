@@ -3,6 +3,32 @@ import { encriptar, comparar } from "../encrytor/encryptor"
 import db from '../database/database';
 
 class UsuarioController {
+    
+    public async CrearUsuario(req: Request, res: Response) {
+        try {
+            const { nombre_usuario, rol, password, id_persona, estado } = req.body;
+            const passwordcifrado = await encriptar(password);
+            const consulta = `
+                    INSERT INTO t_usuario(
+                        nombre_usuario,rol,password,id_persona, estado)
+                    VALUES ($1, $2, $3, $4, $5);
+                `;
+            const valores = [nombre_usuario, rol, passwordcifrado, id_persona, estado];
+            db.query(consulta, valores, (error) => {
+                if (error) {
+                    console.error(`Error al crear usuario ${nombre_usuario}:`, error);
+                } else {
+                    console.log(`usuario ${nombre_usuario} creado correctamente`);
+                    res.json({ text: `El usuario se creó correctamente ${nombre_usuario}` });
+                }
+            });
+
+        } catch (error) {
+            console.error('Error fatal al crear usuario:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+    }
+
     public async listarUsuarios(req: Request, res: Response): Promise<any> {
         try {
             const usuarios = await db.query('select * from t_usuario')
@@ -73,31 +99,6 @@ class UsuarioController {
 
         } catch (error) {
             console.error('Error fatal al obtener usuario:', error);
-            res.status(500).json({ error: 'Error interno del servidor' });
-        }
-    }
-
-    public async CrearUsuario(req: Request, res: Response) {
-        try {
-            const { nombre_usuario, rol, password, id_persona, estado } = req.body;
-            const passwordcifrado = await encriptar(password);
-            const consulta = `
-                    INSERT INTO t_usuario(
-                        nombre_usuario,rol,password,id_persona, estado)
-                    VALUES ($1, $2, $3, $4, $5);
-                `;
-            const valores = [nombre_usuario, rol, passwordcifrado, id_persona, estado];
-            db.query(consulta, valores, (error) => {
-                if (error) {
-                    console.error(`Error al crear usuario ${nombre_usuario}:`, error);
-                } else {
-                    console.log(`usuario ${nombre_usuario} creado correctamente`);
-                    res.json({ text: `El usuario se creó correctamente ${nombre_usuario}` });
-                }
-            });
-
-        } catch (error) {
-            console.error('Error fatal al crear usuario:', error);
             res.status(500).json({ error: 'Error interno del servidor' });
         }
     }

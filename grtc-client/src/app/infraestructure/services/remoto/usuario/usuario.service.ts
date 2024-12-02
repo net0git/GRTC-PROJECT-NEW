@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ListaUsuariosResponse } from '../../../../domain/dto/UsuariosResponse.dto';
+import { UsuarioModel } from '../../../../domain/models/usuario.model';
+import { CrearUsuarioRespuesta } from '../../../../domain/dto/UsuariosResponse.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,10 @@ export class UsuarioService {
       return this.http.get<ListaUsuariosResponse[]>(this.api_uri_usuario+'/detalle');
     }
   
+    crearUsuario(cuerpo_usuario:UsuarioModel):Observable<CrearUsuarioRespuesta>{
+      return this.http.post<CrearUsuarioRespuesta>(this.api_uri_usuario+'/crear',cuerpo_usuario);
+    }
+    
   // this.router.get('/api/usuario',usuarioController.listarUsuarios)
   //        this.router.get('/api/usuario/detalle',usuarioController.listarUsuariosDetalle)
   //        this.router.get('/api/usuario/:id_usuario',usuarioController.ObtenerUsuario)

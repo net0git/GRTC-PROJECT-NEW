@@ -15,6 +15,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const encryptor_1 = require("../encrytor/encryptor");
 const database_1 = __importDefault(require("../database/database"));
 class UsuarioController {
+    CrearUsuario(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { nombre_usuario, rol, password, id_persona, estado } = req.body;
+                const passwordcifrado = yield (0, encryptor_1.encriptar)(password);
+                const consulta = `
+                    INSERT INTO t_usuario(
+                        nombre_usuario,rol,password,id_persona, estado)
+                    VALUES ($1, $2, $3, $4, $5);
+                `;
+                const valores = [nombre_usuario, rol, passwordcifrado, id_persona, estado];
+                database_1.default.query(consulta, valores, (error) => {
+                    if (error) {
+                        console.error(`Error al crear usuario ${nombre_usuario}:`, error);
+                    }
+                    else {
+                        console.log(`usuario ${nombre_usuario} creado correctamente`);
+                        res.json({ text: `El usuario se creó correctamente ${nombre_usuario}` });
+                    }
+                });
+            }
+            catch (error) {
+                console.error('Error fatal al crear usuario:', error);
+                res.status(500).json({ error: 'Error interno del servidor' });
+            }
+        });
+    }
     listarUsuarios(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -91,33 +118,6 @@ class UsuarioController {
             }
             catch (error) {
                 console.error('Error fatal al obtener usuario:', error);
-                res.status(500).json({ error: 'Error interno del servidor' });
-            }
-        });
-    }
-    CrearUsuario(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { nombre_usuario, rol, password, id_persona, estado } = req.body;
-                const passwordcifrado = yield (0, encryptor_1.encriptar)(password);
-                const consulta = `
-                    INSERT INTO t_usuario(
-                        nombre_usuario,rol,password,id_persona, estado)
-                    VALUES ($1, $2, $3, $4, $5);
-                `;
-                const valores = [nombre_usuario, rol, passwordcifrado, id_persona, estado];
-                database_1.default.query(consulta, valores, (error) => {
-                    if (error) {
-                        console.error(`Error al crear usuario ${nombre_usuario}:`, error);
-                    }
-                    else {
-                        console.log(`usuario ${nombre_usuario} creado correctamente`);
-                        res.json({ text: `El usuario se creó correctamente ${nombre_usuario}` });
-                    }
-                });
-            }
-            catch (error) {
-                console.error('Error fatal al crear usuario:', error);
                 res.status(500).json({ error: 'Error interno del servidor' });
             }
         });

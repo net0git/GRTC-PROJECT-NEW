@@ -13,3 +13,8 @@ export interface ListaUsuariosResponse {
     correo: string | null;
 
 }
+
+
+export interface CrearUsuarioRespuesta {
+    text: string;
+}
