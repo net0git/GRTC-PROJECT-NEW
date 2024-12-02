@@ -7,6 +7,12 @@ import { ModUsuarioComponent } from './infraestructure/pages/usuario/mod-usuario
 import { FormUsuarioComponent } from './infraestructure/pages/usuario/form-usuario/form-usuario.component';
 import { ListaEmpresaServicioComponent } from './infraestructure/pages/empresa-servicio/lista-empresa-servicio/lista-empresa-servicio.component';
 import { CrearEmpresaServicioComponent } from './infraestructure/pages/empresa-servicio/crear-empresa-servicio/crear-empresa-servicio.component';
+import { ConsultasTucComponent } from './infraestructure/pages/consultas-tuc/consultas-tuc.component';
+import { ListaInfraestructuraComponent } from './infraestructure/pages/infraestructura/lista-infraestructura/lista-infraestructura.component';
+import { VehiculoComponent } from './infraestructure/pages/vehiculo/vehiculo.component';
+import { BusquedaHistorialComponent } from './infraestructure/pages/busqueda-historial/busqueda-historial.component';
+import { ResolucionComponent } from './infraestructure/pages/resolucion/resolucion.component';
+import { ReportePanelComponent } from './infraestructure/pages/reporte/reporte-panel/reporte-panel.component';
 
 
 
@@ -25,6 +31,14 @@ export const routes: Routes = [
 
       { path:'principal/lista-empresas-servicio', component: ListaEmpresaServicioComponent },
       { path:'principal/crear-empresa-servicio', component: CrearEmpresaServicioComponent },
+
+      { path:'principal/consultas-tuc',component:ConsultasTucComponent },
+
+      { path:'principal/lista-infraestructura', component: ListaInfraestructuraComponent },
+      { path:'principal/lista-vehiculos', component:VehiculoComponent},
+      { path:'principal/busqueda-historial', component:BusquedaHistorialComponent},
+      { path:'principal/resolucion', component:ResolucionComponent},
+      { path:'principal/panel-reportes', component:ReportePanelComponent},
      
       { path: '**', redirectTo: '/login' } 
   ];

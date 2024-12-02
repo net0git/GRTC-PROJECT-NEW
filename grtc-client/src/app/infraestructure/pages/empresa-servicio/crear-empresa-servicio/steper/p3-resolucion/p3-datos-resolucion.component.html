@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <form>
+                        <div class="mb-2">
+                            <label for="documento_pdf" class="form-label mb-0">Documento PDF:</label>
+                            <input class="form-control form-control-sm" type="file" id="formFile"
+                                accept=".pdf" autofocus>
+                        </div>
+                        <div class="mb-2">
+                            <label for="titulo" class="form-label  mb-0">Titulo resolución:</label>
+
+                            <input type="text" name="nombre_resolucion"
+                                class="form-control form-control-sm">
+                        </div>
+                        <div class="mb-2">
+                            <label for="nro_resolucion" class="form-label  mb-0">Nro resolución</label>
+                            <input type="text" name="nro_resolucion"
+                                class="form-control form-control-sm">
+                        </div>
+                        <div class="mb-2">
+                            <label for="anio_resolucion" class="form-label  mb-0">Año</label>
+                            <input type="text" name="anio_resolucion"
+                                class="form-control form-control-sm">
+                        </div>
+                        <div class="mb-2">
+                            <label for="tomo_resolucion" class="form-label  mb-0">Tomo</label>
+                            <input type="number" name="tomo_resolucion"
+                                class="form-control form-control-sm">
+                        </div>
+                        <div class=" mb-2">
+                            <label for="fecha_resolucion" class="form-label   mb-0">Fecha</label>
+                            <input type="date" class="form-control form-control-sm"
+                                name="fecha_resolucion">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="documento_pdf" class="form-label  mb-0">Descripcion</label>
+                            <textarea class="form-control" name="descripcion" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="text-center">
+                <iframe [src]="pdfUrl" type="application/pdf" width="100%" height="540px"></iframe>
+            </div>
+        </div>
+    </div>
+</div>

@@ -22,31 +22,31 @@ export class PrincipalComponent implements OnInit {
     this.router.navigate(['/principal/lista-empresas-servicio']);
   }
 
-  empresas_por_infraestructura() {
-    this.router.navigate(['/principal/empresas/infraestructura']);
+  infraestructura() {
+    this.router.navigate(['/principal/lista-infraestructura']);
   }
 
   usuarios() {
-    this.router.navigate(['principal/lista-usuarios']);
+    this.router.navigate(['/principal/lista-usuarios']);
   }
 
   vehiculos() {
-    this.router.navigate(['/principal/vehiculos'])
+    this.router.navigate(['/principal/lista-vehiculos'])
   }
 
   tuc() {
-    this.router.navigate(['/principal/tuc'])
+    this.router.navigate(['/principal/consultas-tuc'])
   }
 
   reporte() {
-    this.router.navigate(['/principal/reportes'])
+    this.router.navigate(['/principal/panel-reportes'])
   }
 
   busqueda_por_historial() {
-    this.router.navigate(['principal/busqueda'])
+    this.router.navigate(['/principal/busqueda-historial'])
   }
 
   resoluciones() {
-    this.router.navigate(['principal/resoluciones'])
+    this.router.navigate(['principal/resolucion'])
   }
 }

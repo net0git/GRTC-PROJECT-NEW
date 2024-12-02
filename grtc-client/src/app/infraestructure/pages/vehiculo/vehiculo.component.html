@@ -1,1 +1,142 @@
-<p>vehiculo works!</p>
+<div class="panel">
+    <app-navegador></app-navegador>
+    <app-subnavegador></app-subnavegador>
+  
+    <div class="container-fluid">
+        <!-- presentacion -->
+        <div class="encabezado_pages">
+            <i class="bi bi-car-front icon-custom-encabezado"></i>
+            <h2 class="titulo_menu">Vehiculos</h2>
+        </div>
+
+        <!-- agregar y busqueda -->
+        <div class="row pb-5">
+            <div class=" col-lg-10 mx-auto">
+                <p class="d-inline-flex gap-1 " >
+                    <!-- <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Link with href
+                    </a> -->
+                    <button class="btn btn-primary mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
+                        REGISTRAR MARCA Y MODELO
+                    </button>
+                </p>
+                
+                <div class="collapse mb-4 rounded shadow border-1" id="collapseExample">
+                    <div class="card card-body car_body_panel">
+                        <div class="container">
+                            <div class="row"  >
+                                <div class="col " style="max-width: 600px;">
+                                    <input type="text" class="form-control m-2" name="buscar" placeholder="BUSCAR MARCA">
+                                    <div style="max-height: 300px; overflow-y: auto; overflow-x: hidden; border: 2px solid rgba(0, 0, 0, 0.214); " >
+                                        <table class="table text-center table-hover m-2 ">
+                                        <thead class="text-white table-success">
+                                            <tr>
+                                            <th scope="col">Nro</th>
+                                            <th scope="col">MARCA</th>
+                                            </tr>
+                                        </thead>
+                                    
+                                        <!-- <tbody>
+                                            <tr *ngFor="let marca of listaMarcas; let i = index" (click)="obtenerModeloPoridMarca(marca.id_marca,marca.nombre_marca)">
+                                            <th scope="row">{{i + 1}}</th>
+                                            <td>{{marca.nombre_marca}}</td>
+                                            </tr>
+                                        </tbody> -->
+                                        </table>
+                                    </div> 
+                                    <div class="row  d-flex  mt-3" >
+                                        <div class="col  d-flex justify-content-end">
+                                            <button type="button" class="btn btn-primary" 
+                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                                                Crear Marca
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control" name="marca" placeholder="ingrese marca" id="marcaForm"  >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" style="max-width: 600px;" >
+                                    <br>
+                                    <h5>Marca : marca</h5>
+                                
+                                    
+                                    <div style="max-height: 300px; overflow-y: auto; overflow-x: hidden; margin-top: 5px;" >
+                                        <table class="table text-center  table-hover m-2" >
+                                        
+                                            <thead class="text-white table-success">
+                                            <tr>
+                                                <th scope="col">Nro</th>
+                                                <th scope="col">MODELO</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody >
+                                            <tr *ngFor="let modelo of listaModelos, index as i"  >            
+                                            <th scope="row">{{i+1}}</th>
+                                                <td>modelo</td>   
+                                            </tr> 
+                                            </tbody>
+                                        </table>
+                                        <label class="text-danger" >No registra modelos</label>
+                                    </div>
+                                    <div class="row mt-3" >
+                                        <div class="col d-flex justify-content-end ">
+                                            <button type="button" class="btn btn-primary"
+                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                                                Crear Modelo
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control" name="modelo" placeholder="ingrese modelo" id="modeloForm" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              <div class="card rounded shadow border-2 ">
+                
+                <div class="card-header  ">
+
+                    <div class="py-3 d-flex justify-content-between align-items-center">
+                        <!--<h6 class="m-0 font-weight-bold text-primary">Tabla Usuarios</h6>-->
+                        <input type="text" class="form-control mx-4" name="buscar" placeholder="BUSCAR" >     
+                    </div>
+
+                </div>
+                <div class="card-body px-5 bg-white rounded">
+                  <div class="table-responsive">
+                    <!-- <button type="button" class="btn btn-success mb-3"  (click)="AgregarUsuario()">+add</button> -->
+                    <table class="table text-center  table-hover">
+                        <thead class="text-white table-success">
+                          <tr>
+                            <th scope="col">Nro</th>
+                            <th scope="col">PLACA</th>
+                            <th scope="col">AÑO</th>
+                            <th scope="col">MARCA</th>
+                            <th scope="col">MODELO</th>
+                            <th scope="col">CATEGORIA</th>
+                            <th scope="col">EMPRESA</th>
+                          </tr>
+                        </thead>
+                        <!-- <tbody >
+                          <tr *ngFor="let vehiuclo of listaVehiculos, index as i"  >
+                            
+                           <th scope="row">{{i+1}}</th>
+                             <td>{{vehiuclo.placa}}</td>
+                            <td>{{vehiuclo.anio_fabricacion}}</td>
+                            <td>{{vehiuclo.marca}}</td>
+                            <td>{{vehiuclo.modelo}}</td>
+                            <td>{{vehiuclo.categoria}}</td>
+                            <td>{{vehiuclo.razon_social}}</td>
+                          </tr> 
+                        </tbody> -->
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>   
+</div>

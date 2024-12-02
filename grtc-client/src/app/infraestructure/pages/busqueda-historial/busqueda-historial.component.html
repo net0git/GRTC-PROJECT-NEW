@@ -1,1 +1,60 @@
-<p>busqueda-historial works!</p>
+<div class="panel">
+    <app-navegador></app-navegador>
+    <app-subnavegador></app-subnavegador>
+    <div class="encabezado_pages ">
+        <i class="bi bi-search icon-custom-encabezado"></i>
+        <h2 class="titulo_menu">Busqueda de historial vehicular</h2>
+    </div>
+    <div class="container">
+        <div class="card rounded shadow border-2">
+            <div class="card-header">
+                <div class="py-3 d-flex justify-content-center align-items-center">
+                    <form class="row mx-auto">
+                        <div class="col-auto">
+                            <input type="text" class="form-control mr-2" name="buscar" placeholder="BUSCAR POR PLACA" id="placa_vehicular">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-primary" >BUSCAR</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card-body px-5 bg-white rounded">
+                <div class="table-responsive">
+                    <table class="table text-center  table-hover">
+                        <colgroup>
+                            <col style="width: 5%;">
+                            <col style="width: 15%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                            <col style="width: 20%;">
+                            <col style="width: 35%;">
+                        </colgroup>
+                        <thead class="text-white table-success">
+                            <tr>
+                                <th scope="col">Nro</th>
+                                <th scope="col">FECHA</th>
+                                <th scope="col">PLACA</th>
+                                <th scope="col">CONDICION</th>
+                                <th scope="col">NOMBRE_RESOLUCION</th>
+                                <th scope="col">EMPRESA</th>
+                            </tr>
+                        </thead>
+
+                        <!-- <tbody>
+                            <tr *ngFor="let item of historial_vehicular, index as i">
+
+                                <th scope="row">{{i+1}}</th>
+                                <td>{{item.fecha_resolucion|date:'dd/MM/yyyy'}}</td>
+                                <td>{{item.placa}}</td>
+                                <td>{{item.condicion}}</td>
+                                <td>{{item.nombre_resolucion}}</td>
+                                <td>{{item.nombre_empresa}}</td>
+                            </tr>
+                        </tbody> -->
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
