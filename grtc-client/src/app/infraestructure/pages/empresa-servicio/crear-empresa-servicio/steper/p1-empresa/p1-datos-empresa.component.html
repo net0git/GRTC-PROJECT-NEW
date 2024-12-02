@@ -1,0 +1,115 @@
+<div class="d-flex justify-content-center">
+    <div class="card" style="width: 60%;">
+        <div class="card-body">
+            <form>
+                <fieldset>
+                    <div class="col-sm-12 col-lg-4 mb-4">
+                        <label for="tipo_empresa_servicio" class="form-label mt-2">Tipo de
+                            servicio:</label>
+                        <select id="tipo_empresa_servicio" name="tipo_empresa_servicio"
+                            class="form-control form-select">
+                            <option value=0 disabled selected>TIPO SERVICIO</option>
+                            <option value=1>TRANSPORTE DE PERSONAS</option>
+                            <option value=2>TRANSPORTE TURISTICO</option>
+                            <option value=3>TRASNPORTE DE TRABAJADORES</option>
+                            <option value=4>TRANSPORTE DE ESTUDIANTES</option>
+                        </select>
+                    </div>
+
+                    <!-- DATOS DE LA EMPRESA-->
+
+                    <!-- FILA DE RUC Y RAZON SOCIAL -->
+                    <div class="row mb-3">
+                        <div class="form-group col-lg-4 col-sm-12">
+                            <label for="ruc_empresa" class="form-label">RUC:</label>
+                            <div class="input-group mb-3">
+                                <input type="number" min="0" class="form-control "
+                                    placeholder="Ingrese RUC" name="empresa_ruc">
+                                <button class="btn btn-primary" type="button" id="button-addon2">
+                                    <i class="bi bi-search"></i>Buscar</button>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-8 col-sm-12">
+                            <label for="nombre_empresa" class="form-label ">Razon Social:</label>
+                            <input id="nombre_empresa" type="text" class="form-control"
+                                name="nombre_empresa">
+                        </div>
+                    </div>
+
+                    <!-- FILA DE DEPARTAMETNO - PRPVINCIA - DISTRITO -->
+                    <div class="row mb-4">
+                        <!-- departamentos -->
+                        <div class="form-group col-lg-4 col-sm-12">
+                            <label for="departamento_empresa" class="form-label">Departamento:</label>
+                            <select id="departamento_empresa" name="departamento_empresa"
+                                class="form-control form-select">
+                                <option value="" disabled selected>DEPARTAMENTO</option>
+                                <!-- <option *ngFor="let departamento of departamentos"
+                                    [value]="departamento">{{ departamento }}</option> -->
+                            </select>
+                        </div>
+                        <!-- provincias -->
+                        <div class="form-group col-lg-4 col-sm-12">
+                            <label for="provincia_empresa" class="form-label">Provincia:</label>
+                            <select id="provincia_empresa" name="provincia_empresa"
+                                class="form-control form-select">
+                                <option value="" disabled selected>PROVINCIA</option>
+                                <!-- <option *ngFor="let provincia of provincias" [value]="provincia">{{
+                                    provincia }}</option> -->
+                            </select>
+                        </div>
+                        <!-- distrito -->
+                        <div class="form-group col-lg-4 col-sm-12">
+                            <label for="distrito_empresa" class="form-label">Distrito:</label>
+                            <select id="distrito_empresa" name="distrito_empresa"
+                                class="form-control form-select">
+                                <option value="" disabled selected>DISTRITO</option>
+                                <!-- <option *ngFor="let distrito of distritosPorProvincia"
+                                    [value]="distrito">{{ distrito }}</option> -->
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- FILA DE DIRECCION CORREO Y TELEFONO -->
+                    <div class="row mb-3">
+                        <div class="form-group col-lg-4 col-sm-12">
+                            <label for="direccion_empresa" class="form-label ">Direccion:</label>
+                            <input id="direccion_empresa" type="text" class="form-control "
+                                name="direccion_empresa">
+                        </div>
+                        <div class="form-group col-lg-4 col-sm-12">
+                            <label for="correo_empresa " class="form-label ">Correo:</label>
+                            <input type="email" class="form-control texto-form-minuscula"
+                                name="correo_empresa">
+                        </div>
+                        <div class="form-group  col-lg-4 col-sm-12">
+                            <label for="telefono_empresa" class="form-label">Telefono:</label>
+                            <input type="number" inputmode="numeric" min="0" class="form-control "
+                                name="telefono_empresa">
+
+
+                        </div>
+                    </div>
+
+                    <!-- FILA DE FECHA DE HABILITACION Y EXPEDIENTE -->
+                    <div class="row mb-3">
+                        <div class="form-group col-lg-6 col-sm-12">
+                            <div class="mb-1">
+                                <label for="fecha_empresa" class="form-label ">Fecha de
+                                    Autorización:</label>
+                                <input id="fecha_empresa" type="date" class="form-control"
+                                    name="fecha_resolucion">
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-sm-12">
+                            <label for="expediente_empresa" class="form-label ">Expediente:</label>
+                            <input id="expediente_empresa" type="text" class="form-control"
+                                name="expediente_empresa">
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

@@ -6,16 +6,19 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { P1DatosEmpresa } from './steper/p1-empresa/p1-datos-empresa.component';
+import { P2DatosRepresentante } from './steper/p2-representante/p2-datos-representante'
+
 @Component({
   selector: 'app-crear-empresa-servicio',
   standalone: true,
-  imports: [CommonModule,NavegadorComponent,SubnavegadorComponent,ProgressBarComponent],
+  imports: [CommonModule,NavegadorComponent,SubnavegadorComponent,ProgressBarComponent,P1DatosEmpresa,P2DatosRepresentante],
   templateUrl: './crear-empresa-servicio.component.html',
   styleUrl: './crear-empresa-servicio.component.css'
 })
 export class CrearEmpresaServicioComponent implements OnInit{ 
 
-  currentStep: number = 1;
+  currentStep: number = 1;      
   progressValue=((1 ) / 7) * 100;
 
   pdfUrl: SafeResourceUrl | null =null;

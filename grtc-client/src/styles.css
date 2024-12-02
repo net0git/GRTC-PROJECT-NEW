@@ -1,4 +1,8 @@
 
+body{
+    transform: scale(1); /* Cambia el valor de escala según el nivel de zoom deseado */
+    transform-origin: top left; /* Asegúrate de ajustar el origen para que el zoom se vea natural */
+}
 
 .panel{
 
