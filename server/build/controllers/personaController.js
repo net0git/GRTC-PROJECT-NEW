@@ -61,7 +61,7 @@ class PersonaController {
                 const consulta = 'select * from t_persona where id_persona = $1';
                 const persona = yield database_1.default.query(consulta, [id_persona]);
                 if (persona && persona['rows'].length > 0) {
-                    res.json(persona['rows']);
+                    res.json(persona['rows'][0]);
                 }
                 else {
                     res.status(404).json({ text: 'La persona no existe' });
@@ -95,14 +95,14 @@ class PersonaController {
     ModificarPersona(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id } = req.params;
+                const { id_persona } = req.params;
                 const { nombres, ap_paterno, ap_materno, tipo_doc, documento, telefono, correo } = req.body;
                 const consulta = `
                 UPDATE t_persona 
-                SET nombres= $1, ap_paterno= $2, ap_materno= $3, tipo_doc= $4, documento= $5, telefono= $6, correo= $7 
+                     SET nombres= $1, ap_paterno= $2, ap_materno= $3, tipo_doc= $4, documento= $5, telefono= $6, correo= $7 
                 WHERE id_persona=$8
                 `;
-                const valores = [nombres, ap_paterno, ap_materno, tipo_doc, documento, telefono, correo, id];
+                const valores = [nombres, ap_paterno, ap_materno, tipo_doc, documento, telefono, correo, id_persona];
                 database_1.default.query(consulta, valores, (error) => {
                     if (error) {
                         console.error('Error al modificar persona:', error);

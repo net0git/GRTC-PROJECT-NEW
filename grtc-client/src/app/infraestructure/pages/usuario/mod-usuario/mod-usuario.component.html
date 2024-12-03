@@ -18,17 +18,17 @@
                 <fieldset>
                     <div class="form-group">
                         <label for="nombre" class="form-label mt-2">Nombre(s):</label>
-                        <input type="text" class="form-control" name="nombre">
+                        <input type="text" class="form-control" name="nombre" [(ngModel)]="dataPersona.nombres">
                     </div>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-12 col-md-6">
                                 <label for="ap_paterno" class="form-label mt-3">Apellido Paterno:</label>
-                                <input type="text" class="form-control" name="ap_paterno">
+                                <input type="text" class="form-control" name="ap_paterno" [(ngModel)]="dataPersona.ap_paterno">
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="ap_materno" class="form-label mt-3">Apellido Materno:</label>
-                                <input type="text" class="form-control" name="ap_materno">
+                                <input type="text" class="form-control" name="ap_materno" [(ngModel)]="dataPersona.ap_materno">
                             </div>
                         </div>
                     </div>
@@ -37,11 +37,11 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-8">
                                 <label for="correo" class="form-label mt-3">Email:</label>
-                                <input type="email" class="form-control text-correo" name="correo">
+                                <input type="email" class="form-control text-correo" name="correo" [(ngModel)]="dataPersona.correo">
                             </div>
                             <div class="col-sm-12 col-md-4">
                                 <label for="email" class="form-label mt-3">Telefono:</label>
-                                <input type="text" class="form-control" name="email">
+                                <input type="text" class="form-control" name="email" [(ngModel)]="dataPersona.telefono">
                             </div>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                         <label for="documento_id" class="form-label mt-3">Documento de Identidad:</label>
                         <div class="row">
                             <div class="col-sm-12 col-md-6">
-                                <select id="tipo_doc" name="tipo_doc" class="form-control">
+                                <select id="tipo_doc" name="tipo_doc" class="form-control"  [(ngModel)]="dataPersona.tipo_doc">
                                     <option value="" disabled selected>TIPO DE DOCUMENTO</option>
                                     <option value="CE">CARNET DE ESTRANGERIA</option>
                                     <option value="DNI">DNI</option>
@@ -58,14 +58,14 @@
                             </div>
 
                             <div class="col-sm-12 col-md-6">
-                                <input type="text" class="form-control" name="documento_id">
+                                <input type="text" class="form-control" name="documento_id" [(ngModel)]="dataPersona.documento">
                             </div>
                         </div>
                     </div>
                 </fieldset>
             </form>
             <div class="d-grid gap-2">
-                <button class="btn btn-lg btn-success mt-4"  type="button" >GUARDAR</button>
+                <button class="btn btn-lg btn-success mt-4"  type="button" (click)="modificarDatosPersona()" >GUARDAR</button>
             </div>
         </div>
 

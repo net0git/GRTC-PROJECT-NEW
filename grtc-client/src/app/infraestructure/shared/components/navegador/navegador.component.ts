@@ -19,6 +19,7 @@ export class NavegadorComponent {
   credenciales: UsuarioModel={
     nombre_usuario:'',
     id_usuario:0,
+    id_persona:0,
     rol:'',
   };
 

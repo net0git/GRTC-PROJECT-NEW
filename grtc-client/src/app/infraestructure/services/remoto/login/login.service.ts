@@ -4,15 +4,17 @@ import { catchError, map } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 import { CredencialesService } from '../../local/credenciales/credenciales.service';
 import { LoginRequest } from '../../../../domain/dto/LoginRequest.dto';
-import { UsuarioResponse } from '../../../../domain/dto/LoginResponse.dto';
+import { UsuarioLoginResponse } from '../../../../domain/dto/LoginResponse.dto';
 import { ErrorValidacion } from '../../../../domain/dto/ErrorValidacion.dto';
+import { environment } from '../../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   private isAuthenticated = false;
-  private url_api_login = 'http://localhost:4000/api/usuario/login';
+  // private url_api_login = 'http://localhost:4000/api/usuario/login';
+   private url_api_login = `${environment.urlApi}usuario/login`;
 
   constructor(
     private http: HttpClient,
@@ -40,11 +42,12 @@ export class LoginService {
       return throwError(() => errorMensaje);
     }
 
-    return this.http.post<UsuarioResponse>(this.url_api_login, credenciales).pipe(
-      map((response: UsuarioResponse) => {
+    return this.http.post<UsuarioLoginResponse>(this.url_api_login, credenciales).pipe(
+      map((response: UsuarioLoginResponse) => {
         if (response.success) {
           this.credencialesService.credenciales = {
             id_usuario: response.id_usuario,
+            id_persona: response.id_persona,
             nombre_usuario: response.nombre_usuario,
             rol: response.rol,
           };

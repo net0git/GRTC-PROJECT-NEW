@@ -17,7 +17,7 @@ class PersonaRoutes{
         this.router.get('/api/persona/:id_persona',personaController.ObtenerPersona)
         this.router.get('/api/persona/:documento',personaController.ObtenerPersonaBydocumento)
         this.router.post('/api/persona',personaController.CrearPersona)
-        this.router.put('/api/persona/:id_persona',personaController.ModificarPersona)
+        this.router.put('/api/persona/modificar/datos/:id_persona',personaController.ModificarPersona)
         this.router.delete('/api/persona/:id_persona',personaController.EliminarPersona) 
     }
 

@@ -1,3 +1,4 @@
+
 export interface ListaUsuariosResponse {
     
     id_usuario: number;
@@ -11,10 +12,10 @@ export interface ListaUsuariosResponse {
     documento: string | null;
     telefono: string | null;
     correo: string | null;
-
 }
 
 
-export interface CrearUsuarioRespuesta {
+export interface CrearUsuarioResponse {
     text: string;
 }
+

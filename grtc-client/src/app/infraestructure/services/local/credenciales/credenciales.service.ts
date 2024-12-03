@@ -7,7 +7,8 @@ import { UsuarioModel } from '../../../../domain/models/usuario.model';
 export class CredencialesService {
 
   private usuario: UsuarioModel = {
-    id_usuario: 0,
+    id_usuario: 1,
+    id_persona: 1,
     nombre_usuario: 'ADMIN',
     rol: 'ADMINISTRADOR',
   };
@@ -25,6 +26,7 @@ export class CredencialesService {
   clear(): void {
     this.usuario = {
       id_usuario: 0,
+      id_persona: 0,
       nombre_usuario: '',
       rol: '',
     };

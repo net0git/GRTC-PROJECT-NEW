@@ -27,6 +27,7 @@ export const routes: Routes = [
 
       { path:'principal/lista-usuarios', component: ListaUsuarioComponent },
       { path:'principal/form-usuario', component: FormUsuarioComponent },
+      { path:'principal/form-usuario/modificar/:id_usuario', component: FormUsuarioComponent },
       { path:'principal/mod-usuario/:id_usuario', component: ModUsuarioComponent },
 
       { path:'principal/lista-empresas-servicio', component: ListaEmpresaServicioComponent },

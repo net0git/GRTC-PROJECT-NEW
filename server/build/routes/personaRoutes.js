@@ -16,7 +16,7 @@ class PersonaRoutes {
         this.router.get('/api/persona/:id_persona', personaController_1.default.ObtenerPersona);
         this.router.get('/api/persona/:documento', personaController_1.default.ObtenerPersonaBydocumento);
         this.router.post('/api/persona', personaController_1.default.CrearPersona);
-        this.router.put('/api/persona/:id_persona', personaController_1.default.ModificarPersona);
+        this.router.put('/api/persona/modificar/datos/:id_persona', personaController_1.default.ModificarPersona);
         this.router.delete('/api/persona/:id_persona', personaController_1.default.EliminarPersona);
     }
 }

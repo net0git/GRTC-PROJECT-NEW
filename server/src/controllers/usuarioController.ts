@@ -114,11 +114,11 @@ class UsuarioController {
             }
 
             // Verificar si el usuario existe
-            const usuarioQuery = 'SELECT id_usuario, password, nombre_usuario, rol, estado FROM t_usuario WHERE nombre_usuario = $1';
+            const usuarioQuery = 'SELECT id_usuario, password, nombre_usuario, id_persona , rol, estado FROM t_usuario WHERE nombre_usuario = $1';
             const usuarioResult = await db.query(usuarioQuery, [nombre_usuario]);
 
             if (usuarioResult.rows.length !== 1) {
-                res.status(404).json({ error: 'Usuario no encontrado.' });
+                res.status(404).json({ error: 'Usuario no encontrado.'});
                 return;
             }
 
@@ -142,6 +142,7 @@ class UsuarioController {
             res.json({
                 success: true,
                 id_usuario: usuario.id_usuario,
+                id_persona: usuario.id_persona,
                 nombre_usuario: usuario.nombre_usuario,
                 rol: usuario.rol,
             });

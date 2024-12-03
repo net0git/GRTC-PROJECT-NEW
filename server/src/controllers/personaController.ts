@@ -49,7 +49,7 @@ class PersonaController{
             const persona = await db.query(consulta,[id_persona]);
 
             if (persona && persona['rows'].length > 0) {
-                res.json(persona['rows']);
+                res.json(persona['rows'][0]);
             } else {
                 res.status(404).json({ text: 'La persona no existe' });
             }
@@ -80,15 +80,15 @@ class PersonaController{
 
     public async ModificarPersona(req: Request, res: Response): Promise<void> {
         try {
-            const { id } = req.params;
+            const { id_persona } = req.params;
             const { nombres, ap_paterno, ap_materno, tipo_doc, documento, telefono, correo } = req.body;
 
             const consulta = `
                 UPDATE t_persona 
-                SET nombres= $1, ap_paterno= $2, ap_materno= $3, tipo_doc= $4, documento= $5, telefono= $6, correo= $7 
+                     SET nombres= $1, ap_paterno= $2, ap_materno= $3, tipo_doc= $4, documento= $5, telefono= $6, correo= $7 
                 WHERE id_persona=$8
                 `;
-            const valores = [nombres,ap_paterno,ap_materno,tipo_doc,documento,telefono,correo,id];
+            const valores = [nombres,ap_paterno,ap_materno,tipo_doc,documento,telefono,correo,id_persona];
 
             db.query(consulta, valores, (error) => {
                 if (error) {
