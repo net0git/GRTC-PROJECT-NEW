@@ -43,8 +43,15 @@ export class ListaUsuarioComponent implements OnInit {
   crearUsuario(){
     this.router.navigate(['principal/form-usuario']);
   }
+
+  modificarUsuario(id_usuario:number){
+    this.router.navigate(['principal/form-usuario/modificar/'+id_usuario]);
+  }
+
   volver(){
     this.router.navigate(['/principal']);
   }
+
+
 
 }
