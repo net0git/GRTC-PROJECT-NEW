@@ -73,7 +73,8 @@ class UsuarioController {
                     FROM
                         t_usuario
                     INNER JOIN
-                        t_persona ON t_usuario.id_persona = t_persona.id_persona;
+                        t_persona ON t_usuario.id_persona = t_persona.id_persona
+                    ORDER BY t_usuario.estado, t_usuario.rol ASC;
             `;
                 const usuarios = yield database_1.default.query(consulta);
                 res.json(usuarios['rows']);
@@ -91,7 +92,7 @@ class UsuarioController {
                 const consulta = 'select * from t_usuario where id_usuario = $1';
                 const usuario = yield database_1.default.query(consulta, [id_usuario]);
                 if (usuario && usuario['rows'].length > 0) {
-                    res.json(usuario['rows']);
+                    res.json(usuario['rows'][0]);
                 }
                 else {
                     res.status(404).json({ text: 'El usuario no existe' });
@@ -172,8 +173,7 @@ class UsuarioController {
                 const consulta = `
                 UPDATE t_usuario 
                     SET nombre_usuario= $1, rol= $2, estado= $3
-                WHERE id_usuario=$4
-                `;
+                WHERE id_usuario=$4`;
                 const valores = [nombre_usuario, rol, estado, id_usuario];
                 database_1.default.query(consulta, valores, (error) => {
                     if (error) {

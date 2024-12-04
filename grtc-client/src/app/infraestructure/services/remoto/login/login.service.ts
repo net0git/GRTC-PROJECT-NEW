@@ -14,7 +14,7 @@ import { environment } from '../../../../../../environments/environment';
 export class LoginService {
   private isAuthenticated = false;
   // private url_api_login = 'http://localhost:4000/api/usuario/login';
-   private url_api_login = `${environment.urlApi}usuario/login`;
+   private url_api_login = `${environment.urlApi}/usuario/login`;
 
   constructor(
     private http: HttpClient,
@@ -41,7 +41,7 @@ export class LoginService {
       });
       return throwError(() => errorMensaje);
     }
-
+    credenciales.nombre_usuario=credenciales.nombre_usuario.toUpperCase();
     return this.http.post<UsuarioLoginResponse>(this.url_api_login, credenciales).pipe(
       map((response: UsuarioLoginResponse) => {
         if (response.success) {

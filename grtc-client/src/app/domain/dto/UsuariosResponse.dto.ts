@@ -15,7 +15,18 @@ export interface ListaUsuariosResponse {
 }
 
 
-export interface CrearUsuarioResponse {
+export interface CrearUsuarioResponse  {
     text: string;
 }
 
+export interface ObtenerUsuarioResponse  {
+    text: string;
+}
+
+export interface ModificarDatosUsuarioResponse{
+    text: string;
+}
+
+export interface ModificarPasswordUsuarioResponse{
+    text: string;
+}

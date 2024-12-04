@@ -1,8 +1,4 @@
 
-body{
-    transform: scale(1); /* Cambia el valor de escala según el nivel de zoom deseado */
-    transform-origin: top left; /* Asegúrate de ajustar el origen para que el zoom se vea natural */
-}
 
 .panel{
 
@@ -10,10 +6,6 @@ body{
     /* overflow-y: hidden; */
     display: flex;
     flex-direction: column;
-
-
-        
-  
     
  }
 
@@ -49,11 +41,18 @@ body{
 
 .hand_cursor{
     cursor: pointer; /*  convierte el cursor en una mano */
+    
+}
+
+.font-weight-bold{
     font-weight: bold;
 }
+
 img{
     margin: 0px;
 }
+
+
 
 
 /* modifica la posicion y alinacion de todos los lementos del encabezado de la pagina */

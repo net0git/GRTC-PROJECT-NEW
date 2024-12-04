@@ -5,13 +5,16 @@ import { ListaUsuariosResponse } from '../../../../domain/dto/UsuariosResponse.d
 import { UsuarioModel } from '../../../../domain/models/usuario.model';
 import { CrearUsuarioResponse } from '../../../../domain/dto/UsuariosResponse.dto';
 import { ErrorValidacion } from '../../../../domain/dto/ErrorValidacion.dto';
+import { environment } from '../../../../../../environments/environment';
+import { ModificarDatosUsuarioResponse, ModificarPasswordUsuarioResponse } from '../../../../domain/dto/UsuariosResponse.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  api_uri_usuario='http://localhost:4000/api/usuario'
+  // api_uri_usuario='http://localhost:4000/api/usuario'
+  api_uri_usuario=`${environment.urlApi}/usuario`
   constructor( private http: HttpClient) { }
 
   validarUsuarioForm(cuerpo_usuario: UsuarioModel): ErrorValidacion[] {
@@ -45,6 +48,19 @@ export class UsuarioService {
 
       cuerpo_usuario.nombre_usuario=cuerpo_usuario.nombre_usuario.trim().toUpperCase()
       return this.http.post<CrearUsuarioResponse>(this.api_uri_usuario+'/crear',cuerpo_usuario);
+    }
+
+    obtenerUsuarioDetalle(id_usuario:number):Observable<UsuarioModel>{
+      return this.http.get<UsuarioModel>(this.api_uri_usuario+'/'+id_usuario)
+    }
+
+    modificarDatosUsuario(id_usuario:number,cuerpo_usuario:UsuarioModel):Observable<ModificarDatosUsuarioResponse>{
+      cuerpo_usuario.nombre_usuario=cuerpo_usuario.nombre_usuario.trim().toUpperCase()
+      return this.http.put<ModificarDatosUsuarioResponse>(this.api_uri_usuario+'/modificar/datos/'+id_usuario,cuerpo_usuario);
+    }
+
+    ModificarPasswordUsuario(id_usuario:number,password:string):Observable<ModificarPasswordUsuarioResponse>{
+      return this.http.put<ModificarPasswordUsuarioResponse>(this.api_uri_usuario+'/modificar/password/'+id_usuario,{password:password});
     }
 
 }

@@ -4,7 +4,11 @@ export interface ListarPersonasResponse {
     data: PersonaModel[]
 }
 
-export interface personaMessageResponse{
+export interface CrearPersonaMessageResponse{
     id_persona: number
+    text: string
+}
+
+export interface ModificarPersonaPersonaMessageResponse{
     text: string
 }

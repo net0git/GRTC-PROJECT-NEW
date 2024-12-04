@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class=" encabezado_pages">
             <i class="bi bi-person icon-custom-encabezado"></i>
-            <h2 class="titulo_menu">{{boton_text}}</h2>
+            <h2 class="titulo_menu">{{titulo}}</h2>
         </div>
         <div style="width: 100%; max-width: 700px; margin: 0 auto; padding: 10px;">
             <form>
@@ -31,7 +31,7 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-8">
                                 <label for="correo" class="form-label mt-3">Email:</label>
-                                <input type="email" class="form-control text-correo" name="correo"  [(ngModel)]="dataPersona.correo">
+                                <input type="email" class="form-control text-correo" name="correo" [(ngModel)]="dataPersona.correo">
                             </div>
                             <div class="col-sm-12 col-md-4">
                                 <label for="email" class="form-label mt-3">Telefono:</label>
@@ -94,7 +94,7 @@
             </form>
 
             <div class="d-grid gap-2">
-                <button class="btn btn-lg btn-success mt-4"  (click)="crearUsuario()" type="button">{{boton_text}}</button>
+                <button class="btn btn-lg btn-success mt-4"  (click)="IdentificarAcciionFormulario()" type="button">{{boton_text}}</button>
                 <br>
             </div>
         </div>

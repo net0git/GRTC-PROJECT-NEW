@@ -6,16 +6,16 @@ import { UsuarioModel } from '../../../../domain/models/usuario.model';
 import { PersonaService } from '../../../services/remoto/persona/persona.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from '../../../services/remoto/usuario/usuario.service';
-import { personaMessageResponse } from '../../../../domain/dto/PersonasResponse.dto';
+import { CrearPersonaMessageResponse, ModificarPersonaPersonaMessageResponse } from '../../../../domain/dto/PersonasResponse.dto';
 import { switchMap } from 'rxjs/operators';
-import { of, throwError } from 'rxjs';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule
-import { CrearUsuarioResponse } from '../../../../domain/dto/UsuariosResponse.dto';
+import { CrearUsuarioResponse, ModificarDatosUsuarioResponse,ModificarPasswordUsuarioResponse } from '../../../../domain/dto/UsuariosResponse.dto';
 import { ErrorValidacion } from '../../../../domain/dto/ErrorValidacion.dto';
 import { Validators } from '../../../../../../public/utils/validators';
 import { SoloLetrasDirective } from '../../../directives/solo-letras.directive';
 import { SoloNumerosDirective } from '../../../directives/solo-numeros.directive';
 import { SweetAlert } from '../../../shared/animated-messages/sweetAlert';
+
 
 
 @Component({
@@ -28,6 +28,7 @@ import { SweetAlert } from '../../../shared/animated-messages/sweetAlert';
 export class FormUsuarioComponent implements OnInit {
 
   dataPersona: PersonaModel = {
+    id_persona:0,
     nombres: '',
     ap_paterno: '',
     ap_materno: '',
@@ -38,27 +39,47 @@ export class FormUsuarioComponent implements OnInit {
   };
 
   dataUsuario: UsuarioModel = {
-
     id_usuario: 0,
     id_persona: 0,
     nombre_usuario: '',
+    password: '',
     rol: '',
     estado: '',
   };
 
   boton_text: string='Guardar';
   titulo:string='Crear usuario';
+  modificar_usuario:boolean=false;
+  
 
-
-  constructor(private router: Router, private route: ActivatedRoute, private personaService: PersonaService, private usuarioService: UsuarioService, private sweetAlert: SweetAlert) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private personaService: PersonaService, private usuarioService: UsuarioService, private sweetAlert: SweetAlert) { }
 
   ngOnInit(): void {
-
+    this.CargarPagina()
   }
 
-
-
-  validarFormulario(dataPersona: PersonaModel, dataUsuario: UsuarioModel): ErrorValidacion[] {
+  // ---------------------------------------------------------
+  CargarPagina(){
+    const params = this.activatedRoute.snapshot.params
+    console.log(params['id_usuario'])
+    if(params['id_usuario']){
+      this.ObtenerDatosUsuario(params['id_usuario'])
+    }
+    
+  }
+  // ---------------------------------------------------------
+  IdentificarAcciionFormulario(){
+    if(this.modificar_usuario){
+      this.ModificarUsuarioFormulario()
+      if(this.dataUsuario.password){
+        this.ModificarPasswordUsuario(this.dataUsuario.password)
+      }
+    }else{
+      this.CrearUsuarioFormulario()
+    }
+  }
+  // ---------------------------------------------------------
+  ValidarFormulario(dataPersona: PersonaModel, dataUsuario: UsuarioModel): ErrorValidacion[] {
     const errorValidacion: ErrorValidacion[] = [];
     if (!dataPersona.nombres) {
       errorValidacion.push({ campo: 'nombres', mensaje: 'Campo requerido' });
@@ -101,14 +122,17 @@ export class FormUsuarioComponent implements OnInit {
     if (!dataUsuario.estado) {
       errorValidacion.push({ campo: 'estado', mensaje: 'Campo requerido' });
     }
-    if (!dataUsuario.password) {
-      errorValidacion.push({ campo: 'password', mensaje: 'Campo requerido' });
+    if (!this.modificar_usuario){
+      if (!dataUsuario.password) {
+        errorValidacion.push({ campo: 'password', mensaje: 'Campo requerido' });
+      }
     }
+    
     return errorValidacion;
   }
 
-  crearUsuario() {
-    const erroresValidacion = this.validarFormulario(this.dataPersona, this.dataUsuario);
+  CrearUsuarioFormulario() {
+    const erroresValidacion = this.ValidarFormulario(this.dataPersona, this.dataUsuario);
     if (erroresValidacion.length > 0) {
       let errorMensaje = '';
       erroresValidacion.forEach(error => {
@@ -119,7 +143,7 @@ export class FormUsuarioComponent implements OnInit {
     }
 
     this.personaService.CrearPersona(this.dataPersona).pipe(
-      switchMap((personaResponse: personaMessageResponse) => {
+      switchMap((personaResponse: CrearPersonaMessageResponse) => {
         // Usar el id_persona devuelto por la API
         const idPersona = personaResponse.id_persona;
         this.dataUsuario.id_persona = idPersona;
@@ -141,9 +165,128 @@ export class FormUsuarioComponent implements OnInit {
     });
   }
 
-  
-  modificaUsuario() {
+  async ModificarUsuarioFormulario(){
+    const erroresValidacion = this.ValidarFormulario(this.dataPersona, this.dataUsuario);
+    if (erroresValidacion.length > 0) {
+      let errorMensaje = '';
+      erroresValidacion.forEach(error => {
+        errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje} \n`;
+      });
+      alert(errorMensaje);
+      return;
+    }
+    this.ModificarDatosPersona()
+    this.ModificarDatosUsuario()
+    
+  }
+// ------------------------------------------------------------------
+  ModificarDatosUsuario() {
+    this.usuarioService.modificarDatosUsuario(this.dataUsuario.id_usuario,this.dataUsuario).subscribe({
+      next: (res: ModificarDatosUsuarioResponse) => {
+        console.log(res);
+     
+        this.sweetAlert.MensajeExito('Datos actualizados con éxito')
+      },
+      error: (err) => {
+        console.log(err);
+      
+      },
+      complete: () => {
+        console.log('Proceso de modificación completado');
+        this.sweetAlert.MensajeExito('Usuario modificado con éxito')
+        this.router.navigate(['/principal/lista-usuarios']);
+      }
+    });
 
   }
+  ModificarPasswordUsuario(password:string){
+    this.usuarioService.ModificarPasswordUsuario(this.dataUsuario.id_usuario,password).subscribe({
+      next: (res: ModificarPasswordUsuarioResponse) => {
+        console.log(res);
+        
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('Proceso de modificación completado');
+        this.sweetAlert.MensajeExito('Contraseña actualizada con éxito')
+      }
+    })
+  }
+
+  ModificarDatosPersona(){
+    this.personaService.ModificarPersona(this.dataPersona.id_persona,this.dataPersona).subscribe({
+      next: (res: ModificarPersonaPersonaMessageResponse) => {
+        console.log(res);
+        this.sweetAlert.MensajeExito('Datos actualizados con éxito')
+      },
+      error: (err) => {
+        console.log(err);
+      
+      },
+      complete: () => {
+        console.log('Proceso de modificación completado');
+      }
+    });
+
+  }
+  // --------------------------------------------------------------
+  ObtenerDatosUsuario(id_usuario:number){
+    this.usuarioService.obtenerUsuarioDetalle(id_usuario).subscribe({
+      next: (usuario:UsuarioModel) => {
+        delete usuario.password
+        this.dataUsuario = usuario;
+        this.modificar_usuario=true
+        console.log('Usuario encontrado:', usuario);
+      },
+      error: (err) => {
+        if (err.status === 404) {
+          console.error('El usuario no existe:', err);
+          alert('El usuario no existe.');
+        } else if (err.status === 500) {
+          console.error('Error interno del servidor:', err);
+          alert('Error interno del servidor. verifique la consola.');
+        } else {
+          console.error('Error desconocido:', err);
+          alert('Ocurrió un error inesperado. Verifique el servidor.');
+        }
+      } ,
+      complete: () => {
+        console.log('Proceso de recuperacion usuario completado');
+        this.ObtenerDatosPersona(this.dataUsuario.id_persona)
+      }
+          
+    })
+  }
+
+  ObtenerDatosPersona(id_persona:number){
+    this.personaService.ObtenerDatosPersona(id_persona).subscribe({
+      next: (persona:PersonaModel) => {
+        
+        this.dataPersona = persona;
+        this.modificar_usuario=true
+        console.log('Persona encontrado:', persona);
+      },
+      error: (err) => {
+        if (err.status === 404) {
+          console.error('La persona no existe:', err);
+          alert('La persona no existe.');
+        } else if (err.status === 500) {
+          console.error('Error interno del servidor:', err);
+          alert('Error interno del servidor. verifique la consola.');
+        } else {
+          console.error('Error desconocido:', err);
+          alert('Ocurrió un error inesperado. Verifique el servidor.');
+        }
+      } ,
+      complete: () => {
+        console.log('Proceso de recuperacion persona completado');
+        this.titulo='Modificar Usuario'
+        this.boton_text='Modificar'
+      }
+    })
+  }
+// ------------------------------------------------------------------
 
 }

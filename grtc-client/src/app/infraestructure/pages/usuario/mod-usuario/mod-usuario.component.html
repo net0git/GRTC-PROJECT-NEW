@@ -18,17 +18,17 @@
                 <fieldset>
                     <div class="form-group">
                         <label for="nombre" class="form-label mt-2">Nombre(s):</label>
-                        <input type="text" class="form-control" name="nombre" [(ngModel)]="dataPersona.nombres">
+                        <input type="text" class="form-control" name="nombre" [(ngModel)]="dataPersona.nombres" appSoloLetras>
                     </div>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-12 col-md-6">
                                 <label for="ap_paterno" class="form-label mt-3">Apellido Paterno:</label>
-                                <input type="text" class="form-control" name="ap_paterno" [(ngModel)]="dataPersona.ap_paterno">
+                                <input type="text" class="form-control" name="ap_paterno" [(ngModel)]="dataPersona.ap_paterno" appSoloLetras>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="ap_materno" class="form-label mt-3">Apellido Materno:</label>
-                                <input type="text" class="form-control" name="ap_materno" [(ngModel)]="dataPersona.ap_materno">
+                                <input type="text" class="form-control" name="ap_materno" [(ngModel)]="dataPersona.ap_materno" appSoloLetras>
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                             </div>
                             <div class="col-sm-12 col-md-4">
                                 <label for="email" class="form-label mt-3">Telefono:</label>
-                                <input type="text" class="form-control" name="email" [(ngModel)]="dataPersona.telefono">
+                                <input type="text" class="form-control" name="email" [(ngModel)]="dataPersona.telefono" appSoloNumeros maxlength="9">
                             </div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                             </div>
 
                             <div class="col-sm-12 col-md-6">
-                                <input type="text" class="form-control" name="documento_id" [(ngModel)]="dataPersona.documento">
+                                <input type="text" class="form-control" name="documento_id" [(ngModel)]="dataPersona.documento" appSoloNumeros  [attr.maxlength]="dataPersona.tipo_doc === 'CE' ? 12 : (dataPersona.tipo_doc === 'DNI' ? 8 : null)">
                             </div>
                         </div>
                     </div>
