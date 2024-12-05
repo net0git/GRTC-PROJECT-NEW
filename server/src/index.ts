@@ -4,6 +4,10 @@ import morgan from 'morgan'
 
 import usuariosRoutes from './routes/usuarioRoutes';
 import personaRoutes from './routes/personaRoutes';
+import marcaRoutes from './routes/marcaRoutes';
+import modeloRoutes from './routes/modeloRoutes';
+import empresaServicioRoutes from './routes/empresaServicioRoutes';
+
 
 class Server{
     public app: Application;
@@ -24,6 +28,10 @@ class Server{
     ruotes():void{
         this.app.use('/',usuariosRoutes);
         this.app.use('/',personaRoutes);
+        this.app.use('/',marcaRoutes);
+        this.app.use('/',modeloRoutes);
+        this.app.use('/',empresaServicioRoutes);
+        
     }
     star():void{
         this.app.listen(this.app.get('port'),()=>{

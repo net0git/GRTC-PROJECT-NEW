@@ -49,14 +49,14 @@
                                                 <th scope="col">INDICADOR</th>
                                             </tr>
                                         </thead>
-                                        <!-- <tbody>
-                                            <tr *ngFor="let empresa of empresas, index as i"
-                                                (click)="EmpresaDetalle(empresa.id_empresa_servicio)"
-                                                class="table-barra">
+                                        <tbody>
+                                            <tr *ngFor="let empresa of listaEmpresasServicio | paginate: { itemsPerPage: 10, currentPage: p }; let i = index"
+                                             
+                                                class="table-barra hand_cursor" title="cick para ver detalle empresa" (click)="detalleEmpresaServicio(empresa.id_empresa_servicio)">
 
-                                                <th scope="row">{{i+1}}</th>
+                                                <th scope="row">{{ i + (p - 1) * 10 + 1 }}</th>
                                                 <td>{{empresa.expediente}}</td>
-                                                <td>{{empresa.empresa}}</td>
+                                                <td class="text-start">{{empresa.empresa}}</td>
                                                 <td>{{empresa.ruc}}</td>
                                                 <td>{{empresa.tipo_servicio}}</td>
                                                 <td>{{empresa.fecha_inicial| date:'dd/MM/yyyy'}}</td>
@@ -75,8 +75,11 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                        </tbody> -->
+                                        </tbody>
                                     </table>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
                                 </div>
                             </div>
                         </div>

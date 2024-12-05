@@ -42,19 +42,12 @@ class ModeloController {
     obtenerModelosByMarca(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { nombre_marca } = req.params;
+                const { id_marca } = req.params;
                 const consulta = `
-                    SELECT
-                        m.id_modelo,
-                        m.nombre_modelo,
-                        marca.nombre_marca
-                    FROM
-                        t_modelo m
-                    JOIN
-                        d_marca marca ON m.id_marca = marca.id_marca
+                    SELECT * FROM t_modelo 
                     WHERE 
-                        marca.nombre_marca=$1 `;
-                const valores = [nombre_marca];
+                        id_marca=$1 `;
+                const valores = [id_marca];
                 const modelos = yield database_1.default.query(consulta, valores);
                 if (modelos && modelos['rows'].length > 0) {
                     res.json(modelos['rows']);

@@ -30,20 +30,13 @@ class ModeloController{
 
     public async obtenerModelosByMarca(req:Request, res:Response):Promise<any>{
         try {
-            const { nombre_marca  } = req.params;
+            const { id_marca  } = req.params;
             const consulta = `
-                    SELECT
-                        m.id_modelo,
-                        m.nombre_modelo,
-                        marca.nombre_marca
-                    FROM
-                        t_modelo m
-                    JOIN
-                        d_marca marca ON m.id_marca = marca.id_marca
+                    SELECT * FROM t_modelo 
                     WHERE 
-                        marca.nombre_marca=$1 `;
+                        id_marca=$1 `;
 
-            const valores = [nombre_marca];
+            const valores = [id_marca];
             
             const modelos = await db.query(consulta,valores);
 

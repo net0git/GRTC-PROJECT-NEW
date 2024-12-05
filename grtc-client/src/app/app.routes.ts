@@ -13,6 +13,7 @@ import { VehiculoComponent } from './infraestructure/pages/vehiculo/vehiculo.com
 import { BusquedaHistorialComponent } from './infraestructure/pages/busqueda-historial/busqueda-historial.component';
 import { ResolucionComponent } from './infraestructure/pages/resolucion/resolucion.component';
 import { ReportePanelComponent } from './infraestructure/pages/reporte/reporte-panel/reporte-panel.component';
+import { DetalleEmpresaServicioComponent } from './infraestructure/pages/empresa-servicio/detalle-empresa-servicio/detalle-empresa-servicio.component';
 
 
 
@@ -32,6 +33,7 @@ export const routes: Routes = [
 
       { path:'principal/lista-empresas-servicio', component: ListaEmpresaServicioComponent },
       { path:'principal/crear-empresa-servicio', component: CrearEmpresaServicioComponent },
+      { path:'principal/detalle-empresa-servicio/:id_empresa_servicio', component: DetalleEmpresaServicioComponent },
 
       { path:'principal/consultas-tuc',component:ConsultasTucComponent },
 
