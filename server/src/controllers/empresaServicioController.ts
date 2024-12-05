@@ -99,7 +99,7 @@ class EmpresaServicioController{
             const empresaServicio = await db.query(consulta,[id_empresa_servicio]);
 
             if (empresaServicio && empresaServicio['rows'].length > 0) {
-                res.json(empresaServicio['rows']);
+                res.json(empresaServicio['rows'][0]);
             } else {
                 res.status(404).json({ text: 'los detalles de la empresa no existe' });
             }

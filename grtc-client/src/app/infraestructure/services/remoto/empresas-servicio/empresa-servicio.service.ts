@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environment';
 import { Observable } from 'rxjs';
-import { ListaEmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
+import { DetalleEmpresaServicioResponse, ListaEmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +23,9 @@ export class EmpresaServicioService {
 
     return this.http.get<ListaEmpresaServicioResponse[]>(this.api_uri_empresa_servicio)
 
+  }
+
+  DetalleEmpresaServicio(id_empresa_servicio:number):Observable<DetalleEmpresaServicioResponse>{
+    return this.http.get<DetalleEmpresaServicioResponse>(this.api_uri_empresa_servicio+'/detalle/'+id_empresa_servicio)
   }
 }
