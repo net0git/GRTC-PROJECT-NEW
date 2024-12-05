@@ -29,8 +29,6 @@ class VehiculoController{
          }
     }
 
-    
-    
     public async listarTotalVehiculos(req:Request, res:Response):Promise<any>{
         try {
             const consulta = `

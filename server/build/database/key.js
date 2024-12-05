@@ -8,6 +8,7 @@ exports.default = {
         password: '12345',
         host: 'localhost', //172.16.226.4
         port: 5432,
-        database: 'grtc_archivo_prueba'
+        // database: 'grtc_archivo_prueba'
+        database:'db_grtcc'
     }
 };
