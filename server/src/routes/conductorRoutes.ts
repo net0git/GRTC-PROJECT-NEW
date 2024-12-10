@@ -13,7 +13,7 @@ class ConductorRoutes{
     }
     config():void{
         //consultas para las tuc - 
-         this.router.get('/api/conductor/lista/:id_empresa_servicio',conductorController.listarConductoresByEmpresaServicio)
+         this.router.get('/api/conductor/lista/empresa/:id_empresa_servicio',conductorController.listarConductoresByEmpresaServicio)
          this.router.get('/api/conductor',conductorController.listarTotalConductores)
          this.router.post('/api/conductor',conductorController.CrearConductor)
          this.router.put('/api/conductor/:id_conductor',conductorController.ModificarConductor)    

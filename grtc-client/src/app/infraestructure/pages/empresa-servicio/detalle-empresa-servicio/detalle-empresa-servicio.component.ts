@@ -4,6 +4,8 @@ import { SubnavegadorComponent } from '../../../shared/components/subnavegador/s
 import { DetalleEmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { EmpresaServicioService } from '../../../services/remoto/empresas-servicio/empresa-servicio.service';
+import { ResolucionService } from '../../../services/remoto/resolucion/resolucion.service';
+import { ListaResolucionResponse } from '../../../../domain/dto/ResolucionResponse.dto';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -43,7 +45,9 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     porcentaje: 0                    // Porcentaje inicializado como 0
   };
 
-  constructor(private sanitizer: DomSanitizer, private empresaServicioService:EmpresaServicioService,private activatedRoute:ActivatedRoute){}
+  listaResoluciones:ListaResolucionResponse[]=[];
+
+  constructor(private sanitizer: DomSanitizer, private empresaServicioService:EmpresaServicioService,private activatedRoute:ActivatedRoute, private resolucionService:ResolucionService){}
 
   ngOnInit(): void {
     this.detalleEmpresa();
@@ -62,7 +66,25 @@ export class DetalleEmpresaServicioComponent implements OnInit {
       },
       complete:()=>{
         console.log('Detalle de empresa obtenido correctamente'); 
+        this.listarResolucionesEmpresaServicio(this.dataEmpresaDetalle.id_empresa_servicio);
       }
     });
   } 
+
+  listarResolucionesEmpresaServicio(id_empresa_servicio:number){
+    this.resolucionService.ObternerResolucionesPorEmpresaServicio(id_empresa_servicio).subscribe({
+      next:(data:ListaResolucionResponse[])=>{
+        this.listaResoluciones=data;
+        console.log('Resoluciones obtenidas:', data)
+      },
+      error:(err)=>{
+        console.error('Error al obtener resoluciones:', err);
+      },
+      complete:()=>{
+        console.log('Resoluciones obtenidas correctamente'); 
+      }
+    });
+
+  }
+
 }

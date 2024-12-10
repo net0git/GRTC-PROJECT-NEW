@@ -121,7 +121,7 @@ class ResoucionController {
         }
     }
 
-    public async ObtnerResolucionesDeEmpresaServicio(req: Request, res: Response): Promise<void> {
+    public async ObtenerResolucionesDeEmpresaServicio(req: Request, res: Response): Promise<void> {
         try {
             const { id_empresa_servicio } = req.params;
             const consulta = `
@@ -193,5 +193,5 @@ class ResoucionController {
         }
     }
 }
-const resoucionController = new ResoucionController();
-export default resoucionController;
+const resolucionController = new ResoucionController();
+export default resolucionController;

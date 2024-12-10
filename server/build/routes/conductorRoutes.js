@@ -12,7 +12,7 @@ class ConductorRoutes {
     }
     config() {
         //consultas para las tuc - 
-        this.router.get('/api/conductor/lista/:id_empresa_servicio', conductorController_1.default.listarConductoresByEmpresaServicio);
+        this.router.get('/api/conductor/lista/empresa/:id_empresa_servicio', conductorController_1.default.listarConductoresByEmpresaServicio);
         this.router.get('/api/conductor', conductorController_1.default.listarTotalConductores);
         this.router.post('/api/conductor', conductorController_1.default.CrearConductor);
         this.router.put('/api/conductor/:id_conductor', conductorController_1.default.ModificarConductor);

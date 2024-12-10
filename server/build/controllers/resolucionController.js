@@ -134,7 +134,7 @@ class ResoucionController {
             }
         });
     }
-    ObtnerResolucionesDeEmpresaServicio(req, res) {
+    ObtenerResolucionesDeEmpresaServicio(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id_empresa_servicio } = req.params;
@@ -210,5 +210,5 @@ class ResoucionController {
         });
     }
 }
-const resoucionController = new ResoucionController();
-exports.default = resoucionController;
+const resolucionController = new ResoucionController();
+exports.default = resolucionController;

@@ -7,6 +7,8 @@ import personaRoutes from './routes/personaRoutes';
 import marcaRoutes from './routes/marcaRoutes';
 import modeloRoutes from './routes/modeloRoutes';
 import empresaServicioRoutes from './routes/empresaServicioRoutes';
+import resolucionRoutes from './routes/resolucionRoutes';
+import conductorRoutes from './routes/conductorRoutes';
 
 
 class Server{
@@ -31,6 +33,8 @@ class Server{
         this.app.use('/',marcaRoutes);
         this.app.use('/',modeloRoutes);
         this.app.use('/',empresaServicioRoutes);
+        this.app.use('/',resolucionRoutes)
+        this.app.use('/',conductorRoutes)
         
     }
     star():void{

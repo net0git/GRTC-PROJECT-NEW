@@ -22,8 +22,7 @@
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" id="section1-tab" data-bs-toggle="tab" href="#section1">Datos
-                                    Empresa</a>
+                                <a class="nav-link active" id="section1-tab" data-bs-toggle="tab" href="#section1">Datos Empresa</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="section2-tab" data-bs-toggle="tab"
@@ -52,7 +51,7 @@
                             <div class="tab-pane fade show active" id="section1">
                                 <div class="row row-titulo">
                                     <div class="col-sm-12 col-md-12 col-lg-5 titulo-empresa">
-                                        <h1 class="text-start mt-2">Expediente: {{dataEmpresaDetalle.expediente}} </h1>
+                                        <h2 class="text-start mt-2">Expediente: {{dataEmpresaDetalle.expediente}} </h2>
                                     </div>
                                     <div class="col-sm-12 col-md-12 col-lg-7">
                                         <div class="text-start">
@@ -98,15 +97,9 @@
 
                                 </div>
                                 <div class="container mt-4">
-                                    <div >
-                                        <h5>Resoluciones</h5>
-                                    </div>
-                                    <div class="mb-0 " >
-
-                                        <button class="my-button_ingreso_resolucion"> <i
-                                                class="bi bi-arrow-down-square"></i> agregar Resolucion</button>
-
-
+                                    <div class="d-flex justify-content-between">
+                                        <p class="subtitulo_menu mt-4">Resoluciones</p>
+                                        <button class="my-button_ingreso_resolucion"> <i class="bi bi-arrow-down-square"></i> agregar Resolucion</button>
                                     </div>
                                     <table class="table table-bordered table-striped">
                                         <thead>
@@ -120,19 +113,19 @@
                                                 <th >Mod</th>
                                             </tr>
                                         </thead>
-                                        <!-- <tbody>
-                                      <tr *ngFor="let resolucion of resoluciones_empresa_servicio">
+                                        <tbody>
+                                      <tr *ngFor="let resolucion of listaResoluciones">
                                           <td>{{resolucion.fecha_resolucion | date:'dd/MM/yyyy'}}</td>
                                           <td>{{resolucion.nro_resolucion}}</td>
                                           <td>{{resolucion.anio_resolucion}}</td>
                                           <td>{{resolucion.tomo_resolucion}}</td>
-                                          
-                                          <td class="text-primary text_documento" (click)="showDocumentoPdf(resolucion.documento)">{{resolucion.nombre_resolucion}}</td>
+                                          <td class="text-primary text_documento" >{{resolucion.nombre_resolucion}}</td>
                                           <td>{{resolucion.descripcion}}</td>
-                                          <td [style]="disableInvitado"><img src="assets/imagenes/iconos/modificar_doc.png" width="25px" (click)="ModificarResolucion(empresa_detalle.id_empresa_servicio, resolucion.id_resolucion)"></td>
+                                          <td > <i class="bi bi-pencil-square hand_cursor"></i></td>
+                                          <!-- <td ><img src="assets/imagenes/iconos/modificar_doc.png" width="25px" ></td> -->
                                       </tr>
                                       
-                                  </tbody> -->
+                                  </tbody>
                                     </table>
                                 </div>
                             </div>
