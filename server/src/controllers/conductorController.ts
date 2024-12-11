@@ -31,8 +31,33 @@ class ConductorController{
     public async listarConductoresByEmpresaServicio(req:Request, res:Response):Promise<any>{
         try {
             const {id_empresa_servicio} =req.params;
+            const consulta = `
+                    SELECT
+                        tc.id_conductor,
+                        tp.id_persona,
+                        tc.id_conductor,
+                        tc.categoria,
+                        tp.nombres,
+                        tp.ap_paterno,
+                        tp.ap_materno,
+                        tp.tipo_doc,
+                        tp.documento,
+                        tp.telefono,
+                        tp.correo,
+                        tc.nro_licencia
+                    FROM
+                        t_conductor tc
+                    INNER JOIN
+                        t_empresa_servicio tes ON tc.id_empresa_servicio = tes.id_empresa_servicio
+                    INNER JOIN
+                        t_empresa te ON tes.id_empresa = te.id_empresa
+                    INNER JOIN
+                        t_persona tp ON tc.id_persona = tp.id_persona
+                    WHERE
+                        tes.id_empresa_servicio =$1
+            `;
             
-            const conductores = await db.query('select * from t_conductor where id_empresa_servicio=$1',[id_empresa_servicio]);
+            const conductores = await db.query(consulta,[id_empresa_servicio]);
 
             if (conductores && conductores['rows'].length > 0) {
                 res.json(conductores['rows']);

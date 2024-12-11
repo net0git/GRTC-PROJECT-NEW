@@ -78,7 +78,7 @@ class VehiculoController{
         
     }
 
-    public async listarVehiculosByEmpresas(req:Request, res:Response):Promise<any>{
+    public async listarVehiculosEmpresasServicio(req:Request, res:Response):Promise<any>{
         try {     
             const consulta = `
                         SELECT 
@@ -109,51 +109,49 @@ class VehiculoController{
         }    
     }    
 
-    public async obtenerVehiculosDetalleByEmpresa(req:Request, res:Response):Promise<any>{
+    public async obtenerVehiculosDetalleByEmpresaServicio(req:Request, res:Response):Promise<any>{
         try {
-            const { id } = req.params;
+            const { id_empresa_servicio } = req.params;
             const consulta = `
-                                    SELECT
-                                        ts.denominacion as tipo_servicio,
-                                        e.razon_social,
-                                        v.id_vehiculo,
-                                        v.placa,
-                                        v.nro_part_reg,
-                                        v.modalidad,
-                                        v.estado,
-                                        v.carga,
-                                        v.peso,
-                                        v.categoria,
-                                        v.anio_fabricacion,
-                                        v.color,
-                                        v.nro_chasis,
-                                        v.nro_asientos,
-                                        v.marca,
-                                        v.modelo,
-                                        v.serie,
-                                        v.carroceria,
-                                        v.id_tuc,
-                                        r.fecha_resolucion as fecha_inicial,
-                                        es.fecha_final,
-                                        r.nombre_resolucion,
-                                        i.itinerario
-                                    FROM
-                                        t_vehiculo v
-                                    JOIN
-                                        t_empresa_servicio AS es ON v.id_empresa_servicio = es.id_empresa_servicio
-                                    JOIN
-                                        d_tipo_servicio AS ts ON es.id_tipo_servicio = ts.id_tipo_servicio
-                                    JOIN
-                                        t_empresa AS e ON es.id_empresa=e.id_empresa
-                                    JOIN 
-                                        d_resolucion AS r ON v.id_resolucion=r.id_resolucion
-                                    JOIN 
-                                        t_detalle_ruta_itinerario AS i ON v.id_detalle_ruta_itinerario=i.id_detalle_ruta_itinerario
-                                    WHERE
-                                        es.id_empresa_servicio=$1
-
-                             `;
-            const vehiculos=await db.query(consulta,[id])
+                        SELECT
+                            ts.denominacion as tipo_servicio,
+                            e.razon_social,
+                            v.id_vehiculo,
+                            v.placa,
+                            v.nro_part_reg,
+                            v.modalidad,
+                            v.estado,
+                            v.carga,
+                            v.peso,
+                            v.categoria,
+                            v.anio_fabricacion,
+                            v.color,
+                            v.nro_chasis,
+                            v.nro_asientos,
+                            v.marca,
+                            v.modelo,
+                            v.serie,
+                            v.carroceria,
+                            v.id_tuc,
+                            r.fecha_resolucion as fecha_inicial,
+                            es.fecha_final,
+                            r.nombre_resolucion,
+                            i.itinerario
+                        FROM
+                            t_vehiculo v
+                        JOIN
+                            t_empresa_servicio AS es ON v.id_empresa_servicio = es.id_empresa_servicio
+                        JOIN
+                            d_tipo_servicio AS ts ON es.id_tipo_servicio = ts.id_tipo_servicio
+                        JOIN
+                            t_empresa AS e ON es.id_empresa=e.id_empresa
+                        JOIN 
+                            d_resolucion AS r ON v.id_resolucion=r.id_resolucion
+                        JOIN 
+                            t_detalle_ruta_itinerario AS i ON v.id_detalle_ruta_itinerario=i.id_detalle_ruta_itinerario
+                        WHERE
+                            es.id_empresa_servicio=$1 `;
+            const vehiculos=await db.query(consulta,[id_empresa_servicio])
             res.json(vehiculos['rows']);
         }catch (error) {
             console.error('Error al obtener vehiculos:', error);

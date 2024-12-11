@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../../environments/environment';
+import { ListaConductoresResponse } from '../../../../../app/domain/dto/conductorResponse.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,8 @@ export class ConductorService {
 
   constructor(private http: HttpClient) { }
 
-  listarConductoresByEmpresaServicio(id_empresa_servicio:number):Observable<any>{
-    return this.http.get<any>(this.api_uri_conductor+'/lista/empresa/'+id_empresa_servicio)
+  listarConductoresByEmpresaServicio(id_empresa_servicio:number):Observable<ListaConductoresResponse[]>{
+    return this.http.get<ListaConductoresResponse[]>(this.api_uri_conductor+'/lista/empresa/'+id_empresa_servicio)
   }
-  
+
 }

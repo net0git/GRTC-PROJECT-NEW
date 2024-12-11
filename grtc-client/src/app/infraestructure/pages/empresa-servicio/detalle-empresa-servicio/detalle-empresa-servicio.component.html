@@ -22,7 +22,8 @@
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" id="section1-tab" data-bs-toggle="tab" href="#section1">Datos Empresa</a>
+                                <a class="nav-link active" id="section1-tab" data-bs-toggle="tab" href="#section1">Datos
+                                    Empresa</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="section2-tab" data-bs-toggle="tab"
@@ -82,10 +83,11 @@
                                     <li><strong>Distrito:</strong> {{dataEmpresaDetalle.distrito}}</li>
                                     <li><strong>Provincia:</strong> {{dataEmpresaDetalle.provincia}}</li>
                                     <li><strong>Departamento:</strong> {{dataEmpresaDetalle.departamento}}</li>
-                                    <li><strong>Periodo de vigencia:</strong> {{dataEmpresaDetalle.fecha_inicial| date:'dd/MM/yyyy'}} - {{dataEmpresaDetalle.fecha_final| date:'dd/MM/yyyy'}}</li>
+                                    <li><strong>Periodo de vigencia:</strong> {{dataEmpresaDetalle.fecha_inicial|
+                                        date:'dd/MM/yyyy'}} - {{dataEmpresaDetalle.fecha_final| date:'dd/MM/yyyy'}}</li>
                                     <li><strong>Representante legal:</strong> {{dataEmpresaDetalle.representante_legal}}
-                                
-                                    <!-- <li><strong>Doc. de autorizacion:</strong> {{ultimaResolucionAutorizacion}}</li> -->
+
+                                        <!-- <li><strong>Doc. de autorizacion:</strong> {{ultimaResolucionAutorizacion}}</li> -->
 
                                 </ul>
                                 <div class="text-start panel-resolucion">
@@ -99,7 +101,8 @@
                                 <div class="container mt-4">
                                     <div class="d-flex justify-content-between">
                                         <p class="subtitulo_menu mt-4">Resoluciones</p>
-                                        <button class="my-button_ingreso_resolucion"> <i class="bi bi-arrow-down-square"></i> agregar Resolucion</button>
+                                        <button class="my-button_ingreso_resolucion"> <i
+                                                class="bi bi-arrow-down-square"></i> agregar Resolucion</button>
                                     </div>
                                     <table class="table table-bordered table-striped">
                                         <thead>
@@ -110,22 +113,23 @@
                                                 <th>Tomo</th>
                                                 <th>Resolución</th>
                                                 <th>Descipción</th>
-                                                <th >Mod</th>
+                                                <th>Mod</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                      <tr *ngFor="let resolucion of listaResoluciones">
-                                          <td>{{resolucion.fecha_resolucion | date:'dd/MM/yyyy'}}</td>
-                                          <td>{{resolucion.nro_resolucion}}</td>
-                                          <td>{{resolucion.anio_resolucion}}</td>
-                                          <td>{{resolucion.tomo_resolucion}}</td>
-                                          <td class="text-primary text_documento" >{{resolucion.nombre_resolucion}}</td>
-                                          <td>{{resolucion.descripcion}}</td>
-                                          <td > <i class="bi bi-pencil-square hand_cursor"></i></td>
-                                          <!-- <td ><img src="assets/imagenes/iconos/modificar_doc.png" width="25px" ></td> -->
-                                      </tr>
-                                      
-                                  </tbody>
+                                            <tr *ngFor="let resolucion of listaResoluciones">
+                                                <td>{{resolucion.fecha_resolucion | date:'dd/MM/yyyy'}}</td>
+                                                <td>{{resolucion.nro_resolucion}}</td>
+                                                <td>{{resolucion.anio_resolucion}}</td>
+                                                <td>{{resolucion.tomo_resolucion}}</td>
+                                                <td class="text-primary text_documento">{{resolucion.nombre_resolucion}}
+                                                </td>
+                                                <td>{{resolucion.descripcion}}</td>
+                                                <td> <i class="bi bi-pencil-square hand_cursor"></i></td>
+                                                <!-- <td ><img src="assets/imagenes/iconos/modificar_doc.png" width="25px" ></td> -->
+                                            </tr>
+
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -139,7 +143,7 @@
                                     <thead class="thead-ligth bg-secondary text-white table-success">
                                         <tr>
                                             <th scope="col">Nro</th>
-                                            <th scope="col">Nombre y Apellidos</th>
+                                            <th class="text-start" scope="col">Apellidos y Nombres</th>
                                             <th scope="col">DNI/CE</th>
                                             <th scope="col">Licencia</th>
                                             <th scope="col">Categoria</th>
@@ -148,16 +152,17 @@
 
                                         </tr>
                                     </thead>
-                                    <!-- <tbody >
-                                  <tr *ngFor="let item of listaConductores, index as i">
-                                   <th scope="row">{{i+1}}</th>
-                                   <td>{{item.ap_paterno + ' ' + item.ap_materno+', '+item.nombres }}</td>
-                                   <td>{{item.documento}}</td>
-                                   <td>{{item.nro_licencia}}</td>
-                                   <td>{{item.categoria}}</td>
-                                   <td [style]="disableInvitado"><i class="bi bi-trash3-fill" (click)="mensajeEliminarConductor(item.id_persona,item.id_conductor)"></i> </td>
-                                  </tr> 
-                                </tbody> -->
+                                    <tbody>
+                                        <tr *ngFor="let item of listaConductores, index as i">
+                                            <th scope="row">{{i+1}}</th>
+                                            <td class="text-start">{{item.ap_paterno + ' ' + item.ap_materno+',
+                                                '+item.nombres }}</td>
+                                            <td>{{item.documento}}</td>
+                                            <td>{{item.nro_licencia}}</td>
+                                            <td>{{item.categoria}}</td>
+                                            <td><i class="bi bi-trash3-fill"></i> </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
 
                             </div>
@@ -180,20 +185,20 @@
 
                                         </tr>
                                     </thead>
-                                    <!-- <tbody >
-                                  <tr *ngFor="let item of listaContratosArrendamiento, index as i"   >
-                                    
-                                    <th scope="row">{{i+1}}</th>
-                                    
-                                      <td>{{item.arrendador}}</td>
-                                      <td>{{item.propiedad}}</td>
-                                      <td>{{item.direccion}}</td>           
-                                      <td>{{item.fecha_inicio | date:'dd/MM/yyyy'}}</td>
-                                      <td>{{item.fecha_fin | date:'dd/MM/yyyy'}}</td>
-                                      <td [style]="disableInvitado"><i class="bi bi-trash3-fill"  (click)="mensajeEliminarContratoArrendamiento(item.id_contrato)" ></i> </td>
-                                                          
-                                  </tr> 
-                                </tbody> -->
+                                    <tbody>
+                                        <tr *ngFor="let item of listaArrendamientos, index as i">
+
+                                            <th scope="row">{{i+1}}</th>
+
+                                            <td>{{item.arrendador}}</td>
+                                            <td>{{item.propiedad}}</td>
+                                            <td>{{item.direccion}}</td>
+                                            <td>{{item.fecha_inicio | date:'dd/MM/yyyy'}}</td>
+                                            <td>{{item.fecha_fin | date:'dd/MM/yyyy'}}</td>
+                                            <td><i class="bi bi-trash3-fill"></i> </td>
+
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- Contenido de la Sección 4: Itinerario -->
@@ -219,22 +224,22 @@
                                             <th scope="col">Destino</th>
                                             <th scope="col">Itinerario</th>
                                             <th scope="col">Frecuencia</th>
-                                            <th scope="col" >Eliminar</th>
+                                            <th scope="col">Eliminar</th>
                                         </tr>
                                     </thead>
-                                    <!-- <tbody >
-                                  <tr *ngFor="let item of listaItinerarios, index as i"   >
-                                    
-                                    <th scope="row">{{i+1}}</th>
-                                    
-                                      <td>{{item.origen }}</td>
-                                      <td>{{item.destino}}</td>
-                                      <td>{{item.itinerario}}</td>           
-                                      <td>{{item.frecuencia}}</td>
-                                      <td [style]="estiloItinearioEminiar" ><i class="bi bi-trash3-fill"  (click)="EliminarItinerario(item.id_detalle_ruta_itinerario)" [style]="disableInvitado"></i> </td>
-                                                                                              
-                                  </tr> 
-                                </tbody> -->
+                                    <tbody>
+                                        <tr *ngFor="let item of listaItinerarios, index as i">
+
+                                            <th scope="row">{{i+1}}</th>
+
+                                            <td>{{item.origen }}</td>
+                                            <td>{{item.destino}}</td>
+                                            <td>{{item.itinerario}}</td>
+                                            <td>{{item.frecuencia}}</td>
+                                            <td><i class="bi bi-trash3-fill"></i> </td>
+
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- Contenido de la Sección 5: Vehiculos -->
@@ -266,77 +271,97 @@
                                             <th scope="col">FECHA INICIO</th>
                                             <th scope="col">FECHA FINAL</th>
                                             <th scope="col">TUC</th>
-                                            <th scope="col" >BAJA</th>
+                                            <th scope="col">BAJA</th>
                                         </tr>
                                     </thead>
 
-                                    <!-- <tbody *ngFor="let vehiculo of lista_vehiculos, index as i">
+                                    <tbody *ngFor="let vehiculo of listaVehiculos, index as i">
 
-                                  <tr  >
-                                    
-                                   <th (click)="toggleCollapse(i)" scope="row">{{i+1}}</th>
-                                    <td (click)="toggleCollapse(i)">{{vehiculo.placa}}</td>
-                                    <td (click)="toggleCollapse(i)">{{vehiculo.anio_fabricacion}}</td>
-                                    <td (click)="toggleCollapse(i)">{{vehiculo.marca}}</td>
-                                    <td (click)="toggleCollapse(i)">{{vehiculo.modelo}}</td>  
-                                    <td (click)="toggleCollapse(i)">{{vehiculo.fecha_inicial|date:'dd/MM/yyyy'}}</td>
-                                    <td (click)="toggleCollapse(i)">{{vehiculo.fecha_final |date:'dd/MM/yyyy'}}</td> 
+                                        <tr>
 
-                                    <td >{{vehiculo.tuc}}<i class="bi bi-filetype-pdf icon-custom-pdf" (click)="MostrarDetalleTUC(vehiculo.id_vehiculo)"></i></td>
-                                    <td [style]="disableInvitado" ><button class="btn btn-secondary" (click)="DarBajaVehiculo(vehiculo.id_vehiculo)"><i class="bi bi-arrow-down-circle-fill" ></i> Baja</button></td>
-                                 
-                                  </tr> 
+                                            <th (click)="toggleCollapse(i)" scope="row">{{i+1}}</th>
+                                            <td (click)="toggleCollapse(i)">{{vehiculo.placa}}</td>
+                                            <td (click)="toggleCollapse(i)">{{vehiculo.anio_fabricacion}}</td>
+                                            <td (click)="toggleCollapse(i)">{{vehiculo.marca}}</td>
+                                            <td (click)="toggleCollapse(i)">{{vehiculo.modelo}}</td>
+                                            <td (click)="toggleCollapse(i)">{{vehiculo.fecha_inicial|date:'dd/MM/yyyy'}}
+                                            </td>
+                                            <td (click)="toggleCollapse(i)">{{vehiculo.fecha_final |date:'dd/MM/yyyy'}}
+                                            </td>
 
-                                  <tr [ngClass]="{'collapse': !isExpanded[i]}" id="collapseExample">
-                                    <td colspan="9">
-                                      <div class="card card-body-vehiculo text-start"> 
-                                        <div class="text-center">
-                                          <h6 class="mt-4"><strong>ITINERARIO: </strong></h6>
-                                          <p>{{'"'+vehiculo.itinerario+'"'}}</p>
-                                        </div>
-                                        <div class="container mb-4">
-                                          <div class="row">
-                                            <div class="col-md-4">
-                                              <ul class="list-unstyled m-3 ">
-                                                <li><strong>PLACA:</strong> {{vehiculo.placa}}</li>
-                                                <li><strong>AÑO DE FABRICACIÓN:</strong> {{vehiculo.anio_fabricacion}}</li>
-                                                <li><strong>MARCA:</strong> {{vehiculo.marca}}</li>
-                                                <li><strong>MODELO:</strong> {{vehiculo.modelo}}</li>
-                                                <li><strong>CATEGORÍA:</strong> {{vehiculo.categoria}}</li>
-                                                <li><strong>CARROCERÍA:</strong> {{vehiculo.carroceria}}</li>
-                                              </ul>
-                                            </div>
-                                            <div class="col-md-4">
-                                              <ul class="list-unstyled m-3 ">
-                                                <li><strong>MODALIDAD:</strong> {{vehiculo.modalidad}}</li>
-                                                <li><strong>PARTIDA REGISTRAL:</strong> {{vehiculo.nro_part_reg}}</li>
-                                                <li><strong>RESOLUCIÓN:</strong> {{vehiculo.nombre_resolucion}}</li>
-                                                <li><strong>CONDICIÓN:</strong> {{vehiculo.estado}}</li>
-                                                <li><strong>COLOR:</strong> {{vehiculo.color}}</li>
-                                                <li><strong>N° CHASIS:</strong> {{vehiculo.nro_chasis}}</li>
-                                              </ul>
-                                            </div>
-                                            <div class="col-md-4">
-                                              <ul class="list-unstyled m-3 ">
-                                                <li><strong>N° ASIENTOS:</strong> {{vehiculo.nro_asientos}}</li>
-                                                <li><strong>N° SERIE:</strong> {{vehiculo.serie}}</li>
-                                                <li><strong>CARGA:</strong> {{vehiculo.carga}}</li>
-                                                <li><strong>PESO:</strong> {{vehiculo.peso}}</li>
-                                                <li><strong>FECHA INICIAL:</strong> {{vehiculo.fecha_inicial | date:'dd/MM/yyyy'}}</li>
-                                                <li><strong>FECHA FINAL:</strong> {{vehiculo.fecha_final | date:'dd/MM/yyyy'}}</li>
-                                              </ul>
-                                            </div>
+                                            <td><i class="bi bi-filetype-pdf icon-custom-pdf"></i></td>
+                                            <td><button class="btn btn-secondary"><i
+                                                        class="bi bi-arrow-down-circle-fill"></i> Baja</button></td>
 
-                                            <div class="d-flex justify-content-center mt-2">
-                                              <button type="button" class="btn btn-success  button-full-width" (click)="AlertaCreacionTuc(vehiculo.id_vehiculo)" [style]="disableInvitado">GenerarTuc  <i class="bi bi-nut"></i></button>
+                                        </tr>
 
-                                            </div>
-                                          </div>
-                                        </div>    
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </tbody> -->
+                                        <tr [ngClass]="{'collapse': !isExpanded[i]}" id="collapseExample">
+                                            <td colspan="9">
+                                                <div class="card card-body-vehiculo text-start">
+                                                    <div class="text-center">
+                                                        <h6 class="mt-4"><strong>ITINERARIO: </strong></h6>
+                                                        <p>{{'"'+vehiculo.itinerario+'"'}}</p>
+                                                    </div>
+                                                    <div class="container mb-4">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <ul class="list-unstyled m-3 ">
+                                                                    <li><strong>PLACA:</strong> {{vehiculo.placa}}</li>
+                                                                    <li><strong>AÑO DE FABRICACIÓN:</strong>
+                                                                        {{vehiculo.anio_fabricacion}}</li>
+                                                                    <li><strong>MARCA:</strong> {{vehiculo.marca}}</li>
+                                                                    <li><strong>MODELO:</strong> {{vehiculo.modelo}}
+                                                                    </li>
+                                                                    <li><strong>CATEGORÍA:</strong>
+                                                                        {{vehiculo.categoria}}</li>
+                                                                    <li><strong>CARROCERÍA:</strong>
+                                                                        {{vehiculo.carroceria}}</li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <ul class="list-unstyled m-3 ">
+                                                                    <li><strong>MODALIDAD:</strong>
+                                                                        {{vehiculo.modalidad}}</li>
+                                                                    <li><strong>PARTIDA REGISTRAL:</strong>
+                                                                        {{vehiculo.nro_part_reg}}</li>
+                                                                    <li><strong>RESOLUCIÓN:</strong>
+                                                                        {{vehiculo.nombre_resolucion}}</li>
+                                                                    <li><strong>CONDICIÓN:</strong> {{vehiculo.estado}}
+                                                                    </li>
+                                                                    <li><strong>COLOR:</strong> {{vehiculo.color}}</li>
+                                                                    <li><strong>N° CHASIS:</strong>
+                                                                        {{vehiculo.nro_chasis}}</li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <ul class="list-unstyled m-3 ">
+                                                                    <li><strong>N° ASIENTOS:</strong>
+                                                                        {{vehiculo.nro_asientos}}</li>
+                                                                    <li><strong>N° SERIE:</strong> {{vehiculo.serie}}
+                                                                    </li>
+                                                                    <li><strong>CARGA:</strong> {{vehiculo.carga}}</li>
+                                                                    <li><strong>PESO:</strong> {{vehiculo.peso}}</li>
+                                                                    <li><strong>FECHA INICIAL:</strong>
+                                                                        {{vehiculo.fecha_inicial | date:'dd/MM/yyyy'}}
+                                                                    </li>
+                                                                    <li><strong>FECHA FINAL:</strong>
+                                                                        {{vehiculo.fecha_final | date:'dd/MM/yyyy'}}
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+
+                                                            <div class="d-flex justify-content-center mt-2">
+                                                                <button type="button"
+                                                                    class="btn btn-success  button-full-width">GenerarTuc
+                                                                    <i class="bi bi-nut"></i></button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
 
                                 </table>
                             </div>

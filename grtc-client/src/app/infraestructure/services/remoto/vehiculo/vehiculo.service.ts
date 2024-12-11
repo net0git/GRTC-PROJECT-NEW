@@ -13,6 +13,7 @@ import { ValidarModeloForm } from '../../../validatorForm/modelo.validator';
 import { ValidarMarcaForm } from '../../../validatorForm/marca.validator';
 
 import { ListarMarcasResponse } from '../../../../domain/dto/MarcaResponse.dto';
+import { ListaVehiculosResponse } from '../../../../domain/dto/VehiculoResponse.dto';
 
 
 
@@ -31,6 +32,7 @@ export class VehiculoService {
   // this.router.get('/api/marca',marcaController.listarMarcas)
   // this.router.get('/api/marca/:id_marca',marcaController.ObtenerMarca)
   // this.router.put('/api/marca/:id_marca',marcaController.ModificarMarca)
+  //  this.router.get('/api/vehiculo/empresaservicio',vehiculoController.listarVehiculosEmpresasServicio)
 
   CrearMarca(cuerpo_marca: MarcaModel): Observable<CrearMarcaMessageResponse> {
     const erroresValidacion = ValidarMarcaForm(cuerpo_marca);
@@ -84,8 +86,9 @@ export class VehiculoService {
     return this.http.post(this.api_url_vehiculo, cuerpo_vehiculo);
   }
 
-  ListarVehiculosEmpresa(id_empresa_servicio: number) {
-    return this.http.get(this.api_url_vehiculo + '/empresaservicio/' + id_empresa_servicio);
+ 
+  ObeterVehiculosPorEmpresaServicio(id_empresa_servicio: number):Observable<ListaVehiculosResponse[]> {
+    return this.http.get<ListaVehiculosResponse[]>(this.api_url_vehiculo + '/empresaservicio/' + id_empresa_servicio);
   }
 
   ObternerVehiculo(id_vehiculo: number) {

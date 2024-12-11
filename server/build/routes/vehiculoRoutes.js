@@ -13,8 +13,8 @@ class TucRoutes {
     config() {
         this.router.post('/api/vehiculo', vehiculoController_1.default.CrearVehiculo);
         this.router.get('/api/vehiculo', vehiculoController_1.default.listarTotalVehiculos);
-        this.router.get('/api/vehiculo/empresaservicio', vehiculoController_1.default.listarVehiculosByEmpresas);
-        this.router.get('/api/vehiculo/empresaservicio/:id', vehiculoController_1.default.obtenerVehiculosDetalleByEmpresa);
+        this.router.get('/api/vehiculo/empresaservicio', vehiculoController_1.default.listarVehiculosEmpresasServicio);
+        this.router.get('/api/vehiculo/empresaservicio/:id_empresa_servicio', vehiculoController_1.default.obtenerVehiculosDetalleByEmpresaServicio);
         this.router.get('/api/vehiculo/placa/:placa', vehiculoController_1.default.ObtenerVehiculoPorPlaca);
         this.router.put('/api/vehiculo/:id_vehiculo', vehiculoController_1.default.ModificarVehiculo);
         this.router.put('/api/vehiculo/tuc/:id_vehiculo', vehiculoController_1.default.ModificarTucVehiculoAsociado);

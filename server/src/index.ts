@@ -9,6 +9,9 @@ import modeloRoutes from './routes/modeloRoutes';
 import empresaServicioRoutes from './routes/empresaServicioRoutes';
 import resolucionRoutes from './routes/resolucionRoutes';
 import conductorRoutes from './routes/conductorRoutes';
+import arrendamientoRoutes from './routes/arrendamientoRoutes';
+import itinerarioRoutes from './routes/itinerarioRoutes';
+import vehiculoRoutes from './routes/vehiculoRoutes';
 
 
 class Server{
@@ -33,8 +36,11 @@ class Server{
         this.app.use('/',marcaRoutes);
         this.app.use('/',modeloRoutes);
         this.app.use('/',empresaServicioRoutes);
-        this.app.use('/',resolucionRoutes)
-        this.app.use('/',conductorRoutes)
+        this.app.use('/',resolucionRoutes);
+        this.app.use('/',conductorRoutes);
+        this.app.use('/',arrendamientoRoutes);
+        this.app.use('/',itinerarioRoutes);
+        this.app.use('/',vehiculoRoutes);
         
     }
     star():void{

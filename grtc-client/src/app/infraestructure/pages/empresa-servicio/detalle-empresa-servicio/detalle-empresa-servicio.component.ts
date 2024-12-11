@@ -5,9 +5,17 @@ import { DetalleEmpresaServicioResponse } from '../../../../domain/dto/EmpresaSe
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { EmpresaServicioService } from '../../../services/remoto/empresas-servicio/empresa-servicio.service';
 import { ResolucionService } from '../../../services/remoto/resolucion/resolucion.service';
+import { ConductorService } from '../../../services/remoto/conductor/conductor.service';
 import { ListaResolucionResponse } from '../../../../domain/dto/ResolucionResponse.dto';
+import { ListaConductoresResponse } from '../../../../domain/dto/conductorResponse.dto';
+import { ListaItinerarioResponse } from '../../../../domain/dto/ItinerarioResponse.dto';
+import { ListaArrendamientoResponse } from '../../../../domain/dto/ArrendamientoResponse.dto';
+import { ArrendamientoService } from '../../../services/remoto/arrendamiento/arrendamiento.service';
+import { ItinerarioService } from '../../../services/remoto/itinerario/itinerario.service';
+import { VehiculoService } from '../../../services/remoto/vehiculo/vehiculo.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ListaVehiculosResponse } from '../../../../domain/dto/VehiculoResponse.dto';
 
 
 
@@ -46,13 +54,27 @@ export class DetalleEmpresaServicioComponent implements OnInit {
   };
 
   listaResoluciones:ListaResolucionResponse[]=[];
+  listaConductores:ListaConductoresResponse[]=[];
+  listaArrendamientos:ListaArrendamientoResponse[]=[];
+  listaItinerarios:ListaItinerarioResponse[]=[];
+  listaVehiculos:ListaVehiculosResponse[]=[];
 
-  constructor(private sanitizer: DomSanitizer, private empresaServicioService:EmpresaServicioService,private activatedRoute:ActivatedRoute, private resolucionService:ResolucionService){}
+  constructor(private vehiculoService:VehiculoService,private itinerarioService:ItinerarioService, private arrendamientoService:ArrendamientoService,private conductorService:ConductorService ,private sanitizer: DomSanitizer, private empresaServicioService:EmpresaServicioService,private activatedRoute:ActivatedRoute, private resolucionService:ResolucionService){}
 
   ngOnInit(): void {
     this.detalleEmpresa();
     this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`/doc/error_carga.pdf`);
   }
+
+  //datos del collapse para la tabla de vehiculos----------------------------------------
+  isExpanded: boolean[] = [];
+
+  toggleCollapse(index: number) {
+    // Cambiar el estado de la fila en el índice dado
+    console.log(index)
+    this.isExpanded[index] = !this.isExpanded[index];
+  }
+//--------------------------------------------------------------------------------------
 
   detalleEmpresa(){
     const params=this.activatedRoute.snapshot.params
@@ -67,6 +89,10 @@ export class DetalleEmpresaServicioComponent implements OnInit {
       complete:()=>{
         console.log('Detalle de empresa obtenido correctamente'); 
         this.listarResolucionesEmpresaServicio(this.dataEmpresaDetalle.id_empresa_servicio);
+        this.listarConductores(this.dataEmpresaDetalle.id_empresa_servicio);
+        this.listarArrendamientos(this.dataEmpresaDetalle.id_empresa_servicio);
+        this.listarItinerarios(this.dataEmpresaDetalle.id_empresa_servicio);
+        this.listarVehiculosPorEmpresaServicio(this.dataEmpresaDetalle.id_empresa_servicio);
       }
     });
   } 
@@ -86,5 +112,68 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     });
 
   }
+
+  listarConductores(id_empresa_servicio:number){
+    this.conductorService.listarConductoresByEmpresaServicio(id_empresa_servicio).subscribe({
+      next:(res:ListaConductoresResponse[])=>{
+        this.listaConductores=res;
+        console.log(this.listaConductores)
+      },
+      error:(err)=>{
+        console.error('Error al obtener conductores:', err);
+      },
+      complete:()=>{
+        console.log('Conductores obtenidos correctamente'); 
+      }
+    });
+  }
+
+  listarArrendamientos(id_empresa_servicio:number){
+    this.arrendamientoService.ListarArrendamientoByEmpresaServicio(id_empresa_servicio).subscribe({
+      next:(data:ListaArrendamientoResponse[])=>{
+        this.listaArrendamientos=data;
+        console.log(this.listaArrendamientos);
+      },
+      error:(err)=>{
+        console.error('Error al obtener arrendamientos:', err);
+      },
+      complete:()=>{
+        console.log('Arrendamientos obtenidos correctamente'); 
+      }
+    });  
+  }
+
+  listarItinerarios(id_empresa_servicio:number){
+    this.itinerarioService.listarItinerarioByEmpresasServicio(id_empresa_servicio).subscribe({
+      next:(data:ListaItinerarioResponse[])=>{
+        this.listaItinerarios=data;
+        console.log('Arrendamientos obtenidos correctamente',data);
+      },
+      error:(err)=>{
+        console.error('Error al obtener arrendamientos:', err);
+      },
+      complete:()=>{
+        console.log('Arrendamientos obtenidos correctamente'); 
+      }
+    });
+  }  
+
+  listarVehiculosPorEmpresaServicio(id_empresa_servicio:number){
+    this.vehiculoService.ObeterVehiculosPorEmpresaServicio(id_empresa_servicio).subscribe({
+      next:(data:ListaVehiculosResponse[])=>{
+        this.listaVehiculos=data;
+        console.log(data)
+      },
+      error:(err)=>{
+        console.error('Error al obtener vehiculos:', err);
+      },
+      complete:()=>{
+        console.log('Vehiculos obtenidos correctamente'); 
+      }
+    });
+  }
+
+
+
 
 }
