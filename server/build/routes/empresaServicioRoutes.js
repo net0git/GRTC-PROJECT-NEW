@@ -13,6 +13,7 @@ class EmpresaServicioRoutes {
     config() {
         this.router.post('/api/empresaservicio', empresaServicioController_1.default.CrearEmpresaServicio);
         this.router.get('/api/empresaservicio', empresaServicioController_1.default.listarEmpresasServicios);
+        this.router.get('/api/empresaservicio/:id_empresa_servicio', empresaServicioController_1.default.ObtenerEmpresaServicio);
         this.router.get('/api/empresaservicio/detalle/:id_empresa_servicio', empresaServicioController_1.default.ObtenerDetalleEmpresaServicio);
         this.router.put('/api/empresaservicio/:id_empresa_servicio', empresaServicioController_1.default.ModificarEmpresaServicio);
         this.router.get('/api/empresaservicio/:id_tipo_servicio/:empresa_ruc', empresaServicioController_1.default.BuscarEmpresaPorRuc_TipoServicio);

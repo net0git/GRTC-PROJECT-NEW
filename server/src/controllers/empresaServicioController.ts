@@ -28,7 +28,25 @@ class EmpresaServicioController{
             res.status(500).json({ error: 'Error interno del servidor' });
          }
     }
-    
+    public async ObtenerEmpresaServicio(req:Request, res:Response):Promise<any>{
+        try {
+            //devuelve todas las empresas que estan registradas como servicio, juntamente con su estado de acuerdo a la fecha inicial de apertura
+            // --empresas activas, inactivas y encondicion de alerta (empresa, id_tipo_servicio, tipo_servicio, fecha_activacion, fecha_vencimiento)
+            const { id_empresa_servicio } = req.params;
+            const consulta = `
+                            select * 
+                            from t_empresa_servicio 
+                            where id_empresa_servicio=$1 
+                    `;
+            const empresaServicios=await db.query(consulta,[id_empresa_servicio])
+            res.json(empresaServicios['rows'][0]);
+        } catch (error) {
+            console.error('Error al obtener empresa por servicio:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        
+    }
+
     public async listarEmpresasServicios(req:Request, res:Response):Promise<any>{
         try {
             const consulta = `

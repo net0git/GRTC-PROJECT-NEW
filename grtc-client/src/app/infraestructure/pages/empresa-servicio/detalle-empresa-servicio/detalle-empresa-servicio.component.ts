@@ -16,6 +16,10 @@ import { VehiculoService } from '../../../services/remoto/vehiculo/vehiculo.serv
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ListaVehiculosResponse } from '../../../../domain/dto/VehiculoResponse.dto';
+import { HistorialVehicularService } from '../../../services/remoto/historial-vehicular/historial-vehicular.service';
+import { HistorialVehicularResponse } from '../../../../domain/dto/HistorialVehicularResponse.dto';
+import {Router} from '@angular/router'
+
 
 
 
@@ -58,8 +62,9 @@ export class DetalleEmpresaServicioComponent implements OnInit {
   listaArrendamientos:ListaArrendamientoResponse[]=[];
   listaItinerarios:ListaItinerarioResponse[]=[];
   listaVehiculos:ListaVehiculosResponse[]=[];
+  listaHistorialVehicular:HistorialVehicularResponse[]=[];
 
-  constructor(private vehiculoService:VehiculoService,private itinerarioService:ItinerarioService, private arrendamientoService:ArrendamientoService,private conductorService:ConductorService ,private sanitizer: DomSanitizer, private empresaServicioService:EmpresaServicioService,private activatedRoute:ActivatedRoute, private resolucionService:ResolucionService){}
+  constructor(private router:Router,private historialVehicularService:HistorialVehicularService,private vehiculoService:VehiculoService,private itinerarioService:ItinerarioService, private arrendamientoService:ArrendamientoService,private conductorService:ConductorService ,private sanitizer: DomSanitizer, private empresaServicioService:EmpresaServicioService,private activatedRoute:ActivatedRoute, private resolucionService:ResolucionService){}
 
   ngOnInit(): void {
     this.detalleEmpresa();
@@ -93,6 +98,7 @@ export class DetalleEmpresaServicioComponent implements OnInit {
         this.listarArrendamientos(this.dataEmpresaDetalle.id_empresa_servicio);
         this.listarItinerarios(this.dataEmpresaDetalle.id_empresa_servicio);
         this.listarVehiculosPorEmpresaServicio(this.dataEmpresaDetalle.id_empresa_servicio);
+        this.listarHistorialVehicular(this.dataEmpresaDetalle.id_empresa_servicio);
       }
     });
   } 
@@ -173,7 +179,25 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     });
   }
 
+  listarHistorialVehicular(id_empresa_servicio:number){
+    this.historialVehicularService.ObtenerHistorialVehicularPorEmpresa(id_empresa_servicio).subscribe({
+      next:(res:HistorialVehicularResponse[])=>{
+        this.listaHistorialVehicular=res;
+        console.log("historial vehicular"+this.listaHistorialVehicular);
+      },
+      error:(err)=>{
+        console.error('Error al obtener historial vehicular:', err);
+      },
+      complete:()=>{
+        console.log('historial vehicular obtenido correctamente'); 
+      }
+    });
+  }
 
 
+  modificarEmpresa(){
+    const params=this.activatedRoute.snapshot.params
+    this.router.navigate(['principal/mod-empresa-servicio/',params['id_empresa_servicio']]);
+  }
 
 }

@@ -53,6 +53,31 @@ class EmpresaController {
             }
         });
     }
+    ObtenerEmpresa(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_empresa } = req.params;
+                const consulta = `
+                    SELECT 
+                        *
+                    FROM 
+                        t_empresa 
+                    WHERE 
+                        id_empresa = $1; `;
+                const empresa = yield database_1.default.query(consulta, [id_empresa]);
+                if (empresa && empresa['rows'].length > 0) {
+                    res.json(empresa['rows'][0]);
+                }
+                else {
+                    res.status(404).json({ text: 'La empresa no existe' });
+                }
+            }
+            catch (error) {
+                console.error('Error fatal al obtener emrpesa:', error);
+                res.status(500).json({ error: 'Error interno del servidor' });
+            }
+        });
+    }
     ObtenerEmpresaDetalle(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

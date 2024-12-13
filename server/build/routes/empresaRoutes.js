@@ -12,7 +12,8 @@ class TucRoutes {
     }
     config() {
         this.router.get('/api/empresa', empresaController_1.default.listarEmpresas);
-        this.router.get('/api/empresa/:id_empresa', empresaController_1.default.ObtenerEmpresaDetalle);
+        this.router.get('/api/empresa/:id_empresa', empresaController_1.default.ObtenerEmpresa);
+        this.router.get('/api/empresa/detalle/:id_empresa', empresaController_1.default.ObtenerEmpresaDetalle);
         this.router.get('/api/empresa/ruc/:ruc_empresa', empresaController_1.default.ObtenerEmpresaPorRuc);
         this.router.post('/api/empresa', empresaController_1.default.CrearEmpresa);
         this.router.put('/api/empresa/:id_empresa', empresaController_1.default.ModificarEmpresa);

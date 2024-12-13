@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="">
-                    <i class="bi bi-gear icon-custom_gear" title="Modificar Empresa"></i>
+                    <i class="bi bi-gear icon-custom_gear" title="Modificar datos de la Empresa" (click)="modificarEmpresa()"></i>
                 </div>
             </div>
             <hr>
@@ -22,8 +22,7 @@
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" id="section1-tab" data-bs-toggle="tab" href="#section1">Datos
-                                    Empresa</a>
+                                <a class="nav-link active" id="section1-tab" data-bs-toggle="tab" href="#section1">Datos     Empresa</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="section2-tab" data-bs-toggle="tab"
@@ -387,8 +386,8 @@
                                         </tr>
                                     </thead>
 
-                                    <!-- <tbody >
-                                  <tr *ngFor="let item of lista_historial_vehicular, index as i"  >
+                                    <tbody >
+                                  <tr *ngFor="let item of listaHistorialVehicular, index as i"  >
                                     
                                    <th scope="row">{{i+1}}</th>
                                      <td>{{item.placa}}</td>
@@ -398,7 +397,7 @@
                                  
 
                                   </tr> 
-                                </tbody> -->
+                                </tbody>
                                 </table>
                             </div>
                         </div>

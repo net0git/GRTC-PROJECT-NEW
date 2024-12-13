@@ -14,6 +14,7 @@ class EmpresaServicioRoutes{
     config():void{
         this.router.post('/api/empresaservicio',empresaServicioController.CrearEmpresaServicio)
         this.router.get('/api/empresaservicio',empresaServicioController.listarEmpresasServicios)
+        this.router.get('/api/empresaservicio/:id_empresa_servicio',empresaServicioController.ObtenerEmpresaServicio)
         this.router.get('/api/empresaservicio/detalle/:id_empresa_servicio',empresaServicioController.ObtenerDetalleEmpresaServicio)
         this.router.put('/api/empresaservicio/:id_empresa_servicio',empresaServicioController.ModificarEmpresaServicio)  
         this.router.get('/api/empresaservicio/:id_tipo_servicio/:empresa_ruc',empresaServicioController.BuscarEmpresaPorRuc_TipoServicio)
