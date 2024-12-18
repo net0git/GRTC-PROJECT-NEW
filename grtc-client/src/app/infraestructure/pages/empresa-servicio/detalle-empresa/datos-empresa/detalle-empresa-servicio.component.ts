@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { NavegadorComponent } from '../../../shared/components/navegador/navegador.component';
-import { SubnavegadorComponent } from '../../../shared/components/subnavegador/subnavegador.component';
-import { DetalleEmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
+import { NavegadorComponent } from '../../../../shared/components/navegador/navegador.component';
+import { SubnavegadorComponent } from '../../../../shared/components/subnavegador/subnavegador.component';
+import { DetalleEmpresaServicioResponse } from '../../../../../domain/dto/EmpresaServicioResponse.dto';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { EmpresaServicioService } from '../../../services/remoto/empresas-servicio/empresa-servicio.service';
-import { ResolucionService } from '../../../services/remoto/resolucion/resolucion.service';
-import { ConductorService } from '../../../services/remoto/conductor/conductor.service';
-import { ListaResolucionResponse } from '../../../../domain/dto/ResolucionResponse.dto';
-import { ListaConductoresResponse } from '../../../../domain/dto/conductorResponse.dto';
-import { ListaItinerarioResponse } from '../../../../domain/dto/ItinerarioResponse.dto';
-import { ListaArrendamientoResponse } from '../../../../domain/dto/ArrendamientoResponse.dto';
-import { ArrendamientoService } from '../../../services/remoto/arrendamiento/arrendamiento.service';
-import { ItinerarioService } from '../../../services/remoto/itinerario/itinerario.service';
-import { VehiculoService } from '../../../services/remoto/vehiculo/vehiculo.service';
+import { EmpresaServicioService } from '../../../../services/remoto/empresas-servicio/empresa-servicio.service';
+import { ResolucionService } from '../../../../services/remoto/resolucion/resolucion.service';
+import { ConductorService } from '../../../../services/remoto/conductor/conductor.service';
+import { ListaResolucionResponse } from '../../../../../domain/dto/ResolucionResponse.dto';
+import { ListaConductoresResponse } from '../../../../../domain/dto/conductorResponse.dto';
+import { ListaItinerarioResponse } from '../../../../../domain/dto/ItinerarioResponse.dto';
+import { ListaArrendamientoResponse } from '../../../../../domain/dto/ArrendamientoResponse.dto';
+import { ArrendamientoService } from '../../../../services/remoto/arrendamiento/arrendamiento.service';
+import { ItinerarioService } from '../../../../services/remoto/itinerario/itinerario.service';
+import { VehiculoService } from '../../../../services/remoto/vehiculo/vehiculo.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ListaVehiculosResponse } from '../../../../domain/dto/VehiculoResponse.dto';
-import { HistorialVehicularService } from '../../../services/remoto/historial-vehicular/historial-vehicular.service';
-import { HistorialVehicularResponse } from '../../../../domain/dto/HistorialVehicularResponse.dto';
+import { ListaVehiculosResponse } from '../../../../../domain/dto/VehiculoResponse.dto';
+import { HistorialVehicularService } from '../../../../services/remoto/historial-vehicular/historial-vehicular.service';
+import { HistorialVehicularResponse } from '../../../../../domain/dto/HistorialVehicularResponse.dto';
 import {Router} from '@angular/router'
 
 

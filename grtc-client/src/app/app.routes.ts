@@ -13,7 +13,7 @@ import { VehiculoComponent } from './infraestructure/pages/vehiculo/vehiculo.com
 import { BusquedaHistorialComponent } from './infraestructure/pages/busqueda-historial/busqueda-historial.component';
 import { ResolucionComponent } from './infraestructure/pages/resolucion/resolucion.component';
 import { ReportePanelComponent } from './infraestructure/pages/reporte/reporte-panel/reporte-panel.component';
-import { DetalleEmpresaServicioComponent } from './infraestructure/pages/empresa-servicio/detalle-empresa-servicio/detalle-empresa-servicio.component';
+import { DetalleEmpresaServicioComponent } from './infraestructure/pages/empresa-servicio/detalle-empresa/datos-empresa/detalle-empresa-servicio.component';
 import {ModEmpresaServicioComponent} from './infraestructure/pages/empresa-servicio/mod-empresa-servicio/mod-empresa-servicio.component';
 
 
