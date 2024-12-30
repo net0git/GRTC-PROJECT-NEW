@@ -200,4 +200,24 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     this.router.navigate(['principal/mod-empresa-servicio/',params['id_empresa_servicio']]);
   }
 
+  modificarConductores(){
+    const params=this.activatedRoute.snapshot.params
+    this.router.navigate(['principal/detalle-empresa-servicio/conductores/',params['id_empresa_servicio']]);
+  }
+
+  modificarArrendamiento(){
+    const params=this.activatedRoute.snapshot.params
+    this.router.navigate(['principal/detalle-empresa-servicio/arrendamiento/',params['id_empresa_servicio']]);
+  }
+
+  modificarItinerario(){
+    const params=this.activatedRoute.snapshot.params
+    this.router.navigate(['principal/detalle-empresa-servicio/itineario/',params['id_empresa_servicio']]);
+  }
+
+  modificarVehiculos(){
+    const params=this.activatedRoute.snapshot.params
+    this.router.navigate(['principal/detalle-empresa-servicio/vehiculos/',params['id_empresa_servicio']]);
+  }
+
 }

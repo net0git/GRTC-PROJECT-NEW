@@ -14,9 +14,11 @@ import { BusquedaHistorialComponent } from './infraestructure/pages/busqueda-his
 import { ResolucionComponent } from './infraestructure/pages/resolucion/resolucion.component';
 import { ReportePanelComponent } from './infraestructure/pages/reporte/reporte-panel/reporte-panel.component';
 import { DetalleEmpresaServicioComponent } from './infraestructure/pages/empresa-servicio/detalle-empresa/datos-empresa/detalle-empresa-servicio.component';
-import {ModEmpresaServicioComponent} from './infraestructure/pages/empresa-servicio/mod-empresa-servicio/mod-empresa-servicio.component';
-
-
+import { ModEmpresaServicioComponent } from './infraestructure/pages/empresa-servicio/mod-empresa-servicio/mod-empresa-servicio.component';
+import { ConductoresComponent } from './infraestructure/pages/empresa-servicio/detalle-empresa/conductores/conductores.component';
+import { ArrendamientoComponent } from './infraestructure/pages/empresa-servicio/detalle-empresa/arrendamiento/arrendamiento.component';
+import { ItinerarioComponent } from './infraestructure/pages/empresa-servicio/detalle-empresa/itinerario/itinerario.component';
+import { VehiculosComponent } from './infraestructure/pages/empresa-servicio/detalle-empresa/vehiculos/vehiculos.component';
 
 export const routes: Routes = [
     {
@@ -35,7 +37,12 @@ export const routes: Routes = [
       { path:'principal/lista-empresas-servicio', component: ListaEmpresaServicioComponent },
       { path:'principal/crear-empresa-servicio', component: CrearEmpresaServicioComponent },
       { path:'principal/detalle-empresa-servicio/:id_empresa_servicio', component: DetalleEmpresaServicioComponent },
+      { path:'principal/detalle-empresa-servicio/conductores/:id_empresa_servicio', component: ConductoresComponent },
+      { path:'principal/detalle-empresa-servicio/arrendamiento/:id_empresa_servicio', component: ArrendamientoComponent },
+      { path:'principal/detalle-empresa-servicio/vehiculos/:id_empresa_servicio', component: VehiculosComponent },
+      { path:'principal/detalle-empresa-servicio/itineario/:id_empresa_servicio', component: ItinerarioComponent },
       { path:'principal/mod-empresa-servicio/:id_empresa_servicio', component: ModEmpresaServicioComponent },
+
 
       { path:'principal/consultas-tuc',component:ConsultasTucComponent },
 
