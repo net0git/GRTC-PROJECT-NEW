@@ -7,7 +7,7 @@ import { EmpresaServicioService } from '../../../../services/remoto/empresas-ser
 import { ResolucionService } from '../../../../services/remoto/resolucion/resolucion.service';
 import { ConductorService } from '../../../../services/remoto/conductor/conductor.service';
 import { ListaResolucionResponse } from '../../../../../domain/dto/ResolucionResponse.dto';
-import { ListaConductoresResponse } from '../../../../../domain/dto/conductorResponse.dto';
+import { ListaConductoresResponse } from '../../../../../domain/dto/ConductorResponse.dto';
 import { ListaItinerarioResponse } from '../../../../../domain/dto/ItinerarioResponse.dto';
 import { ListaArrendamientoResponse } from '../../../../../domain/dto/ArrendamientoResponse.dto';
 import { ArrendamientoService } from '../../../../services/remoto/arrendamiento/arrendamiento.service';

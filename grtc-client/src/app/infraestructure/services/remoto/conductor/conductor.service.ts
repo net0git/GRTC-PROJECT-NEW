@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../../environments/environment';
-import { ListaConductoresResponse } from '../../../../../app/domain/dto/conductorResponse.dto';
+import { ListaConductoresResponse } from '../../../../domain/dto/ConductorResponse.dto';
 
 @Injectable({
   providedIn: 'root'
