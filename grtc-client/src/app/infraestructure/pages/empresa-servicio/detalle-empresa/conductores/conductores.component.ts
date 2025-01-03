@@ -43,14 +43,15 @@ export class ConductoresComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private conductorService: ConductorService) { }
 
   ngOnInit(): void {
-    this.mostrarListaConductores()
+    this.ListaConductores()
   }
-  mostrarListaConductores() {
+  ListaConductores() {
     const params = this.activatedRoute.snapshot.params;
+    this.id_empresa_servicio_temp = params['id_empresa_servicio'].toString();
     this.conductorService.listarConductoresByEmpresaServicio(params['id_empresa_servicio']).subscribe({
       next: (data: ListaConductoresResponse[]) => {
         this.listaConductores = data
-        this.id_empresa_servicio_temp = params['id_empresa_servicio'].toString();
+        
         console.log(this.listaConductores)
       },
       error: (err) => {

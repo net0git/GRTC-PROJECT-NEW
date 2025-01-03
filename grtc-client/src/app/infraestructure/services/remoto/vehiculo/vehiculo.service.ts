@@ -86,7 +86,6 @@ export class VehiculoService {
     return this.http.post(this.api_url_vehiculo, cuerpo_vehiculo);
   }
 
- 
   ObeterVehiculosPorEmpresaServicio(id_empresa_servicio: number):Observable<ListaVehiculosResponse[]> {
     return this.http.get<ListaVehiculosResponse[]>(this.api_url_vehiculo + '/empresaservicio/' + id_empresa_servicio);
   }

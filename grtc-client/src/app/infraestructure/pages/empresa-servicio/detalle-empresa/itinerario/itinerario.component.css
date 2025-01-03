@@ -1,0 +1,4 @@
+.container {
+    max-width: 1600px !important; /* Establece el ancho máximo del contenedor */
+    width: 80% !important; /* Asegúrate de que use el 100% del ancho disponible */
+  }

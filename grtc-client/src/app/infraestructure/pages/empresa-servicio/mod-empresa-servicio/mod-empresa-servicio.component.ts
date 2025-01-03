@@ -67,7 +67,7 @@ export class ModEmpresaServicioComponent implements OnInit {
   provincias: string[] = []
   distritos: string[] = []
 
-  constructor( private personaService:PersonaService, private empresaService:EmpresaService ,private empresaServicioService:EmpresaServicioService ,private ubigeoService:UbigeoService, private route: ActivatedRoute) { }
+  constructor( private personaService:PersonaService, private empresaService:EmpresaService ,private empresaServicioService:EmpresaServicioService ,private ubigeoService:UbigeoService, private activatedRoute: ActivatedRoute) { }
 
 
   ngOnInit(): void {
@@ -101,7 +101,7 @@ export class ModEmpresaServicioComponent implements OnInit {
     }
   //------------------------------------------------------------------------- 
   ObtenerEmpresaServicio(){
-    const params=this.route.snapshot.params;
+    const params=this.activatedRoute.snapshot.params;
     this.empresaServicioService.ObtenerEmpresaServicio(params['id_empresa_servicio']).subscribe({
       next:(data:EmpresaServicioResponse)=>{
         this.dataEmpresaServicio=data;
