@@ -159,7 +159,7 @@
                                             <td>{{item.documento}}</td>
                                             <td>{{item.nro_licencia}}</td>
                                             <td>{{item.categoria}}</td>
-                                            <td><i class="bi bi-trash3-fill"></i> </td>
+                                            <td><i class="bi bi-trash3-fill" (click)="eliminarElemento(item)"></i> </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -194,7 +194,7 @@
                                             <td>{{item.direccion}}</td>
                                             <td>{{item.fecha_inicio | date:'dd/MM/yyyy'}}</td>
                                             <td>{{item.fecha_fin | date:'dd/MM/yyyy'}}</td>
-                                            <td><i class="bi bi-trash3-fill"></i> </td>
+                                            <td><i class="bi bi-trash3-fill" ></i> </td>
 
                                         </tr>
                                     </tbody>

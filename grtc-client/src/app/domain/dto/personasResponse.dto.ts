@@ -18,3 +18,7 @@ export interface CrearPersonaMessageResponse{
 export interface ModificarPersonaPersonaMessageResponse{
     text: string
 }
+
+export interface EliminarPersonaMessageResponse{
+    text: string
+}

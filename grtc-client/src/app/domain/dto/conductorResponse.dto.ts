@@ -13,3 +13,14 @@ export interface ListaConductoresResponse {
     nro_licencia: string
 }
 
+export interface CrearConductorMessageResponse{
+    text: string
+}
+
+export interface ModificarConductorMessageResponse{
+    text: string
+}
+
+export interface EliminarConductorMessageResponse{
+    text: string
+}

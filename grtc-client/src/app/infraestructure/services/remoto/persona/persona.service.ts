@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PersonaModel } from '../../../../domain/models/Persona.model';
-import { CrearPersonaMessageResponse, ModificarPersonaPersonaMessageResponse } from '../../../../domain/dto/PersonasResponse.dto';
+import { CrearPersonaMessageResponse, ModificarPersonaPersonaMessageResponse, EliminarPersonaMessageResponse } from '../../../../domain/dto/PersonasResponse.dto';
 import { Observable, throwError } from 'rxjs';
 import { ErrorValidacion } from '../../../../domain/dto/ErrorValidacion.dto';
 
@@ -53,6 +53,10 @@ api_uri_persona='http://localhost:4000/api/persona'
     cuerpo_persona.ap_paterno=cuerpo_persona.ap_paterno.trim().toUpperCase()
     cuerpo_persona.ap_materno=cuerpo_persona.ap_materno.trim().toUpperCase()
     return this.http.put<ModificarPersonaPersonaMessageResponse>(this.api_uri_persona+`/modificar/datos/${id_persona}`,cuerpo_persona)
+  }
+
+  eliminarPersona(id_persona:number):Observable<EliminarPersonaMessageResponse>{
+    return this.http.delete<EliminarPersonaMessageResponse>(this.api_uri_persona+`/${id_persona}`)
   }
   
 

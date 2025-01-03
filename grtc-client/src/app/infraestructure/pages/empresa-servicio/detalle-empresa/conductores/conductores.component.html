@@ -4,7 +4,7 @@
 
     <div class="encabezado_pages">
         <i class="bi bi-building-fill  icon-custom-encabezado"></i>
-        <p class="titulo_menu">RESGISTRO DE CONDUCTORES</p>
+        <p class="titulo_menu">REGISTRO DE CONDUCTORES</p>
     </div>
         <div class="container">
             <div class="row">
@@ -14,75 +14,76 @@
                             <form>
                                 <!-- DATOS DEL PERSONALES -->
                                 <fieldset>
-                                    <div class="form-group mb-3">
-                                        <input type="text" class="form-control" name="nombre"
-                                            [(ngModel)]="dataPersona.nombres" placeholder="Nombre(s)">
+                                    <div class="mb-3">
+                                        <label for="nombre" class="form-label">Nombre(s):</label>
+                                        <input type="text" class="form-control form-control-sm" name="nombre" [(ngModel)]="dataPersona.nombres"  appSoloLetras>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <input type="text" class="form-control" name="ap_paterno"
-                                            [(ngModel)]="dataPersona.ap_paterno" placeholder="Apellido Paterno">
+                                    <div class="mb-3">
+                                        <label for="ap_paterno" class="form-label">Apellido Paterno:</label>
+                                        <input type="text" class="form-control form-control-sm" name="ap_paterno" [(ngModel)]="dataPersona.ap_paterno"  appSoloLetras>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <input type="text" class="form-control" name="ap_materno"
-                                            [(ngModel)]="dataPersona.ap_materno" placeholder="Apellido Materno">
+                                    <div class=" mb-3">
+                                        <label for="ap_materno" class="form-label ">Apellido Materno:</label>
+                                        <input type="text" class="form-control form-control-sm" name="ap_materno" [(ngModel)]="dataPersona.ap_materno"  appSoloLetras>
                                     </div>
                                     <div class="form-group ">
-                                        <input type="email" class="form-control texto-form-minuscula" name="correo"
-                                            [(ngModel)]="dataPersona.correo" placeholder="correo">
+                                        <label for="correo" class="form-label">Correo:</label>
+                                        <input type="email" class="form-control form-control-sm text-correo" name="correo" [(ngModel)]="dataPersona.correo">
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label for="documento_id" class="form-label mt-3">Documento de
-                                            Identidad:</label>
+                                        <label for="documento_id" class="form-label mt-3">Documento de Identidad:</label>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <select id="tipo_doc" name="tipo_doc" class="form-control form-select"
-                                                    [(ngModel)]="dataPersona.tipo_doc">
+                                                <select id="tipo_doc" name="tipo_doc" class="form-control form-select-sm form-select" [(ngModel)]="dataPersona.tipo_doc">
                                                     <option value="">TIPO DE DOCUMENTO </option>
-                                                    <option value="CE">CARNET DE ESTRANGERIA</option>
+                                                    <option value="CE">CE</option>
                                                     <option value="DNI">DNI</option>
                                                 </select>
                                             </div>
 
                                             <div class="col-sm-6">
-                                                <input type="text" min="0" class="form-control" name="documento_id"
-                                                    [(ngModel)]="dataPersona.documento">
+                                                <input type="text" min="0" class="form-control form-control-sm" name="documento_id"
+                                                    [(ngModel)]="dataPersona.documento" appSoloNumeros  [attr.maxlength]="dataPersona.tipo_doc === 'CE' ? 12 : (dataPersona.tipo_doc === 'DNI' ? 8 : null)"
+                                                    [disabled]="dataPersona.tipo_doc == ''">
                                             </div>
 
                                         </div>
 
                                     </div>
                                     <div class="form-group mb-3">
-                                        <input type="number" min="0" class="form-control" name="telefono"
-                                            [(ngModel)]="dataPersona.telefono" placeholder="Telefono/cel">
+                                        <label for="telefono" class="form-label">Telefono:</label>
+                                        <input type="number" min="0" class="form-control form-control-sm" name="telefono"
+                                            [(ngModel)]="dataPersona.telefono" appSoloNumeros maxlength="9">
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <input type="text" class="form-control" name="licencia"
-                                            [(ngModel)]="dataConductor.nro_licencia" placeholder="Licencia"
-                                            >
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <label for="licencia" class="form-label">Licencia:</label>
+                                            <input type="text" class="form-control form-control-sm" name="licencia"
+                                                [(ngModel)]="dataConductor.nro_licencia" >
+                                        </div>
+                                        <div class="col">
+                                            <label for="categoria" class="form-label">Categoria:</label>
+                                            <select id="categoria" name="categoria" class="form-control form-select form-select-sm" [(ngModel)]="dataConductor.categoria">
+                                                <option value="">CATEGORIA </option>
+                                                <option value="A-I">A-I</option>
+                                                <option value="A-IIa">A-IIa</option>
+                                                <option value="A-IIb">A-IIb</option>
+                                                <option value="A-IIIa">A-IIIa</option>
+                                                <option value="A-IIIb">A-IIIb</option>
+                                                <option value="A-IIIc">A-IIIc</option>
+    
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="form-group ">
-                                        <select id="categoria" name="categoria" class="form-control form-select"
-                                            [(ngModel)]="dataConductor.categoria">
-                                            <option value="">CATEGORIA </option>
-                                            <option value="A-I">A-I</option>
-                                            <option value="A-IIa">A-IIa</option>
-                                            <option value="A-IIb">A-IIb</option>
-                                            <option value="A-IIIa">A-IIIa</option>
-                                            <option value="A-IIIb">A-IIIb</option>
-                                            <option value="A-IIIc">A-IIIc</option>
-
-                                        </select>
-                                    </div>
+                                    
 
 
                                 </fieldset>
                                 <div class="d-grid gap-2 mt-2">
-                                    <button class="btn btn-success" type="button"
-                                      >Guardar</button>
+                                    <button [ngClass]="modificar ? 'btn btn-warning' : ' btn btn-success'"  type="button" (click)="GuardarDatosFormulario()">{{modificar? 'Modificar' : 'Guardar'}}</button> 
                                 </div>
                                 <div class="d-grid gap-2 mt-2">
-                                    <button class="btn btn-secondary btn-lg m-0" type="button"
-                                        >limpiar</button>
+                                    <button class="btn btn-secondary m-0" type="button" (click)="limpiar()" >limpiar</button>
                                 </div>
                             </form>
                         </div>
@@ -97,22 +98,19 @@
                                 <th scope="col">DNI</th>
                                 <th scope="col">Licencia</th>
                                 <th scope="col">Categoria</th>
-                                <th scope="col">Eliminar</th>
+                                <th scope="col"></th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of listaConductores, index as i"
-                                >
+                            <tr *ngFor="let item of listaConductores, index as i"  >
 
                                 <th scope="row">{{i+1}}</th>
-
                                 <td>{{ item.nombres + ' ' + item.ap_paterno + ' ' +item.ap_materno}}</td>
                                 <td>{{item.documento}}</td>
-
                                 <td>{{item.nro_licencia}}</td>
                                 <td>{{item.categoria}}</td>
-                                <td><i class="bi bi-trash3-fill" ></i> </td>
+                                <td><i class="bi bi-pencil-fill m-2" (click)="obtenerConductor(item)"></i> <i class="bi bi-trash3-fill m-2" (click)="eliminarElemento(item)" ></i> </td>
 
                             </tr>
                         </tbody>

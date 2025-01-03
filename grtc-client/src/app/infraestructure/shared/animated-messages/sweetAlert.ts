@@ -45,5 +45,19 @@ export class SweetAlert {
     });
   }
 
+  async MensajeConfirmacionEliminar(mensaje: string): Promise<boolean> {
+    return Swal.fire({
+      title: '¿Estás seguro?',
+      text: mensaje,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      return result.isConfirmed; // Retorna true si se confirma, false si se cancela
+    });
+  }
 
 }

@@ -6,8 +6,9 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { EmpresaServicioService } from '../../../../services/remoto/empresas-servicio/empresa-servicio.service';
 import { ResolucionService } from '../../../../services/remoto/resolucion/resolucion.service';
 import { ConductorService } from '../../../../services/remoto/conductor/conductor.service';
+import { PersonaService } from '../../../../services/remoto/persona/persona.service';
 import { ListaResolucionResponse } from '../../../../../domain/dto/ResolucionResponse.dto';
-import { ListaConductoresResponse } from '../../../../../domain/dto/ConductorResponse.dto';
+import { EliminarConductorMessageResponse, ListaConductoresResponse } from '../../../../../domain/dto/ConductorResponse.dto';
 import { ListaItinerarioResponse } from '../../../../../domain/dto/ItinerarioResponse.dto';
 import { ListaArrendamientoResponse } from '../../../../../domain/dto/ArrendamientoResponse.dto';
 import { ArrendamientoService } from '../../../../services/remoto/arrendamiento/arrendamiento.service';
@@ -19,6 +20,9 @@ import { ListaVehiculosResponse } from '../../../../../domain/dto/VehiculoRespon
 import { HistorialVehicularService } from '../../../../services/remoto/historial-vehicular/historial-vehicular.service';
 import { HistorialVehicularResponse } from '../../../../../domain/dto/HistorialVehicularResponse.dto';
 import {Router} from '@angular/router'
+import { EliminarPersonaMessageResponse } from '../../../../../domain/dto/PersonasResponse.dto';
+import { SweetAlert } from '../../../../shared/animated-messages/sweetAlert';
+
 
 
 
@@ -64,7 +68,7 @@ export class DetalleEmpresaServicioComponent implements OnInit {
   listaVehiculos:ListaVehiculosResponse[]=[];
   listaHistorialVehicular:HistorialVehicularResponse[]=[];
 
-  constructor(private router:Router,private historialVehicularService:HistorialVehicularService,private vehiculoService:VehiculoService,private itinerarioService:ItinerarioService, private arrendamientoService:ArrendamientoService,private conductorService:ConductorService ,private sanitizer: DomSanitizer, private empresaServicioService:EmpresaServicioService,private activatedRoute:ActivatedRoute, private resolucionService:ResolucionService){}
+  constructor(private sweetAlert:SweetAlert,private personaService:PersonaService,private router:Router,private historialVehicularService:HistorialVehicularService,private vehiculoService:VehiculoService,private itinerarioService:ItinerarioService, private arrendamientoService:ArrendamientoService,private conductorService:ConductorService ,private sanitizer: DomSanitizer, private empresaServicioService:EmpresaServicioService,private activatedRoute:ActivatedRoute, private resolucionService:ResolucionService){}
 
   ngOnInit(): void {
     this.detalleEmpresa();
@@ -194,6 +198,47 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     });
   }
 
+  eliminarPersona(id_persona: number) {
+    this.personaService.eliminarPersona(id_persona).subscribe({
+      next: (res: EliminarPersonaMessageResponse) => {
+        console.log(res)
+      },
+      error: (err) => {
+        console.error('Error al eliminar persona:', err);
+      },
+      complete: () => {
+        console.log('Persona eliminada correctamente');
+        const params = this.activatedRoute.snapshot.params
+        this.listarConductores(params['id_empresa_servicio'])
+      }
+    });
+  }
+
+  eliminarConductor(conductor: any) {
+    this.conductorService.eliminarConductor(conductor.id_conductor).subscribe({
+      next: (res: EliminarConductorMessageResponse) => {
+        console.log(res)
+      },
+      error: (err) => {
+        console.error('Error al eliminar conductor:', err);
+      },
+      complete: () => {
+        console.log('Conductor eliminado correctamente');
+        this.eliminarPersona(conductor.id_persona)
+      }
+    });
+  }
+
+  eliminarElemento(conductor: any) {
+    this.sweetAlert.MensajeConfirmacionEliminar('Esta acción no se puede deshacer.')
+      .then((confirmado) => {
+        if (confirmado) {
+          this.eliminarConductor(conductor)
+        } else {
+          console.log('Acción cancelada.');
+        }
+      });
+  }
 
   modificarEmpresa(){
     const params=this.activatedRoute.snapshot.params
