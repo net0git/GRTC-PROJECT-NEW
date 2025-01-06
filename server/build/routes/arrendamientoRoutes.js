@@ -11,7 +11,6 @@ class ArrendamientoRoutes {
         this.config();
     }
     config() {
-        //consultas para las tuc - 
         this.router.get('/api/arrendamiento', arrendamientoController_1.default.ListaArrendamientos);
         this.router.get('/api/arrendamiento/:id_empresa_servicio', arrendamientoController_1.default.ObtenerContratoArrendamientoPorEmpresa);
         this.router.post('/api/arrendamiento', arrendamientoController_1.default.CrearContratoArrendamiento);

@@ -283,4 +283,6 @@ export class ConductoresComponent implements OnInit {
     this.modificar = false
   }
 
+  // nota: la idea general de este codigo es que primero se crea la persona y con el id_persona se crea el conductor
+  // del mismo modo se elimina primero al conductor y luego a al persona 
 }

@@ -14,6 +14,7 @@ import { EmpresaService } from '../../../services/remoto/empresa/empresa.service
 import { EmpresaResponse } from '../../../../domain/dto/EmpresaResponse.dto';
 import { PersonaService } from '../../../services/remoto/persona/persona.service';
 import { PersonaResponse } from '../../../../domain/dto/PersonasResponse.dto';
+import { FechaConFormato } from '../../../../../../public/utils/formateDate';
 
 
 
@@ -67,7 +68,7 @@ export class ModEmpresaServicioComponent implements OnInit {
   provincias: string[] = []
   distritos: string[] = []
 
-  constructor( private personaService:PersonaService, private empresaService:EmpresaService ,private empresaServicioService:EmpresaServicioService ,private ubigeoService:UbigeoService, private activatedRoute: ActivatedRoute) { }
+  constructor(private personaService:PersonaService, private empresaService:EmpresaService ,private empresaServicioService:EmpresaServicioService ,private ubigeoService:UbigeoService, private activatedRoute: ActivatedRoute) { }
 
 
   ngOnInit(): void {
@@ -86,26 +87,16 @@ export class ModEmpresaServicioComponent implements OnInit {
     console.log('provincias',this.provincias)
   }
 
-  onProvinciaChange(){
+  onChangeProvincia(){
     this.distritos=this.ubigeoService.getDistritosPorProvincia(this.dataEmpresa.provincia)
   }
-  // -----------------------------------------------------------------------
-  FechaConFormato(fechaISO:string | Date):string{
-    // Función para convertir una fecha ISO a formato "mm-yyyy-dd"
-      const fecha = new Date(fechaISO);
-      const dia = fecha.getDate().toString().padStart(2, '0'); //Obtiene el día
-      const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); //Obtiene el mes (agregamos 1 porque los meses en JavaScript comienzan en 0)
-      const anio = fecha.getFullYear(); //Obtiene el año
-    //Formatea la fecha en "yyyy-dd-mm"
-      return `${anio}-${mes}-${dia}`;
-    }
-  //------------------------------------------------------------------------- 
+
   ObtenerEmpresaServicio(){
     const params=this.activatedRoute.snapshot.params;
     this.empresaServicioService.ObtenerEmpresaServicio(params['id_empresa_servicio']).subscribe({
       next:(data:EmpresaServicioResponse)=>{
         this.dataEmpresaServicio=data;
-        this.dataEmpresaServicio.fecha_inicial=this.FechaConFormato(this.dataEmpresaServicio.fecha_inicial);
+        this.dataEmpresaServicio.fecha_inicial=FechaConFormato(this.dataEmpresaServicio.fecha_inicial);
         console.log(data)
       },
       error:(err)=>{
@@ -152,7 +143,7 @@ export class ModEmpresaServicioComponent implements OnInit {
         console.log('representante legal obtenida correctamente'); 
         this.ListaDepartamentos() 
         this.onChangeDepartamento()
-        this.onProvinciaChange()
+        this.onChangeProvincia()
       }
     }); 
   }

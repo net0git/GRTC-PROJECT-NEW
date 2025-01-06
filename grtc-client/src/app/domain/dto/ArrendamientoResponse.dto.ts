@@ -11,3 +11,15 @@ export interface ListaArrendamientoResponse {
     provincia: string
     distrito: string
 }
+
+export interface CrearArrendamientoMessageResponse{
+    text: string
+}
+
+export interface ModificarArrendamientoMessageResponse{
+    text: string
+}
+
+export interface EliminarArrendamientoMessageResponse{
+    text: string
+}

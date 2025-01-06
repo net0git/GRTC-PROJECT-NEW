@@ -11,12 +11,13 @@ class ArrendamientoRoutes{
         
     }
     config():void{
-        //consultas para las tuc - 
+
          this.router.get('/api/arrendamiento',arrendamientoController.ListaArrendamientos)
          this.router.get('/api/arrendamiento/:id_empresa_servicio',arrendamientoController.ObtenerContratoArrendamientoPorEmpresa)
          this.router.post('/api/arrendamiento',arrendamientoController.CrearContratoArrendamiento)
          this.router.put('/api/arrendamiento/:id_contrato',arrendamientoController.ModificarContratoArrendamiento) 
          this.router.delete('/api/arrendamiento/:id_contrato',arrendamientoController.EliminarContratoArrendamiento)   
+         
     }
 }
 

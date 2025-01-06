@@ -7,7 +7,7 @@
         <p class="titulo_menu">RESGISTRO DE ARRENDAMIENTO</p>
     </div>
 
-    <div class="container"  >
+    <div class="container">
         <div class="row">
             <div class="col-md-4 ">
                 <div class="card">
@@ -17,79 +17,75 @@
                             <fieldset>
                                 <div class="row">
                                     <div class="form-group col-lg-7 col-sm-12">
-                                        <label for="datos_arrendador" class="form-label ">Nombres y Apellidos
-                                            (Arrendador):</label>
-                                        <input type="text" class="form-control" name="arrendador">
+                                        <label for="datos_arrendador" class="form-label ">Datos Arrendador:</label>
+                                        <input type="text" class="form-control" name="arrendador" [(ngModel)]="dataArrendamiento.arrendador"appSoloLetras >
                                     </div>
                                     <div class="form-group col-lg-5 col-sm-12">
                                         <label for="datos_arrendador" class="form-label ">DNI:</label>
-                                        <input type="text" min="0" [maxLength]="8" class="form-control"
-                                            name="dni_arrendario">
+                                        <input type="text" min="0" [maxLength]="8" class="form-control" name="dni_arrendario" [(ngModel)]="dataArrendamiento.dni" appSoloNumeros >
                                     </div>
                                 </div>
 
                                 <div class="form-group mb-2">
                                     <label for="propiedad" class="form-label ">Nombre de la propiedad:</label>
-                                    <input type="text" class="form-control" name="propiedad">
+                                    <input type="text" class="form-control" name="propiedad" [(ngModel)]="dataArrendamiento.propiedad">
                                 </div>
                                 <!-- FILA DE DEPARTAMETNO - PRPVINCIA - DISTRITO -->
-                                <div class="row ">
-                                    <!-- departamentos -->
-                                    <div class="form-group  col-lg-4 col-sm-12">
-                                        <label for="departamento_empresa" class="form-label ">Departamento:</label>
-                                        <!-- <select id="departamento_empresa" name="departamento_empresa"
-                                    class="form-control form-select" (change)="onDepartamentoChange()"
-                                    [(ngModel)]="data_contrato_arrendamineto.departamento">
-                                    <option value="">DEPARTAMENTO </option>
-                                    <option *ngFor="let departamento of departamentos" [value]="departamento">{{
-                                        departamento }}</option>
-                                </select> -->
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="departamento_empresa" class="form-label mt-3">Departamento:</label>
+                                        <select id="departamento_empresa" name="departamento_empresa"
+                                            class="form-control form-select" (change)="onChangeDepartamento()"
+                                            [(ngModel)]="dataArrendamiento.departamento" >
+                                            <option value="">DEPARTAMENTO </option>
+                                            <option *ngFor="let departamento of departamentos" [value]="departamento">{{
+                                                departamento }}</option>
+    
+                                        </select>
                                     </div>
-                                    <!-- distritos -->
-                                    <div class="form-group  col-lg-4 col-sm-12">
-                                        <label for="provincia_empresa" class="form-label  ">Provincia:</label>
-                                        <!-- <select id="provincia_empresa" name="provincia_empresa" class="form-control form-select"
-                                    (change)="onProvinciaChange()" [(ngModel)]="data_contrato_arrendamineto.provincia"
-                                    [disabled]="!data_contrato_arrendamineto.departamento">
-                                    <option value="">PROVINCIA</option>
-                                    <option *ngFor="let provincia of provincias" [value]="provincia">{{
-                                        provincia }}</option>
-                                </select> -->
+                                    <div class="col-sm-4">
+                                        <label for="provincia_empresa" class="form-label mt-3">Provincia:</label>
+                                        <select id="provincia_empresa" name="provincia_empresa"
+                                            class="form-control form-select" (change)="onChangeProvincia()"
+                                            [(ngModel)]="dataArrendamiento.provincia" [disabled]="!dataArrendamiento.departamento">
+                                            <option value="">PROVINCIA</option>
+                                            <option *ngFor="let provincia of provincias" [value]="provincia">{{ provincia }}
+                                            </option>
+                                        </select>
                                     </div>
-                                    <!-- provincias -->
-                                    <div class="form-group  col-lg-4 col-sm-12">
-                                        <label for="distrito_empresa" class="form-label  ">Distrito:</label>
-                                        <!-- <select id="distrito_empresa" name="distrito_empresa" class="form-control form-select"
-                                    [disabled]="!data_contrato_arrendamineto.provincia"
-                                    [(ngModel)]="data_contrato_arrendamineto.distrito ">
-                                    <option value="">DISTRITO</option>
-                                    <option *ngFor="let distrito of distritosPorProvincia" [value]="distrito">{{
-                                        distrito }}</option>
-                                </select> -->
+                                    <div class="col-sm-4">
+                                        <label for="distrito_empresa" class="form-label mt-3">Distrito:</label>
+                                        <select id="distrito_empresa" name="distrito_empresa"
+                                            class="form-control form-select" [(ngModel)]="dataArrendamiento.distrito" [disabled]="!dataArrendamiento.provincia"
+                                            >
+                                            <option value="">DISTRITO</option>
+                                            <option *ngFor="let distrito of distritos" [value]="distrito">{{ distrito }}
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group ">
                                     <label for="direccion" class="form-label mt-3 ">Direccion:</label>
-                                    <input type="text" class="form-control" name="direccion">
+                                    <input type="text" class="form-control" name="direccion" [(ngModel)]="dataArrendamiento.direccion">
                                 </div>
                                 <div class="row mt-3">
                                     <div class="form-group col-lg-6 col-sm-12  ">
                                         <label for="fecha_inicio " class="form-label ">Fecha inicio:</label>
-                                        <input type="date" class="form-control" name="fecha_inicio">
+                                        <input type="date" class="form-control" name="fecha_inicio" [(ngModel)]="dataArrendamiento.fecha_inicio">
                                     </div>
                                     <div class="form-group col-lg-6  col-sm-12">
                                         <label for="fecha_final" class="form-label ">Fecha final:</label>
-                                        <input type="date" class="form-control" name="fecha_final">
+                                        <input type="date" class="form-control" name="fecha_final" [(ngModel)]="dataArrendamiento.fecha_fin">
                                     </div>
                                 </div>
 
 
                             </fieldset>
                             <div class="d-grid gap-2 mt-2">
-                                <button class="btn btn-lg btn-success" type="button">guardar</button>
+                                <button [ngClass]="modificar ? 'btn btn-warning' : ' btn btn-success'" type="button" (click)="GuardarDatosFormulario()">{{modificar? 'Modificar' : 'Guardar'}}</button>
                             </div>
                             <div class="d-grid gap-2 mt-2">
-                                <button class="btn btn-lg btn-secondary text-white">limpiar</button>
+                                <button class="btn btn-lg btn-secondary text-white" (click)="limpiar()">limpiar</button>
                             </div>
                         </form>
                     </div>
@@ -111,20 +107,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                <tr *ngFor="let item of listaContratosArrendamiento, index as i">
+                        <tr *ngFor="let item of listaContratosArrendamiento, index as i">
 
-                    <th scope="row">{{i+1}}</th>
-
-                    <td>{{item.arrendador}}</td>
-                    <!-- <td>{{item.propiedad}}</td> -->
-                    <td>{{item.direccion}}</td>
-                    <td>{{item.fecha_inicio | date:'dd-MM-yyyy'}} </td>
-                    <td>{{item.fecha_fin | date:'dd-MM-yyyy'}}</td>
-                    <td><i class="bi bi-trash3-fill"></i> </td>
-
-
-                </tr>
-            </tbody>
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{item.arrendador}}</td>
+                            <!-- <td>{{item.propiedad}}</td> -->
+                            <td>{{item.direccion}}</td>
+                            <td>{{item.fecha_inicio | date:'dd-MM-yyyy'}} </td>
+                            <td>{{item.fecha_fin | date:'dd-MM-yyyy'}}</td>
+                            <td><i class="bi bi-pencil-fill m-2" (click)="obtenerArrendamiento(item)"></i> <i class="bi bi-trash3-fill" (click)="eliminarArrendamiento(item)"></i> </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
