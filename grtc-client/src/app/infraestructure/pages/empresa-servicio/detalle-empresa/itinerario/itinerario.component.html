@@ -9,7 +9,7 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-md-5 ">
+            <div class="col-md-4 ">
                 <div class="card">
                     <div class="card-body">
                         <form>
@@ -17,13 +17,13 @@
                             <fieldset>
                                 <div class="form-group ">
                                     <label for="origen_itinerario" class="form-label ">Origen:</label>
-                                    <input type="text" class="form-control" name="origen_itinerario"
-                                        [(ngModel)]="dataItinerario.origen">
+                                    <input type="text" class="form-control" name="origen_itinerario" 
+                                        [(ngModel)]="dataItinerario.origen" appSoloLetras>
                                 </div>
                                 <div class="form-group ">
                                     <label for="destino_itinerario" class="form-label mt-3">Destino:</label>
                                     <input type="text" class="form-control" name="destino_itinerario"
-                                        [(ngModel)]="dataItinerario.destino">
+                                        [(ngModel)]="dataItinerario.destino"  appSoloLetras>
                                 </div>
                                 <div class="form-group ">
                                     <label for="itinerario" class="form-label mt-3 ">Itinerario:</label>
@@ -38,16 +38,16 @@
 
                             </fieldset>
                             <div class="d-grid gap-2 mt-2">
-                                <button class="btn btn-success btn-lg" type="button">guardar</button>
+                                <button [ngClass]="modificar ? 'btn btn-warning' : ' btn btn-success'"  type="button" (click)="GuardarDatosFormulario()">{{modificar? 'Modificar' : 'Guardar'}}</button> 
                             </div>
                             <div class="d-grid gap-2 mt-2">
-                                <button class="btn btn-lg btn-secondary text-white" type="button">limpiar</button>
+                                <button class="btn btn-lg btn-secondary text-white" type="button" (click)="limpiar()">limpiar</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="col-md-7 text-center">
+            <div class="col-md-8 text-center">
                 <table class="table text-center  table-hover">
                     <thead class="thead-ligth bg-secondary text-white table-success">
                         <tr>
@@ -56,19 +56,18 @@
                             <th scope="col">Destino</th>
                             <th scope="col">Itinerario</th>
                             <th scope="col">Frecuencia</th>
-                            <th scope="col">Eliminar</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of listaItinerarios, index as i">
 
                             <th scope="row">{{i+1}}</th>
-
                             <td>{{item.origen }}</td>
                             <td>{{item.destino}}</td>
                             <td>{{item.itinerario}}</td>
                             <td>{{item.frecuencia}}</td>
-                            <td><i class="bi bi-trash3-fill"></i> </td>
+                            <td><i class="bi bi-pencil-fill m-2" (click)="obtenerItinerario(item)"></i> <i class="bi bi-trash3-fill m-2" (click)="eliminarElemento(item)" ></i> </td>
 
                         </tr>
                     </tbody>

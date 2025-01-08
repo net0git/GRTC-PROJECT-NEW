@@ -5,20 +5,24 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ItinerarioService } from '../../../../services/remoto/itinerario/itinerario.service';
 import { ItinerarioModel } from '../../../../../domain/models/Itinerario.model';
-import { ListaItinerarioResponse } from '../../../../../domain/dto/ItinerarioResponse.dto';
+import { CrearItinerarioMessageResponse, EliminarItinerarioMessageResponse, ListaItinerarioResponse, ModificarItinerarioMessageResponse } from '../../../../../domain/dto/ItinerarioResponse.dto';
 import { ActivatedRoute } from '@angular/router';
+import { SweetAlert } from '../../../../shared/animated-messages/sweetAlert';
+import { SoloLetrasDirective } from '../../../../directives/solo-letras.directive';
+import { SoloNumerosDirective } from '../../../../directives/solo-numeros.directive';
+import { ErrorValidacion } from '../../../../../domain/dto/ErrorValidacion.dto';
 
 @Component({
   selector: 'app-itinerario',
   standalone: true,
-  imports: [NavegadorComponent, SubnavegadorComponent, FormsModule, CommonModule],
+  imports: [NavegadorComponent, SubnavegadorComponent, FormsModule, CommonModule, SoloLetrasDirective, SoloNumerosDirective],
   templateUrl: './itinerario.component.html',
   styleUrl: './itinerario.component.css'
 })
 export class ItinerarioComponent implements OnInit {
 
   dataItinerario:ItinerarioModel={
-    id_itinerario:0,
+    id_detalle_ruta_itinerario:0,
     id_empresa_servicio:0,
     origen:'',
     destino:'',
@@ -28,12 +32,32 @@ export class ItinerarioComponent implements OnInit {
 
   listaItinerarios:ListaItinerarioResponse[]=[];
   id_empresa_servicio_temp: string = "";
-  constructor(private itinerarioService:ItinerarioService,private activatedRoute: ActivatedRoute) { }
+
+  modificar: boolean = false
+  constructor(private sweetAlert:SweetAlert,private itinerarioService:ItinerarioService,private activatedRoute: ActivatedRoute) { }
   ngOnInit(): void {
-   this.ListarItinerarios()
+   this.listarItinerarios()
   }
 
-  ListarItinerarios(){
+  ValidarFormulario(dataItinerario: ItinerarioModel): ErrorValidacion[] {
+    const errorValidacion: ErrorValidacion[] = [];
+
+    if (!dataItinerario.origen) {
+      errorValidacion.push({ campo: 'origen', mensaje: 'Campo requerido' });
+    }
+    if (!dataItinerario.destino) {
+      errorValidacion.push({ campo: 'destino', mensaje: 'Campo requerido' });
+    }
+    if (!dataItinerario.itinerario) {
+      errorValidacion.push({ campo: 'itinerario', mensaje: 'Campo requerido' });
+    }
+    if (!dataItinerario.frecuencia) {
+      errorValidacion.push({ campo: 'frecuencia', mensaje: 'Campo requerido' });
+    }
+    return errorValidacion;
+  }
+
+  listarItinerarios(){
     const params=this.activatedRoute.snapshot.params;
     this.id_empresa_servicio_temp = params['id_empresa_servicio'].toString();
     this.itinerarioService.listarItinerarioByEmpresasServicio(params['id_empresa_servicio']).subscribe({
@@ -48,6 +72,116 @@ export class ItinerarioComponent implements OnInit {
         console.log('Itinerarios obtenidos correctamente'); 
       }
     });
+  }
+
+  crearItinerario(){
+    const params=this.activatedRoute.snapshot.params;
+    this.dataItinerario.id_empresa_servicio=params['id_empresa_servicio']
+    console.log(this.dataItinerario)
+    this.itinerarioService.crearItinerario(this.dataItinerario).subscribe({
+      next: (res: CrearItinerarioMessageResponse) => {
+        console.log(res)
+      },
+      error: (err) => {
+        console.error('Error al obtener itinerarios:', err);
+      },
+      complete: () => {
+        console.log('Itinerarios obtenidos correctamente');
+        this.limpiar()
+        this.sweetAlert.MensajeToast('Itinerario creado correctamente')
+        this.listarItinerarios()
+      }
+    });
+  }
+
+  modificarItinerario(){
+    this.itinerarioService.modificarItinerario(this.dataItinerario.id_detalle_ruta_itinerario,this.dataItinerario).subscribe({
+      next: (res: ModificarItinerarioMessageResponse) => {
+        console.log(res)
+      },
+      error: (err) => {
+        console.error('Error al obtener itinerarios:', err);
+      },
+      complete: () => {
+        console.log('Itinerarios obtenidos correctamente');
+        this.limpiar()
+        this.sweetAlert.MensajeToast('Itinerario modificado correctamente')
+        this.listarItinerarios()
+      }
+    });
+  }
+
+  obtenerItinerario(itinerario: any) {
+
+    this.dataItinerario.id_detalle_ruta_itinerario = itinerario.id_detalle_ruta_itinerario
+    this.dataItinerario.id_empresa_servicio = itinerario.id_empresa_servicio
+    this.dataItinerario.origen = itinerario.origen
+    this.dataItinerario.destino = itinerario.destino
+    this.dataItinerario.itinerario = itinerario.itinerario
+    this.dataItinerario.frecuencia = itinerario.frecuencia
+    this.modificar = true;
+
+  }
+
+  GuardarDatosFormulario() {
+    const erroresValidacion = this.ValidarFormulario(this.dataItinerario);
+    if (erroresValidacion.length > 0) {
+      let errorMensaje = '';
+      erroresValidacion.forEach(error => {
+        errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje} \n`;
+      });
+      alert(errorMensaje);
+      return;
+    }
+    if(this.modificar){
+      this.modificarItinerario()
+    }else{
+      this.crearItinerario()
+    }
+  }
+
+  eliminarItinerario(id_itinerario: number) {
+    console.log(id_itinerario)
+    this.itinerarioService.eliminarItinerario(id_itinerario).subscribe({
+      next: (res: EliminarItinerarioMessageResponse) => {
+        console.log('mensjade de eliminacion:',res)
+        // if (res.text === 'error') {
+        //   this.sweetAlert.MensajeError('Error al eliminar itinerario')
+        // }else{
+        //   this.sweetAlert.MensajeToast('Itinerario eliminado correctamente')
+        // }
+      },
+      error: (err) => {
+        console.error('Error al eliminar itinerario:', err);
+      },
+      complete: () => {
+        console.log('Itinerario eliminado correctamente');
+        this.limpiar()
+        this.sweetAlert.MensajeToast('Itinerario eliminado correctamente')
+        this.listarItinerarios()
+      }
+    });
+  }
+
+  eliminarElemento(itinerario: any) {
+    this.sweetAlert.MensajeConfirmacionEliminar('Esta acción no se puede deshacer.')
+      .then((confirmado) => {
+        if (confirmado) {
+          this.eliminarItinerario(itinerario.id_detalle_ruta_itinerario)
+        } else {
+          console.log('Acción cancelada.');
+        }
+      });
+  }
+
+  limpiar() {
+    this.dataItinerario.id_detalle_ruta_itinerario = 0
+    this.dataItinerario.id_empresa_servicio = 0
+    this.dataItinerario.origen = ""
+    this.dataItinerario.destino = ""
+    this.dataItinerario.itinerario = ""
+    this.dataItinerario.frecuencia = ""
+    this.modificar = false;
   }
 
 }
