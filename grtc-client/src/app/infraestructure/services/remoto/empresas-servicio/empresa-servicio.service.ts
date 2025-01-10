@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environment';
 import { Observable } from 'rxjs';
-import { DetalleEmpresaServicioResponse, ListaEmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
+import { DetalleEmpresaServicioResponse, ListaEmpresaServicioResponse, modificarEmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
 import { EmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
 
 @Injectable({
@@ -32,5 +32,10 @@ export class EmpresaServicioService {
 
   ObtenerEmpresaServicio(id_empresa_servicio:number):Observable<EmpresaServicioResponse>{
     return this.http.get<EmpresaServicioResponse>(this.api_uri_empresa_servicio+'/'+id_empresa_servicio)
+  }
+
+  ModificarEmpresaServicio(id_empresa_servicio:number,cuerpo_empresa_servicio:any):Observable<modificarEmpresaServicioResponse>{
+    cuerpo_empresa_servicio.id_empresa_servicio=id_empresa_servicio
+    return this.http.put<modificarEmpresaServicioResponse>(this.api_uri_empresa_servicio+'/'+id_empresa_servicio,cuerpo_empresa_servicio)
   }
 }

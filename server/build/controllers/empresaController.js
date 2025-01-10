@@ -147,7 +147,7 @@ class EmpresaController {
             }
             catch (error) {
                 console.error('Error fatal al modificar empresa:', error);
-                res.status(500).json({ error: 'Error interno del servidor' });
+                res.status(500).json({ text: 'Error interno del servidor' });
             }
         });
     }

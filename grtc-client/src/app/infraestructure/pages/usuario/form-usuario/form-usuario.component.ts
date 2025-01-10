@@ -6,7 +6,7 @@ import { UsuarioModel } from '../../../../domain/models/usuario.model';
 import { PersonaService } from '../../../services/remoto/persona/persona.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from '../../../services/remoto/usuario/usuario.service';
-import { CrearPersonaMessageResponse, ModificarPersonaPersonaMessageResponse } from '../../../../domain/dto/PersonasResponse.dto';
+import { CrearPersonaMessageResponse, ModificarPersonaMessageResponse } from '../../../../domain/dto/PersonasResponse.dto';
 import { switchMap } from 'rxjs/operators';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule
 import { CrearUsuarioResponse, ModificarDatosUsuarioResponse,ModificarPasswordUsuarioResponse } from '../../../../domain/dto/UsuariosResponse.dto';
@@ -217,7 +217,7 @@ export class FormUsuarioComponent implements OnInit {
 
   ModificarDatosPersona(){
     this.personaService.ModificarPersona(this.dataPersona.id_persona,this.dataPersona).subscribe({
-      next: (res: ModificarPersonaPersonaMessageResponse) => {
+      next: (res: ModificarPersonaMessageResponse) => {
         console.log(res);
         this.sweetAlert.MensajeExito('Datos actualizados con éxito')
       },

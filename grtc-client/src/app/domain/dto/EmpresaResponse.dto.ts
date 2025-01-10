@@ -13,3 +13,7 @@ export interface EmpresaResponse {
     nota: string;
     
 }
+
+export interface modificarEmpresaResponse{
+    text: string
+}

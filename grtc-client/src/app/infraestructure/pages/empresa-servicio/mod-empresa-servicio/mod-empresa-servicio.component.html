@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="encabezado_pages">
             <i class="bi bi-building-fill  icon-custom-encabezado"></i>
-            <p class="titulo_menu">Modificar Empresa</p>
+            <p class="titulo_menu">MODIFICAR EMPRESA</p>
         </div>
 
         <div class="row">
@@ -103,62 +103,64 @@
                                     name="expediente_empresa" [(ngModel)]="dataEmpresaServicio.expediente"
                                     inputmode="uppercase">
                             </div>
-            </div>
-            <!-- DATOS DEL REPRESENTANTE DE LA EMPRESA -->
-            <h4 class="subtitulo_empresa">REPRESENTANTE LEGAL:</h4>
-            <div class="form-group">
-                <label for="nombre_representante" class="form-label mt-2">Nombres:</label>
-                <input id="nombre_representante" type="text" class="form-control" [(ngModel)]="dataPersona.nombres"
-                    name="nombre_representante" style="text-transform:uppercase;">
-            </div>
-            <div class="form-group">
-                <label for="ap_paterno" class="form-label mt-3">Apellido Paterno:</label>
-                <input id="ap_paterno" type="text" class="form-control" [(ngModel)]="dataPersona.ap_paterno"
-                    name="ap_paterno" style="text-transform:uppercase;">
-            </div>
-            <div class="form-group">
-                <label for="ap_materno" class="form-label mt-3">Apellido Materno:</label>
-                <input id="ap_materno" type="text" class="form-control" [(ngModel)]="dataPersona.ap_materno"
-                    name="ap_materno" style="text-transform:uppercase;">
-            </div>
-            <div class="form-group">
-                <label for="correo_representante" class="form-label mt-3">Correo:</label>
-                <input type="email" class="form-control" name="correo_representante" [(ngModel)]="dataPersona.correo">
-            </div>
-            <div class="form-group">
-                <label for="documento_id" class="form-label mt-3">Documento de Identidad:</label>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <select id="tipo_doc" name="tipo_doc" class="form-control" [(ngModel)]="dataPersona.tipo_doc"
-                            style="text-transform:uppercase;">
-                            <option value="">TIPO DE DOCUMENTO </option>
-                            <option value="CE">CARNET DE ESTRANGERIA</option>
-                            <option value="DNI">DNI</option>
-                        </select>
-                    </div>
+                        </div>
+                        <!-- DATOS DEL REPRESENTANTE DE LA EMPRESA -->
+                        <h4 class="subtitulo_empresa">REPRESENTANTE LEGAL:</h4>
+                        <div class="form-group">
+                            <label for="nombre_representante" class="form-label mt-2">Nombres:</label>
+                            <input id="nombre_representante" type="text" class="form-control"
+                                [(ngModel)]="dataPersona.nombres" name="nombre_representante"
+                                style="text-transform:uppercase;">
+                        </div>
+                        <div class="form-group">
+                            <label for="ap_paterno" class="form-label mt-3">Apellido Paterno:</label>
+                            <input id="ap_paterno" type="text" class="form-control" [(ngModel)]="dataPersona.ap_paterno"
+                                name="ap_paterno" style="text-transform:uppercase;">
+                        </div>
+                        <div class="form-group">
+                            <label for="ap_materno" class="form-label mt-3">Apellido Materno:</label>
+                            <input id="ap_materno" type="text" class="form-control" [(ngModel)]="dataPersona.ap_materno"
+                                name="ap_materno" style="text-transform:uppercase;">
+                        </div>
+                        <div class="form-group">
+                            <label for="correo_representante" class="form-label mt-3">Correo:</label>
+                            <input type="email" class="form-control" name="correo_representante"
+                                [(ngModel)]="dataPersona.correo">
+                        </div>
+                        <div class="form-group">
+                            <label for="documento_id" class="form-label mt-3">Documento de Identidad:</label>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <select id="tipo_doc" name="tipo_doc" class="form-control"
+                                        [(ngModel)]="dataPersona.tipo_doc" style="text-transform:uppercase;">
+                                        <option value="">TIPO DE DOCUMENTO </option>
+                                        <option value="CE">CARNET DE ESTRANGERIA</option>
+                                        <option value="DNI">DNI</option>
+                                    </select>
+                                </div>
 
-                    <div class="col-sm-6">
-                        <input id="documento_id" type="text" class="form-control" name="documento_id"
-                            [(ngModel)]="dataPersona.documento">
-                    </div>
+                                <div class="col-sm-6">
+                                    <input id="documento_id" type="text" class="form-control" name="documento_id"
+                                        [(ngModel)]="dataPersona.documento">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="telefono_representante" class="form-label mt-3">Telefono:</label>
+                            <input type="text" class="form-control" name="telefono_representante"
+                                [(ngModel)]="dataPersona.telefono">
+                        </div>
+
+                    </fieldset>
+                </form>
+
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-warning" (click)="ModificarDatosFormulario()">Modificar</button>
+                    <br>
                 </div>
             </div>
-            <div class="form-group mb-4">
-                <label for="telefono_representante" class="form-label mt-3">Telefono:</label>
-                <input type="text" class="form-control" name="telefono_representante"
-                    [(ngModel)]="dataPersona.telefono">
-            </div>
-
-            </fieldset>
-            </form>
-
-            <div class="d-grid gap-2">
-                <button type="button" class="btn btn-warning">Modificar</button>
-                <br>
-            </div>
         </div>
+
+
     </div>
-
-
-</div>
 </div>

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PersonaModel } from '../../../../domain/models/Persona.model';
-import { CrearPersonaMessageResponse, ModificarPersonaPersonaMessageResponse, EliminarPersonaMessageResponse } from '../../../../domain/dto/PersonasResponse.dto';
+import { CrearPersonaMessageResponse, ModificarPersonaMessageResponse, EliminarPersonaMessageResponse } from '../../../../domain/dto/PersonasResponse.dto';
 import { Observable, throwError } from 'rxjs';
 import { ErrorValidacion } from '../../../../domain/dto/ErrorValidacion.dto';
 
@@ -48,11 +48,11 @@ api_uri_persona='http://localhost:4000/api/persona'
     return this.http.get<PersonaModel>(this.api_uri_persona+`/${id_persona}`)
   }
 
-  ModificarPersona(id_persona:number,cuerpo_persona:any):Observable<ModificarPersonaPersonaMessageResponse>{
+  ModificarPersona(id_persona:number,cuerpo_persona:any):Observable<ModificarPersonaMessageResponse>{
     cuerpo_persona.nombres=cuerpo_persona.nombres.trim().toUpperCase()
     cuerpo_persona.ap_paterno=cuerpo_persona.ap_paterno.trim().toUpperCase()
     cuerpo_persona.ap_materno=cuerpo_persona.ap_materno.trim().toUpperCase()
-    return this.http.put<ModificarPersonaPersonaMessageResponse>(this.api_uri_persona+`/modificar/datos/${id_persona}`,cuerpo_persona)
+    return this.http.put<ModificarPersonaMessageResponse>(this.api_uri_persona+`/modificar/datos/${id_persona}`,cuerpo_persona)
   }
 
   eliminarPersona(id_persona:number):Observable<EliminarPersonaMessageResponse>{

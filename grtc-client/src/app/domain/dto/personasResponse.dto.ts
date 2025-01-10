@@ -15,7 +15,7 @@ export interface CrearPersonaMessageResponse{
     text: string
 }
 
-export interface ModificarPersonaPersonaMessageResponse{
+export interface ModificarPersonaMessageResponse{
     text: string
 }
 

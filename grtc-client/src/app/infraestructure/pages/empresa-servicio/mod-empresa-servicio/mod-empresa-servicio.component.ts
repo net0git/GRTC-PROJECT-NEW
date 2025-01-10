@@ -9,12 +9,13 @@ import { EmpresaServicioModel } from '../../../../domain/models/EmpresaServicio.
 import { PersonaModel } from '../../../../domain/models/Persona.model';
 import { UbigeoService } from '../../../services/local/ubigeo/ubigeo.service';
 import { EmpresaServicioService } from '../../../services/remoto/empresas-servicio/empresa-servicio.service';
-import { EmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
+import { EmpresaServicioResponse, modificarEmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
 import { EmpresaService } from '../../../services/remoto/empresa/empresa.service';
-import { EmpresaResponse } from '../../../../domain/dto/EmpresaResponse.dto';
+import { EmpresaResponse, modificarEmpresaResponse } from '../../../../domain/dto/EmpresaResponse.dto';
 import { PersonaService } from '../../../services/remoto/persona/persona.service';
-import { PersonaResponse } from '../../../../domain/dto/PersonasResponse.dto';
+import { ModificarPersonaMessageResponse, PersonaResponse } from '../../../../domain/dto/PersonasResponse.dto';
 import { FechaConFormato } from '../../../../../../public/utils/formateDate';
+import { SweetAlert } from '../../../shared/animated-messages/sweetAlert';
 
 
 
@@ -68,7 +69,7 @@ export class ModEmpresaServicioComponent implements OnInit {
   provincias: string[] = []
   distritos: string[] = []
 
-  constructor(private personaService:PersonaService, private empresaService:EmpresaService ,private empresaServicioService:EmpresaServicioService ,private ubigeoService:UbigeoService, private activatedRoute: ActivatedRoute) { }
+  constructor(private sweetAlert:SweetAlert ,private personaService:PersonaService, private empresaService:EmpresaService ,private empresaServicioService:EmpresaServicioService ,private ubigeoService:UbigeoService, private activatedRoute: ActivatedRoute) { }
 
 
   ngOnInit(): void {
@@ -90,6 +91,8 @@ export class ModEmpresaServicioComponent implements OnInit {
   onChangeProvincia(){
     this.distritos=this.ubigeoService.getDistritosPorProvincia(this.dataEmpresa.provincia)
   }
+
+  // ------------------------------------------------
 
   ObtenerEmpresaServicio(){
     const params=this.activatedRoute.snapshot.params;
@@ -148,5 +151,59 @@ export class ModEmpresaServicioComponent implements OnInit {
     }); 
   }
 
-  // 
+  // ------------------------------------------------
+  ModificarEmpresa(){
+    const params=this.activatedRoute.snapshot.params;
+    this.empresaService.ModificarEmpresa(this.dataEmpresa.id_empresa,this.dataEmpresa).subscribe({
+      next:(data:modificarEmpresaResponse)=>{
+        console.log(data)
+      },
+      error:(err)=>{
+        console.error('Error al modificar empresa:', err);
+      },
+      complete:()=>{
+        console.log('empresa modificada correctamente'); 
+        this.sweetAlert.MensajeToast('La empresa se modifico correctamente')
+      }
+    }); 
+  }
+
+  ModificarEmpresaServicio(){
+    this.empresaServicioService.ModificarEmpresaServicio(this.dataEmpresaServicio.id_empresa_servicio,this.dataEmpresaServicio).subscribe({
+      next:(data:modificarEmpresaServicioResponse)=>{
+        console.log(data)
+      },
+      error:(err)=>{
+        console.error('Error al modificar empresa:', err);
+      },
+      complete:()=>{
+        console.log('empresa modificada correctamente'); 
+        this.sweetAlert.MensajeToast('La empresa se modifico correctamente')
+      }
+    }); 
+  }
+
+  modificarDatosPersona(){
+    this.personaService.ModificarPersona(this.dataPersona.id_persona,this.dataPersona).subscribe({
+      next:(data:ModificarPersonaMessageResponse)=>{
+        console.log(data)
+      },
+      error:(err)=>{
+        console.error('Error al modificar persona:', err);
+      },
+      complete:()=>{
+        console.log('persona modificada correctamente'); 
+        this.sweetAlert.MensajeToast('La persona se modifico correctamente')
+      }
+    }); 
+  }
+  // -----------------------------------------------------------------------------
+  ModificarDatosFormulario(){
+    this.ModificarEmpresa()
+    this.ModificarEmpresaServicio()
+    this.modificarDatosPersona()
+    
+    
+  }
+
 }
