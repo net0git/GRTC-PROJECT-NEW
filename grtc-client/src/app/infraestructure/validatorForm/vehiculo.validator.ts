@@ -58,9 +58,6 @@ export function ValidadVehiculoForm(cuerpo_vehiculo: VehiculoModel): ErrorValida
     if (!cuerpo_vehiculo.id_resolucion) {
       errorValidacion.push({ campo: 'id_resolucion', mensaje: 'Campo requerido' });
     }
-    if (!cuerpo_vehiculo.id_tuc) {
-      errorValidacion.push({ campo: 'id_tuc', mensaje: 'Campo requerido' });
-    }
   
     return errorValidacion;
   }

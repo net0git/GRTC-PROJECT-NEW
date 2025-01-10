@@ -13,7 +13,7 @@ import { ValidarModeloForm } from '../../../validatorForm/modelo.validator';
 import { ValidarMarcaForm } from '../../../validatorForm/marca.validator';
 
 import { ListarMarcasResponse } from '../../../../domain/dto/MarcaResponse.dto';
-import { ListaVehiculosResponse } from '../../../../domain/dto/VehiculoResponse.dto';
+import { ListaVehiculosDetalleResponse, ListaVehiculosResponse, CrearVehiculoMessageResponse } from '../../../../domain/dto/VehiculoResponse.dto';
 
 
 
@@ -60,7 +60,7 @@ export class VehiculoService {
     return this.http.post<CrearModeloMessageResponse>(this.api_url_modelo, cuerpo_modelo);
   }
 
-  CrearVehiculo(cuerpo_vehiculo: VehiculoModel) {
+  CrearVehiculo(cuerpo_vehiculo: VehiculoModel): Observable<CrearVehiculoMessageResponse> {
     const erroresValidacion = ValidadVehiculoForm(cuerpo_vehiculo);
       if (erroresValidacion.length > 0) {
         let errorMensaje = '';
@@ -75,19 +75,18 @@ export class VehiculoService {
       cuerpo_vehiculo.modelo = cuerpo_vehiculo.modelo.trim();
       cuerpo_vehiculo.marca = cuerpo_vehiculo.marca.trim();
       cuerpo_vehiculo.color = cuerpo_vehiculo.color.trim();
-      cuerpo_vehiculo.modalidad = cuerpo_vehiculo.modalidad.trim().toUpperCase();
-      cuerpo_vehiculo.estado = cuerpo_vehiculo.estado.trim().toUpperCase();
-      cuerpo_vehiculo.categoria = cuerpo_vehiculo.categoria.trim().toLocaleUpperCase();
-      cuerpo_vehiculo.nro_chasis = cuerpo_vehiculo.nro_chasis.trim().toLocaleUpperCase();
-      cuerpo_vehiculo.nro_asientos = cuerpo_vehiculo.nro_asientos.trim();
       cuerpo_vehiculo.serie = cuerpo_vehiculo.serie.trim().toLocaleUpperCase();
       cuerpo_vehiculo.carroceria = cuerpo_vehiculo.carroceria.trim().toLocaleUpperCase();
       
-    return this.http.post(this.api_url_vehiculo, cuerpo_vehiculo);
+    return this.http.post<CrearVehiculoMessageResponse>(this.api_url_vehiculo, cuerpo_vehiculo);
+  }
+
+  ObeterDetalleVehiculosPorEmpresaServicio(id_empresa_servicio: number):Observable<ListaVehiculosDetalleResponse[]> {
+    return this.http.get<ListaVehiculosDetalleResponse[]>(this.api_url_vehiculo + '/empresaservicio/' + id_empresa_servicio);
   }
 
   ObeterVehiculosPorEmpresaServicio(id_empresa_servicio: number):Observable<ListaVehiculosResponse[]> {
-    return this.http.get<ListaVehiculosResponse[]>(this.api_url_vehiculo + '/empresaservicio/' + id_empresa_servicio);
+    return this.http.get<ListaVehiculosResponse[]>(this.api_url_vehiculo + '/lista/empresaservicio/' + id_empresa_servicio);
   }
 
   ObternerVehiculo(id_vehiculo: number) {

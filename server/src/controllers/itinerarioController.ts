@@ -81,9 +81,9 @@ class ItinerarioController{
         try {
             const {id} =req.params;
             
-            const consulta='DELETE FROM t_detalle_ruta_itinerario WHERE id_detalle_ruta_itinerario  =$1';
+            const consulta='DELETE FROM t_detalle_ruta_itinerario WHERE id_detalle_ruta_itinerario =$1';
 
-            db.query(consulta, [id] ,(error, resultado) => {
+            db.query(consulta, [id] ,(error) => {
                 if (error) {
                     console.error('Error al eliminar itinerario :', error);
                     res.json({ text: 'error' });

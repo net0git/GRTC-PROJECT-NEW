@@ -6,32 +6,109 @@ import { ListaVehiculosResponse } from '../../../../../domain/dto/VehiculoRespon
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { VehiculoModel } from '../../../../../domain/models/Vehiculo.model';
+import { ListarMarcasResponse } from '../../../../../domain/dto/MarcaResponse.dto';
+import { ListarModelosResponse } from '../../../../../domain/dto/ModeloResponse.dto';
+import { ResolucionService } from '../../../../services/remoto/resolucion/resolucion.service';
+import { ListaResolucionResponse } from '../../../../../domain/dto/ResolucionResponse.dto';
+import { ListaItinerarioResponse } from '../../../../../domain/dto/ItinerarioResponse.dto';
+import { ItinerarioService } from '../../../../services/remoto/itinerario/itinerario.service';
+import { SweetAlert } from '../../../../shared/animated-messages/sweetAlert';
+import { SoloLetrasDirective } from '../../../../directives/solo-letras.directive';
+import { SoloNumerosDirective } from '../../../../directives/solo-numeros.directive';
+import { PlacaDirective } from '../../../../directives/placa.directive';
+import { SoloLetrasGuionDirective } from '../../../../directives/solo-letras-guion.directive';
+import { HistorialVehicularModel } from '../../../../../domain/models/HistorialVehicular.model';
+import { HistorialVehicularService } from '../../../../services/remoto/historial-vehicular/historial-vehicular.service';
+
 
 @Component({
   selector: 'app-vehiculos',
   standalone: true,
-  imports: [NavegadorComponent, SubnavegadorComponent,CommonModule,FormsModule],
+  imports: [NavegadorComponent, SubnavegadorComponent, CommonModule, FormsModule, SoloLetrasDirective, SoloNumerosDirective, SoloLetrasGuionDirective, PlacaDirective],
   templateUrl: './vehiculos.component.html',
   styleUrl: './vehiculos.component.css'
 })
-export class VehiculosComponent implements OnInit{
+export class VehiculosComponent implements OnInit {
 
   id_empresa_servicio_temp: string = "";
   listaVehiculos: ListaVehiculosResponse[] = [];
-  
-  constructor(private vehiculoService: VehiculoService, private activatedRoute: ActivatedRoute) { }
+  lista_marcas: ListarMarcasResponse[] = [];
+  lista_modelos: ListarModelosResponse[] = [];
+  lista_resoluciones: ListaResolucionResponse[] = [];
+  lista_itinerarios: ListaItinerarioResponse[] = [];
 
-  ngOnInit(): void {
-    this.ListarVehiculos()
+  dataVehiculo: VehiculoModel = {
+
+    id_vehiculo: 0,
+    placa: "",
+    nro_part_reg: "",
+    modalidad: "",
+    estado: "",
+
+    carga: 0,
+    peso: 0,
+    categoria: "",
+    anio_fabricacion: "",
+    color: "",
+    nro_chasis: "",
+    nro_asientos: "",
+    marca: "",
+    modelo: "",
+    serie: "",
+    carroceria: "",
+
+    id_empresa_servicio: 0,
+    id_detalle_ruta_itinerario: 0,
+    id_resolucion: 0,
+
   }
 
-  ListarVehiculos() {
+  
+
+  idMarcaSeleccionada: number = 0;
+  idModeloSeleccionado: number = 0;
+  modificar: boolean = false;
+
+  constructor(private historialVehicularService:HistorialVehicularService ,private sweetAlert:SweetAlert, private itinerarioService:ItinerarioService, private resolucionService: ResolucionService,private vehiculoService: VehiculoService, private activatedRoute: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    this.listarVehiculos()
+    this.listarMarcas()
+    this.listaResoluciones()
+    this.listaItinerarios()
+  }
+
+  listarMarcas() {
+    this.vehiculoService.ListarMarcas().subscribe({
+      next: (data: ListarMarcasResponse[]) => {
+        this.lista_marcas = data
+      },
+      error: (err) => {
+        console.error('Error al obtener marcas:', err);
+      }
+    })
+  }
+
+
+  listarModelos(id_marca: number) {
+    this.vehiculoService.ObtenerModelosPorMarca(id_marca).subscribe({
+      next: (data: ListarModelosResponse[]) => {
+        this.lista_modelos = data
+      },
+      error: (err) => {
+        console.error('Error al obtener modelos:', err);
+      }
+    })
+  }
+
+  listarVehiculos() {
     const params = this.activatedRoute.snapshot.params;
     this.id_empresa_servicio_temp = params['id_empresa_servicio'].toString();
     this.vehiculoService.ObeterVehiculosPorEmpresaServicio(params['id_empresa_servicio']).subscribe({
       next: (data: ListaVehiculosResponse[]) => {
         this.listaVehiculos = data
-        console.log(this.listaVehiculos)
+        console.log(data)
       },
       error: (err) => {
         console.error('Error al obtener vehiculos:', err);
@@ -41,4 +118,190 @@ export class VehiculosComponent implements OnInit{
       }
     });
   }
+
+  onMarcaSeleccionada() {
+    console.log(this.idMarcaSeleccionada)
+    this.listarModelos(this.idMarcaSeleccionada)
+    this.dataVehiculo.marca = this.lista_marcas.find(x => x.id_marca == this.idMarcaSeleccionada)?.nombre_marca || '';
+  }
+
+  onModeloSeleccionado() {
+    console.log(this.idModeloSeleccionado)
+    this.dataVehiculo.modelo = this.lista_modelos.find(x => x.id_modelo == this.idModeloSeleccionado)?.nombre_modelo || '';
+  }
+
+
+  obternerDatosVehiculo(vehiculo: any) {
+    if (!vehiculo) {
+      console.error('El objeto vehiculo es inválido:', vehiculo);
+      return;
+    }
+
+    Object.assign(this.dataVehiculo, vehiculo);
+    console.log("datos vehiculo", this.dataVehiculo)
+
+    this.idMarcaSeleccionada = this.lista_marcas.find(x => x.nombre_marca == vehiculo.marca)?.id_marca || 0;
+
+    if (this.idMarcaSeleccionada > 0) {
+      this.vehiculoService.ObtenerModelosPorMarca(this.idMarcaSeleccionada).subscribe({
+        next: (data: ListarModelosResponse[]) => {
+          this.lista_modelos = data;
+          this.idModeloSeleccionado = this.lista_modelos.find(x => x.nombre_modelo == vehiculo.modelo)?.id_modelo || 0;
+          this.onModeloSeleccionado();
+        },
+        error: (err) => {
+          console.error('Error al obtener modelos:', err);
+        }
+      });
+    }
+
+    this.modificar = true
+
+  }
+
+  GuardarDatosFormulario() {
+    if (this.modificar) {
+       this.modificarVehiculo()
+    } else {
+      this.crearVehiculo()
+    }
+  }
+
+  crearVehiculo() {
+    const params = this.activatedRoute.snapshot.params;
+    this.dataVehiculo.id_empresa_servicio = params['id_empresa_servicio'];
+    console.log(this.dataVehiculo)
+    this.vehiculoService.CrearVehiculo(this.dataVehiculo).subscribe({
+      next: (res) => {
+        console.log(res)
+      },
+      error: (err) => {
+        alert(err)
+      },
+      complete: () => {
+        console.log('Vehiculos obtenidos correctamente');
+        this.limpiar()
+        this.sweetAlert.MensajeToast('Vehiculo creado correctamente')
+        this.crearRegistroHistorialVehicular()
+        this.listarVehiculos()
+      }
+    });
+  }
+
+  crearRegistroHistorialVehicular(){
+    const params = this.activatedRoute.snapshot.params;
+    let id_resolucion = (<HTMLInputElement>document.getElementById('resolucion')).value;
+    let id_itinerario = (<HTMLInputElement>document.getElementById('itinerario')).value;
+    let estado = (<HTMLInputElement>document.getElementById('estado')).value;
+    let placa = (<HTMLInputElement>document.getElementById('placa')).value;
+    let ruta=this.lista_itinerarios.filter((itinerario: { id_detalle_ruta_itinerario: number; }) => itinerario.id_detalle_ruta_itinerario == parseInt(id_itinerario))[0].itinerario;
+    let resolucion = this.lista_resoluciones.filter((resolucion: { id_resolucion: number; }) => resolucion.id_resolucion == parseInt(id_resolucion));
+
+   let dataHistorialVehicular: HistorialVehicularModel = {
+      id_empresa_servicio: params['id_empresa_servicio'],
+      condicion: estado,
+      nombre_resolucion: resolucion[0].nombre_resolucion,
+      fecha_resolucion: new Date(resolucion[0].fecha_resolucion) ,
+      ruta: ruta,
+      placa: placa,
+      observaciones: ""
+    }
+    console.log(dataHistorialVehicular)
+
+    this.historialVehicularService.CrearHistorialVehicular(dataHistorialVehicular).subscribe({
+      next: (res) => {
+        console.log(res)
+      },
+      error: (err) => {
+        alert(err)
+      },
+      complete: () => {
+        console.log('Historial vehicular creado correctamente');
+      }
+    });
+  }
+
+  modificarVehiculo() {
+
+    this.vehiculoService.ModificarVehiculo(this.dataVehiculo.id_vehiculo, this.dataVehiculo).subscribe({
+      next: (res) => {
+        console.log(res)
+      },
+      error: (err) => {
+        alert(err)
+      },
+      complete: () => {
+        console.log('Vehiculos obtenidos correctamente');
+        this.limpiar()
+        this.sweetAlert.MensajeToast('Vehiculo modificado correctamente')
+        this.listarVehiculos()
+      }
+    });
+  }
+
+  listaResoluciones(){
+    const params = this.activatedRoute.snapshot.params;
+    this.resolucionService.ObternerResolucionesPorEmpresaServicio(params['id_empresa_servicio']).subscribe({
+      next: (data) => {
+        console.log(data)
+        this.lista_resoluciones = data
+      },
+      error: (err) => {
+        console.log(err)
+      },
+      complete: () => {
+        console.log('complete')
+      }
+
+    })  
+  }
+
+  listaItinerarios(){
+    const params = this.activatedRoute.snapshot.params;
+    this.itinerarioService.listarItinerarioByEmpresasServicio(params['id_empresa_servicio']).subscribe({
+      next:(data:ListaItinerarioResponse[])=>{
+        this.lista_itinerarios=data;
+        console.log(this.lista_itinerarios)
+      },
+      error:(err)=>{
+        console.error('Error al obtener Itinerarios:', err);
+      },
+      complete:()=>{
+        console.log('Itinerarios obtenidos correctamente'); 
+      }
+    });
+  }
+
+
+  limpiar() {
+    this.dataVehiculo.id_vehiculo= 0
+    this.dataVehiculo.placa= "",
+    this.dataVehiculo.nro_part_reg= "",
+    this.dataVehiculo.modalidad= "",
+    this.dataVehiculo.estado= "",
+
+    this.dataVehiculo.carga= 0,
+    this.dataVehiculo.peso= 0,
+    this.dataVehiculo.categoria= "",
+    this.dataVehiculo.anio_fabricacion= "",
+    this.dataVehiculo.color= "",
+    this.dataVehiculo.nro_chasis= "",
+    this.dataVehiculo.nro_asientos= "",
+    this.dataVehiculo. marca= "",
+    this.dataVehiculo.modelo= "",
+    this.dataVehiculo.serie= "",
+    this.dataVehiculo.carroceria= "",
+
+    this.dataVehiculo.id_empresa_servicio= 0,
+    this.dataVehiculo.id_detalle_ruta_itinerario= 0,
+    this.dataVehiculo.id_resolucion= 0
+
+    this.idMarcaSeleccionada = 0;
+    this.idModeloSeleccionado = 0;
+
+    this.modificar = false
+  }
+
+
+
 }

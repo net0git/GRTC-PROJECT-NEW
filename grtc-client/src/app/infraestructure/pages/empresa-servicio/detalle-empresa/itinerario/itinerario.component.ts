@@ -141,24 +141,25 @@ export class ItinerarioComponent implements OnInit {
   }
 
   eliminarItinerario(id_itinerario: number) {
-    console.log(id_itinerario)
+    let eliminado=false
     this.itinerarioService.eliminarItinerario(id_itinerario).subscribe({
       next: (res: EliminarItinerarioMessageResponse) => {
-        console.log('mensjade de eliminacion:',res)
-        // if (res.text === 'error') {
-        //   this.sweetAlert.MensajeError('Error al eliminar itinerario')
-        // }else{
-        //   this.sweetAlert.MensajeToast('Itinerario eliminado correctamente')
-        // }
+        if (res.text !== 'error') {
+          eliminado=true
+        }
       },
       error: (err) => {
         console.error('Error al eliminar itinerario:', err);
       },
       complete: () => {
-        console.log('Itinerario eliminado correctamente');
-        this.limpiar()
-        this.sweetAlert.MensajeToast('Itinerario eliminado correctamente')
-        this.listarItinerarios()
+        if(eliminado){  
+          this.limpiar()
+          this.sweetAlert.MensajeToast('Itinerario eliminado correctamente')
+          this.listarItinerarios()
+        }else{
+          this.limpiar()
+          this.sweetAlert.MensajeError('No es posible eliminar un itinerario que esta activo')
+        }
       }
     });
   }

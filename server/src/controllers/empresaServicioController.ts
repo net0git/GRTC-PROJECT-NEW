@@ -28,6 +28,7 @@ class EmpresaServicioController{
             res.status(500).json({ error: 'Error interno del servidor' });
          }
     }
+    
     public async ObtenerEmpresaServicio(req:Request, res:Response):Promise<any>{
         try {
             //devuelve todas las empresas que estan registradas como servicio, juntamente con su estado de acuerdo a la fecha inicial de apertura

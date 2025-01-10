@@ -16,7 +16,7 @@ import { ItinerarioService } from '../../../../services/remoto/itinerario/itiner
 import { VehiculoService } from '../../../../services/remoto/vehiculo/vehiculo.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ListaVehiculosResponse } from '../../../../../domain/dto/VehiculoResponse.dto';
+import { ListaVehiculosDetalleResponse } from '../../../../../domain/dto/VehiculoResponse.dto';
 import { HistorialVehicularService } from '../../../../services/remoto/historial-vehicular/historial-vehicular.service';
 import { HistorialVehicularResponse } from '../../../../../domain/dto/HistorialVehicularResponse.dto';
 import {Router} from '@angular/router'
@@ -65,7 +65,7 @@ export class DetalleEmpresaServicioComponent implements OnInit {
   listaConductores:ListaConductoresResponse[]=[];
   listaArrendamientos:ListaArrendamientoResponse[]=[];
   listaItinerarios:ListaItinerarioResponse[]=[];
-  listaVehiculos:ListaVehiculosResponse[]=[];
+  listaVehiculos:ListaVehiculosDetalleResponse[]=[];
   listaHistorialVehicular:HistorialVehicularResponse[]=[];
 
   constructor(private sweetAlert:SweetAlert,private personaService:PersonaService,private router:Router,private historialVehicularService:HistorialVehicularService,private vehiculoService:VehiculoService,private itinerarioService:ItinerarioService, private arrendamientoService:ArrendamientoService,private conductorService:ConductorService ,private sanitizer: DomSanitizer, private empresaServicioService:EmpresaServicioService,private activatedRoute:ActivatedRoute, private resolucionService:ResolucionService){}
@@ -169,8 +169,8 @@ export class DetalleEmpresaServicioComponent implements OnInit {
   }  
 
   listarVehiculosPorEmpresaServicio(id_empresa_servicio:number){
-    this.vehiculoService.ObeterVehiculosPorEmpresaServicio(id_empresa_servicio).subscribe({
-      next:(data:ListaVehiculosResponse[])=>{
+    this.vehiculoService.ObeterDetalleVehiculosPorEmpresaServicio(id_empresa_servicio).subscribe({
+      next:(data:ListaVehiculosDetalleResponse[])=>{
         this.listaVehiculos=data;
         console.log(data)
       },

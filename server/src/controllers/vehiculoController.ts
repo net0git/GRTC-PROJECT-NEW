@@ -4,15 +4,15 @@ import db from '../database/database'; // Ruta al archivo db.ts
 class VehiculoController{
     public async CrearVehiculo(req: Request, res: Response): Promise<void> {
         try {
-            const { placa, categoria, anio_fabricacion, peso, carga, serie, nro_asientos, color, carroceria, modalidad, nro_part_reg, id_detalle_ruta_itinerario, id_tuc, id_resolucion, estado, marca, modelo, id_empresa_servicio, nro_chasis} = req.body;
+            const { placa, categoria, anio_fabricacion, peso, carga, serie, nro_asientos, color, carroceria, modalidad, nro_part_reg, id_detalle_ruta_itinerario, id_resolucion, estado, marca, modelo, id_empresa_servicio, nro_chasis} = req.body;
             const consulta = `
                     INSERT INTO t_vehiculo(
-                            placa, categoria, anio_fabricacion, peso, carga, serie, nro_asientos, color, carroceria, modalidad, nro_part_reg, id_detalle_ruta_itinerario, id_tuc, id_resolucion, estado, marca, modelo, id_empresa_servicio, nro_chasis)
-                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16 ,$17 ,$18, $19);
+                            placa, categoria, anio_fabricacion, peso, carga, serie, nro_asientos, color, carroceria, modalidad, nro_part_reg, id_detalle_ruta_itinerario, id_resolucion, estado, marca, modelo, id_empresa_servicio, nro_chasis)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16 ,$17 ,$18);
            
             `;
             
-            const valores = [placa, categoria, anio_fabricacion, peso, carga, serie, nro_asientos, color, carroceria, modalidad, nro_part_reg, id_detalle_ruta_itinerario, id_tuc, id_resolucion, estado, marca, modelo, id_empresa_servicio, nro_chasis];
+            const valores = [placa, categoria, anio_fabricacion, peso, carga, serie, nro_asientos, color, carroceria, modalidad, nro_part_reg, id_detalle_ruta_itinerario, id_resolucion, estado, marca, modelo, id_empresa_servicio, nro_chasis];
             
             db.query(consulta, valores, (error, resultado) => {
                 if (error) {
@@ -108,6 +108,25 @@ class VehiculoController{
             res.status(500).json({ error: 'Error interno del servidor'});
         }    
     }    
+
+    public async listarVehiculosEmpresaServicio(req:Request, res:Response):Promise<any>{
+        try {     
+
+            const { id_empresa_servicio } = req.params;
+            const consulta = `
+                        SELECT 
+                            *  
+                        FROM 
+                            t_vehiculo 
+                        WHERE
+                            id_empresa_servicio = $1 `;
+            const vehiculos=await db.query(consulta,[id_empresa_servicio])
+            res.json(vehiculos['rows']);
+        }catch (error) {
+            console.error('Error al obtener vehiculos:', error);
+            res.status(500).json({ error: 'Error interno del servidor'});
+        }    
+    } 
 
     public async obtenerVehiculosDetalleByEmpresaServicio(req:Request, res:Response):Promise<any>{
         try {

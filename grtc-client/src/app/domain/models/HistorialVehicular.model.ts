@@ -1,6 +1,5 @@
-export interface HistorialVehicularResponse {
+export interface HistorialVehicularModel {
 
-    id_historial: number;
     id_empresa_servicio: number;
     condicion: string;
     nombre_resolucion: string;
@@ -9,8 +8,4 @@ export interface HistorialVehicularResponse {
     placa: string;
     observaciones: string;
 
-}
-
-export interface CrearHistorialVehicularMessageResponse{
-    text: string
 }

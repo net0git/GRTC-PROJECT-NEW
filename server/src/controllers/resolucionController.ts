@@ -125,7 +125,14 @@ class ResoucionController {
         try {
             const { id_empresa_servicio } = req.params;
             const consulta = `
-                SELECT r.*
+                SELECT 
+                    r.id_resolucion,
+                    r.anio_resolucion,
+                    r.nro_resolucion,
+                    r.fecha_resolucion,
+                    r.tomo_resolucion,
+                    r.nombre_resolucion,
+                    r.descripcion
                 FROM d_resolucion r
                 JOIN t_empresa_servicio_resoluciones ir ON r.id_resolucion = ir.id_resolucion
                 WHERE ir.id_empresa_servicio =$1
