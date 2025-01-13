@@ -91,9 +91,9 @@
                                 </ul>
                                 <div class="text-start panel-resolucion">
 
-                                    <button class="my-button_resolucion" type="button"><i
-                                            class="bi bi-filetype-pdf icon-custom-pdf"> </i> ver resolucion </button>
-                                    <button class="my-button_reporte"><i
+                                    <button class="my-button_resolucion" type="button" (click)="obtenerResolucionAutorizacion()"><i
+                                            class="bi bi-filetype-pdf icon-custom-pdf" > </i> ver resolucion </button>
+                                    <button class="my-button_reporte" (click)="generarReportePDF()"><i
                                             class="bi bi-clipboard-data icon-custom-pdf"></i> Generar Reporte</button>
 
                                 </div>
@@ -121,8 +121,7 @@
                                                 <td>{{resolucion.nro_resolucion}}</td>
                                                 <td>{{resolucion.anio_resolucion}}</td>
                                                 <td>{{resolucion.tomo_resolucion}}</td>
-                                                <td class="text-primary text_documento">{{resolucion.nombre_resolucion}}
-                                                </td>
+                                                <td class="text-primary text_documento" (click)="obternerResolucionById(resolucion.id_resolucion)">{{resolucion.nombre_resolucion}}</td>
                                                 <td>{{resolucion.descripcion}}</td>
                                                 <td> <i class="bi bi-pencil-square hand_cursor"></i></td>
                                                 <!-- <td ><img src="assets/imagenes/iconos/modificar_doc.png" width="25px" ></td> -->

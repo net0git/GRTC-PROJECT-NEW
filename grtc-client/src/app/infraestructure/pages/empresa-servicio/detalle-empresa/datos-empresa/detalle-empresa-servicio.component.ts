@@ -19,12 +19,12 @@ import { CommonModule } from '@angular/common';
 import { ListaVehiculosDetalleResponse } from '../../../../../domain/dto/VehiculoResponse.dto';
 import { HistorialVehicularService } from '../../../../services/remoto/historial-vehicular/historial-vehicular.service';
 import { HistorialVehicularResponse } from '../../../../../domain/dto/HistorialVehicularResponse.dto';
-import {Router} from '@angular/router'
+import { Router } from '@angular/router'
 import { EliminarPersonaMessageResponse } from '../../../../../domain/dto/PersonasResponse.dto';
 import { SweetAlert } from '../../../../shared/animated-messages/sweetAlert';
-
-
-
+import { ResolucionModel } from '../../../../../domain/models/Resolucion.model';
+import { ShowDocumentoPdf, generatePDFreporte} from '../../../../../../../public/utils/pdfFunctions';
+import { CredencialesService } from '../../../../services/local/credenciales/credenciales.service';
 
 
 
@@ -32,13 +32,13 @@ import { SweetAlert } from '../../../../shared/animated-messages/sweetAlert';
 @Component({
   selector: 'app-detalle-empresa-servicio',
   standalone: true,
-  imports: [NavegadorComponent,SubnavegadorComponent,CommonModule],
+  imports: [NavegadorComponent, SubnavegadorComponent, CommonModule],
   templateUrl: './detalle-empresa-servicio.component.html',
   styleUrl: './detalle-empresa-servicio.component.css'
 })
 export class DetalleEmpresaServicioComponent implements OnInit {
 
-  pdfUrl: SafeResourceUrl | null =null;
+  pdfUrl: SafeResourceUrl | null = null;
   dataEmpresaDetalle: DetalleEmpresaServicioResponse = {
     id_empresa_servicio: 0,          // ID inicializado como 0
     id_tipo_servicio: 0,             // ID del tipo de servicio inicializado como 0
@@ -61,14 +61,25 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     porcentaje: 0                    // Porcentaje inicializado como 0
   };
 
-  listaResoluciones:ListaResolucionResponse[]=[];
-  listaConductores:ListaConductoresResponse[]=[];
-  listaArrendamientos:ListaArrendamientoResponse[]=[];
-  listaItinerarios:ListaItinerarioResponse[]=[];
-  listaVehiculos:ListaVehiculosDetalleResponse[]=[];
-  listaHistorialVehicular:HistorialVehicularResponse[]=[];
+  listaResoluciones: ListaResolucionResponse[] = [];
+  listaConductores: ListaConductoresResponse[] = [];
+  listaArrendamientos: ListaArrendamientoResponse[] = [];
+  listaItinerarios: ListaItinerarioResponse[] = [];
+  listaVehiculos: ListaVehiculosDetalleResponse[] = [];
+  listaHistorialVehicular: HistorialVehicularResponse[] = [];
 
-  constructor(private sweetAlert:SweetAlert,private personaService:PersonaService,private router:Router,private historialVehicularService:HistorialVehicularService,private vehiculoService:VehiculoService,private itinerarioService:ItinerarioService, private arrendamientoService:ArrendamientoService,private conductorService:ConductorService ,private sanitizer: DomSanitizer, private empresaServicioService:EmpresaServicioService,private activatedRoute:ActivatedRoute, private resolucionService:ResolucionService){}
+  resolucion: ResolucionModel = {
+    id_resolucion: 0,
+    anio_resolucion: '',
+    descripcion: '',
+    documento: '',
+    fecha_resolucion: '',
+    nombre_resolucion: '',
+    nro_resolucion: 0,
+    tomo_resolucion: 0
+  };
+
+  constructor(private credencialesService:CredencialesService,private sweetAlert: SweetAlert, private personaService: PersonaService, private router: Router, private historialVehicularService: HistorialVehicularService, private vehiculoService: VehiculoService, private itinerarioService: ItinerarioService, private arrendamientoService: ArrendamientoService, private conductorService: ConductorService, private sanitizer: DomSanitizer, private empresaServicioService: EmpresaServicioService, private activatedRoute: ActivatedRoute, private resolucionService: ResolucionService) { }
 
   ngOnInit(): void {
     this.detalleEmpresa();
@@ -83,20 +94,20 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     console.log(index)
     this.isExpanded[index] = !this.isExpanded[index];
   }
-//--------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------
 
-  detalleEmpresa(){
-    const params=this.activatedRoute.snapshot.params
+  detalleEmpresa() {
+    const params = this.activatedRoute.snapshot.params
     this.empresaServicioService.DetalleEmpresaServicio(params['id_empresa_servicio']).subscribe({
-      next:(res:DetalleEmpresaServicioResponse)=>{
-        this.dataEmpresaDetalle=res;
+      next: (res: DetalleEmpresaServicioResponse) => {
+        this.dataEmpresaDetalle = res;
         console.log(this.dataEmpresaDetalle);
       },
-      error:(err)=>{
+      error: (err) => {
         console.error('Error al obtener detalle de empresa:', err);
       },
-      complete:()=>{
-        console.log('Detalle de empresa obtenido correctamente'); 
+      complete: () => {
+        console.log('Detalle de empresa obtenido correctamente');
         this.listarResolucionesEmpresaServicio(this.dataEmpresaDetalle.id_empresa_servicio);
         this.listarConductores(this.dataEmpresaDetalle.id_empresa_servicio);
         this.listarArrendamientos(this.dataEmpresaDetalle.id_empresa_servicio);
@@ -105,95 +116,104 @@ export class DetalleEmpresaServicioComponent implements OnInit {
         this.listarHistorialVehicular(this.dataEmpresaDetalle.id_empresa_servicio);
       }
     });
-  } 
+  }
 
-  listarResolucionesEmpresaServicio(id_empresa_servicio:number){
+  listarResolucionesEmpresaServicio(id_empresa_servicio: number) {
     this.resolucionService.ObternerResolucionesPorEmpresaServicio(id_empresa_servicio).subscribe({
-      next:(data:ListaResolucionResponse[])=>{
-        this.listaResoluciones=data;
+      next: (data: ListaResolucionResponse[]) => {
+        this.listaResoluciones = data;
         console.log('Resoluciones obtenidas:', data)
+
       },
-      error:(err)=>{
+      error: (err) => {
         console.error('Error al obtener resoluciones:', err);
       },
-      complete:()=>{
-        console.log('Resoluciones obtenidas correctamente'); 
+      complete: () => {
+        console.log('Resoluciones obtenidas correctamente');
+        // Filtrado de resoluciones que coincidan con la fecha_inicial
+        const fechaInicial = this.dataEmpresaDetalle.fecha_inicial;
+        const resolucionesFiltradas = this.listaResoluciones.filter(resolucion =>
+          new Date(resolucion.fecha_resolucion).getTime() === new Date(fechaInicial).getTime()
+        );
+        console.log('Resolucion filtrada:', resolucionesFiltradas[0].id_resolucion);
+        this.obternerResolucionById(resolucionesFiltradas[0].id_resolucion)
       }
+
     });
 
   }
 
-  listarConductores(id_empresa_servicio:number){
+  listarConductores(id_empresa_servicio: number) {
     this.conductorService.listarConductoresByEmpresaServicio(id_empresa_servicio).subscribe({
-      next:(res:ListaConductoresResponse[])=>{
-        this.listaConductores=res;
+      next: (res: ListaConductoresResponse[]) => {
+        this.listaConductores = res;
         console.log(this.listaConductores)
       },
-      error:(err)=>{
+      error: (err) => {
         console.error('Error al obtener conductores:', err);
       },
-      complete:()=>{
-        console.log('Conductores obtenidos correctamente'); 
+      complete: () => {
+        console.log('Conductores obtenidos correctamente');
       }
     });
   }
 
-  listarArrendamientos(id_empresa_servicio:number){
+  listarArrendamientos(id_empresa_servicio: number) {
     this.arrendamientoService.ListarArrendamientoByEmpresaServicio(id_empresa_servicio).subscribe({
-      next:(data:ListaArrendamientoResponse[])=>{
-        this.listaArrendamientos=data;
+      next: (data: ListaArrendamientoResponse[]) => {
+        this.listaArrendamientos = data;
         console.log(this.listaArrendamientos);
       },
-      error:(err)=>{
+      error: (err) => {
         console.error('Error al obtener arrendamientos:', err);
       },
-      complete:()=>{
-        console.log('Arrendamientos obtenidos correctamente'); 
-      }
-    });  
-  }
-
-  listarItinerarios(id_empresa_servicio:number){
-    this.itinerarioService.listarItinerarioByEmpresasServicio(id_empresa_servicio).subscribe({
-      next:(data:ListaItinerarioResponse[])=>{
-        this.listaItinerarios=data;
-        console.log('Arrendamientos obtenidos correctamente',data);
-      },
-      error:(err)=>{
-        console.error('Error al obtener arrendamientos:', err);
-      },
-      complete:()=>{
-        console.log('Arrendamientos obtenidos correctamente'); 
+      complete: () => {
+        console.log('Arrendamientos obtenidos correctamente');
       }
     });
-  }  
+  }
 
-  listarVehiculosPorEmpresaServicio(id_empresa_servicio:number){
+  listarItinerarios(id_empresa_servicio: number) {
+    this.itinerarioService.listarItinerarioByEmpresasServicio(id_empresa_servicio).subscribe({
+      next: (data: ListaItinerarioResponse[]) => {
+        this.listaItinerarios = data;
+        console.log('Arrendamientos obtenidos correctamente', data);
+      },
+      error: (err) => {
+        console.error('Error al obtener arrendamientos:', err);
+      },
+      complete: () => {
+        console.log('Arrendamientos obtenidos correctamente');
+      }
+    });
+  }
+
+  listarVehiculosPorEmpresaServicio(id_empresa_servicio: number) {
     this.vehiculoService.ObeterDetalleVehiculosPorEmpresaServicio(id_empresa_servicio).subscribe({
-      next:(data:ListaVehiculosDetalleResponse[])=>{
-        this.listaVehiculos=data;
+      next: (data: ListaVehiculosDetalleResponse[]) => {
+        this.listaVehiculos = data;
         console.log(data)
       },
-      error:(err)=>{
+      error: (err) => {
         console.error('Error al obtener vehiculos:', err);
       },
-      complete:()=>{
-        console.log('Vehiculos obtenidos correctamente'); 
+      complete: () => {
+        console.log('Vehiculos obtenidos correctamente');
       }
     });
   }
 
-  listarHistorialVehicular(id_empresa_servicio:number){
+  listarHistorialVehicular(id_empresa_servicio: number) {
     this.historialVehicularService.ObtenerHistorialVehicularPorEmpresa(id_empresa_servicio).subscribe({
-      next:(res:HistorialVehicularResponse[])=>{
-        this.listaHistorialVehicular=res;
-        console.log("historial vehicular"+this.listaHistorialVehicular);
+      next: (res: HistorialVehicularResponse[]) => {
+        this.listaHistorialVehicular = res;
+        console.log("historial vehicular" + this.listaHistorialVehicular);
       },
-      error:(err)=>{
+      error: (err) => {
         console.error('Error al obtener historial vehicular:', err);
       },
-      complete:()=>{
-        console.log('historial vehicular obtenido correctamente'); 
+      complete: () => {
+        console.log('historial vehicular obtenido correctamente');
       }
     });
   }
@@ -240,29 +260,65 @@ export class DetalleEmpresaServicioComponent implements OnInit {
       });
   }
 
-  modificarEmpresa(){
-    const params=this.activatedRoute.snapshot.params
-    this.router.navigate(['principal/mod-empresa-servicio/',params['id_empresa_servicio']]);
+  modificarEmpresa() {
+    const params = this.activatedRoute.snapshot.params
+    this.router.navigate(['principal/mod-empresa-servicio/', params['id_empresa_servicio']]);
   }
 
-  modificarConductores(){
-    const params=this.activatedRoute.snapshot.params
-    this.router.navigate(['principal/detalle-empresa-servicio/conductores/',params['id_empresa_servicio']]);
+  modificarConductores() {
+    const params = this.activatedRoute.snapshot.params
+    this.router.navigate(['principal/detalle-empresa-servicio/conductores/', params['id_empresa_servicio']]);
   }
 
-  modificarArrendamiento(){
-    const params=this.activatedRoute.snapshot.params
-    this.router.navigate(['principal/detalle-empresa-servicio/arrendamiento/',params['id_empresa_servicio']]);
+  modificarArrendamiento() {
+    const params = this.activatedRoute.snapshot.params
+    this.router.navigate(['principal/detalle-empresa-servicio/arrendamiento/', params['id_empresa_servicio']]);
   }
 
-  modificarItinerario(){
-    const params=this.activatedRoute.snapshot.params
-    this.router.navigate(['principal/detalle-empresa-servicio/itineario/',params['id_empresa_servicio']]);
+  modificarItinerario() {
+    const params = this.activatedRoute.snapshot.params
+    this.router.navigate(['principal/detalle-empresa-servicio/itineario/', params['id_empresa_servicio']]);
   }
 
-  modificarVehiculos(){
-    const params=this.activatedRoute.snapshot.params
-    this.router.navigate(['principal/detalle-empresa-servicio/vehiculos/',params['id_empresa_servicio']]);
+  modificarVehiculos() {
+    const params = this.activatedRoute.snapshot.params
+    this.router.navigate(['principal/detalle-empresa-servicio/vehiculos/', params['id_empresa_servicio']]);
+  }
+
+  obternerResolucionById(id_resolucion: number) {
+    this.resolucionService.ObtenerResolucionById(id_resolucion).subscribe({
+      next: (res: ResolucionModel) => {
+        this.resolucion = res;
+        console.log('Resolucion obtenida:', this.resolucion);
+
+      },
+      error: (err) => {
+        console.error('Error al obtener resolucion:', err);
+      },
+      complete: () => {
+        console.log('Resolucion obtenida correctamente');
+        this.verDocumentoResolucion(this.resolucion.documento)
+      }
+    })
+  }
+
+  verDocumentoResolucion(documento: string) {
+    this.pdfUrl = ShowDocumentoPdf(documento, this.sanitizer);
+  }
+
+  obtenerResolucionAutorizacion() {
+    const fechaInicial = this.dataEmpresaDetalle.fecha_inicial;
+    const resolucionesFiltradas = this.listaResoluciones.filter(resolucion =>
+      new Date(resolucion.fecha_resolucion).getTime() === new Date(fechaInicial).getTime()
+    );
+    // console.log('Resolucion filtrada:', resolucionesFiltradas[0].id_resolucion);
+    this.obternerResolucionById(resolucionesFiltradas[0].id_resolucion)
+
+  }
+
+  generarReportePDF() {
+
+     this.pdfUrl=generatePDFreporte(this.listaVehiculos, this.dataEmpresaDetalle , this.listaResoluciones, this.credencialesService.credenciales.nombre_usuario, this.sanitizer)
   }
 
 }

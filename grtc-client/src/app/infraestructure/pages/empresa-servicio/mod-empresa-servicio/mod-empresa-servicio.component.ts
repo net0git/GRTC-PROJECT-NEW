@@ -16,13 +16,18 @@ import { PersonaService } from '../../../services/remoto/persona/persona.service
 import { ModificarPersonaMessageResponse, PersonaResponse } from '../../../../domain/dto/PersonasResponse.dto';
 import { FechaConFormato } from '../../../../../../public/utils/formateDate';
 import { SweetAlert } from '../../../shared/animated-messages/sweetAlert';
-
+import { Router } from '@angular/router';
+import { ErrorValidacion } from '../../../../domain/dto/ErrorValidacion.dto';
+import { Validators } from '../../../../../../public/utils/validators';
+import { SoloLetrasDirective } from '../../../directives/solo-letras.directive';
+import { SoloNumerosDirective } from '../../../directives/solo-numeros.directive';
+import { SoloNumerosGuionDirective } from '../../../directives/solo-numeros-guion.directive';
 
 
 @Component({
   selector: 'app-mod-empresa-servicio',
   standalone: true,
-  imports: [NavegadorComponent, SubnavegadorComponent, CommonModule, FormsModule],
+  imports: [NavegadorComponent, SubnavegadorComponent, CommonModule, FormsModule, SoloLetrasDirective, SoloNumerosDirective, SoloNumerosGuionDirective],
   templateUrl: './mod-empresa-servicio.component.html',
   styleUrl: './mod-empresa-servicio.component.css'
 })
@@ -69,7 +74,7 @@ export class ModEmpresaServicioComponent implements OnInit {
   provincias: string[] = []
   distritos: string[] = []
 
-  constructor(private sweetAlert:SweetAlert ,private personaService:PersonaService, private empresaService:EmpresaService ,private empresaServicioService:EmpresaServicioService ,private ubigeoService:UbigeoService, private activatedRoute: ActivatedRoute) { }
+  constructor(private router: Router, private sweetAlert: SweetAlert, private personaService: PersonaService, private empresaService: EmpresaService, private empresaServicioService: EmpresaServicioService, private ubigeoService: UbigeoService, private activatedRoute: ActivatedRoute) { }
 
 
   ngOnInit(): void {
@@ -78,132 +83,216 @@ export class ModEmpresaServicioComponent implements OnInit {
   }
 
   // ubigeo------------------------------------------
-  ListaDepartamentos(){
-    this.departamentos=this.ubigeoService.getDepartamentos()
-    console.log('departamentos',this.departamentos)
+  ListaDepartamentos() {
+    this.departamentos = this.ubigeoService.getDepartamentos()
+    console.log('departamentos', this.departamentos)
   }
 
-  onChangeDepartamento(){
-    this.provincias=this.ubigeoService.getProvinciasPorDepartamento(this.dataEmpresa.departamento)
-    console.log('provincias',this.provincias)
+  onChangeDepartamento() {
+    this.provincias = this.ubigeoService.getProvinciasPorDepartamento(this.dataEmpresa.departamento)
+    console.log('provincias', this.provincias)
   }
 
-  onChangeProvincia(){
-    this.distritos=this.ubigeoService.getDistritosPorProvincia(this.dataEmpresa.provincia)
+  onChangeProvincia() {
+    this.distritos = this.ubigeoService.getDistritosPorProvincia(this.dataEmpresa.provincia)
   }
 
   // ------------------------------------------------
 
-  ObtenerEmpresaServicio(){
-    const params=this.activatedRoute.snapshot.params;
+  ObtenerEmpresaServicio() {
+    const params = this.activatedRoute.snapshot.params;
     this.empresaServicioService.ObtenerEmpresaServicio(params['id_empresa_servicio']).subscribe({
-      next:(data:EmpresaServicioResponse)=>{
-        this.dataEmpresaServicio=data;
-        this.dataEmpresaServicio.fecha_inicial=FechaConFormato(this.dataEmpresaServicio.fecha_inicial);
+      next: (data: EmpresaServicioResponse) => {
+        this.dataEmpresaServicio = data;
+        this.dataEmpresaServicio.fecha_inicial = FechaConFormato(this.dataEmpresaServicio.fecha_inicial);
         console.log(data)
       },
-      error:(err)=>{
+      error: (err) => {
         console.error('Error al obtener empresa:', err);
       },
-      complete:()=>{
-        console.log('Empresa obtenida correctamente'); 
-        
-  
+      complete: () => {
+        console.log('Empresa obtenida correctamente');
+
+
         // this.onProvinciaChange()
         this.ObternerEmpresa(this.dataEmpresaServicio.id_empresa);
-        
+
       }
-    }); 
+    });
 
   }
 
-  ObternerEmpresa(id_empresa:number){
+  ObternerEmpresa(id_empresa: number) {
     this.empresaService.ObtenerEmpresa(id_empresa).subscribe({
-      next:(data:EmpresaResponse)=>{
-        this.dataEmpresa=data;
+      next: (data: EmpresaResponse) => {
+        this.dataEmpresa = data;
         console.log(data)
       },
-      error:(err)=>{
+      error: (err) => {
         console.error('Error al obtener empresa:', err);
       },
-      complete:()=>{
-        console.log('Empresa obtenida correctamente'); 
+      complete: () => {
+        console.log('Empresa obtenida correctamente');
         this.OternerPersona(this.dataEmpresa.id_representante_legal);
       }
-    }); 
-  } 
+    });
+  }
 
-  OternerPersona(id_persona:number){
+  OternerPersona(id_persona: number) {
     this.personaService.ObtenerDatosPersona(id_persona).subscribe({
-      next:(data:PersonaResponse)=>{
-        console.log('representante legal',data);
-        this.dataPersona=data;
+      next: (data: PersonaResponse) => {
+        console.log('representante legal', data);
+        this.dataPersona = data;
       },
-      error:(err)=>{
+      error: (err) => {
         console.error('Error al obtener representate legal:', err);
       },
-      complete:()=>{
-        console.log('representante legal obtenida correctamente'); 
-        this.ListaDepartamentos() 
+      complete: () => {
+        console.log('representante legal obtenida correctamente');
+        this.ListaDepartamentos()
         this.onChangeDepartamento()
         this.onChangeProvincia()
       }
-    }); 
+    });
   }
 
   // ------------------------------------------------
-  ModificarEmpresa(){
-    const params=this.activatedRoute.snapshot.params;
-    this.empresaService.ModificarEmpresa(this.dataEmpresa.id_empresa,this.dataEmpresa).subscribe({
-      next:(data:modificarEmpresaResponse)=>{
+  ModificarEmpresa() {
+    const params = this.activatedRoute.snapshot.params;
+    this.empresaService.ModificarEmpresa(this.dataEmpresa.id_empresa, this.dataEmpresa).subscribe({
+      next: (data: modificarEmpresaResponse) => {
         console.log(data)
       },
-      error:(err)=>{
+      error: (err) => {
         console.error('Error al modificar empresa:', err);
       },
-      complete:()=>{
-        console.log('empresa modificada correctamente'); 
+      complete: () => {
+        console.log('empresa modificada correctamente');
         this.sweetAlert.MensajeToast('La empresa se modifico correctamente')
       }
-    }); 
+    });
   }
 
-  ModificarEmpresaServicio(){
-    this.empresaServicioService.ModificarEmpresaServicio(this.dataEmpresaServicio.id_empresa_servicio,this.dataEmpresaServicio).subscribe({
-      next:(data:modificarEmpresaServicioResponse)=>{
+  ModificarEmpresaServicio() {
+    this.empresaServicioService.ModificarEmpresaServicio(this.dataEmpresaServicio.id_empresa_servicio, this.dataEmpresaServicio).subscribe({
+      next: (data: modificarEmpresaServicioResponse) => {
         console.log(data)
       },
-      error:(err)=>{
+      error: (err) => {
         console.error('Error al modificar empresa:', err);
       },
-      complete:()=>{
-        console.log('empresa modificada correctamente'); 
+      complete: () => {
+        console.log('empresa modificada correctamente');
         this.sweetAlert.MensajeToast('La empresa se modifico correctamente')
       }
-    }); 
+    });
   }
 
-  modificarDatosPersona(){
-    this.personaService.ModificarPersona(this.dataPersona.id_persona,this.dataPersona).subscribe({
-      next:(data:ModificarPersonaMessageResponse)=>{
+  modificarDatosPersona() {
+    this.personaService.ModificarPersona(this.dataPersona.id_persona, this.dataPersona).subscribe({
+      next: (data: ModificarPersonaMessageResponse) => {
         console.log(data)
       },
-      error:(err)=>{
+      error: (err) => {
         console.error('Error al modificar persona:', err);
       },
-      complete:()=>{
-        console.log('persona modificada correctamente'); 
+      complete: () => {
+        console.log('persona modificada correctamente');
         this.sweetAlert.MensajeToast('La persona se modifico correctamente')
       }
-    }); 
+    });
   }
   // -----------------------------------------------------------------------------
-  ModificarDatosFormulario(){
+  validarFormulario(dataPersona: PersonaModel, dataEmpresa: EmpresaModel, dataEmpresaServicio: EmpresaServicioModel): ErrorValidacion[] {
+    const errorValidacion: ErrorValidacion[] = [];
+    if (dataEmpresa.correo.length > 0) {
+      if (!Validators.validarCorreo(dataEmpresa.correo)) {
+        errorValidacion.push({ campo: 'Correo Empresa', mensaje: 'Campo no válido' });
+      }
+    }
+    if (dataEmpresa.telefono.length > 0) {
+      if (!Validators.validarTelefono(dataEmpresa.telefono)) {
+        errorValidacion.push({ campo: 'Telefono Empresa', mensaje: 'Campo no válido' });
+      }
+    }
+    if (!dataEmpresa.direccion) {
+      errorValidacion.push({ campo: 'Direccion Empresa', mensaje: 'Campo no válido' });
+    }
+    if (!dataEmpresa.razon_social) {
+      errorValidacion.push({ campo: 'Razón social Empresa', mensaje: 'Campo no válido' });
+    }
+    if (!dataEmpresa.departamento) {
+      errorValidacion.push({ campo: 'Departamento Empresa', mensaje: 'Campo no válido' });
+    }
+    if (!dataEmpresa.provincia) {
+      errorValidacion.push({ campo: 'Provincia Empresa', mensaje: 'Campo no válido' });
+    }
+    if (!dataEmpresa.distrito) {
+      errorValidacion.push({ campo: 'Distrito Empresa', mensaje: 'Campo no válido' });
+    }
+
+    if (!dataEmpresaServicio.fecha_inicial) {
+      errorValidacion.push({ campo: 'Fecha autorización', mensaje: 'Campo no válido' });
+    }
+    if (!dataEmpresaServicio.expediente) {
+      errorValidacion.push({ campo: 'Expediente', mensaje: 'Campo no válido' });
+    }
+
+    if (!dataPersona.nombres) {
+      errorValidacion.push({ campo: 'nombres del representante', mensaje: 'Campo requerido' });
+    }
+    if (!dataPersona.ap_paterno) {
+      errorValidacion.push({ campo: 'apellido paterno del representante', mensaje: 'Campo requerido' });
+    }
+    if (!dataPersona.ap_materno) {
+      errorValidacion.push({ campo: 'apellido materno del representante', mensaje: 'Campo requerido' });
+    }
+    if (dataPersona.telefono.length > 0) {
+      if (!Validators.validarTelefono(dataPersona.telefono)) {
+        errorValidacion.push({ campo: 'telefono representante', mensaje: 'Campo no válido' });
+      }
+    }
+    if (dataPersona.correo.length > 0) {
+      if (!Validators.validarCorreo(dataPersona.correo)) {
+        errorValidacion.push({ campo: 'Correo del representante', mensaje: 'Campo no válido' });
+      }
+    }
+    if (dataPersona.documento.length > 0) {
+      if (dataPersona.tipo_doc != "") {
+        if (dataPersona.tipo_doc == 'DNI' && dataPersona.documento.length != 8) {
+          errorValidacion.push({ campo: 'documento de identidad', mensaje: 'la cantidad en caracteres debe ser 8 para el tipo de documento DNI' });
+        }
+        else if (dataPersona.tipo_doc == 'CE' && dataPersona.documento.length != 12) {
+          errorValidacion.push({ campo: 'documento de identidad', mensaje: 'la cantidad en caracteres debe ser 12 para el tipo de documento CE' });
+        }
+      }
+      else {
+        errorValidacion.push({ campo: 'Documento de identidad', mensaje: 'Seleccione el tipo de documento' });
+      }
+    }
+
+
+
+    return errorValidacion;
+  }
+  // -----------------------------------------------------------------------------
+  ModificarDatosFormulario() {
+
+    const erroresValidacion = this.validarFormulario(this.dataPersona, this.dataEmpresa, this.dataEmpresaServicio);
+    if (erroresValidacion.length > 0) {
+      let errorMensaje = '';
+      erroresValidacion.forEach(error => {
+        errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje} \n`;
+      });
+      alert(errorMensaje);
+      return;
+    }
+
     this.ModificarEmpresa()
     this.ModificarEmpresaServicio()
     this.modificarDatosPersona()
-    
-    
+    this.router.navigate(['/principal/detalle-empresa-servicio/' + this.dataEmpresaServicio.id_empresa_servicio])
+
   }
 
 }

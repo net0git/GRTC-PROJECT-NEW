@@ -151,6 +151,29 @@ class ResoucionController {
         }
     }
 
+    public async ObtenerResolucionById(req: Request, res: Response): Promise<void> {
+        try {
+            const { id_resolucion } = req.params;
+            const consulta = `
+                SELECT 
+                    *
+                FROM d_resolucion 
+                WHERE id_resolucion =$1 `;
+            const resolucion = await db.query(consulta, [id_resolucion]);
+
+            if (resolucion && resolucion['rows'].length > 0) {
+                res.json(resolucion['rows'][0]);
+            } else {
+                res.status(404).json({ text: 'las resoluciones correspondientes a la empresa no existen' });
+            }
+
+        } catch (error) {
+            console.error('Error al obtener resoluciones:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+    }
+
+    
     public async ObtnerResolucionesDeInfraestructura(req: Request, res: Response): Promise<void> {
         try {
             const { id_infraestructura } = req.params;

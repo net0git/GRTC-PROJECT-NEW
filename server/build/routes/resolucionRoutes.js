@@ -12,6 +12,7 @@ class TucRoutes {
     }
     config() {
         this.router.post('/api/resolucion', resolucionController_1.default.CrearResolucion);
+        this.router.get('/api/resolucion/:id_resolucion', resolucionController_1.default.ObtenerResolucionById);
         this.router.post('/api/resolucion/empresa/:id_empresa_servicio', resolucionController_1.default.CrearResolucionEmpresaServicio);
         this.router.post('/api/resolucion/infraestructura/:id_infraestructura', resolucionController_1.default.CrearResolucionInfraestructura);
         this.router.get('/api/resolucion/:nro_resolucion/:anio_resolucion', resolucionController_1.default.ObtenerResolucionPorNroAnio);

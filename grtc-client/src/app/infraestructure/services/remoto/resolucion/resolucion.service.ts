@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ListaResolucionResponse } from '../../../../domain/dto/ResolucionResponse.dto';
+import { ListaResolucionResponse, ResolucionResponse } from '../../../../domain/dto/ResolucionResponse.dto';
 import { environment } from '../../../../../../environments/environment';
 
 @Injectable({
@@ -25,6 +25,9 @@ export class ResolucionService {
     return this.http.get<ListaResolucionResponse[]>(this.api_uri_resolucion+'/lista/empresa/'+id_empresa_servicio)
   }
 
+  ObtenerResolucionById(id_resolucion:number):Observable<ResolucionResponse>{
+    return this.http.get<ResolucionResponse>(this.api_uri_resolucion+'/'+id_resolucion)
+  }
 
 
 }

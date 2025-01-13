@@ -49,13 +49,13 @@
                         </div>
                         <div class="form-group">
                             <label for="correo_empresa" class="form-label mt-3">Correo:</label>
-                            <input type="email" class="form-control" name="correo_empresa"
+                            <input type="email" class="form-control text-correo" name="correo_empresa"
                                 [(ngModel)]="dataEmpresa.correo">
                         </div>
                         <div class="form-group">
                             <label for="telefono_empresa" class="form-label mt-3">Telefono:</label>
                             <input type="text" class="form-control" name="telefono_empresa"
-                                [(ngModel)]="dataEmpresa.telefono">
+                                [(ngModel)]="dataEmpresa.telefono" appSoloNumerosGuion >
                         </div>
                         <div class="form-group mb-4">
 
@@ -110,21 +110,21 @@
                             <label for="nombre_representante" class="form-label mt-2">Nombres:</label>
                             <input id="nombre_representante" type="text" class="form-control"
                                 [(ngModel)]="dataPersona.nombres" name="nombre_representante"
-                                style="text-transform:uppercase;">
+                                style="text-transform:uppercase;" appSoloLetras>
                         </div>
                         <div class="form-group">
                             <label for="ap_paterno" class="form-label mt-3">Apellido Paterno:</label>
                             <input id="ap_paterno" type="text" class="form-control" [(ngModel)]="dataPersona.ap_paterno"
-                                name="ap_paterno" style="text-transform:uppercase;">
+                                name="ap_paterno" style="text-transform:uppercase;" appSoloLetras>
                         </div>
                         <div class="form-group">
                             <label for="ap_materno" class="form-label mt-3">Apellido Materno:</label>
                             <input id="ap_materno" type="text" class="form-control" [(ngModel)]="dataPersona.ap_materno"
-                                name="ap_materno" style="text-transform:uppercase;">
+                                name="ap_materno" style="text-transform:uppercase;" appSoloLetras>
                         </div>
                         <div class="form-group">
                             <label for="correo_representante" class="form-label mt-3">Correo:</label>
-                            <input type="email" class="form-control" name="correo_representante"
+                            <input type="email" class="form-control text-correo" name="correo_representante"
                                 [(ngModel)]="dataPersona.correo">
                         </div>
                         <div class="form-group">
@@ -141,14 +141,14 @@
 
                                 <div class="col-sm-6">
                                     <input id="documento_id" type="text" class="form-control" name="documento_id"
-                                        [(ngModel)]="dataPersona.documento">
+                                        [(ngModel)]="dataPersona.documento" appSoloNumeros>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group mb-4">
                             <label for="telefono_representante" class="form-label mt-3">Telefono:</label>
                             <input type="text" class="form-control" name="telefono_representante"
-                                [(ngModel)]="dataPersona.telefono">
+                                [(ngModel)]="dataPersona.telefono" appSoloNumeros maxlength="9">
                         </div>
 
                     </fieldset>

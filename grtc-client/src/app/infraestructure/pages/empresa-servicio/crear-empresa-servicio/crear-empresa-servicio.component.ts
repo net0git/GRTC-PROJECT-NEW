@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common'; // Importar CommonModule
 import { NavegadorComponent } from '../../../shared/components/navegador/navegador.component';
 import { SubnavegadorComponent } from '../../../shared/components/subnavegador/subnavegador.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { P1DatosEmpresa } from './steper/p1-empresa/p1-datos-empresa.component';

@@ -165,6 +165,29 @@ class ResoucionController {
             }
         });
     }
+    ObtenerResolucionById(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_resolucion } = req.params;
+                const consulta = `
+                SELECT 
+                    *
+                FROM d_resolucion 
+                WHERE id_resolucion =$1 `;
+                const resolucion = yield database_1.default.query(consulta, [id_resolucion]);
+                if (resolucion && resolucion['rows'].length > 0) {
+                    res.json(resolucion['rows'][0]);
+                }
+                else {
+                    res.status(404).json({ text: 'las resoluciones correspondientes a la empresa no existen' });
+                }
+            }
+            catch (error) {
+                console.error('Error al obtener resoluciones:', error);
+                res.status(500).json({ error: 'Error interno del servidor' });
+            }
+        });
+    }
     ObtnerResolucionesDeInfraestructura(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

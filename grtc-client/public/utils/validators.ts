@@ -9,11 +9,9 @@ export class Validators {
       return this.patronDni.test(dni);
     }
   
-    
     static validarTelefono(telefono: string): boolean {
       return this.patronTelefono.test(telefono);
     }
-  
     
     static validarCorreo(correo: string): boolean {
       return this.patronEmail.test(correo);
