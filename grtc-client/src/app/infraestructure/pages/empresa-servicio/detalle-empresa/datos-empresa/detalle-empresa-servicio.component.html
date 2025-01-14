@@ -86,8 +86,6 @@
                                         date:'dd/MM/yyyy'}} - {{dataEmpresaDetalle.fecha_final| date:'dd/MM/yyyy'}}</li>
                                     <li><strong>Representante legal:</strong> {{dataEmpresaDetalle.representante_legal}}
 
-                                        <!-- <li><strong>Doc. de autorizacion:</strong> {{ultimaResolucionAutorizacion}}</li> -->
-
                                 </ul>
                                 <div class="text-start panel-resolucion">
 
@@ -103,6 +101,7 @@
                                         <button class="my-button_ingreso_resolucion"> <i
                                                 class="bi bi-arrow-down-square"></i> agregar Resolucion</button>
                                     </div>
+                                    
                                     <table class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
@@ -124,7 +123,6 @@
                                                 <td class="text-primary text_documento" (click)="obternerResolucionById(resolucion.id_resolucion)">{{resolucion.nombre_resolucion}}</td>
                                                 <td>{{resolucion.descripcion}}</td>
                                                 <td> <i class="bi bi-pencil-square hand_cursor"></i></td>
-                                                <!-- <td ><img src="assets/imagenes/iconos/modificar_doc.png" width="25px" ></td> -->
                                             </tr>
 
                                         </tbody>

@@ -23,8 +23,10 @@ import { Router } from '@angular/router'
 import { EliminarPersonaMessageResponse } from '../../../../../domain/dto/PersonasResponse.dto';
 import { SweetAlert } from '../../../../shared/animated-messages/sweetAlert';
 import { ResolucionModel } from '../../../../../domain/models/Resolucion.model';
-import { ShowDocumentoPdf, generatePDFreporte} from '../../../../../../../public/utils/pdfFunctions';
+import { ShowDocumentoPdf, generatePDFreporte, ShowDocumentoPdfMarcado } from '../../../../../../../public/utils/pdfFunctions';
 import { CredencialesService } from '../../../../services/local/credenciales/credenciales.service';
+
+import { FechaConFormato_ddMMyyyy } from '../../../../../../../public/utils/formateDate';
 
 
 
@@ -79,7 +81,7 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     tomo_resolucion: 0
   };
 
-  constructor(private credencialesService:CredencialesService,private sweetAlert: SweetAlert, private personaService: PersonaService, private router: Router, private historialVehicularService: HistorialVehicularService, private vehiculoService: VehiculoService, private itinerarioService: ItinerarioService, private arrendamientoService: ArrendamientoService, private conductorService: ConductorService, private sanitizer: DomSanitizer, private empresaServicioService: EmpresaServicioService, private activatedRoute: ActivatedRoute, private resolucionService: ResolucionService) { }
+  constructor(private credencialesService: CredencialesService, private sweetAlert: SweetAlert, private personaService: PersonaService, private router: Router, private historialVehicularService: HistorialVehicularService, private vehiculoService: VehiculoService, private itinerarioService: ItinerarioService, private arrendamientoService: ArrendamientoService, private conductorService: ConductorService, private sanitizer: DomSanitizer, private empresaServicioService: EmpresaServicioService, private activatedRoute: ActivatedRoute, private resolucionService: ResolucionService) { }
 
   ngOnInit(): void {
     this.detalleEmpresa();
@@ -302,8 +304,11 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     })
   }
 
-  verDocumentoResolucion(documento: string) {
-    this.pdfUrl = ShowDocumentoPdf(documento, this.sanitizer);
+   async verDocumentoResolucion(documento: string) {
+    const nombre_usuario = this.credencialesService.credenciales.nombre_usuario;
+    const fecha = FechaConFormato_ddMMyyyy(new Date()) ;
+    const mensaje = `ARCHIVO CENTRAL GRTCC - ${nombre_usuario} - ${fecha}`;
+    this.pdfUrl = await ShowDocumentoPdfMarcado(documento,mensaje, this.sanitizer);
   }
 
   obtenerResolucionAutorizacion() {
@@ -318,7 +323,13 @@ export class DetalleEmpresaServicioComponent implements OnInit {
 
   generarReportePDF() {
 
-     this.pdfUrl=generatePDFreporte(this.listaVehiculos, this.dataEmpresaDetalle , this.listaResoluciones, this.credencialesService.credenciales.nombre_usuario, this.sanitizer)
+    this.pdfUrl = generatePDFreporte(this.listaVehiculos, this.dataEmpresaDetalle, this.listaResoluciones, this.credencialesService.credenciales.nombre_usuario, this.sanitizer)
+
   }
+
+
+  // ----------------------------------------------------------
+
+ 
 
 }
