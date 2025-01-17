@@ -23,7 +23,7 @@ import { Router } from '@angular/router'
 import { EliminarPersonaMessageResponse } from '../../../../../domain/dto/PersonasResponse.dto';
 import { SweetAlert } from '../../../../shared/animated-messages/sweetAlert';
 import { ResolucionModel } from '../../../../../domain/models/Resolucion.model';
-import { ShowDocumentoPdf, generatePDFreporte, ShowDocumentoPdfMarcado } from '../../../../../../../public/utils/pdfFunctions';
+import { generatePDFreporte, ShowDocumentoPdfMarcado } from '../../../../../../../public/utils/pdfFunctions';
 import { CredencialesService } from '../../../../services/local/credenciales/credenciales.service';
 
 import { FechaConFormato_ddMMyyyy } from '../../../../../../../public/utils/formateDate';
@@ -77,8 +77,8 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     documento: '',
     fecha_resolucion: '',
     nombre_resolucion: '',
-    nro_resolucion: 0,
-    tomo_resolucion: 0
+    nro_resolucion: null,
+    tomo_resolucion: null
   };
 
   constructor(private credencialesService: CredencialesService, private sweetAlert: SweetAlert, private personaService: PersonaService, private router: Router, private historialVehicularService: HistorialVehicularService, private vehiculoService: VehiculoService, private itinerarioService: ItinerarioService, private arrendamientoService: ArrendamientoService, private conductorService: ConductorService, private sanitizer: DomSanitizer, private empresaServicioService: EmpresaServicioService, private activatedRoute: ActivatedRoute, private resolucionService: ResolucionService) { }
@@ -327,9 +327,12 @@ export class DetalleEmpresaServicioComponent implements OnInit {
 
   }
 
+  editarResolucion(id_resolucion: number) {
+    this.router.navigate(['principal/mod-empresa-servicio-resolucion/' + this.dataEmpresaDetalle.id_empresa_servicio +  '/' +id_resolucion ]);
+  }
 
-  // ----------------------------------------------------------
-
- 
+  agregarResolucion() {
+    this.router.navigate(['principal/mod-empresa-servicio-resolucion/'+ this.dataEmpresaDetalle.id_empresa_servicio ]);
+  }
 
 }

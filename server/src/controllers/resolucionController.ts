@@ -42,7 +42,7 @@ class ResoucionController {
                 VALUES ($1, $2);`;
             const valores = [id_empresa_servicio, id_resolucion];
 
-            db.query(consulta, valores, (error, resultado) => {
+            db.query(consulta, valores, (error) => {
                 if (error) {
                     console.error('Error al insertar resolucione a empresa por servicio:', error);
                 } else {
@@ -155,10 +155,10 @@ class ResoucionController {
         try {
             const { id_resolucion } = req.params;
             const consulta = `
-                SELECT 
-                    *
-                FROM d_resolucion 
-                WHERE id_resolucion =$1 `;
+                    SELECT 
+                        *
+                    FROM d_resolucion 
+                    WHERE id_resolucion =$1 `;
             const resolucion = await db.query(consulta, [id_resolucion]);
 
             if (resolucion && resolucion['rows'].length > 0) {
@@ -173,7 +173,6 @@ class ResoucionController {
         }
     }
 
-    
     public async ObtnerResolucionesDeInfraestructura(req: Request, res: Response): Promise<void> {
         try {
             const { id_infraestructura } = req.params;
@@ -219,7 +218,7 @@ class ResoucionController {
             });
         } catch (error) {
             console.error('Error al modificar resolucion:', error);
-            res.status(500).json({ error: 'Error interno del servidor' });
+            res.status(500).json({ text: 'Error interno del servidor' });
         }
     }
 }

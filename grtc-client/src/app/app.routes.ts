@@ -19,6 +19,8 @@ import { ConductoresComponent } from './infraestructure/pages/empresa-servicio/d
 import { ArrendamientoComponent } from './infraestructure/pages/empresa-servicio/detalle-empresa/arrendamiento/arrendamiento.component';
 import { ItinerarioComponent } from './infraestructure/pages/empresa-servicio/detalle-empresa/itinerario/itinerario.component';
 import { VehiculosComponent } from './infraestructure/pages/empresa-servicio/detalle-empresa/vehiculos/vehiculos.component';
+import { ModEmpresaServicioResolucionComponent } from './infraestructure/pages/empresa-servicio/mod-empresa-servicio-resolucion/mod-empresa-servicio-resolucion.component';
+
 
 export const routes: Routes = [
     {
@@ -42,6 +44,8 @@ export const routes: Routes = [
       { path:'principal/detalle-empresa-servicio/vehiculos/:id_empresa_servicio', component: VehiculosComponent },
       { path:'principal/detalle-empresa-servicio/itineario/:id_empresa_servicio', component: ItinerarioComponent },
       { path:'principal/mod-empresa-servicio/:id_empresa_servicio', component: ModEmpresaServicioComponent },
+      { path:'principal/mod-empresa-servicio-resolucion/:id_empresa_servicio/:id_resolucion', component: ModEmpresaServicioResolucionComponent },
+      { path:'principal/mod-empresa-servicio-resolucion/:id_empresa_servicio', component: ModEmpresaServicioResolucionComponent },
 
 
       { path:'principal/consultas-tuc',component:ConsultasTucComponent },

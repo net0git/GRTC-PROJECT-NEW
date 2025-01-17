@@ -10,11 +10,6 @@ import { ListaResolucionResponse } from '../../src/app/domain/dto/ResolucionResp
 
 import { PDFDocument, rgb } from 'pdf-lib';
 
-/**
- * Convierte un string en formato Base64 a un array de bytes.
- * @param base64 El string en formato Base64.
- * @returns Un Uint8Array representando los bytes.
- */
 export function base64ToBytes(base64: string): Uint8Array {
   const binaryString = atob(base64);
   const length = binaryString.length;
@@ -23,27 +18,31 @@ export function base64ToBytes(base64: string): Uint8Array {
   for (let i = 0; i < length; i++) {
     bytes[i] = binaryString.charCodeAt(i);
   }
-
   return bytes;
 }
 
-/**
- * Convierte un string en formato Base64 a un Blob PDF.
- * @param base64 El string en formato Base64.
- * @returns Un Blob en formato PDF.
- */
 export function base64ToPdfBlob(base64: string): Blob {
   const bytes = base64ToBytes(base64);
   return new Blob([bytes], { type: "application/pdf" });
 }
 
-/**
- * Muestra un documento PDF en el navegador a partir de un string en formato Base64.
- * @param documento El string en formato Base64 del documento.
- * @param sanitizer El DomSanitizer de Angular para manejar URLs seguras.
- * @param errorUrl URL de un PDF de error en caso de que el documento esté vacío.
- * @returns Un SafeResourceUrl con la URL del PDF listo para visualizar.
- */
+export function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+          const result = reader.result as string;
+          resolve(result.split(',')[1]); // Extrae solo la parte Base64 después de la coma
+      };
+
+      reader.onerror = (error) => {
+          reject(error);
+      };
+
+      reader.readAsDataURL(file);
+  });
+}
+
 export function ShowDocumentoPdf(
   documento: string,
   sanitizer: DomSanitizer,

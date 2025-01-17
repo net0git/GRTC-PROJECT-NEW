@@ -9,8 +9,8 @@ export class CredencialesService {
   private usuario: UsuarioModel = {
     id_usuario: 1,
     id_persona: 1,
-    nombre_usuario: 'ADMIN',
-    rol: 'ADMINISTRADOR',
+    nombre_usuario: '',
+    rol: '',
   };
 
   constructor() { }

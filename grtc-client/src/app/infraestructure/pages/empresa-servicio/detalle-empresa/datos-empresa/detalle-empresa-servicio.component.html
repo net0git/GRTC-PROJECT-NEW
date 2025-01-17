@@ -98,7 +98,7 @@
                                 <div class="container mt-4">
                                     <div class="d-flex justify-content-between">
                                         <p class="subtitulo_menu mt-4">Resoluciones</p>
-                                        <button class="my-button_ingreso_resolucion"> <i
+                                        <button class="my-button_ingreso_resolucion" (click)="agregarResolucion()"> <i
                                                 class="bi bi-arrow-down-square"></i> agregar Resolucion</button>
                                     </div>
                                     
@@ -122,7 +122,7 @@
                                                 <td>{{resolucion.tomo_resolucion}}</td>
                                                 <td class="text-primary text_documento" (click)="obternerResolucionById(resolucion.id_resolucion)">{{resolucion.nombre_resolucion}}</td>
                                                 <td>{{resolucion.descripcion}}</td>
-                                                <td> <i class="bi bi-pencil-square hand_cursor"></i></td>
+                                                <td> <i class="bi bi-pencil-square hand_cursor" (click)="editarResolucion(resolucion.id_resolucion)"></i></td>
                                             </tr>
 
                                         </tbody>

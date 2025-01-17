@@ -3,8 +3,8 @@ export interface ResolucionModel {
     anio_resolucion: string;
     descripcion: string;
     documento: string;
-    fecha_resolucion: string; 
+    fecha_resolucion: Date | string  ; 
     nombre_resolucion: string;
-    nro_resolucion: number;
-    tomo_resolucion: number;
+    nro_resolucion: number | null;
+    tomo_resolucion: number | null;
 }
