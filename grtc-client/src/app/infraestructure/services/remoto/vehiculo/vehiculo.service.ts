@@ -13,7 +13,7 @@ import { ValidarModeloForm } from '../../../validatorForm/modelo.validator';
 import { ValidarMarcaForm } from '../../../validatorForm/marca.validator';
 
 import { ListarMarcasResponse } from '../../../../domain/dto/MarcaResponse.dto';
-import { ListaVehiculosDetalleResponse, ListaVehiculosResponse, CrearVehiculoMessageResponse } from '../../../../domain/dto/VehiculoResponse.dto';
+import { ListaVehiculosDetalleResponse, ListaVehiculosResponse, CrearVehiculoMessageResponse, DarBajaVehiculoMessageResponse } from '../../../../domain/dto/VehiculoResponse.dto';
 
 
 
@@ -33,6 +33,16 @@ export class VehiculoService {
   // this.router.get('/api/marca/:id_marca',marcaController.ObtenerMarca)
   // this.router.put('/api/marca/:id_marca',marcaController.ModificarMarca)
   //  this.router.get('/api/vehiculo/empresaservicio',vehiculoController.listarVehiculosEmpresasServicio)
+
+  // this.router.post('/api/vehiculo',vehiculoController.CrearVehiculo)
+  // this.router.get('/api/vehiculo',vehiculoController.listarTotalVehiculos)
+  // this.router.get('/api/vehiculo/empresaservicio',vehiculoController.listarVehiculosEmpresasServicio)
+  // this.router.get('/api/vehiculo/lista/empresaservicio/:id_empresa_servicio',vehiculoController.listarVehiculosEmpresaServicio)
+  // this.router.get('/api/vehiculo/empresaservicio/:id_empresa_servicio',vehiculoController.obtenerVehiculosDetalleByEmpresaServicio)
+  // this.router.get('/api/vehiculo/placa/:placa',vehiculoController.ObtenerVehiculoPorPlaca)
+  // this.router.put('/api/vehiculo/:id_vehiculo',vehiculoController.ModificarVehiculo)    
+  // this.router.put('/api/vehiculo/tuc/:id_vehiculo', vehiculoController.ModificarTucVehiculoAsociado)
+  // this.router.put('/api/vehiculo/baja/:id_vehiculo', vehiculoController.DarBajaVehiculo)
 
   CrearMarca(cuerpo_marca: MarcaModel): Observable<CrearMarcaMessageResponse> {
     const erroresValidacion = ValidarMarcaForm(cuerpo_marca);
@@ -107,6 +117,10 @@ export class VehiculoService {
 
   ObtenerModelosPorMarca(id_marca: number):Observable<ListarModelosResponse[]> {
     return this.http.get<ListarModelosResponse[]>(this.api_url_modelo + '/grupo/' + id_marca);
+  }
+
+  DarBajaVehiculo(id_vehiculo: number): Observable<DarBajaVehiculoMessageResponse> {
+    return this.http.get<DarBajaVehiculoMessageResponse>(this.api_url_vehiculo + '/baja/' + id_vehiculo);
   }
 
 

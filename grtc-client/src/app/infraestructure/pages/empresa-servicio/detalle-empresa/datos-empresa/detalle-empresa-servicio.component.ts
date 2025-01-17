@@ -27,6 +27,9 @@ import { generatePDFreporte, ShowDocumentoPdfMarcado } from '../../../../../../.
 import { CredencialesService } from '../../../../services/local/credenciales/credenciales.service';
 
 import { FechaConFormato_ddMMyyyy } from '../../../../../../../public/utils/formateDate';
+import Swal from 'sweetalert2';
+import { VehiculoModel } from '../../../../../domain/models/Vehiculo.model';
+import { HistorialVehicularModel } from '../../../../../domain/models/HistorialVehicular.model';
 
 
 
@@ -319,6 +322,106 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     // console.log('Resolucion filtrada:', resolucionesFiltradas[0].id_resolucion);
     this.obternerResolucionById(resolucionesFiltradas[0].id_resolucion)
 
+  }
+
+  // -----------------------------------------------------------------------------------------------------------
+  DarBajaVehiculo(vehiculo:any){
+
+    let htmltemp = ` <select id="mySelect" style='width: 80%;'> ` ;
+    for (const resolucion of this.listaResoluciones) {
+      htmltemp += `<option value="${resolucion.nombre_resolucion}">${resolucion.nombre_resolucion}</option>`;
+    }
+    htmltemp += '</select>';
+    
+    htmltemp += ` <div style='margin-top: 20px; text-align: left; padding-left:45px' >
+    
+      <label class="form-check-label" for="flexCheckDefault" >Otra Resolución:</label>
+      </div> 
+      <input type='text' id='resolucion_referencia' name='resolucion_referencia' placeholder='Resolucion de referencia' style='width: 80%;'> 
+    `
+    ;
+  
+        Swal.fire({
+          title: 'estas seguro?',
+          text: "si da de baja el vehiculo se desvinculara de la empresa!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'si, dar de baja!'
+        }).then(async ( result) => {
+          if (result.isConfirmed) {
+            const { value: formValues } = await Swal.fire({
+              title: 'Bajo que Resolucion se dara de baja el Vehiculo',
+              html: htmltemp, 
+              focusConfirm: false,
+              preConfirm: () => {
+        
+                return [
+                  (<HTMLSelectElement>document.getElementById('mySelect')).value,
+                  (<HTMLSelectElement>document.getElementById('resolucion_referencia')).value,
+                ];
+              }
+            });
+            
+            if (formValues) {
+              this.darBajaVehiculoEmpresa(vehiculo)
+            }
+    
+          }
+        })
+    }
+
+
+    GuardarEnHistrorialVehicular(id_vehiculo:number, resolucion:string, resolucion_resferencial:string){
+      const params=this.activatedRoute.snapshot.params
+      // Obtén una referencia al elemento select por su ID 
+      // let id_resolucion = (<HTMLInputElement>document.getElementById('resolucion')).value;
+      // let id_itinerario = (<HTMLInputElement>document.getElementById('itinerario')).value;
+    
+       let datosVehiculo=this.listaVehiculos.filter((vehiculo: { id_vehiculo: number; }) => vehiculo.id_vehiculo ==id_vehiculo)[0];
+      //  let nombre_resolucion = this.resoluciones_empresa_servicio.filter((resolucion: { id_resolucion: number; }) => resolucion.id_resolucion ==parseInt(id_resolucion))[0].nombre_resolucion;
+    
+      
+       this.data_historial_vehicular.placa=datosVehiculo.placa
+       this.data_historial_vehicular.condicion='BAJA'
+       if(resolucion_resferencial==''||resolucion_resferencial==null){
+        this.data_historial_vehicular.nombre_resolucion=resolucion
+       }else{
+        this.data_historial_vehicular.nombre_resolucion=resolucion_resferencial
+       }
+       this.data_historial_vehicular.ruta=datosVehiculo.itinerario
+       this.data_historial_vehicular.id_empresa_servicio=params['id']
+      //  console.log(this.data_historial_vehicular)
+      // this.data_historial_vehicular.id_empresa_servicio=params['id']
+      // console.log(nombre_resolucion,this.data_historial_vehicular.condicion, this.data_historial_vehicular.placa)
+      // console.log(this.data_historial_vehicular)
+      this.historialvehicularService.crearHistorialVehicular(this.data_historial_vehicular).subscribe(
+        res=>{
+          console.log(res);
+          this.listarHistorialVehicular()
+        },
+        err=>{
+          console.error(err);
+        }
+      )
+    }
+  // -----------------------------------------------------------------------------------------------------------
+
+  darBajaVehiculoEmpresa(vehiculo: any) {
+    this.vehiculoService.DarBajaVehiculo(vehiculo.id_vehiculo).subscribe({
+      next: (data) => {
+        console.log(data);
+
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => {
+        console.log("complete");
+        this.listarVehiculosPorEmpresaServicio(this.dataEmpresaDetalle.id_empresa_servicio);
+      }
+    });
   }
 
   generarReportePDF() {

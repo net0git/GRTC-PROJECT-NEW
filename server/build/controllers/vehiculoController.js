@@ -270,14 +270,12 @@ class VehiculoController {
     DarBajaVehiculo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id } = req.params;
-                const { id_detalle_ruta_itinerario, id_tuc, id_resolucion, estado, id_empresa_servicio } = req.body;
-                const consulta = `
-                        UPDATE t_vehiculo
-                            SET  id_detalle_ruta_itinerario=$1, id_tuc=$2, id_resolucion=$3, estado=$4,id_empresa_servicio=$5 
-                        WHERE id_vehiculo=$6;`;
-                const valores = [id_detalle_ruta_itinerario, id_tuc, id_resolucion, estado, id_empresa_servicio, id];
-                database_1.default.query(consulta, valores, (error, resultado) => {
+                const { id_vehiculo } = req.params;
+                const consulta = `UPDATE t_vehiculo
+                            SET  id_detalle_ruta_itinerario=null, id_tuc=null, id_resolucion=null, estado=null, id_empresa_servicio=null 
+                        WHERE id_vehiculo=$1`;
+                const valores = [id_vehiculo];
+                database_1.default.query(consulta, valores, (error) => {
                     if (error) {
                         console.error('Error al dar de baja al vehiculo:', error);
                     }
@@ -289,7 +287,7 @@ class VehiculoController {
             }
             catch (error) {
                 console.error('Error al modificar la baja del vehiculo:', error);
-                res.status(500).json({ error: 'Error interno del servidor' });
+                res.status(500).json({ text: 'Error interno del servidor' });
             }
         });
     }

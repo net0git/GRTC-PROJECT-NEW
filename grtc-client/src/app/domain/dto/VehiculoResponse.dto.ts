@@ -1,5 +1,5 @@
 export interface ListaVehiculosDetalleResponse {
-    
+
         id_vehiculo: number; // v.id_vehiculo
         id_tuc: number; // v.id_tuc
         tipo_servicio: string; // ts.denominacion
@@ -23,11 +23,11 @@ export interface ListaVehiculosDetalleResponse {
         fecha_final: string; // es.fecha_final
         nombre_resolucion: string; // r.nombre_resolucion
         itinerario: string; // i.itinerario
-      
+
 }
 
 export interface ListaVehiculosResponse {
-    
+
         id_vehiculo: number; // v.id_vehiculo
         id_resolucion: number
         id_detalle_ruta_itinerario: number; // i.itinerario
@@ -50,6 +50,10 @@ export interface ListaVehiculosResponse {
         modelo: string; // v.modelo   
 }
 
-export interface CrearVehiculoMessageResponse{
-    text: string
+export interface CrearVehiculoMessageResponse {
+        text: string
+}
+
+export interface DarBajaVehiculoMessageResponse {
+        text: string
 }
