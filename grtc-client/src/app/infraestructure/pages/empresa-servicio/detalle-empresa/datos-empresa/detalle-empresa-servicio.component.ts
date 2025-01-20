@@ -333,11 +333,26 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     }
     htmltemp += '</select>';
 
-    htmltemp += ` <div style='margin-top: 20px; text-align: left; padding-left:45px' >
-    
-      <label class="form-check-label" for="flexCheckDefault" >Otra Resolución:</label>
-      </div> 
-      <input type='text' id='resolucion_referencia' name='resolucion_referencia' placeholder='Resolucion de referencia' style='width: 80%;'> 
+    htmltemp += ` <div style="margin-top: 20px; text-align: left; padding-left: 45px;">
+  <label class="form-check-label" for="flexCheckDefault">Otra Resolución:</label>
+</div>
+<input
+  type="text"
+  id="resolucion_referencia"
+  name="resolucion_referencia"
+  placeholder="Resolución de referencia"
+  style="width: 80%;"
+/>
+
+<div style="margin-top: 10px; text-align: left; padding-left: 45px;">
+  <label class="form-check-label" for="fecha_resolucion">Fecha de Resolución:</label>
+</div>
+<input
+  type="date"
+  id="fecha_resolucion"
+  name="fecha_resolucion"
+  style="width: 80%;"
+/>
     `
       ;
 
@@ -360,13 +375,14 @@ export class DetalleEmpresaServicioComponent implements OnInit {
             return [
               (<HTMLSelectElement>document.getElementById('mySelect')).value,
               (<HTMLSelectElement>document.getElementById('resolucion_referencia')).value,
+              (<HTMLSelectElement>document.getElementById('fecha_resolucion')).value,
             ];
           }
         });
 
         if (formValues) {
           this.darBajaVehiculoEmpresa(vehiculo)
-          this.GuardarEnHistrorialVehicular(vehiculo, formValues[0], formValues[1])
+          this.GuardarEnHistrorialVehicular(vehiculo, formValues[0], formValues[1], formValues[2])
         }
 
       }
@@ -374,72 +390,72 @@ export class DetalleEmpresaServicioComponent implements OnInit {
   }
 
 
-  GuardarEnHistrorialVehicular(vehiculo: ListaVehiculosDetalleResponse, resolucion: string, resolucion_resferencial: string) {
+  GuardarEnHistrorialVehicular(vehiculo: ListaVehiculosDetalleResponse, resolucion: string, resolucion_resferencial: string, fecha_resolucion_temp: Date) {
     const params = this.activatedRoute.snapshot.params
-    
-  //   //  let nombre_resolucion = this.resoluciones_empresa_servicio.filter((resolucion: { id_resolucion: number; }) => resolucion.id_resolucion ==parseInt(id_resolucion))[0].nombre_resolucion;
+
+    //   //  let nombre_resolucion = this.resoluciones_empresa_servicio.filter((resolucion: { id_resolucion: number; }) => resolucion.id_resolucion ==parseInt(id_resolucion))[0].nombre_resolucion;
     let dataHistorialVehicular: HistorialVehicularModel = {
       id_empresa_servicio: params['id_empresa_servicio'],
       condicion: 'BAJA',
       nombre_resolucion: resolucion,
-      fecha_resolucion: new Date(),
-      ruta: vehiculo.itinerario, 
+      fecha_resolucion: new Date(fecha_resolucion_temp),
+      ruta: vehiculo.itinerario,
       placa: vehiculo.placa,
       observaciones: ''
+    }
+    if (resolucion_resferencial == '' || resolucion_resferencial == null) {
+      dataHistorialVehicular.nombre_resolucion = resolucion
+      let fecha_resolucion = this.listaResoluciones.filter((res: { nombre_resolucion: string; }) => res.nombre_resolucion == resolucion);
+      dataHistorialVehicular.fecha_resolucion = new Date(fecha_resolucion[0].fecha_resolucion)
+    } else {
+      dataHistorialVehicular.nombre_resolucion = resolucion_resferencial + ' (ref)'
+    }
+
+    this.historialVehicularService.CrearHistorialVehicular(dataHistorialVehicular).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => {
+        console.log('Completado');
+        this.listarHistorialVehicular(params['id_empresa_servicio'])
+      }
+
+    })
+
   }
-  if(resolucion_resferencial==''||resolucion_resferencial==null){
-    dataHistorialVehicular.nombre_resolucion=resolucion
-    let fecha_resolucion = this.listaResoluciones.filter((res: { nombre_resolucion: string; }) => res.nombre_resolucion == resolucion);
-    dataHistorialVehicular.fecha_resolucion=new Date(fecha_resolucion[0].fecha_resolucion)
-   }else{
-    dataHistorialVehicular.nombre_resolucion=resolucion_resferencial+' (ref)'
-   }
-    
-   this.historialVehicularService.CrearHistorialVehicular(dataHistorialVehicular).subscribe({
-    next: (data) => {
-      console.log(data);
-    },
-    error: (error) => {
-      console.log(error);
-    },
-    complete: () => {
-      console.log('Completado');
-      this.listarHistorialVehicular(params['id_empresa_servicio'])
-    }
+  // -----------------------------------------------------------------------------------------------------------
 
-   })
-  
-}
-// -----------------------------------------------------------------------------------------------------------
+  darBajaVehiculoEmpresa(vehiculo: any) {
+    this.vehiculoService.DarBajaVehiculo(vehiculo.id_vehiculo).subscribe({
+      next: (data) => {
+        console.log(data);
 
-darBajaVehiculoEmpresa(vehiculo: any) {
-  this.vehiculoService.DarBajaVehiculo(vehiculo.id_vehiculo).subscribe({
-    next: (data) => {
-      console.log(data);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => {
+        console.log("complete");
+        this.listarVehiculosPorEmpresaServicio(this.dataEmpresaDetalle.id_empresa_servicio);
+      }
+    });
+  }
 
-    },
-    error: (error) => {
-      console.log(error);
-    },
-    complete: () => {
-      console.log("complete");
-      this.listarVehiculosPorEmpresaServicio(this.dataEmpresaDetalle.id_empresa_servicio);
-    }
-  });
-}
+  generarReportePDF() {
 
-generarReportePDF() {
+    this.pdfUrl = generatePDFreporte(this.listaVehiculos, this.dataEmpresaDetalle, this.listaResoluciones, this.credencialesService.credenciales.nombre_usuario, this.sanitizer)
 
-  this.pdfUrl = generatePDFreporte(this.listaVehiculos, this.dataEmpresaDetalle, this.listaResoluciones, this.credencialesService.credenciales.nombre_usuario, this.sanitizer)
+  }
 
-}
+  editarResolucion(id_resolucion: number) {
+    this.router.navigate(['principal/mod-empresa-servicio-resolucion/' + this.dataEmpresaDetalle.id_empresa_servicio + '/' + id_resolucion]);
+  }
 
-editarResolucion(id_resolucion: number) {
-  this.router.navigate(['principal/mod-empresa-servicio-resolucion/' + this.dataEmpresaDetalle.id_empresa_servicio + '/' + id_resolucion]);
-}
-
-agregarResolucion() {
-  this.router.navigate(['principal/mod-empresa-servicio-resolucion/' + this.dataEmpresaDetalle.id_empresa_servicio]);
-}
+  agregarResolucion() {
+    this.router.navigate(['principal/mod-empresa-servicio-resolucion/' + this.dataEmpresaDetalle.id_empresa_servicio]);
+  }
 
 }
