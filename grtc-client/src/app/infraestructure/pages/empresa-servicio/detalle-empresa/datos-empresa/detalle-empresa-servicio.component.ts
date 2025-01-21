@@ -9,14 +9,14 @@ import { ConductorService } from '../../../../services/remoto/conductor/conducto
 import { PersonaService } from '../../../../services/remoto/persona/persona.service';
 import { ListaResolucionResponse } from '../../../../../domain/dto/ResolucionResponse.dto';
 import { EliminarConductorMessageResponse, ListaConductoresResponse } from '../../../../../domain/dto/ConductorResponse.dto';
-import { ListaItinerarioResponse } from '../../../../../domain/dto/ItinerarioResponse.dto';
-import { ListaArrendamientoResponse } from '../../../../../domain/dto/ArrendamientoResponse.dto';
+import { EliminarItinerarioMessageResponse, ListaItinerarioResponse } from '../../../../../domain/dto/ItinerarioResponse.dto';
+import { EliminarArrendamientoMessageResponse, ListaArrendamientoResponse } from '../../../../../domain/dto/ArrendamientoResponse.dto';
 import { ArrendamientoService } from '../../../../services/remoto/arrendamiento/arrendamiento.service';
 import { ItinerarioService } from '../../../../services/remoto/itinerario/itinerario.service';
 import { VehiculoService } from '../../../../services/remoto/vehiculo/vehiculo.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ListaVehiculosDetalleResponse } from '../../../../../domain/dto/VehiculoResponse.dto';
+import { ListaVehiculosDetalleResponse, ModificarTucVehiculoAsociadoMessageResponse } from '../../../../../domain/dto/VehiculoResponse.dto';
 import { HistorialVehicularService } from '../../../../services/remoto/historial-vehicular/historial-vehicular.service';
 import { HistorialVehicularResponse } from '../../../../../domain/dto/HistorialVehicularResponse.dto';
 import { Router } from '@angular/router'
@@ -25,19 +25,21 @@ import { SweetAlert } from '../../../../shared/animated-messages/sweetAlert';
 import { ResolucionModel } from '../../../../../domain/models/Resolucion.model';
 import { generatePDFreporte, ShowDocumentoPdfMarcado } from '../../../../../../../public/utils/pdfFunctions';
 import { CredencialesService } from '../../../../services/local/credenciales/credenciales.service';
-
+import { FormsModule } from '@angular/forms';
 import { FechaConFormato_ddMMyyyy } from '../../../../../../../public/utils/formateDate';
 import Swal from 'sweetalert2';
-import { VehiculoModel } from '../../../../../domain/models/Vehiculo.model';
 import { HistorialVehicularModel } from '../../../../../domain/models/HistorialVehicular.model';
+import { TucService } from '../../../../services/remoto/tuc/tuc.service';
+import { TUCModel } from '../../../../../domain/models/TUC.model';
+import { CrearTUCMessageResponse, TUCResponse } from '../../../../../domain/dto/TUCResponse.dto';
 
-
+declare var bootstrap: any;
 
 
 @Component({
   selector: 'app-detalle-empresa-servicio',
   standalone: true,
-  imports: [NavegadorComponent, SubnavegadorComponent, CommonModule],
+  imports: [NavegadorComponent, SubnavegadorComponent, CommonModule, FormsModule],
   templateUrl: './detalle-empresa-servicio.component.html',
   styleUrl: './detalle-empresa-servicio.component.css'
 })
@@ -66,6 +68,31 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     porcentaje: 0                    // Porcentaje inicializado como 0
   };
 
+  dataTuc: TUCModel = {
+    id_tuc: 0,
+    nro_impresion: 0,
+    nro_tuc: 0, 
+    placa: '', 
+    razon_social: '', 
+    anio_fabricacion: '', 
+    marca: '',
+    modalidad: '', 
+    nro_part_reg: '', 
+    nombre_resolucion: '', 
+    condicion: '', 
+    color: '', 
+    nro_chasis: '', 
+    nro_asientos: '', 
+    carga: '', 
+    peso: '', 
+    fecha_exp: new Date(), 
+    fecha_ven: new Date(), 
+    ruta: '', 
+    copia:''
+  };
+
+  private myModal: any;
+
   listaResoluciones: ListaResolucionResponse[] = [];
   listaConductores: ListaConductoresResponse[] = [];
   listaArrendamientos: ListaArrendamientoResponse[] = [];
@@ -84,7 +111,7 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     tomo_resolucion: null
   };
 
-  constructor(private credencialesService: CredencialesService, private sweetAlert: SweetAlert, private personaService: PersonaService, private router: Router, private historialVehicularService: HistorialVehicularService, private vehiculoService: VehiculoService, private itinerarioService: ItinerarioService, private arrendamientoService: ArrendamientoService, private conductorService: ConductorService, private sanitizer: DomSanitizer, private empresaServicioService: EmpresaServicioService, private activatedRoute: ActivatedRoute, private resolucionService: ResolucionService) { }
+  constructor(private tucService:TucService, private credencialesService: CredencialesService, private sweetAlert: SweetAlert, private personaService: PersonaService, private router: Router, private historialVehicularService: HistorialVehicularService, private vehiculoService: VehiculoService, private itinerarioService: ItinerarioService, private arrendamientoService: ArrendamientoService, private conductorService: ConductorService, private sanitizer: DomSanitizer, private empresaServicioService: EmpresaServicioService, private activatedRoute: ActivatedRoute, private resolucionService: ResolucionService) { }
 
   ngOnInit(): void {
     this.detalleEmpresa();
@@ -254,11 +281,67 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     });
   }
 
-  eliminarElemento(conductor: any) {
+  eliminarElementoConductor(conductor: any) {
     this.sweetAlert.MensajeConfirmacionEliminar('Esta acción no se puede deshacer.')
       .then((confirmado) => {
         if (confirmado) {
           this.eliminarConductor(conductor)
+        } else {
+          console.log('Acción cancelada.');
+        }
+      });
+  }
+
+  eliminarItinerario(id_itinerario: number) {
+    let eliminado = false
+    this.itinerarioService.eliminarItinerario(id_itinerario).subscribe({
+      next: (res: EliminarItinerarioMessageResponse) => {
+        if (res.text !== 'error') {
+          eliminado = true
+        }
+      },
+      error: (err) => {
+        console.error('Error al eliminar itinerario:', err);
+      },
+      complete: () => {
+        if (eliminado) {
+          this.sweetAlert.MensajeToast('Itinerario eliminado correctamente')
+        } else {
+          this.sweetAlert.MensajeError('No es posible eliminar un itinerario que esta activo')
+        }
+      }
+    });
+  }
+
+  eliminarElementoItinerario(itinerario: any) {
+    this.sweetAlert.MensajeConfirmacionEliminar('Esta acción no se puede deshacer.')
+      .then((confirmado) => {
+        if (confirmado) {
+          this.eliminarItinerario(itinerario.id_detalle_ruta_itinerario)
+        } else {
+          console.log('Acción cancelada.');
+        }
+      });
+  }
+
+  eliminarElementoArrendamiento(arrendamiento: any) {
+
+    this.sweetAlert.MensajeConfirmacionEliminar('Esta acción no se puede deshacer.')
+      .then((confirmado) => {
+        if (confirmado) {
+          this.arrendamientoService.eliminarArrendamiento(arrendamiento.id_contrato).subscribe({
+            next: (res: EliminarArrendamientoMessageResponse) => {
+              console.log(res)
+            },
+            error: (err) => {
+              console.error('Error al eliminar arrendamiento:', err);
+            },
+            complete: () => {
+              console.log('Arrendamiento eliminado correctamente');
+              this.sweetAlert.MensajeToast('Arrendamiento eliminado correctamente')
+              this.listarArrendamientos(this.dataEmpresaDetalle.id_empresa_servicio)
+            }
+          });
         } else {
           console.log('Acción cancelada.');
         }
@@ -393,7 +476,6 @@ export class DetalleEmpresaServicioComponent implements OnInit {
   GuardarEnHistrorialVehicular(vehiculo: ListaVehiculosDetalleResponse, resolucion: string, resolucion_resferencial: string, fecha_resolucion_temp: Date) {
     const params = this.activatedRoute.snapshot.params
 
-    //   //  let nombre_resolucion = this.resoluciones_empresa_servicio.filter((resolucion: { id_resolucion: number; }) => resolucion.id_resolucion ==parseInt(id_resolucion))[0].nombre_resolucion;
     let dataHistorialVehicular: HistorialVehicularModel = {
       id_empresa_servicio: params['id_empresa_servicio'],
       condicion: 'BAJA',
@@ -444,11 +526,189 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     });
   }
 
+  ObtenerTUCById(id_tuc:number){
+    this.tucService.obtenerTUCbyId(id_tuc).subscribe({
+      next:(res:TUCResponse)=>{
+        this.dataTuc=res
+        console.log(res)
+      },
+      error:(err)=>{
+        console.error('Error al obtener TUC:',err);
+      },
+      complete:()=>{
+        console.log('complete')
+      }
+    })
+  }
+
+  openModal(vehiculo: ListaVehiculosDetalleResponse) {
+
+    if (vehiculo.id_tuc == null) {
+      Swal.fire('No existe N° de TUC asignado')
+    } else {
+
+      this.ObtenerTUCById(vehiculo.id_tuc)
+      this.myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
+      this.myModal.show();
+    }
+
+  }
+
+  closeModal() {
+    this.myModal.hide();
+  }
+
   generarReportePDF() {
 
     this.pdfUrl = generatePDFreporte(this.listaVehiculos, this.dataEmpresaDetalle, this.listaResoluciones, this.credencialesService.credenciales.nombre_usuario, this.sanitizer)
 
   }
+
+  modificarTUCenVehiculo(id_tuc : number, id_vehiculo:number) {
+    this.vehiculoService.ModificarTucVehiculo(id_tuc,id_vehiculo).subscribe({
+      next:(res:ModificarTucVehiculoAsociadoMessageResponse)=>{
+        console.log('vehiculo modificado tuc',res)
+        const indice = this.listaVehiculos.findIndex(vehiculo => vehiculo.id_vehiculo === id_vehiculo);
+        this.listaVehiculos[indice].id_tuc=id_tuc
+      },
+      error:(error:any)=>{
+        console.log('error al modificar id_tuc en vehiculo'+error)
+      },
+      complete:()=>{
+        console.log('Tuc Modificado en vechiculo');
+      }
+    })
+  }
+
+  crearTUC(vehiculo: ListaVehiculosDetalleResponse, nro_impresion:number, nro_tuc:number) {
+    const bodyTuc: TUCModel = {
+      nro_impresion: nro_impresion,
+      nro_tuc: nro_tuc,
+      placa: vehiculo.placa,
+      razon_social: vehiculo.razon_social,
+      anio_fabricacion: vehiculo.anio_fabricacion,
+      marca: vehiculo.marca,
+      modalidad: vehiculo.modalidad,
+      nro_part_reg: vehiculo.nro_part_reg,
+      nombre_resolucion: vehiculo.nombre_resolucion,
+      condicion: vehiculo.estado,
+      color: vehiculo.color,
+      nro_chasis: vehiculo.nro_chasis,
+      nro_asientos: vehiculo.nro_asientos,
+      carga: vehiculo.carga,
+      peso: vehiculo.peso,
+      fecha_exp: new Date(vehiculo.fecha_inicial),
+      fecha_ven: new Date(vehiculo.fecha_final),
+      ruta: vehiculo.itinerario,
+      copia: ''
+    }
+
+    this.tucService.crearTUC(bodyTuc).subscribe({
+      next: (response: CrearTUCMessageResponse) => {
+        console.log(response)
+    
+        this.modificarTUCenVehiculo(response.id_tuc,vehiculo.id_vehiculo)
+
+      },
+      error: (error) => {
+        console.error('Error al crear tuc:', error);
+      },
+      complete: () => {
+        console.log('complete');
+      }
+    })
+  }
+
+  async CrearElementoTuc(vehiculo: ListaVehiculosDetalleResponse) {
+
+    if (vehiculo.id_tuc == null) {
+      const { value: formValues } = await Swal.fire({
+        title: 'Generar TUC',
+        html:
+          '<input id="swal-input1" class="swal2-input"  placeholder="N° de impresion">' +
+          '<input id="swal-input2" class="swal2-input" placeholder="N° de TUC">',
+        focusConfirm: false,
+        preConfirm: () => {
+          return [(<HTMLInputElement>document.getElementById('swal-input1')).value,
+          (<HTMLInputElement>document.getElementById('swal-input2')).value]
+
+        }
+      });
+
+      if (formValues[0] == '' || formValues[1] == '') {
+        Swal.fire(
+          'Campos icompletos, intente de nuevo'
+        )
+      }
+      else {
+        //PROCEDIMIENTO DE CREACION DE TUC
+         this.crearTUC(vehiculo, formValues[0], formValues[1])
+      }
+    }
+    else {
+      Swal.fire({
+        title: 'Ya existe una TUC asignado a este vehiculo',
+        text: "Deseas generar una nueva TUC para la placa: " + vehiculo.placa,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Generar TUC!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const { value: formValues } = await Swal.fire({
+            title: 'Generar TUC',
+            html:
+              '<input id="swal-input1" class="swal2-input"  placeholder="N° de impresion">' +
+              '<input id="swal-input2" class="swal2-input" placeholder="N° de TUC">',
+            focusConfirm: false,
+            preConfirm: () => {
+              return [(<HTMLInputElement>document.getElementById('swal-input1')).value,
+              (<HTMLInputElement>document.getElementById('swal-input2')).value]
+
+            }
+          });
+
+          // Swal.fire(JSON.stringify(formValues));
+          if (formValues[0] == '' || formValues[1] == '') {
+            Swal.fire(
+              'Campos icompletos, intente de nuevo'
+            )
+          }
+          else {
+
+            //PROCEDIMIENTO DE CREACION DE TUC
+            console.log(formValues[0] + '  ' + formValues[1] + ' ' + vehiculo.id_vehiculo)
+            // this.data_tuc.nro_impresion=formValues[0]
+            // this.data_tuc.nro_tuc=formValues[1]
+            // this.InsertarTUCbd(id_vehiculo)
+
+          }
+
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+
+
+            }
+          })
+
+          Toast.fire({
+            icon: 'success',
+            title: 'Creacion en Progresa'
+          })
+        }
+      })
+    }
+
+
+  }
+  // -----------------------------------------------------------------------------------------
 
   editarResolucion(id_resolucion: number) {
     this.router.navigate(['principal/mod-empresa-servicio-resolucion/' + this.dataEmpresaDetalle.id_empresa_servicio + '/' + id_resolucion]);

@@ -95,7 +95,7 @@ class VehiculoController {
             try {
                 const consulta = `
                         SELECT 
-                            e.razon_social AS nombre_empresa,
+                            e.razon_social,
                             e.ruc,
                             te.fecha_inicial,
                             te.fecha_final,
@@ -244,8 +244,7 @@ class VehiculoController {
     ModificarTucVehiculoAsociado(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { id_vehiculo } = req.params;
-                const { id_tuc } = req.body;
+                const { id_tuc, id_vehiculo } = req.body;
                 const consulta = `
                 UPDATE t_vehiculo
                        SET  id_tuc=$1
@@ -263,7 +262,7 @@ class VehiculoController {
             }
             catch (error) {
                 console.error('Error al modificar vehiculo:', error);
-                res.status(500).json({ error: 'Error interno del servidor' });
+                res.status(500).json({ text: 'Error interno del servidor' });
             }
         });
     }

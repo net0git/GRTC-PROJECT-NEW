@@ -13,7 +13,7 @@ import { ValidarModeloForm } from '../../../validatorForm/modelo.validator';
 import { ValidarMarcaForm } from '../../../validatorForm/marca.validator';
 
 import { ListarMarcasResponse } from '../../../../domain/dto/MarcaResponse.dto';
-import { ListaVehiculosDetalleResponse, ListaVehiculosResponse, CrearVehiculoMessageResponse, DarBajaVehiculoMessageResponse } from '../../../../domain/dto/VehiculoResponse.dto';
+import { ListaVehiculosDetalleResponse, ListaVehiculosResponse, CrearVehiculoMessageResponse, DarBajaVehiculoMessageResponse, ModificarTucVehiculoAsociadoMessageResponse } from '../../../../domain/dto/VehiculoResponse.dto';
 
 
 
@@ -121,6 +121,10 @@ export class VehiculoService {
 
   DarBajaVehiculo(id_vehiculo: number): Observable<DarBajaVehiculoMessageResponse> {
     return this.http.get<DarBajaVehiculoMessageResponse>(this.api_url_vehiculo + '/baja/' + id_vehiculo);
+  }
+
+  ModificarTucVehiculo(id_tuc: number, id_vehiculo: number): Observable<ModificarTucVehiculoAsociadoMessageResponse> {
+    return this.http.put<ModificarTucVehiculoAsociadoMessageResponse>(this.api_url_vehiculo + '/modificar/tuc', {id_vehiculo, id_tuc});
   }
 
 

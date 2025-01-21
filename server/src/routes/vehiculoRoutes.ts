@@ -18,7 +18,7 @@ class TucRoutes{
         this.router.get('/api/vehiculo/empresaservicio/:id_empresa_servicio',vehiculoController.obtenerVehiculosDetalleByEmpresaServicio)
         this.router.get('/api/vehiculo/placa/:placa',vehiculoController.ObtenerVehiculoPorPlaca)
         this.router.put('/api/vehiculo/:id_vehiculo',vehiculoController.ModificarVehiculo)    
-        this.router.put('/api/vehiculo/tuc/:id_vehiculo', vehiculoController.ModificarTucVehiculoAsociado)
+        this.router.put('/api/vehiculo/modificar/tuc', vehiculoController.ModificarTucVehiculoAsociado)
         this.router.get('/api/vehiculo/baja/:id_vehiculo', vehiculoController.DarBajaVehiculo)
     }   
 }

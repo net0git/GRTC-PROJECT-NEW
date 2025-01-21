@@ -211,7 +211,6 @@ export class ArrendamientoComponent implements OnInit {
           console.log('Acción cancelada.');
         }
       });
-   
   } 
 
   limpiar() {

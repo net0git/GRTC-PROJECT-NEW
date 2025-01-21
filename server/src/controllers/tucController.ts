@@ -66,9 +66,28 @@ class TucController{
         }
     }
 
+    public async ObtenerTucPorId(req: Request, res: Response): Promise<void> {
+        try {
+            const { id_tuc } = req.params;
+            const consulta= 'select * from t_tuc where id_tuc = $1';
+            const tuc = await db.query(consulta,[id_tuc]);
+
+            if (tuc && tuc['rows'].length > 0) {
+                res.json(tuc['rows'][0]);
+            } else {
+                res.status(404).json({ text: 'La tuc no existe' });
+            }
+
+        } catch (error) {
+            console.error('Error al obtener tuc:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+    }
+
+
     public async ModificarTuc(req: Request, res: Response): Promise<void> {
         try {
-            const { id } = req.params;
+            const { id_tuc } = req.params;
             const { nro_tuc, nro_impresion, copia } = req.body;
 
             const consulta = `
@@ -76,7 +95,7 @@ class TucController{
                     SET nro_tuc=$1, nro_impresion=$2, copia=$3
                 WHERE id_tuc=$4
                 `;
-            const valores = [ nro_tuc, nro_impresion, copia, id];
+            const valores = [ nro_tuc, nro_impresion, copia, id_tuc];
 
             db.query(consulta, valores, (error, resultado) => {
                 if (error) {

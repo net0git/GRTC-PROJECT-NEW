@@ -156,7 +156,7 @@
                                             <td>{{item.documento}}</td>
                                             <td>{{item.nro_licencia}}</td>
                                             <td>{{item.categoria}}</td>
-                                            <td><i class="bi bi-trash3-fill" (click)="eliminarElemento(item)"></i> </td>
+                                            <td><i class="bi bi-trash3-fill" (click)="eliminarElementoConductor(item)"></i> </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -191,7 +191,7 @@
                                             <td>{{item.direccion}}</td>
                                             <td>{{item.fecha_inicio | date:'dd/MM/yyyy'}}</td>
                                             <td>{{item.fecha_fin | date:'dd/MM/yyyy'}}</td>
-                                            <td><i class="bi bi-trash3-fill" ></i> </td>
+                                            <td><i class="bi bi-trash3-fill" (click)="eliminarElementoArrendamiento(item)"></i> </td>
 
                                         </tr>
                                     </tbody>
@@ -232,7 +232,7 @@
                                             <td>{{item.destino}}</td>
                                             <td>{{item.itinerario}}</td>
                                             <td>{{item.frecuencia}}</td>
-                                            <td><i class="bi bi-trash3-fill"></i> </td>
+                                            <td><i class="bi bi-trash3-fill" (click)="eliminarElementoItinerario(item)"></i> </td>
 
                                         </tr>
                                     </tbody>
@@ -284,9 +284,16 @@
                                             </td>
                                             <td (click)="toggleCollapse(i)">{{vehiculo.fecha_final |date:'dd/MM/yyyy'}}
                                             </td>
+                                            <td>
+                                                <i
+                                                    [class.bi-postcard-fill]="vehiculo.id_tuc !== null"
+                                                    (click)="openModal(vehiculo)"
+                                                    [style.color]="vehiculo.id_tuc !== null ? '#007bff' : '#6c757d' "
+                                                ></i>
+                                            </td>
 
-                                            <td><i class="bi bi-filetype-pdf icon-custom-pdf"></i></td>
-                                            <td><button class="btn btn-secondary" (click)="DarBajaVehiculo(vehiculo)"><i class="bi bi-arrow-down-circle-fill"></i> Baja</button></td>
+                                            <!-- <td ><i class="bi bi-filetype-pdf icon-custom-pdf" (click)="openModal(vehiculo)"></i></td> -->
+                                            <td><button class="btn btn-secondary btn-sm" (click)="DarBajaVehiculo(vehiculo)"><i class="bi bi-arrow-down-circle-fill"></i> Baja</button></td>
 
                                         </tr>
 
@@ -347,7 +354,7 @@
 
                                                             <div class="d-flex justify-content-center mt-2">
                                                                 <button type="button"
-                                                                    class="btn btn-success  button-full-width">GenerarTuc
+                                                                    class="btn btn-success  button-full-width" (click)="CrearElementoTuc(vehiculo)">GenerarTuc
                                                                     <i class="bi bi-nut"></i></button>
 
                                                             </div>
@@ -413,3 +420,53 @@
     </div>
 
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <div class="bg-secondary custom-width">
+                <h5 class="modal-title m-2 text-white" id="exampleModalLongTitle">N° de impresion: {{dataTuc.nro_impresion}}</h5>
+                <h4 class="modal-title m-2 text-white" id="exampleModalLongTitle2">TUC: {{dataTuc.nro_tuc}}</h4>
+            </div>
+          
+          <!-- <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button> -->
+        </div>
+        <div class="modal-body text-start">
+            <ul>
+                <li><strong>PLACA:</strong> {{dataTuc.placa}}</li>
+                <li><strong>RAZON SOCIAL:</strong> {{dataTuc.razon_social}}</li>
+                <li><strong>AÑO DE FABRICACIÓN:</strong> {{dataTuc.anio_fabricacion}}</li>
+                <li><strong>MARCA:</strong> {{dataTuc.marca}}</li>
+              
+                <li><strong>MODALIDAD:</strong> {{dataTuc.modalidad}}</li>
+                <li><strong>PARTIDA REGISTRAL:</strong> {{dataTuc.nro_part_reg}}</li>
+                <li><strong>RESOLUCIÓN:</strong> {{dataTuc.nombre_resolucion}}</li>
+                <li><strong>CONDICIÓN:</strong> {{dataTuc.condicion}}</li>
+                <li><strong>COLOR:</strong> {{dataTuc.color}}</li>
+                <li><strong>N° CHASIS:</strong> {{dataTuc.nro_chasis}}</li>
+  
+                <li><strong>N° ASIENTOS:</strong> {{dataTuc.nro_asientos}}</li>
+                <li><strong>CARGA:</strong> {{dataTuc.carga}}</li>
+                <li><strong>PESO:</strong> {{dataTuc.peso}}</li>
+                <li><strong>FECHA EXPED:</strong> {{dataTuc.fecha_exp | date:'dd-MM-yyyy'}}</li>
+                <li><strong>FECHA VENCI:</strong> {{dataTuc.fecha_ven | date:'dd-MM-yyyy'}}</li>
+  
+                <li><strong>RUTA AUTORIZADA A OPERAR:</strong> {{dataTuc.ruta}}</li>
+              </ul>
+              <hr>
+              <label class="mx-2 mb-2">copias:</label>
+              <div class="mb-3">
+                <textarea name="tuc_copia" placeholder="Descripción" class="form-control" rows="4" [(ngModel)]="dataTuc.copia" ></textarea>
+              </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+          <button type="button" class="btn btn-primary" >Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>

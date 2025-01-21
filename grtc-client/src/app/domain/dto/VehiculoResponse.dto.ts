@@ -3,18 +3,18 @@ export interface ListaVehiculosDetalleResponse {
         id_vehiculo: number; // v.id_vehiculo
         id_tuc: number; // v.id_tuc
         tipo_servicio: string; // ts.denominacion
-        razonSocial: string; // e.razon_social 
+        razon_social: string; // e.razon_social 
         placa: string; // v.placa
         nro_part_reg: string; // v.nro_part_reg
         modalidad: string; // v.modalidad
         estado: string; // v.estado
         carga: string; // v.carga
-        peso: number; // v.peso
+        peso: string; // v.peso
         categoria: string; // v.categoria
-        anio_fabricacion: number; // v.anio_fabricacion
+        anio_fabricacion: string; // v.anio_fabricacion
         color: string; // v.color
         nro_chasis: string; // v.nro_chasis
-        nro_asientos: number; // v.nro_asientos
+        nro_asientos: string; // v.nro_asientos
         marca: string; // v.marca
         modelo: string; // v.modelo
         serie: string; // v.serie
@@ -48,6 +48,10 @@ export interface ListaVehiculosResponse {
         nro_chasis: string; // v.nro_chasis
         marca: string; // v.marca
         modelo: string; // v.modelo   
+}
+
+export interface ModificarTucVehiculoAsociadoMessageResponse {
+        text: string
 }
 
 export interface CrearVehiculoMessageResponse {
