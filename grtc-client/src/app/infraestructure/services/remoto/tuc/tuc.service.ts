@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../../environments/environment';
 import { TUCModel } from '../../../../domain/models/TUC.model';
-import { CrearTUCMessageResponse, TUCResponse } from '../../../../domain/dto/TUCResponse.dto';
+import { CrearTUCMessageResponse, ModificarTUCResponse, TUCResponse } from '../../../../domain/dto/TUCResponse.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +25,9 @@ export class TucService {
 
   obtenerTUCbyId(id_tuc:number):Observable<TUCResponse>{
     return this.http.get<TUCResponse>(this.api_uri_tuc+'/detalle/'+id_tuc)
+  }
+
+  modificarCopiaTUC(id_tuc:number, copia:string):Observable<ModificarTUCResponse>{
+    return this.http.put<ModificarTUCResponse>(this.api_uri_tuc+'/modificar/'+id_tuc,{copia})
   }
 }

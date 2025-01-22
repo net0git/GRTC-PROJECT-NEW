@@ -31,7 +31,7 @@ import Swal from 'sweetalert2';
 import { HistorialVehicularModel } from '../../../../../domain/models/HistorialVehicular.model';
 import { TucService } from '../../../../services/remoto/tuc/tuc.service';
 import { TUCModel } from '../../../../../domain/models/TUC.model';
-import { CrearTUCMessageResponse, TUCResponse } from '../../../../../domain/dto/TUCResponse.dto';
+import { CrearTUCMessageResponse, ModificarTUCResponse, TUCResponse } from '../../../../../domain/dto/TUCResponse.dto';
 
 declare var bootstrap: any;
 
@@ -617,6 +617,27 @@ export class DetalleEmpresaServicioComponent implements OnInit {
         console.log('complete');
       }
     })
+  }
+
+  modificarDuplicadosTUC() {
+    const newDuplicadosTUC = this.dataTuc.copia;
+    const id_tuc_temp = this.dataTuc.id_tuc;
+  
+    if (id_tuc_temp !== undefined) {
+      this.tucService.modificarCopiaTUC(id_tuc_temp, newDuplicadosTUC).subscribe({
+        next: (response: ModificarTUCResponse) => {
+          console.log('Modificación exitosa', response.text);
+        },
+        error: (err) => {
+          console.error('Error al modificar', err);
+        },
+        complete: () => {
+          console.log('Modificación de TUC completa');
+        }
+      });
+    } else {
+      console.error('El id_tuc_temp es undefined');
+    }
   }
 
   async CrearElementoTuc(vehiculo: ListaVehiculosDetalleResponse) {

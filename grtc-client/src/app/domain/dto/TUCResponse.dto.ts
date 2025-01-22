@@ -1,6 +1,6 @@
 export interface TUCResponse {
 
-    id_tuc: number;
+    id_tuc?: number;
     nro_impresion: number;
     nro_tuc: number;
     placa: string;
@@ -28,5 +28,8 @@ export interface CrearTUCMessageResponse{
     text: string
 }
 
+export interface ModificarTUCResponse{
+    text: string
+}
 
    

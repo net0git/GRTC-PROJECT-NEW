@@ -16,7 +16,7 @@ class TucRoutes{
         this.router.get('/api/tuc/buscar/:nro_tuc',tucController.ObtenerTucPorNumero)
         this.router.get('/api/tuc/detalle/:id_tuc',tucController.ObtenerTucPorId)
         this.router.get('/api/tuc/listar/:placa',tucController.listarTucPorPlaca)
-        this.router.put('/api/tuc/:id_tuc',tucController.ModificarTuc)           
+        this.router.put('/api/tuc/modificar/:id_tuc',tucController.ModificarTuc)           
     }
 }
 

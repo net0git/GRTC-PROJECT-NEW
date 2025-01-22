@@ -88,16 +88,16 @@ class TucController{
     public async ModificarTuc(req: Request, res: Response): Promise<void> {
         try {
             const { id_tuc } = req.params;
-            const { nro_tuc, nro_impresion, copia } = req.body;
+            const { copia } = req.body;
 
             const consulta = `
                 UPDATE t_tuc 
-                    SET nro_tuc=$1, nro_impresion=$2, copia=$3
-                WHERE id_tuc=$4
+                    SET copia=$1
+                WHERE id_tuc=$2
                 `;
-            const valores = [ nro_tuc, nro_impresion, copia, id_tuc];
+            const valores = [ copia, id_tuc];
 
-            db.query(consulta, valores, (error, resultado) => {
+            db.query(consulta, valores, (error) => {
                 if (error) {
                     console.error('Error al modificar tuc:', error);
                 } else {
@@ -110,6 +110,7 @@ class TucController{
             res.status(500).json({ error: 'Error interno del servidor' });
         }
     }
+    
 }
 const tucController = new TucController();
 export default tucController;
