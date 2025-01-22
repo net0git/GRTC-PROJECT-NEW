@@ -90,7 +90,6 @@ export class VehiculosComponent implements OnInit {
     })
   }
 
-
   listarModelos(id_marca: number) {
     this.vehiculoService.ObtenerModelosPorMarca(id_marca).subscribe({
       next: (data: ListarModelosResponse[]) => {
@@ -129,7 +128,6 @@ export class VehiculosComponent implements OnInit {
     console.log(this.idModeloSeleccionado)
     this.dataVehiculo.modelo = this.lista_modelos.find(x => x.id_modelo == this.idModeloSeleccionado)?.nombre_modelo || '';
   }
-
 
   obternerDatosVehiculo(vehiculo: any) {
     if (!vehiculo) {
@@ -272,7 +270,6 @@ export class VehiculosComponent implements OnInit {
     });
   }
 
-
   limpiar() {
     this.dataVehiculo.id_vehiculo= 0
     this.dataVehiculo.placa= "",
@@ -301,7 +298,5 @@ export class VehiculosComponent implements OnInit {
 
     this.modificar = false
   }
-
-
 
 }

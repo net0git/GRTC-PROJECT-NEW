@@ -12,21 +12,193 @@
         <div class="contenedor ">
             <!-- Paso 1: Información básica del usuario -->
             <div *ngIf="currentStep === 1" class="">
-               <app-p1-datos-empresa></app-p1-datos-empresa>
+                <!-- <app-p1-datos-empresa></app-p1-datos-empresa> -->
+                <div class="d-flex justify-content-center">
+                    <div class="card" style="width: 60%;">
+                        <div class="card-body">
+                            <form>
+                                <fieldset>
+                                    <div class="col-sm-12 col-lg-6 mb-4">
+                                        <label for="tipo_empresa_servicio" class="form-label mt-2">Tipo de
+                                            servicio:</label>
+                                        <select id="tipo_empresa_servicio" name="tipo_empresa_servicio"
+                                            class="form-control form-select"
+                                            [(ngModel)]="dataEmpresaServicio.id_tipo_servicio">
+                                            <option value=0 disabled selected>TIPO SERVICIO</option>
+                                            <option value=1>TRANSPORTE DE PERSONAS</option>
+                                            <option value=2>TRANSPORTE TURISTICO</option>
+                                            <option value=3>TRASNPORTE DE TRABAJADORES</option>
+                                            <option value=4>TRANSPORTE DE ESTUDIANTES</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- DATOS DE LA EMPRESA-->
+
+                                    <!-- FILA DE RUC Y RAZON SOCIAL -->
+                                    <div class="row mb-3">
+                                        <div class="form-group col-lg-4 col-sm-12">
+                                            <label for="ruc_empresa" class="form-label">RUC:</label>
+                                            <div class="input-group mb-3">
+                                                <input type="number" min="0" class="form-control "
+                                                    placeholder="Ingrese RUC" name="empresa_ruc"
+                                                    [(ngModel)]="dataEmpresa.ruc">
+                                                <button class="btn btn-success " type="button" id="button-addon2"
+                                                    style="background-color: rgba(24, 148, 7, 0.747); border-color: rgba(24, 148, 7, 0.747);">
+                                                    <i class="bi bi-search"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-8 col-sm-12">
+                                            <label for="nombre_empresa" class="form-label ">Razon Social:</label>
+                                            <input id="nombre_empresa" type="text" class="form-control"
+                                                name="nombre_empresa" [(ngModel)]="dataEmpresa.razon_social">
+                                        </div>
+                                    </div>
+
+                                    <!-- FILA DE DEPARTAMETNO - PRPVINCIA - DISTRITO -->
+                                    <div class="row mb-4">
+                                        <div class="col-sm-4">
+                                            <label for="departamento_empresa"
+                                                class="form-label mt-3">Departamento:</label>
+                                            <select id="departamento_empresa" name="departamento_empresa"
+                                                class="form-control form-select" (change)="onChangeDepartamentoEmpresa()"
+                                                [(ngModel)]="dataEmpresa.departamento">
+                                                <option value="">DEPARTAMENTO </option>
+                                                <option *ngFor="let departamento of departamentos"
+                                                    [value]="departamento">{{
+                                                    departamento }}</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="provincia_empresa" class="form-label mt-3">Provincia:</label>
+                                            <select id="provincia_empresa" name="provincia_empresa"
+                                                class="form-control form-select" (change)="onChangeProvinciaEmpresa()"
+                                                [(ngModel)]="dataEmpresa.provincia"
+                                                [disabled]="!dataEmpresa.departamento">
+                                                <option value="">PROVINCIA</option>
+                                                <option *ngFor="let provincia of provincias" [value]="provincia">{{
+                                                    provincia }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="distrito_empresa" class="form-label mt-3">Distrito:</label>
+                                            <select id="distrito_empresa" name="distrito_empresa"
+                                                class="form-control form-select" [disabled]="!dataEmpresa.provincia"
+                                                [(ngModel)]="dataEmpresa.distrito">
+                                                <option value="">DISTRITO</option>
+                                                <option *ngFor="let distrito of distritos" [value]="distrito">{{
+                                                    distrito }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- FILA DE DIRECCION CORREO Y TELEFONO -->
+                                    <div class="row mb-3">
+                                        <div class="form-group col-lg-4 col-sm-12">
+                                            <label for="direccion_empresa" class="form-label ">Direccion:</label>
+                                            <input id="direccion_empresa" type="text" class="form-control "
+                                                name="direccion_empresa" [(ngModel)]="dataEmpresa.direccion">
+                                        </div>
+                                        <div class="form-group col-lg-4 col-sm-12">
+                                            <label for="correo_empresa " class="form-label ">Correo:</label>
+                                            <input type="email" class="form-control texto-form-minuscula"
+                                                name="correo_empresa" [(ngModel)]="dataEmpresa.correo">
+                                        </div>
+                                        <div class="form-group  col-lg-4 col-sm-12">
+                                            <label for="telefono_empresa" class="form-label">Telefono:</label>
+                                            <input type="number" inputmode="numeric" min="0" class="form-control "
+                                                name="telefono_empresa" [(ngModel)]="dataEmpresa.telefono">
+                                        </div>
+                                    </div>
+
+                                    <!-- FILA DE FECHA DE HABILITACION Y EXPEDIENTE -->
+                                    <div class="row mb-3">
+                                        <div class="form-group col-lg-6 col-sm-12">
+                                            <div class="mb-1">
+                                                <label for="fecha_empresa" class="form-label ">Fecha de
+                                                    Autorización:</label>
+                                                <input id="fecha_empresa" type="date" class="form-control"
+                                                    name="fecha_resolucion"
+                                                    [(ngModel)]="dataEmpresaServicio.fecha_inicial">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-sm-12">
+                                            <label for="expediente_empresa" class="form-label ">Expediente:</label>
+                                            <input id="expediente_empresa" type="text" class="form-control"
+                                                name="expediente_empresa" [(ngModel)]="dataEmpresaServicio.expediente">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary" (click)="nextStep()">Siguiente</button>
-
                 </div>
 
             </div>
 
             <!--Paso 2: Información del representante legal =====================================================================================================================================================================-->
             <div *ngIf="currentStep === 2">
+                <!-- <app-p2-datos-representante></app-p2-datos-representante> -->
+                <div class="d-flex justify-content-center">
+                    <div class="card" style="width: 50%;">
+                        <div class="card-body">
+                            <form>
+                                <!-- fila de nombres y apellidos -->
+                                <div class="row mb-3">
+                                    <div class="form-group col-lg-4 col-sm-12">
+                                        <label for="nombre_representante" class="form-label ">Nombres:</label>
+                                        <input id="nombre_representante" type="text" class="form-control"
+                                            name="nombre_representante" [(ngModel)]="dataPersonaRepresentante.nombres">
+                                    </div>
+                                    <div class="form-group col-lg-4 col-sm-12">
+                                        <label for="ap_paterno" class="form-label ">Apellido Paterno:</label>
+                                        <input id="ap_paterno" type="text" class="form-control" name="ap_paterno"
+                                            [(ngModel)]="dataPersonaRepresentante.ap_paterno">
+                                    </div>
+                                    <div class="form-group col-lg-4 col-sm-12">
+                                        <label for="ap_materno" class="form-label ">Apellido Materno:</label>
+                                        <input id="ap_materno" type="text" class="form-control" name="ap_materno"
+                                            [(ngModel)]="dataPersonaRepresentante.ap_materno">
+                                    </div>
+                                </div>
+                                <!-- fila de correo y telefono -->
+                                <div class="row mb-3">
+                                    <div class="form-group col-lg-8 col-sm-12">
+                                        <label for="correo_representante" class="form-label ">Correo:</label>
+                                        <input type="email" class="form-control texto-form-minuscula"
+                                            name="correo_representante" [(ngModel)]="dataPersonaRepresentante.correo">
+                                    </div>
+                                    <div class="form-group col-lg-4 col-sm-12">
+                                        <label for="telefono_representante" class="form-label ">Telefono:</label>
+                                        <input type="number" min="0" class="form-control" name="telefono_representante"
+                                            [(ngModel)]="dataPersonaRepresentante.telefono">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="documento_id" class="form-label ">Documento de Identidad:</label>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="inputGroupSelect01">Opciones:</label>
+                                    <select class="form-select form-select " id="tipo_doc" name="tipo_doc"
+                                        [(ngModel)]="dataPersonaRepresentante.tipo_doc">
+                                        <option value="" disabled selected>TIPO DE DOCUMENTO</option>
+                                        <option value="CE">CARNET DE ESTRANGERIA</option>
+                                        <option value="DNI">DNI</option>
+                                    </select>
+                                    <input type="text" class="form-control" name="documento"
+                                        [(ngModel)]="dataPersonaRepresentante.documento">
+                                </div>
 
-
-                <app-p2-datos-representante></app-p2-datos-representante>
-
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary mx-2" (click)="prevStep()">Anterior</button>
                     <button type="button" class="btn btn-primary" (click)="nextStep()">Siguiente</button>
@@ -36,9 +208,65 @@
 
             <!-- Paso 3: Registro de Resolucion ==========================================================================================================================================-->
             <div *ngIf="currentStep === 3">
+                <!-- <app-p3-datos-resolucion></app-p3-datos-resolucion> -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 offset-md-2">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form>
+                                        <div class="mb-2">
+                                            <label for="documento_pdf" class="form-label mb-0">Documento PDF:</label>
+                                            <input class="form-control form-control-sm" type="file" id="formFile"
+                                                (change)="onFileSelected($event)" accept=".pdf">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="titulo" class="form-label  mb-0">Titulo resolución:</label>
 
-                <app-p3-datos-resolucion></app-p3-datos-resolucion>
-               
+                                            <input type="text" name="nombre_resolucion"
+                                                class="form-control form-control-sm"
+                                                [(ngModel)]="dataResolucion.nombre_resolucion">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="nro_resolucion" class="form-label  mb-0">Nro resolución</label>
+                                            <input type="text" name="nro_resolucion"
+                                                class="form-control form-control-sm"
+                                                [(ngModel)]="dataResolucion.nro_resolucion">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="anio_resolucion" class="form-label  mb-0">Año</label>
+                                            <input type="text" name="anio_resolucion"
+                                                class="form-control form-control-sm"
+                                                [(ngModel)]="dataResolucion.anio_resolucion">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="tomo_resolucion" class="form-label  mb-0">Tomo</label>
+                                            <input type="number" name="tomo_resolucion"
+                                                class="form-control form-control-sm"
+                                                [(ngModel)]="dataResolucion.tomo_resolucion">
+                                        </div>
+                                        <div class=" mb-2">
+                                            <label for="fecha_resolucion" class="form-label   mb-0">Fecha</label>
+                                            <input type="date" class="form-control form-control-sm"
+                                                name="fecha_resolucion" [(ngModel)]="dataResolucion.fecha_resolucion">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="documento_pdf" class="form-label  mb-0">Descripcion</label>
+                                            <textarea class="form-control" name="descripcion" rows="3"
+                                                [(ngModel)]="dataResolucion.descripcion"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <div class="text-center">
+                                <iframe [src]="pdfUrl" type="application/pdf" width="100%" height="540px"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary mx-2" (click)="prevStep()">Anterior</button>
                     <button type="button" class="btn btn-primary" (click)="nextStep()">Siguiente</button>
@@ -47,7 +275,77 @@
 
             <!-- Paso 4: Registro de Itinerarios -->
             <div *ngIf="currentStep === 4">
-                <app-p4-datos-rutas></app-p4-datos-rutas>
+                <!-- <app-p4-datos-rutas></app-p4-datos-rutas> -->
+
+                <div class="contenedor">
+                    <div class="row">
+                        <div class="col-md-5 ">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form>
+                                        <!-- DATOS DEL PERSONALES -->
+                                        <fieldset>
+                                            <div class="form-group ">
+                                                <label for="origen_itinerario" class="form-label ">Origen:</label>
+                                                <input type="text" class="form-control" name="origen_itinerario"
+                                                    [(ngModel)]="dataItinerario.origen">
+                                            </div>
+                                            <div class="form-group mt-3">
+                                                <label for="destino_itinerario" class="form-label ">Destino:</label>
+                                                <input type="text" class="form-control" name="destino_itinerario"
+                                                    [(ngModel)]="dataItinerario.destino">
+                                            </div>
+                                            <div class="form-group mt-3">
+                                                <label for="itinerario" class="form-label  ">Itinerario:</label>
+                                                <textarea class="form-control" name="itinerario" rows="4"
+                                                    [(ngModel)]="dataItinerario.itinerario"></textarea>
+                                            </div>
+                                            <div class="form-group mt-3 mb-3">
+                                                <label for="frecuencia" class="form-label  ">Frecuencia:</label>
+                                                <input type="text" class="form-control" name="frecuencia"
+                                                    [(ngModel)]="dataItinerario.frecuencia">
+                                            </div>
+
+                                        </fieldset>
+                                        <div class="d-grid gap-2 mt-2">
+                                            <button type="button " class="btn btn-success">Crear</button>
+                                        </div>
+                                        <div class="d-grid gap-2 mt-2">
+                                            <button class="btn  btn-secondary text-white" type="button">limpiar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7 text-center">
+                            <table class="table text-center  table-hover">
+                                <thead class="thead-ligth bg-secondary text-white table-success">
+                                    <tr>
+                                        <th scope="col">Nro</th>
+                                        <th scope="col">Origen </th>
+                                        <th scope="col">Destino</th>
+                                        <th scope="col">Itinerario</th>
+                                        <th scope="col">Frecuencia</th>
+                                        <th scope="col">Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of lista_itinerarios, index as i">
+
+                                        <th scope="row">{{i+1}}</th>
+
+                                        <td>{{ item.origen }}</td>
+                                        <td>{{item.destino}}</td>
+                                        <td>{{item.itinerario}}</td>
+                                        <td>{{item.frecuencia}}</td>
+                                        <td><i class="bi bi-trash3-fill"></i> </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary mx-2" (click)="prevStep()">Anterior</button>
@@ -58,8 +356,134 @@
             <!-- Paso 5: Registro de contratos de arrendamientos -->
             <div *ngIf="currentStep === 5">
 
-                <app-p5-datos-arrendamiento></app-p5-datos-arrendamiento>
+                <div class="row">
+                    <div class="col-md-5 ">
+                        <div class="card">
+                            <div class="card-body">
+                                <form>
+                                    <!-- DATOS DE ARRENDAMIENTO-->
+                                    <fieldset>
+                                        <div class="row mb-3">
+                                            <div class="form-group col-lg-7 col-sm-12">
+                                                <label for="datos_arrendador" class="form-label ">Nombres y Apellidos
+                                                    (Arrendador):</label>
+                                                <input type="text" class="form-control" name="arrendador"
+                                                    [(ngModel)]="dataArrendamiento.arrendador">
+                                            </div>
+                                            <div class="form-group col-lg-5 col-sm-12">
+                                                <label for="datos_arrendador" class="form-label ">DNI:</label>
+                                                <input type="text" min="0" [maxLength]="8" class="form-control"
+                                                    name="dni_arrendario" [(ngModel)]="dataArrendamiento.dni">
+                                            </div>
+                                        </div>
 
+                                        <div class="form-group mb-3">
+                                            <label for="propiedad" class="form-label ">Nombre de la propiedad:</label>
+                                            <input type="text" class="form-control" name="propiedad"
+                                                [(ngModel)]="dataArrendamiento.propiedad">
+                                        </div>
+                                        <!-- FILA DE DEPARTAMETNO - PRPVINCIA - DISTRITO -->
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <label for="departamento_empresa"
+                                                    class="form-label mt-3">Departamento:</label>
+                                                <select id="departamento_empresa" name="departamento_empresa"
+                                                    class="form-control form-select" (change)="onChangeDepartamentoArrendamiento()"
+                                                    [(ngModel)]="dataArrendamiento.departamento">
+                                                    <option value="">DEPARTAMENTO </option>
+                                                    <option *ngFor="let departamento of departamentos"
+                                                        [value]="departamento">{{
+                                                        departamento }}</option>
+
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label for="provincia_empresa"
+                                                    class="form-label mt-3">Provincia:</label>
+                                                <select id="provincia_empresa" name="provincia_empresa"
+                                                    class="form-control form-select" (change)="onChangeProvinciaArrendamiento()"
+                                                    [(ngModel)]="dataArrendamiento.provincia"
+                                                    [disabled]="!dataArrendamiento.departamento">
+                                                    <option value="">PROVINCIA</option>
+                                                    <option *ngFor="let provincia of provincias" [value]="provincia">{{
+                                                        provincia }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label for="distrito_empresa" class="form-label mt-3">Distrito:</label>
+                                                <select id="distrito_empresa" name="distrito_empresa"
+                                                    class="form-control form-select"
+                                                    [(ngModel)]="dataArrendamiento.distrito"
+                                                    [disabled]="!dataArrendamiento.provincia">
+                                                    <option value="">DISTRITO</option>
+                                                    <option *ngFor="let distrito of distritos" [value]="distrito">{{
+                                                        distrito }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--  -->
+                                        <div class="form-group mb-3">
+                                            <label for="direccion" class="form-label  ">Direccion:</label>
+                                            <input type="text" class="form-control" name="direccion" [(ngModel)]="dataArrendamiento.direccion">
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="form-group col-lg-6 col-sm-12  ">
+                                                <label for="fecha_inicio " class="form-label ">Fecha inicio:</label>
+                                                <input type="date" class="form-control" name="fecha_inicio" [(ngModel)]="dataArrendamiento.fecha_inicio">
+                                            </div>
+                                            <div class="form-group col-lg-6  col-sm-12">
+                                                <label for="fecha_final" class="form-label ">Fecha final:</label>
+                                                <input type="date" class="form-control" name="fecha_final" [(ngModel)]="dataArrendamiento.fecha_fin">
+                                            </div>
+                                        </div>
+
+
+                                    </fieldset>
+                                    <div class="d-grid gap-2 mt-2">
+                                        <button class="btn btn-success" type="button">crear</button>
+                                    </div>
+                                    <div class="d-grid gap-2 mt-2">
+                                        <button class="btn btn-secondary text-white">limpiar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 text-center">
+                        <table class="table text-center  table-hover">
+                            <thead class="thead-ligth bg-secondary text-white table-success">
+                                <tr>
+                                    <th scope="col">Nro</th>
+                                    <th scope="col">Datos Arrendador</th>
+                                    <th scope="col">Propiedad</th>
+                                    <th scope="col">Direccion</th>
+                                    <th scope="col">Fecha incial</th>
+                                    <th scope="col">Fecha final</th>
+                                    <th scope="col">Eliminar</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of listaContratosArrendamiento, index as i">
+                
+                                    <th scope="row">{{i+1}}</th>
+                
+                                    <td>{{item.arrendador}}</td>
+                                    <td>{{item.propiedad}}</td>
+                                    <td>{{item.direccion}}</td>
+                                    <td>{{item.fecha_inicio | date:'dd-MM-yyyy'}} </td>
+                                    <td>{{item.fecha_fin | date:'dd-MM-yyyy'}}</td>
+                                    <td><i class="bi bi-trash3-fill"></i> </td>
+                
+                
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary mx-2" (click)="prevStep()">Anterior</button>
                     <button type="button" class="btn btn-primary" (click)="nextStep()">Siguiente</button>
@@ -69,24 +493,356 @@
 
             <!-- paso 6: Registro de conductores -->
             <div *ngIf="currentStep === 6">
+                <div class="row">
+                    <div class="col-md-5 ">
+                        <div class="card">
+                            <div class="card-body">
+                                <form>
+                                    <!-- DATOS DEL PERSONALES -->
+                                    <fieldset>
+                                        <div class="form-group mb-3">
+                                            <label for="nombre_conductor " class="form-label ">Nombre(s)</label>
 
+                                            <input type="text" class="form-control" name="nombre" placeholder="Nombre(s)" [(ngModel)]="dataPersonaConductor.nombres">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="ap_paterno" class="form-label ">Apellido
+                                                        Paterno:</label>
+                                                    <input type="text" class="form-control" name="ap_paterno" [(ngModel)]="dataPersonaConductor.ap_paterno">
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <label for="ap_materno" class="form-label ">Apellido
+                                                        Materno:</label>
+                                                    <input type="text" class="form-control" name="ap_materno" [(ngModel)]="dataPersonaConductor.ap_materno">
+                                                </div>
 
-                <app-p6-datos-conductores></app-p6-datos-conductores>
+                                            </div>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="correo" class="form-label ">Correo:</label>
+                                            <input type="email" class="form-control texto-form-minuscula" name="correo" placeholder="correo" [(ngModel)]="dataPersonaConductor.correo">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="documento_id" class="form-label ">Documento de Identidad:</label>
+                                            <div class="input-group mb-3">
+                                                <label class="input-group-text" for="inputGroupSelect01">Opciones:</label>
+                                                <select class="form-select form-select " id="tipo_doc" name="tipo_doc" [(ngModel)]="dataPersonaConductor.tipo_doc">
+                                                    <option value="" disabled selected>TIPO DE DOCUMENTO</option>
+                                                    <option value="CE">CARNET DE ESTRANGERIA</option>
+                                                    <option value="DNI">DNI</option>
+                                                </select>
+                                                <input type="text" class="form-control" name="documento" [(ngModel)]="dataPersonaConductor.documento">
+                                            </div>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="telefono" class="form-label ">Telefono/cel:</label>
+                                                    <input type="number" min="0" class="form-control" name="telefono"  placeholder="Telefono/cel" [(ngModel)]="dataPersonaConductor.telefono">
+                                                </div>
+                                                <div class="col-sm-12 col-md-4">
+                                                    <label for="licencia" class="form-label ">Licencia:</label>
+                                                    <input type="text" class="form-control" name="nro_licencia" placeholder="Licencia" [(ngModel)]="dataConductor.nro_licencia">
+
+                                                </div>
+                                                <div class="col-sm-12 col-md-4 ">
+                                                    <label for="categoria" class="form-label ">Categoria:</label>
+                                                    <select id="categoria" name="categoria" class="form-control form-select" [(ngModel)]="dataConductor.categoria">
+                                                        <option value="" disabled selected>CATEGORIA </option>
+                                                        <option value="A-I">A-I</option>
+                                                        <option value="A-IIa">A-IIa</option>
+                                                        <option value="A-IIb">A-IIb</option>
+                                                        <option value="A-IIIa">A-IIIa</option>
+                                                        <option value="A-IIIb">A-IIIb</option>
+                                                        <option value="A-IIIc">A-IIIc</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+                                    <div class="d-grid gap-2 mt-2">
+                                        <button class="btn btn-success " type="button">crear</button>
+                                    </div>
+                                    <div class="d-grid gap-2 mt-2">
+                                        <button class="btn btn-secondary text-whit" type="button">limpiar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 text-center">
+                        <table class="table text-center  table-hover">
+                            <thead class="thead-ligth bg-secondary text-white table-success">
+                                <tr>
+                                    <th scope="col">Nro</th>
+                                    <th scope="col">Nombre y Apellidos</th>
+                                    <th scope="col">DNI</th>
+                                    <th scope="col">Licencia</th>
+                                    <th scope="col">Categoria</th>
+                                    <th scope="col">Eliminar</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of listaConductores, index as i">
+                
+                                    <th scope="row">{{i+1}}</th>
+                
+                                    <td>{{ item.nombres + ' ' + item.ap_paterno + ' ' +item.ap_materno}}</td>
+                                    <td>{{item.documento}}</td>
+                                    <td>{{item.nro_licencia}}</td>
+                                    <td>{{item.categoria}}</td>
+                                    <td><i class="bi bi-trash3-fill" ></i> </td>
+                
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary mx-2" (click)="prevStep()">Anterior</button>
                     <button type="button" class="btn btn-primary" (click)="nextStep()">Siguiente</button>
                 </div>
             </div>
+
             <!-- Paso 7: Registro de vehiculos -->
-
             <div *ngIf="currentStep === 7">
-
-                <app-p7-datos-vehiculos></app-p7-datos-vehiculos>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 ">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form>
+            
+                                        <fieldset>
+            
+                                            <div class="form-group mb-2">
+            
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-6 col-lg-3">
+                                                        <label for="placa" class="form-label">Placa:</label>
+                                                        <div class="input-group mb-3">
+                                                            <input type="text" min="0" class="form-control form-control-sm"
+                                                                name="placa" [(ngModel)]="dataVehiculo.placa" appSoloPlaca maxlength="7" id="placa">
+                                                            <button class="btn btn-success btn-sm " type="button" id="button-addon2"
+                                                                style="background-color: rgba(24, 148, 7, 0.747); border-color: rgba(24, 148, 7, 0.747);">
+                                                                <i class="bi bi-search"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-6 col-lg-3">
+                                                        <label for="anio" class="form-label">Año:</label>
+                                                        <input type="text" class="form-control form-control-sm" name="anio"
+                                                            [(ngModel)]="dataVehiculo.anio_fabricacion" appSoloNumeros maxlength="4">
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-6 col-lg-3 ">
+                                                        <label for="nro_registro" class="form-label">Partida Registral:</label>
+                                                        <input type="text" class="form-control form-control-sm" name="nro_part_reg"
+                                                            [(ngModel)]="dataVehiculo.nro_part_reg" maxlength="8" appSoloNumeros>
+                                                    </div>
+            
+                                                    <div class="col-sm-12 col-md-6 col-lg-3">
+                                                        <label for="estado" class="form-label">Condicion:</label>
+                                                        <select id="estado" name="estado" class="form-control form-control-sm"
+                                                            [(ngModel)]="dataVehiculo.estado">
+                                                            <option value="">CONDICION </option>
+                                                            <option value="AUTORIZACION">AUTORIZACION</option>
+                                                            <option value="INCREMENTO">INCREMENTO</option>
+                                                            <option value="SUSTITUCION">SUSTITUCION</option>
+                                                            <option value="RENOVACION">RENOVACION</option>
+                                                        </select>
+                                                    </div>
+            
+                                                </div>
+            
+                                            </div>
+            
+                                            <div class="form-group mb-2">
+            
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-6 col-lg-3">
+                                                        <label for="peso" class="form-label">Peso Neto(Tn):</label>
+                                                        <input type="number" class="form-control form-control-sm" name="peso"
+                                                            min="0" [(ngModel)]="dataVehiculo.peso">
+                                                    </div>
+            
+                                                    <div class="col-sm-12 col-md-6 col-lg-3">
+                                                        <label for="carga" class="form-label">Carga Util(Tn):</label>
+                                                        <input type="number" class="form-control form-control-sm" name="carga"
+                                                            min="0" [(ngModel)]="dataVehiculo.carga">
+                                                    </div>
+            
+                                                    <div class="col-sm-12 col-md-6 col-lg-3">
+                                                        <label for="carroceria" class="form-label">Carroceria:</label>
+                                                        <input type="text" class="form-control form-control-sm" name="carroceria"
+                                                            [(ngModel)]="dataVehiculo.carroceria" appSoloLetras>
+                                                    </div>
+            
+                                                    <div class="col-sm-12 col-md-6 col-lg-3">
+                                                        <label for="categoria" class="form-label">Categoria:</label>
+                                                        <select id="Categoria" name="categoria" class="form-control form-control-sm"
+                                                            [(ngModel)]="dataVehiculo.categoria">
+                                                            <option value="" disabled selected>CATEGORÍA</option>
+                                                            <option value="L">L</option>
+                                                            <option value="L1">L1</option>
+                                                            <option value="L2">L2</option>
+                                                            <option value="L3">L3</option>
+                                                            <option value="L4">L4</option>
+                                                            <option value="L5">L5</option>
+                                                            <option value="M">M</option>
+                                                            <option value="M1">M1</option>
+                                                            <option value="M3">M3</option>
+                                                            <option value="M2-C1">M2-C1</option>
+                                                            <option value="M2-C2">M2-C2</option>
+                                                            <option value="M2-C3">M2-C3</option>
+                                                            <option value="M3-C1">M3-C1</option>
+                                                            <option value="M3-C2">M3-C2</option>
+                                                            <option value="M3-C3">M3-C3</option>
+                                                            <option value="N">N</option>
+                                                            <option value="N1">N1</option>
+                                                            <option value="N2">N2</option>
+                                                            <option value="N3">N3</option>
+                                                        </select>
+            
+                                                    </div>
+                                                </div>
+            
+                                            </div>
+                                            <div class="form-group mb-2">
+            
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-6 col-lg-3">
+                                                        <label for="serie" class="form-label">Nro Serie:</label>
+                                                        <input type="text" class="form-control form-control-sm" name="serie"
+                                                            [(ngModel)]="dataVehiculo.serie" maxlength="17">
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-6 col-lg-3">
+                                                        <label for="nro_chasis" class="form-label">Nro chasis/VIN:</label>
+                                                        <input type="text" class="form-control form-control-sm" name="nro_chasis"
+                                                            [(ngModel)]="dataVehiculo.nro_chasis" maxlength="17">
+                                                    </div>
+            
+                                                    <div class="col-sm-12 col-md-6 col-lg-3">
+                                                        <label for="asientos" class="form-label">Nro Asientos:</label>
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            name="nro_asientos" min="0" [(ngModel)]="dataVehiculo.nro_asientos" max="3" appSoloNumeros>
+                                                    </div>
+            
+                                                    <div class="col-sm-12 col-md-6 col-lg-3">
+                                                        <label for="modalidad" class="form-label">modalidad:</label>
+                                                        <select id="modalidad" type="text" class="form-control form-control-sm"
+                                                            name="modalidad" [(ngModel)]="dataVehiculo.modalidad">
+                                                            <option value="" disabled selected>MODALIDAD </option>
+                                                            <option value="ESTANDAR">ESTANDAR</option>
+                                                            <option value="DIFERENCIADO">DIFERENCIADO</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+            
+                                            </div>
+            
+                                            <div class="form-group mb-2">
+            
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <label for="marca" class="form-label">Marca:</label>
+            
+                                                        <select id="marca" name="marca" class="form-control form-control-sm select-reverse" [(ngModel)]="idMarcaSeleccionada" (click)="listarMarcas()" (change)="onMarcaSeleccionada()">
+                                                            <option value=0  disabled selected>MARCA</option>
+                                                            <option *ngFor="let marca of lista_marcas" [value]="marca.id_marca" >{{ marca.nombre_marca }}</option>
+                                                        </select>
+                                                    </div>
+            
+                                                    <div class="col-sm-3">
+                                                        <label for="modelo" class="form-label">Modelo:</label>
+                                                        <select id="modelo" name="modelo"
+                                                            class="form-control form-control-sm select-reverse"
+                                                            [(ngModel)]="idModeloSeleccionado" (change)="onModeloSeleccionado()">
+                                                            
+                                                            <option value=0 disabled selected>MODELO</option>
+                                                            <option *ngFor="let modelo of lista_modelos"
+                                                                [value]="modelo.id_modelo">{{modelo.nombre_modelo}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+            
+                                                    <div class="col-sm-6">
+                                                        <label for="color" class="form-label">Color(es):</label>
+                                                        <input type="text" class="form-control form-control-sm" name="color" [(ngModel)]="dataVehiculo.color" appSoloLetrasGuion >
+            
+                                                    </div>
+            
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-2">
+                                                <label for="itinerario" class="form-label">Itinerario:</label>
+                                                <select id="itinerario" name="itinerario"  class="form-control  form-control-sm " [(ngModel)]="dataVehiculo.id_detalle_ruta_itinerario">
+                                                    <option value=0 selected disabled>ITINERARIO</option>
+                                                    <option *ngFor="let itinerario of lista_itinerarios"
+                                                        [value]="itinerario.id_detalle_ruta_itinerario">{{itinerario.itinerario}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group mb-2">
+                                                <label for="resolucion" class="form-label">Resolución:</label>
+                                                <select id="resolucion" name="resolucion" class="form-control form-control-sm" [(ngModel)]="dataVehiculo.id_resolucion">
+                                                    <option value=0 selected disabled>RESOLUCIÓN </option>
+                                                    <option [value]="dataResolucion.id_resolucion">{{dataResolucion.nombre_resolucion}}</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+            
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <button [ngClass]="true ? 'btn btn-warning mt-3  w-100' : ' btn btn-success mt-3 text-white w-100'"  type="button">guardar</button> 
+                                            </div>
+            
+                                            <div class="col-md-6">
+                                                <button class="btn btn-secondary mt-3 text-white w-100"  type="button">Limpiar</button>
+                                            </div>
+            
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <div class="text-center">
+                                <table class="table text-center  table-hover">
+                                    <thead class="thead-ligth bg-secondary text-white table-success">
+                                        <tr>
+                                            <th scope="col">Nro</th>
+                                            <th scope="col">Placa</th>
+                                            <th scope="col">Año</th>
+                                            <th scope="col">Condicion</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let vehiculo of ListaVehiculos, index as i">
+            
+                                            <th scope="row">{{i+1}}</th>
+            
+            
+                                            <td>{{vehiculo.placa}}</td>
+                                            <td>{{vehiculo.anio_fabricacion}}</td>
+                                            <td>{{vehiculo.estado}}</td>
+                                            <td><i class="bi bi-pencil-fill m-2" ></i></td>
+            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary   mx-2" (click)="prevStep()">Anterior</button>
-                    <button type="button" class="btn btn-primary  mx-2">Registrar</button>
+                    <button type="button" class="btn btn-primary  mx-2" (click)="mostrar()">Registrar</button>
                 </div>
             </div>
         </div>

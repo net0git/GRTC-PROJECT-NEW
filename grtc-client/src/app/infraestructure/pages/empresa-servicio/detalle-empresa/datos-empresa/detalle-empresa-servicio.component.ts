@@ -472,7 +472,6 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     })
   }
 
-
   GuardarEnHistrorialVehicular(vehiculo: ListaVehiculosDetalleResponse, resolucion: string, resolucion_resferencial: string, fecha_resolucion_temp: Date) {
     const params = this.activatedRoute.snapshot.params
 
