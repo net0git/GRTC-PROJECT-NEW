@@ -24,6 +24,7 @@ import { ListaArrendamientoResponse } from '../../../../domain/dto/Arrendamiento
 import { VehiculoService } from '../../../services/remoto/vehiculo/vehiculo.service';
 import { ListaVehiculosResponse } from '../../../../domain/dto/VehiculoResponse.dto';
 
+
 @Component({
   selector: 'app-crear-empresa-servicio',
   standalone: true,
@@ -243,6 +244,31 @@ export class CrearEmpresaServicioComponent implements OnInit {
     this.dataVehiculo.modelo = this.lista_modelos.find(x => x.id_modelo == this.idModeloSeleccionado)?.nombre_modelo || '';
   }
   // -----------------------------------------------------------------------------------------------------------
+
+  // MANEJO DE ITINARARIOS
+  enviarDatosListaItinearios() {
+    this.lista_itinerarios.push(this.dataItinerario)
+  }
+
+  eliminarElementoItinerario(index: number) {
+    this.lista_itinerarios.splice(index, 1);
+  }
+
+  limpiarListaItinerarios() {
+    this.dataItinerario = {
+      id_detalle_ruta_itinerario: 0,
+      id_empresa_servicio: 0,
+      origen: '',
+      destino: '',
+      itinerario: '',
+      frecuencia: ''
+    }
+  }
+  // -----------------------------------------------------------------------------------------------------------
+  // MANEJO DE ARRENDAMIENTOS
+  
+  // -----------------------------------------------------------------------------------------------------------
+
   mostrar() {
     console.log(this.dataPersonaRepresentante)
     console.log(this.dataEmpresa)

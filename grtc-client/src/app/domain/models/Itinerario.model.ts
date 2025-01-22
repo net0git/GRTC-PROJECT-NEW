@@ -4,6 +4,6 @@ export interface ItinerarioModel {
     origen: string;
     destino: string;
     itinerario: string;
-    corredor?: string | null;
+    corredor?: string;
     frecuencia: string | null;
   }
