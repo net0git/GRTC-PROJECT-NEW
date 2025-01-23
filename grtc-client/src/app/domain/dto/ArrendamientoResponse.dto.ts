@@ -2,14 +2,15 @@ export interface ListaArrendamientoResponse {
     id_contrato: number
     id_empresa_servicio: number
     arrendador: string
-    fecha_inicio: Date
-    fecha_fin: Date
+    fecha_inicio: Date | string
+    fecha_fin: Date | string
     propiedad: string
     direccion: string
-    dni: string
+    dni: string | null
     departamento: string
     provincia: string
     distrito: string
+
 }
 
 export interface CrearArrendamientoMessageResponse{

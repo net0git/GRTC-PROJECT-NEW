@@ -4,7 +4,7 @@ export interface PersonaResponse {
     nombres: string;
     ap_paterno: string;
     ap_materno: string;
-    tipo_doc?: string | undefined | null;
+    tipo_doc: string;
     documento: string;
     telefono: string;
     correo: string

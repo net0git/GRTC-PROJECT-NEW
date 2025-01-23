@@ -22,10 +22,9 @@ class VehiculoController {
                     INSERT INTO t_vehiculo(
                             placa, categoria, anio_fabricacion, peso, carga, serie, nro_asientos, color, carroceria, modalidad, nro_part_reg, id_detalle_ruta_itinerario, id_resolucion, estado, marca, modelo, id_empresa_servicio, nro_chasis)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16 ,$17 ,$18);
-           
             `;
                 const valores = [placa, categoria, anio_fabricacion, peso, carga, serie, nro_asientos, color, carroceria, modalidad, nro_part_reg, id_detalle_ruta_itinerario, id_resolucion, estado, marca, modelo, id_empresa_servicio, nro_chasis];
-                database_1.default.query(consulta, valores, (error, resultado) => {
+                database_1.default.query(consulta, valores, (error) => {
                     if (error) {
                         console.error('Error al insertar vehiculo:', error);
                     }

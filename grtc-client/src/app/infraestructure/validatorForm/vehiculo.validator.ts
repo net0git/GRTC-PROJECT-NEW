@@ -16,11 +16,11 @@ export function ValidadVehiculoForm(cuerpo_vehiculo: VehiculoModel): ErrorValida
     if (!cuerpo_vehiculo.estado) {
       errorValidacion.push({ campo: 'estado', mensaje: 'Campo requerido' });
     }
-    if (cuerpo_vehiculo.carga == null || cuerpo_vehiculo.carga < 0) {
-      errorValidacion.push({ campo: 'carga', mensaje: 'Campo requerido o debe ser mayor o igual a 0' });
+    if (cuerpo_vehiculo.carga == '') {
+      errorValidacion.push({ campo: 'carga', mensaje: 'Campo requerido mayor a 0' });
     }
-    if (cuerpo_vehiculo.peso == null || cuerpo_vehiculo.peso < 0) {
-      errorValidacion.push({ campo: 'peso', mensaje: 'Campo requerido o debe ser mayor o igual a 0' });
+    if (cuerpo_vehiculo.peso == '') {
+      errorValidacion.push({ campo: 'peso', mensaje: 'Campo requerido mayor a 0' });
     }
     if (!cuerpo_vehiculo.categoria) {
       errorValidacion.push({ campo: 'categoria', mensaje: 'Campo requerido' });

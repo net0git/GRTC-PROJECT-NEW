@@ -46,8 +46,8 @@ export class VehiculosComponent implements OnInit {
     modalidad: "",
     estado: "",
 
-    carga: 0,
-    peso: 0,
+    carga: "",
+    peso: "",
     categoria: "",
     anio_fabricacion: "",
     color: "",
@@ -277,8 +277,8 @@ export class VehiculosComponent implements OnInit {
     this.dataVehiculo.modalidad= "",
     this.dataVehiculo.estado= "",
 
-    this.dataVehiculo.carga= 0,
-    this.dataVehiculo.peso= 0,
+    this.dataVehiculo.carga= "",
+    this.dataVehiculo.peso= "",
     this.dataVehiculo.categoria= "",
     this.dataVehiculo.anio_fabricacion= "",
     this.dataVehiculo.color= "",

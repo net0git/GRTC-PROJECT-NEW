@@ -26,4 +26,8 @@ export class EmpresaService {
     return this.http.put<modificarEmpresaResponse>(`${this.api_uri_empresa}/${id_empresa}`,cuerpo_empresa)
   }
 
+  obtenerEmpresaPorRuc(ruc:string):Observable<EmpresaResponse>{
+    return this.http.get<EmpresaResponse>(`${this.api_uri_empresa}/ruc/${ruc}`);
+  }
+
 }

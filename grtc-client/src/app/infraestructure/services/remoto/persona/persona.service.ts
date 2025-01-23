@@ -31,7 +31,7 @@ api_uri_persona='http://localhost:4000/api/persona'
     cuerpo_persona.nombres=cuerpo_persona.nombres.trim().toUpperCase()
     cuerpo_persona.ap_paterno=cuerpo_persona.ap_paterno.trim().toUpperCase()
     cuerpo_persona.ap_materno=cuerpo_persona.ap_materno.trim().toUpperCase()
-
+    cuerpo_persona.correo=cuerpo_persona.correo.trim().toLowerCase()
     const erroresValidacion=this.validarPersonaForm(cuerpo_persona)
     if (erroresValidacion.length > 0) {
       let errorMensaje = '';
@@ -52,6 +52,7 @@ api_uri_persona='http://localhost:4000/api/persona'
     cuerpo_persona.nombres=cuerpo_persona.nombres.trim().toUpperCase()
     cuerpo_persona.ap_paterno=cuerpo_persona.ap_paterno.trim().toUpperCase()
     cuerpo_persona.ap_materno=cuerpo_persona.ap_materno.trim().toUpperCase()
+    cuerpo_persona.correo=cuerpo_persona.correo.trim().toLowerCase()
     return this.http.put<ModificarPersonaMessageResponse>(this.api_uri_persona+`/modificar/datos/${id_persona}`,cuerpo_persona)
   }
 

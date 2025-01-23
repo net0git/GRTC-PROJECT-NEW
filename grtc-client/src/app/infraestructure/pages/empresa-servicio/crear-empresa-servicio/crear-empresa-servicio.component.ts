@@ -23,12 +23,20 @@ import { ArrendamientoModel } from '../../../../domain/models/Arrendamiento.mode
 import { ListaArrendamientoResponse } from '../../../../domain/dto/ArrendamientoResponse.dto';
 import { VehiculoService } from '../../../services/remoto/vehiculo/vehiculo.service';
 import { ListaVehiculosResponse } from '../../../../domain/dto/VehiculoResponse.dto';
+import { EmpresaResponse } from '../../../../domain/dto/EmpresaResponse.dto';
+import { EmpresaService } from '../../../services/remoto/empresa/empresa.service';
+import { SweetAlert } from '../../../shared/animated-messages/sweetAlert';
+import { EmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
+import { EmpresaServicioService } from '../../../services/remoto/empresas-servicio/empresa-servicio.service';
+import { PersonaService } from '../../../services/remoto/persona/persona.service';
+import { SoloNumerosGuionDirective } from '../../../directives/solo-numeros-guion.directive';
+import { SoloNumerosDirective } from '../../../directives/solo-numeros.directive';
 
 
 @Component({
   selector: 'app-crear-empresa-servicio',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavegadorComponent, SubnavegadorComponent, ProgressBarComponent],
+  imports: [CommonModule, FormsModule, NavegadorComponent, SubnavegadorComponent, ProgressBarComponent, SoloNumerosGuionDirective, SoloNumerosDirective],
   templateUrl: './crear-empresa-servicio.component.html',
   styleUrl: './crear-empresa-servicio.component.css'
 })
@@ -40,9 +48,9 @@ export class CrearEmpresaServicioComponent implements OnInit {
   lista_itinerarios: ListaItinerarioResponse[] = [];
   lista_marcas: ListarMarcasResponse[] = [];
   lista_modelos: ListarModelosResponse[] = [];
-  listaConductores: ListaConductoresResponse[] = [];
-  ListaVehiculos: ListaVehiculosResponse[] = [];
-  listaContratosArrendamiento: ListaArrendamientoResponse[] = [];
+  lista_conductores: ListaConductoresResponse[] = [];
+  lista_vehiculos: ListaVehiculosResponse[] = [];
+  lista_contratos_arrendamientos: ListaArrendamientoResponse[] = [];
 
   departamentos: string[] = []
   provincias: string[] = []
@@ -50,6 +58,13 @@ export class CrearEmpresaServicioComponent implements OnInit {
 
   idMarcaSeleccionada: number = 0;
   idModeloSeleccionado: number = 0;
+
+  desabilitarFormEmpresa=true
+  deshabilitarCampoTipoEmpresa=false
+  deshabilitarCampoRuc=false 
+  deshabilitarCampofechaInicio=true
+  deshabilitarCampoExpediente=true
+  deshabilitarFormRepresentante=true
 
   dataEmpresa: EmpresaModel = {
     id_empresa: 0,
@@ -79,7 +94,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
     nombres: '',
     ap_paterno: '',
     ap_materno: '',
-    tipo_doc: null,
+    tipo_doc: '',
     documento: '',
     telefono: '',
     correo: ''
@@ -132,7 +147,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
     nombres: '',
     ap_paterno: '',
     ap_materno: '',
-    tipo_doc: null,
+    tipo_doc: '',
     documento: '',
     telefono: '',
     correo: ''
@@ -146,8 +161,8 @@ export class CrearEmpresaServicioComponent implements OnInit {
     modalidad: "",
     estado: "",
 
-    carga: 0,
-    peso: 0,
+    carga: '',
+    peso: '',
     categoria: "",
     anio_fabricacion: "",
     color: "",
@@ -164,7 +179,16 @@ export class CrearEmpresaServicioComponent implements OnInit {
 
   }
 
-  constructor(private vehiculoService: VehiculoService, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer, private ubigeoService: UbigeoService) { }
+  constructor(
+    private vehiculoService: VehiculoService, 
+    private empresaService: EmpresaService,
+    private router: Router, 
+    private activatedRoute: ActivatedRoute, 
+    private sanitizer: DomSanitizer, 
+    private ubigeoService: UbigeoService,
+    private sweetAlert: SweetAlert,
+    private empresaServicioService: EmpresaServicioService,
+    private personaService: PersonaService) { }
   ngOnInit(): void {
     this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`/doc/error_carga.pdf`);
     this.ListaDepartamentosEmpresa()
@@ -254,7 +278,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
     this.lista_itinerarios.splice(index, 1);
   }
 
-  limpiarListaItinerarios() {
+  limpiarFormularioItinerario() {
     this.dataItinerario = {
       id_detalle_ruta_itinerario: 0,
       id_empresa_servicio: 0,
@@ -266,13 +290,190 @@ export class CrearEmpresaServicioComponent implements OnInit {
   }
   // -----------------------------------------------------------------------------------------------------------
   // MANEJO DE ARRENDAMIENTOS
-  
-  // -----------------------------------------------------------------------------------------------------------
+  enviarDatosListaArrendamiento() {
+    this.lista_contratos_arrendamientos.push(this.dataArrendamiento)
+  }
 
+  eliminarElementoArrendamiento(index: number) {
+    this.lista_contratos_arrendamientos.splice(index, 1)
+  }
+
+  limpiarFormularioArrendamiento() {
+    this.dataArrendamiento = {
+      id_contrato: 0,
+      id_empresa_servicio: 0,
+      direccion: '',
+      arrendador: '',
+      dni: '',
+      fecha_fin: '',
+      fecha_inicio: '',
+      propiedad: '',
+      departamento: '',
+      provincia: '',
+      distrito: '',
+    }
+  }
+  // -----------------------------------------------------------------------------------------------------------
+  // MANEJO DE CONDUCTORES
+  inviarDatosListaConductores() {
+    const dataBodyConductor: ListaConductoresResponse = {
+      id_conductor: 0,
+      id_persona: 0,
+      categoria: this.dataConductor.categoria,
+      nombres: this.dataPersonaConductor.nombres,
+      ap_paterno: this.dataPersonaConductor.ap_paterno,
+      ap_materno: this.dataPersonaConductor.ap_materno,
+      tipo_doc: this.dataPersonaConductor.tipo_doc,
+      documento: this.dataPersonaConductor.documento,
+      telefono: this.dataPersonaConductor.telefono,
+      correo: this.dataPersonaConductor.correo,
+      nro_licencia: this.dataConductor.nro_licencia,
+    }
+
+    this.lista_conductores.push(dataBodyConductor)
+
+  }
+
+  eliminarConductor(index: number) {
+    this.lista_conductores.splice(index, 1)
+  }
+  limpiarFormularioConductor() {
+    this.dataConductor = {
+      id_conductor: 0,
+      id_persona: 0,
+      id_empresa_servicio: 0,
+      categoria: '',
+      nro_licencia: '',
+    }
+    this.dataPersonaConductor = {
+      id_persona: 0,
+      nombres: '',
+      ap_paterno: '',
+      ap_materno: '',
+      tipo_doc: '',
+      documento: '',
+      telefono: '',
+      correo: '',
+    }
+  }
+
+  // -----------------------------------------------------------------------------------------------------------
+  // MANEJO DE VEHICULOS
+  enviarDatosListaVehiculos() {
+    this.lista_vehiculos.push(this.dataVehiculo)
+  }
+
+  eliminarVehiculo(id_vehiculo: number) {
+    this.lista_vehiculos.splice(id_vehiculo, 1)
+  }
+
+  limpiarFormularioVehiculo() {
+    this.dataVehiculo = {
+      id_vehiculo: 0,
+      placa: "",
+      nro_part_reg: "",
+      modalidad: "",
+      estado: "",
+
+      carga: '',
+      peso: '',
+      categoria: "",
+      anio_fabricacion: "",
+      color: "",
+      nro_chasis: "",
+      nro_asientos: "",
+      marca: "",
+      modelo: "",
+      serie: "",
+      carroceria: "",
+
+      id_empresa_servicio: 0,
+      id_detalle_ruta_itinerario: 0,
+      id_resolucion: 0,
+    }
+  }
+  // -----------------------------------------------------------------------------------------------------------
+  buscarEmpresaServicioPorRuc_tipoServicio() {
+    
+    
+    if(this.dataEmpresaServicio.id_tipo_servicio==0){
+      alert('Seleccione el tipo de servicio')
+      return
+    }
+    if (this.dataEmpresa.ruc === '' || this.dataEmpresa.ruc.length < 11) {
+      alert('Ingrese un RUC válido de 11 dígitos para la empresa');
+      return;
+    }
+
+    this.empresaServicioService.BuscarEmpresaPorRuc_TipoServicio(this.dataEmpresaServicio.id_tipo_servicio,this.dataEmpresa.ruc).subscribe({
+      next: (data: EmpresaServicioResponse) => { 
+        
+        console.log(data)
+        this.sweetAlert.MensajeError(`ya existe la empresa registrada con el servicio `)
+      },
+      error: (err) => {
+        console.log('error al obtener empresa por ruc', err)
+        this.buscarEmpresaPorRuc()
+      },
+      complete: () => {console.log('otención con exito de empresa por ruc')},
+    });
+  }
+  buscarEmpresaPorRuc() {
+    this.empresaService.obtenerEmpresaPorRuc(this.dataEmpresa.ruc).subscribe({
+      next: (data: EmpresaResponse) => { 
+        this.dataEmpresa=data
+        console.log(this.dataEmpresa)
+        this.onChangeDepartamentoEmpresa()
+        this.onChangeProvinciaEmpresa()
+        this.buscarRepresentanteLegal(this.dataEmpresa.id_representante_legal)
+        this.desabilitarFormEmpresa=true
+        this.deshabilitarCampoTipoEmpresa=true
+        this.deshabilitarCampoRuc=true 
+        this.deshabilitarCampofechaInicio=false
+        this.deshabilitarCampoExpediente=false
+        this.deshabilitarFormRepresentante=true
+      },
+      error: (err) => {
+        console.log('error al obtener empresa por ruc', err)
+        this.sweetAlert.MensajeConfirmacion('no existe empresa con ese RUC, deseas habilitar formulario?')
+        .then((confirmado) => {
+          if (confirmado) {
+            this.desabilitarFormEmpresa=false
+            this.deshabilitarCampoTipoEmpresa=true
+            this.deshabilitarCampoRuc=true 
+            this.deshabilitarCampofechaInicio=false
+            this.deshabilitarCampoExpediente=false
+            this.deshabilitarFormRepresentante=false
+          } else {
+            console.log('Acción cancelada.');
+          }
+        });
+      },
+      complete: () => {console.log('otención con exito de empresa por ruc')},
+    });
+  }
+  buscarRepresentanteLegal(id_persona:number) {
+    this.personaService.ObtenerDatosPersona(id_persona).subscribe({
+      next: (data:PersonaModel) => {
+        this.dataPersonaRepresentante=data
+        console.log(this.dataPersonaRepresentante)
+      },
+      error: (err) => {
+        console.log('error al obtener persona', err)
+      },
+      complete: () => {console.log('otención con exito de persona')},
+    })
+  }
+  //------------------------------------------------------------------------------------------------------------ 
   mostrar() {
     console.log(this.dataPersonaRepresentante)
     console.log(this.dataEmpresa)
     console.log(this.dataEmpresaServicio)
+    console.log(this.dataResolucion)
+    console.log(this.lista_itinerarios)
+    console.log(this.lista_contratos_arrendamientos)
+    console.log(this.lista_conductores)
+    console.log(this.lista_vehiculos)
   }
 
   async onFileSelected(event: any): Promise<void> {

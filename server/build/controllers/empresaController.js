@@ -113,7 +113,7 @@ class EmpresaController {
                 const consulta = 'select * from t_empresa where ruc = $1';
                 const empresa = yield database_1.default.query(consulta, [ruc_empresa]);
                 if (empresa && empresa['rows'].length > 0) {
-                    res.json(empresa['rows']);
+                    res.json(empresa['rows'][0]);
                 }
                 else {
                     res.status(404).json({ text: 'La emrpesa no existe' });

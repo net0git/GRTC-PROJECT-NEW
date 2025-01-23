@@ -21,7 +21,7 @@ class EmpresaServicioController {
                 const consulta = `
                 INSERT INTO t_empresa_servicio(id_tipo_servicio, id_empresa, fecha_inicial, expediente, fecha_final )
                     VALUES ($1, $2, $3, $4, $5)
-                RETURNING id_empresa_servicio; -- Devuelve el ID de la empresa`;
+                RETURNING id_empresa_servicio;`;
                 const valores = [id_tipo_servicio, id_empresa, fecha_inicial, expediente, fecha_final];
                 database_1.default.query(consulta, valores, (error, resultado) => {
                     if (error) {
@@ -42,8 +42,6 @@ class EmpresaServicioController {
     ObtenerEmpresaServicio(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                //devuelve todas las empresas que estan registradas como servicio, juntamente con su estado de acuerdo a la fecha inicial de apertura
-                // --empresas activas, inactivas y encondicion de alerta (empresa, id_tipo_servicio, tipo_servicio, fecha_activacion, fecha_vencimiento)
                 const { id_empresa_servicio } = req.params;
                 const consulta = `
                             select * 
@@ -62,6 +60,8 @@ class EmpresaServicioController {
     listarEmpresasServicios(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                //devuelve todas las empresas que estan registradas como servicio, juntamente con su estado de acuerdo a la fecha inicial de apertura
+                // --empresas activas, inactivas y encondicion de alerta (empresa, id_tipo_servicio, tipo_servicio, fecha_activacion, fecha_vencimiento)
                 const consulta = `
                             SELECT
                                 es.id_empresa_servicio,
@@ -183,10 +183,10 @@ class EmpresaServicioController {
                         WHERE ruc = $2);`;
                 const empresa_servicio = yield database_1.default.query(consulta, [id_tipo_servicio, empresa_ruc]);
                 if (empresa_servicio && empresa_servicio['rows'].length > 0) {
-                    res.json(empresa_servicio['rows']);
+                    res.json(empresa_servicio['rows'][0]);
                 }
                 else {
-                    res.status(404).json({ text: 'la empresa por tipo de servicio y ruc no existe ' });
+                    res.status(404).json({ error: 'No se encontro la empresa' });
                 }
             }
             catch (error) {

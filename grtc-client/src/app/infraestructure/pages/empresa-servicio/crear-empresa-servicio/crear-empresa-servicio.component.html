@@ -19,11 +19,11 @@
                             <form>
                                 <fieldset>
                                     <div class="col-sm-12 col-lg-6 mb-4">
-                                        <label for="tipo_empresa_servicio" class="form-label mt-2">Tipo de
-                                            servicio:</label>
+                                        <label for="tipo_empresa_servicio" class="form-label mt-2">Tipo de servicio:</label>
                                         <select id="tipo_empresa_servicio" name="tipo_empresa_servicio"
                                             class="form-control form-select"
-                                            [(ngModel)]="dataEmpresaServicio.id_tipo_servicio">
+                                            [(ngModel)]="dataEmpresaServicio.id_tipo_servicio"
+                                            [disabled]="deshabilitarCampoTipoEmpresa" >
                                             <option value=0 disabled selected>TIPO SERVICIO</option>
                                             <option value=1>TRANSPORTE DE PERSONAS</option>
                                             <option value=2>TRANSPORTE TURISTICO</option>
@@ -39,18 +39,22 @@
                                         <div class="form-group col-lg-4 col-sm-12">
                                             <label for="ruc_empresa" class="form-label">RUC:</label>
                                             <div class="input-group mb-3">
-                                                <input type="number" min="0" class="form-control "
+                                                <input type="text" min="0" class="form-control "
                                                     placeholder="Ingrese RUC" name="empresa_ruc"
-                                                    [(ngModel)]="dataEmpresa.ruc">
+                                                    [(ngModel)]="dataEmpresa.ruc"
+                                                    [disabled]="deshabilitarCampoRuc" maxlength="11" appSoloNumeros>
                                                 <button class="btn btn-success " type="button" id="button-addon2"
-                                                    style="background-color: rgba(24, 148, 7, 0.747); border-color: rgba(24, 148, 7, 0.747);">
+                                                    style="background-color: rgba(24, 148, 7, 0.747); border-color: rgba(24, 148, 7, 0.747);"
+                                                    (click)="buscarEmpresaServicioPorRuc_tipoServicio()"
+                                                    [disabled]="deshabilitarCampoRuc">
                                                     <i class="bi bi-search"></i></button>
                                             </div>
                                         </div>
                                         <div class="form-group col-lg-8 col-sm-12">
                                             <label for="nombre_empresa" class="form-label ">Razon Social:</label>
                                             <input id="nombre_empresa" type="text" class="form-control"
-                                                name="nombre_empresa" [(ngModel)]="dataEmpresa.razon_social">
+                                                name="nombre_empresa" [(ngModel)]="dataEmpresa.razon_social"
+                                                [disabled]="desabilitarFormEmpresa">
                                         </div>
                                     </div>
 
@@ -61,34 +65,32 @@
                                                 class="form-label mt-3">Departamento:</label>
                                             <select id="departamento_empresa" name="departamento_empresa"
                                                 class="form-control form-select" (change)="onChangeDepartamentoEmpresa()"
-                                                [(ngModel)]="dataEmpresa.departamento">
+                                                [(ngModel)]="dataEmpresa.departamento"
+                                                [disabled]="desabilitarFormEmpresa">
                                                 <option value="">DEPARTAMENTO </option>
                                                 <option *ngFor="let departamento of departamentos"
-                                                    [value]="departamento">{{
-                                                    departamento }}</option>
+                                                    [value]="departamento">{{ departamento }}</option>
 
                                             </select>
                                         </div>
                                         <div class="col-sm-4">
                                             <label for="provincia_empresa" class="form-label mt-3">Provincia:</label>
                                             <select id="provincia_empresa" name="provincia_empresa"
-                                                class="form-control form-select" (change)="onChangeProvinciaEmpresa()"
-                                                [(ngModel)]="dataEmpresa.provincia"
-                                                [disabled]="!dataEmpresa.departamento">
+                                                class="form-control form-select" (change)="onChangeProvinciaEmpresa()"      
+                                                [disabled]="!dataEmpresa.departamento || desabilitarFormEmpresa"
+                                                [(ngModel)]="dataEmpresa.provincia">
                                                 <option value="">PROVINCIA</option>
-                                                <option *ngFor="let provincia of provincias" [value]="provincia">{{
-                                                    provincia }}
+                                                <option *ngFor="let provincia of provincias" [value]="provincia">{{provincia}}
                                                 </option>
                                             </select>
                                         </div>
                                         <div class="col-sm-4">
                                             <label for="distrito_empresa" class="form-label mt-3">Distrito:</label>
                                             <select id="distrito_empresa" name="distrito_empresa"
-                                                class="form-control form-select" [disabled]="!dataEmpresa.provincia"
+                                                class="form-control form-select" [disabled]="!dataEmpresa.provincia || desabilitarFormEmpresa"
                                                 [(ngModel)]="dataEmpresa.distrito">
                                                 <option value="">DISTRITO</option>
-                                                <option *ngFor="let distrito of distritos" [value]="distrito">{{
-                                                    distrito }}
+                                                <option *ngFor="let distrito of distritos" [value]="distrito">{{distrito}}
                                                 </option>
                                             </select>
                                         </div>
@@ -99,17 +101,17 @@
                                         <div class="form-group col-lg-4 col-sm-12">
                                             <label for="direccion_empresa" class="form-label ">Direccion:</label>
                                             <input id="direccion_empresa" type="text" class="form-control "
-                                                name="direccion_empresa" [(ngModel)]="dataEmpresa.direccion">
+                                                name="direccion_empresa" [(ngModel)]="dataEmpresa.direccion" [disabled]="desabilitarFormEmpresa">
                                         </div>
                                         <div class="form-group col-lg-4 col-sm-12">
                                             <label for="correo_empresa " class="form-label ">Correo:</label>
-                                            <input type="email" class="form-control texto-form-minuscula"
-                                                name="correo_empresa" [(ngModel)]="dataEmpresa.correo">
+                                            <input type="email" class="form-control text-correo"
+                                                name="correo_empresa" [(ngModel)]="dataEmpresa.correo" [disabled]="desabilitarFormEmpresa">
                                         </div>
                                         <div class="form-group  col-lg-4 col-sm-12">
                                             <label for="telefono_empresa" class="form-label">Telefono:</label>
-                                            <input type="number" inputmode="numeric" min="0" class="form-control "
-                                                name="telefono_empresa" [(ngModel)]="dataEmpresa.telefono">
+                                            <input type="text" inputmode="numeric" min="0" class="form-control "
+                                                name="telefono_empresa" [(ngModel)]="dataEmpresa.telefono" [disabled]="desabilitarFormEmpresa" appSoloNumerosGuion>
                                         </div>
                                     </div>
 
@@ -117,17 +119,17 @@
                                     <div class="row mb-3">
                                         <div class="form-group col-lg-6 col-sm-12">
                                             <div class="mb-1">
-                                                <label for="fecha_empresa" class="form-label ">Fecha de
-                                                    Autorización:</label>
-                                                <input id="fecha_empresa" type="date" class="form-control"
-                                                    name="fecha_resolucion"
-                                                    [(ngModel)]="dataEmpresaServicio.fecha_inicial">
+                                                <label for="fecha_empresa" class="form-label ">Fecha de Autorización:</label>
+                                                <input id="fecha_empresa" type="date" class="form-control" name="fecha_resolucion"
+                                                    [(ngModel)]="dataEmpresaServicio.fecha_inicial"
+                                                    [disabled]="deshabilitarCampofechaInicio">
                                             </div>
                                         </div>
                                         <div class="form-group col-lg-6 col-sm-12">
                                             <label for="expediente_empresa" class="form-label ">Expediente:</label>
                                             <input id="expediente_empresa" type="text" class="form-control"
-                                                name="expediente_empresa" [(ngModel)]="dataEmpresaServicio.expediente">
+                                                name="expediente_empresa" [(ngModel)]="dataEmpresaServicio.expediente"
+                                                [disabled]="deshabilitarCampoExpediente">
                                         </div>
                                     </div>
                                 </fieldset>
@@ -154,30 +156,35 @@
                                     <div class="form-group col-lg-4 col-sm-12">
                                         <label for="nombre_representante" class="form-label ">Nombres:</label>
                                         <input id="nombre_representante" type="text" class="form-control"
-                                            name="nombre_representante" [(ngModel)]="dataPersonaRepresentante.nombres">
+                                            name="nombre_representante" [(ngModel)]="dataPersonaRepresentante.nombres" 
+                                            [disabled]="deshabilitarFormRepresentante">
                                     </div>
                                     <div class="form-group col-lg-4 col-sm-12">
                                         <label for="ap_paterno" class="form-label ">Apellido Paterno:</label>
                                         <input id="ap_paterno" type="text" class="form-control" name="ap_paterno"
-                                            [(ngModel)]="dataPersonaRepresentante.ap_paterno">
+                                            [(ngModel)]="dataPersonaRepresentante.ap_paterno"
+                                            [disabled]="deshabilitarFormRepresentante">
                                     </div>
                                     <div class="form-group col-lg-4 col-sm-12">
                                         <label for="ap_materno" class="form-label ">Apellido Materno:</label>
                                         <input id="ap_materno" type="text" class="form-control" name="ap_materno"
-                                            [(ngModel)]="dataPersonaRepresentante.ap_materno">
+                                            [(ngModel)]="dataPersonaRepresentante.ap_materno"
+                                            [disabled]="deshabilitarFormRepresentante">
                                     </div>
                                 </div>
                                 <!-- fila de correo y telefono -->
                                 <div class="row mb-3">
                                     <div class="form-group col-lg-8 col-sm-12">
                                         <label for="correo_representante" class="form-label ">Correo:</label>
-                                        <input type="email" class="form-control texto-form-minuscula"
-                                            name="correo_representante" [(ngModel)]="dataPersonaRepresentante.correo">
+                                        <input type="email" class="form-control text-correo"
+                                            name="correo_representante" [(ngModel)]="dataPersonaRepresentante.correo"
+                                            [disabled]="deshabilitarFormRepresentante">
                                     </div>
                                     <div class="form-group col-lg-4 col-sm-12">
                                         <label for="telefono_representante" class="form-label ">Telefono:</label>
                                         <input type="number" min="0" class="form-control" name="telefono_representante"
-                                            [(ngModel)]="dataPersonaRepresentante.telefono">
+                                            [(ngModel)]="dataPersonaRepresentante.telefono"
+                                            [disabled]="deshabilitarFormRepresentante">
                                     </div>
                                 </div>
                                 <div>
@@ -186,13 +193,14 @@
                                 <div class="input-group mb-3">
                                     <label class="input-group-text" for="inputGroupSelect01">Opciones:</label>
                                     <select class="form-select form-select " id="tipo_doc" name="tipo_doc"
-                                        [(ngModel)]="dataPersonaRepresentante.tipo_doc">
+                                        [(ngModel)]="dataPersonaRepresentante.tipo_doc" [disabled]="deshabilitarFormRepresentante">
                                         <option value="" disabled selected>TIPO DE DOCUMENTO</option>
                                         <option value="CE">CARNET DE ESTRANGERIA</option>
                                         <option value="DNI">DNI</option>
                                     </select>
                                     <input type="text" class="form-control" name="documento"
-                                        [(ngModel)]="dataPersonaRepresentante.documento">
+                                        [(ngModel)]="dataPersonaRepresentante.documento"
+                                        [disabled]="deshabilitarFormRepresentante">
                                 </div>
 
                             </form>
@@ -225,25 +233,25 @@
 
                                             <input type="text" name="nombre_resolucion"
                                                 class="form-control form-control-sm"
-                                                [(ngModel)]="dataResolucion.nombre_resolucion">
+                                                [(ngModel)]="dataResolucion.nombre_resolucion" >
                                         </div>
                                         <div class="mb-2">
                                             <label for="nro_resolucion" class="form-label  mb-0">Nro resolución</label>
                                             <input type="text" name="nro_resolucion"
                                                 class="form-control form-control-sm"
-                                                [(ngModel)]="dataResolucion.nro_resolucion">
+                                                [(ngModel)]="dataResolucion.nro_resolucion" appSoloNumeros maxlength="8">
                                         </div>
                                         <div class="mb-2">
                                             <label for="anio_resolucion" class="form-label  mb-0">Año</label>
                                             <input type="text" name="anio_resolucion"
                                                 class="form-control form-control-sm"
-                                                [(ngModel)]="dataResolucion.anio_resolucion">
+                                                [(ngModel)]="dataResolucion.anio_resolucion" appSoloNumeros maxlength="4">
                                         </div>
                                         <div class="mb-2">
                                             <label for="tomo_resolucion" class="form-label  mb-0">Tomo</label>
-                                            <input type="number" name="tomo_resolucion"
+                                            <input type="text" name="tomo_resolucion"
                                                 class="form-control form-control-sm"
-                                                [(ngModel)]="dataResolucion.tomo_resolucion">
+                                                [(ngModel)]="dataResolucion.tomo_resolucion" appSoloNumeros maxlength="2">
                                         </div>
                                         <div class=" mb-2">
                                             <label for="fecha_resolucion" class="form-label   mb-0">Fecha</label>
@@ -311,7 +319,7 @@
                                             <button type="button " class="btn btn-success" (click)="enviarDatosListaItinearios()">Crear</button>
                                         </div>
                                         <div class="d-grid gap-2 mt-2">
-                                            <button class="btn  btn-secondary text-white" type="button" (click)="limpiarListaItinerarios()">limpiar</button>
+                                            <button class="btn  btn-secondary text-white" type="button" (click)="limpiarFormularioItinerario()">limpiar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -442,10 +450,10 @@
 
                                     </fieldset>
                                     <div class="d-grid gap-2 mt-2">
-                                        <button class="btn btn-success" type="button">crear</button>
+                                        <button class="btn btn-success" type="button" (click)="enviarDatosListaArrendamiento()">crear</button>
                                     </div>
                                     <div class="d-grid gap-2 mt-2">
-                                        <button class="btn btn-secondary text-white">limpiar</button>
+                                        <button class="btn btn-secondary text-white" (click)="limpiarFormularioArrendamiento()">limpiar</button>
                                     </div>
                                 </form>
                             </div>
@@ -467,7 +475,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of listaContratosArrendamiento, index as i">
+                                <tr *ngFor="let item of lista_contratos_arrendamientos, index as i">
                 
                                     <th scope="row">{{i+1}}</th>
                 
@@ -476,7 +484,7 @@
                                     <td>{{item.direccion}}</td>
                                     <td>{{item.fecha_inicio | date:'dd-MM-yyyy'}} </td>
                                     <td>{{item.fecha_fin | date:'dd-MM-yyyy'}}</td>
-                                    <td><i class="bi bi-trash3-fill"></i> </td>
+                                    <td><i class="bi bi-trash3-fill" (click)="eliminarElementoArrendamiento(i)"></i> </td>
                 
                 
                                 </tr>
@@ -565,10 +573,10 @@
 
                                     </fieldset>
                                     <div class="d-grid gap-2 mt-2">
-                                        <button class="btn btn-success " type="button">crear</button>
+                                        <button class="btn btn-success " type="button" (click)="inviarDatosListaConductores()">crear</button>
                                     </div>
                                     <div class="d-grid gap-2 mt-2">
-                                        <button class="btn btn-secondary text-whit" type="button">limpiar</button>
+                                        <button class="btn btn-secondary text-whit" type="button" (click)="limpiarFormularioConductor()">limpiar</button>
                                     </div>
                                 </form>
                             </div>
@@ -588,7 +596,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of listaConductores, index as i">
+                                <tr *ngFor="let item of lista_conductores, index as i">
                 
                                     <th scope="row">{{i+1}}</th>
                 
@@ -596,7 +604,7 @@
                                     <td>{{item.documento}}</td>
                                     <td>{{item.nro_licencia}}</td>
                                     <td>{{item.categoria}}</td>
-                                    <td><i class="bi bi-trash3-fill" ></i> </td>
+                                    <td><i class="bi bi-trash3-fill" (click)="eliminarConductor(i)"></i> </td>
                 
                                 </tr>
                             </tbody>
@@ -618,11 +626,8 @@
                             <div class="card">
                                 <div class="card-body">
                                     <form>
-            
                                         <fieldset>
-            
                                             <div class="form-group mb-2">
-            
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-6 col-lg-3">
                                                         <label for="placa" class="form-label">Placa:</label>
@@ -797,11 +802,11 @@
             
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <button [ngClass]="true ? 'btn btn-warning mt-3  w-100' : ' btn btn-success mt-3 text-white w-100'"  type="button">guardar</button> 
+                                                <button class="btn btn-success mt-3 text-white w-100"  type="button" (click)="enviarDatosListaVehiculos()">Crear</button>
                                             </div>
             
                                             <div class="col-md-6">
-                                                <button class="btn btn-secondary mt-3 text-white w-100"  type="button">Limpiar</button>
+                                                <button class="btn btn-secondary mt-3 text-white w-100"  type="button" (click)="limpiarFormularioVehiculo()">Limpiar</button>
                                             </div>
             
                                         </div>
@@ -822,7 +827,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let vehiculo of ListaVehiculos, index as i">
+                                        <tr *ngFor="let vehiculo of lista_vehiculos, index as i">
             
                                             <th scope="row">{{i+1}}</th>
             
@@ -830,7 +835,7 @@
                                             <td>{{vehiculo.placa}}</td>
                                             <td>{{vehiculo.anio_fabricacion}}</td>
                                             <td>{{vehiculo.estado}}</td>
-                                            <td><i class="bi bi-pencil-fill m-2" ></i></td>
+                                            <td><i class="bi bi-pencil-fill m-2" (click)="eliminarVehiculo(i)" ></i></td>
             
                                         </tr>
                                     </tbody>

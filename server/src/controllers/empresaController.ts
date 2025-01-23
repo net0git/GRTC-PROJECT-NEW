@@ -39,6 +39,7 @@ class EmpresaController {
             res.status(500).json({ error: 'Error interno del servidor' });
         }
     }
+
     public async ObtenerEmpresa(req: Request, res: Response): Promise<void> {
         try {
             const { id_empresa } = req.params;
@@ -95,7 +96,7 @@ class EmpresaController {
             const empresa = await db.query(consulta, [ruc_empresa]);
 
             if (empresa && empresa['rows'].length > 0) {
-                res.json(empresa['rows']);
+                res.json(empresa['rows'][0]);
             } else {
                 res.status(404).json({ text: 'La emrpesa no existe' });
             }

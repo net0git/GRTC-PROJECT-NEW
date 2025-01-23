@@ -5,8 +5,8 @@ export interface VehiculoModel {
     modalidad: string;
     estado: string;
 
-    carga: number;
-    peso: number;
+    carga: string;
+    peso: string;
     categoria: string;
     anio_fabricacion: string;
     color: string;
