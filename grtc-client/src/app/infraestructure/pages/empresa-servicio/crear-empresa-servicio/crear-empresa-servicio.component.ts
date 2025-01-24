@@ -32,14 +32,16 @@ import { PersonaService } from '../../../services/remoto/persona/persona.service
 import { SoloNumerosGuionDirective } from '../../../directives/solo-numeros-guion.directive';
 import { SoloNumerosDirective } from '../../../directives/solo-numeros.directive';
 import { SoloLetrasDirective } from '../../../directives/solo-letras.directive';
+import { SoloLetrasGuionDirective } from '../../../directives/solo-letras-guion.directive';
 
-import { crear_empresa_servicio_empresa_vf, crear_empresa_servicio_vehiculo_vf, crear_empresa_servicio_representante_vf } from '../../../../infraestructure/validatorForm/empresaServicio.validator';
+import { crear_empresa_servicio_empresa_vf, crear_empresa_servicio_vehiculo_vf, crear_empresa_servicio_representante_vf, crear_empresa_servicio_resolucion_vf, crear_empresa_servicio_itinerario_vf, crear_empresa_servicio_arrendamiento_vf, crear_empresa_servicio_conductor_vf } from '../../../../infraestructure/validatorForm/empresaServicio.validator';
+
 
 
 @Component({
   selector: 'app-crear-empresa-servicio',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavegadorComponent, SubnavegadorComponent, ProgressBarComponent, SoloNumerosGuionDirective, SoloNumerosDirective, SoloLetrasDirective],
+  imports: [CommonModule, FormsModule, NavegadorComponent, SubnavegadorComponent, ProgressBarComponent, SoloNumerosGuionDirective, SoloNumerosDirective, SoloLetrasDirective, SoloLetrasGuionDirective],
   templateUrl: './crear-empresa-servicio.component.html',
   styleUrl: './crear-empresa-servicio.component.css'
 })
@@ -287,7 +289,67 @@ export class CrearEmpresaServicioComponent implements OnInit {
   }
 
   validarDatosFormularioRepresentanteLegal() {
-    const erroresValidacion = crear_empresa_servicio_representante_vf(this.dataPersonaRepresentante);
+    // const erroresValidacion = crear_empresa_servicio_representante_vf(this.dataPersonaRepresentante);
+    // if (erroresValidacion.length > 0) {
+    //   let errorMensaje = '';
+    //   erroresValidacion.forEach(error => {
+    //     errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
+    //   });
+    //   alert(errorMensaje)
+    //   console.log(errorMensaje)
+    // } else {
+    //   this.nextStep()
+    // }
+
+    this.nextStep()
+  }
+
+  validarDatosFormularioResolucion(){
+    // const erroresValidacion = crear_empresa_servicio_resolucion_vf(this.dataResolucion);
+    // if (erroresValidacion.length > 0) {
+    //   let errorMensaje = '';
+    //   erroresValidacion.forEach(error => {
+    //     errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
+    //   });
+    //   alert(errorMensaje)
+    //   console.log(errorMensaje)
+    // } else {
+    //   this.nextStep()
+    // }
+
+    this.nextStep()
+  }
+
+  validarDatosFormularioItinerario() {
+    const erroresValidacion = crear_empresa_servicio_itinerario_vf(this.dataItinerario)
+    if (erroresValidacion.length > 0) {
+        let errorMensaje = '';
+        erroresValidacion.forEach(error => {
+          errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
+        });
+        alert(errorMensaje)
+        console.log(errorMensaje)
+      } else {
+        this.enviarDatosListaItinearios()
+      }
+  }
+
+  validarDatosFormularioArrendamiento() {
+    const erroresValidacion = crear_empresa_servicio_arrendamiento_vf(this.dataArrendamiento)
+    if (erroresValidacion.length > 0) {
+        let errorMensaje = '';
+        erroresValidacion.forEach(error => {
+          errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
+        });
+        alert(errorMensaje)
+        console.log(errorMensaje)
+      } else {
+        this.enviarDatosListaArrendamiento()
+      }
+  }
+
+  validarDatosListaConductores(){
+    const erroresValidacion = crear_empresa_servicio_conductor_vf(this.dataPersonaConductor, this.dataConductor);
     if (erroresValidacion.length > 0) {
       let errorMensaje = '';
       erroresValidacion.forEach(error => {
@@ -296,7 +358,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
       alert(errorMensaje)
       console.log(errorMensaje)
     } else {
-      this.nextStep()
+      this.inviarDatosListaConductores()
     }
   }
 
@@ -305,8 +367,18 @@ export class CrearEmpresaServicioComponent implements OnInit {
   // -----------------------------------------------------------------------------------------------------------
 
   // MANEJO DE ITINARARIOS
+  itinerarioNextStep(){
+    // if(this.lista_itinerarios.length>0){
+    //   this.nextStep()
+    // }else{
+    //   alert('debes registrar por lo menos una ruta a la empresa')
+    // }
+    this.nextStep()
+  }
+
   enviarDatosListaItinearios() {
     this.lista_itinerarios.push(this.dataItinerario)
+    this.limpiarFormularioItinerario()
   }
 
   eliminarElementoItinerario(index: number) {
@@ -325,8 +397,18 @@ export class CrearEmpresaServicioComponent implements OnInit {
   }
   // -----------------------------------------------------------------------------------------------------------
   // MANEJO DE ARRENDAMIENTOS
+  arrendamientoNextStep(){
+    // if(this.lista_contratos_arrendamientos.length>0){
+    //   this.nextStep()
+    // }else{
+    //   alert('debes registrar por lo menos un contrato de arrendamiento')
+    // }
+    this.nextStep()
+  }
+
   enviarDatosListaArrendamiento() {
     this.lista_contratos_arrendamientos.push(this.dataArrendamiento)
+    this.limpiarFormularioArrendamiento()
   }
 
   eliminarElementoArrendamiento(index: number) {
@@ -350,9 +432,15 @@ export class CrearEmpresaServicioComponent implements OnInit {
   }
   // -----------------------------------------------------------------------------------------------------------
   // MANEJO DE CONDUCTORES
+  conductorNextStep(){
+    if(this.lista_conductores.length>0){
+      this.nextStep()
+    }else{
+      alert('debes registrar por lo menos un conductor')
+    }
+    
+  }
   inviarDatosListaConductores() {
-
-
     const dataBodyConductor: ListaConductoresResponse = {
       id_conductor: 0,
       id_persona: 0,
@@ -366,9 +454,8 @@ export class CrearEmpresaServicioComponent implements OnInit {
       correo: this.dataPersonaConductor.correo,
       nro_licencia: this.dataConductor.nro_licencia,
     }
-
     this.lista_conductores.push(dataBodyConductor)
-
+    this.limpiarFormularioConductor()
   }
 
   eliminarConductor(index: number) {

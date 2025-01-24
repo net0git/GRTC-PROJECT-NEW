@@ -277,7 +277,7 @@
                 </div>
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary mx-2" (click)="prevStep()">Anterior</button>
-                    <button type="button" class="btn btn-primary" (click)="nextStep()">Siguiente</button>
+                    <button type="button" class="btn btn-primary" (click)="validarDatosFormularioResolucion()">Siguiente</button>
                 </div>
             </div>
 
@@ -306,7 +306,7 @@
                                             <div class="form-group mt-3">
                                                 <label for="itinerario" class="form-label  ">Itinerario:</label>
                                                 <textarea class="form-control" name="itinerario" rows="4"
-                                                    [(ngModel)]="dataItinerario.itinerario"></textarea>
+                                                    [(ngModel)]="dataItinerario.itinerario" appSoloLetrasGuion></textarea>
                                             </div>
                                             <div class="form-group mt-3 mb-3">
                                                 <label for="frecuencia" class="form-label  ">Frecuencia:</label>
@@ -316,7 +316,7 @@
 
                                         </fieldset>
                                         <div class="d-grid gap-2 mt-2">
-                                            <button type="button " class="btn btn-success" (click)="enviarDatosListaItinearios()">Crear</button>
+                                            <button type="button " class="btn btn-success" (click)="validarDatosFormularioItinerario()">Crear</button>
                                         </div>
                                         <div class="d-grid gap-2 mt-2">
                                             <button class="btn  btn-secondary text-white" type="button" (click)="limpiarFormularioItinerario()">limpiar</button>
@@ -357,7 +357,7 @@
 
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary mx-2" (click)="prevStep()">Anterior</button>
-                    <button type="button" class="btn btn-primary" (click)="nextStep()">Siguiente</button>
+                    <button type="button" class="btn btn-primary" (click)="itinerarioNextStep()">Siguiente</button>
                 </div>
             </div>
 
@@ -450,7 +450,7 @@
 
                                     </fieldset>
                                     <div class="d-grid gap-2 mt-2">
-                                        <button class="btn btn-success" type="button" (click)="enviarDatosListaArrendamiento()">crear</button>
+                                        <button class="btn btn-success" type="button" (click)="validarDatosFormularioArrendamiento()">crear</button>
                                     </div>
                                     <div class="d-grid gap-2 mt-2">
                                         <button class="btn btn-secondary text-white" (click)="limpiarFormularioArrendamiento()">limpiar</button>
@@ -494,7 +494,7 @@
                 </div>
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary mx-2" (click)="prevStep()">Anterior</button>
-                    <button type="button" class="btn btn-primary" (click)="nextStep()">Siguiente</button>
+                    <button type="button" class="btn btn-primary" (click)="arrendamientoNextStep()">Siguiente</button>
 
                 </div>
             </div>
@@ -526,11 +526,11 @@
                                             </div>
                                         </div>
                                         <div class="form-group mb-3">
-                                            <label for="correo" class="form-label ">Correo:</label>
-                                            <input type="email" class="form-control texto-correo" name="correo" placeholder="correo" [(ngModel)]="dataPersonaConductor.correo">
+                                            <label for="correo" class="form-label">Correo:</label>
+                                            <input type="email" class="form-control texto-correo" name="correo"  [(ngModel)]="dataPersonaConductor.correo">
                                         </div>
                                         <div class="form-group mb-3">
-                                            <label for="documento_id" class="form-label ">Documento de Identidad:</label>
+                                            <label for="documento_id" class="form-label">Documento de Identidad:</label>
                                             <div class="input-group mb-3">
                                                 <label class="input-group-text" for="inputGroupSelect01">Opciones:</label>
                                                 <select class="form-select form-select " id="tipo_doc" name="tipo_doc" [(ngModel)]="dataPersonaConductor.tipo_doc">
@@ -570,7 +570,7 @@
 
                                     </fieldset>
                                     <div class="d-grid gap-2 mt-2">
-                                        <button class="btn btn-success " type="button" (click)="inviarDatosListaConductores()">crear</button>
+                                        <button class="btn btn-success " type="button" (click)="validarDatosListaConductores()">crear</button>
                                     </div>
                                     <div class="d-grid gap-2 mt-2">
                                         <button class="btn btn-secondary text-whit" type="button" (click)="limpiarFormularioConductor()">limpiar</button>
@@ -611,7 +611,7 @@
 
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary mx-2" (click)="prevStep()">Anterior</button>
-                    <button type="button" class="btn btn-primary" (click)="nextStep()">Siguiente</button>
+                    <button type="button" class="btn btn-primary" (click)="conductorNextStep()">Siguiente</button>
                 </div>
             </div>
 

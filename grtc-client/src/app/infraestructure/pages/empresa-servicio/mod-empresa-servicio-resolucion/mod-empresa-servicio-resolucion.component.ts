@@ -147,8 +147,6 @@ export class ModEmpresaServicioResolucionComponent implements OnInit {
     })
   }
 
-
-
   async onFileSelected(event: any): Promise<void> {
     const selectedFile = event.target.files[0];
     if (selectedFile) {

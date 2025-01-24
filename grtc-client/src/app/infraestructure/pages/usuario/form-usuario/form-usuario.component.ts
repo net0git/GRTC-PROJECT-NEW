@@ -13,7 +13,7 @@ import { CrearUsuarioResponse, ModificarDatosUsuarioResponse, ModificarPasswordU
 import { SoloLetrasDirective } from '../../../directives/solo-letras.directive';
 import { SoloNumerosDirective } from '../../../directives/solo-numeros.directive';
 import { SweetAlert } from '../../../shared/animated-messages/sweetAlert';
-import { ValidarFormulario } from '../../../validatorForm/usuario.validator';
+import { form_usuario_vf } from '../../../validatorForm/usuario.validator';
 
 @Component({
   selector: 'app-form-usuario',
@@ -76,7 +76,7 @@ export class FormUsuarioComponent implements OnInit {
   }
 
   CrearUsuarioFormulario() {
-    const erroresValidacion = ValidarFormulario(this.dataPersona, this.dataUsuario, this.modificar_usuario);
+    const erroresValidacion = form_usuario_vf(this.dataPersona, this.dataUsuario, this.modificar_usuario);
     if (erroresValidacion.length > 0) {
       let errorMensaje = '';
       erroresValidacion.forEach(error => {
@@ -110,7 +110,7 @@ export class FormUsuarioComponent implements OnInit {
   }
 
   async ModificarUsuarioFormulario() {
-    const erroresValidacion = ValidarFormulario(this.dataPersona, this.dataUsuario, this.modificar_usuario);
+    const erroresValidacion = form_usuario_vf(this.dataPersona, this.dataUsuario, this.modificar_usuario);
     if (erroresValidacion.length > 0) {
       let errorMensaje = '';
       erroresValidacion.forEach(error => {
