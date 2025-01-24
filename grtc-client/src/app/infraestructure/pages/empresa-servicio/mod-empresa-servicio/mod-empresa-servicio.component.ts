@@ -22,6 +22,7 @@ import { Validators } from '../../../../../../public/utils/validators';
 import { SoloLetrasDirective } from '../../../directives/solo-letras.directive';
 import { SoloNumerosDirective } from '../../../directives/solo-numeros.directive';
 import { SoloNumerosGuionDirective } from '../../../directives/solo-numeros-guion.directive';
+import { mod_empresa_servicio_vf } from '../../../../infraestructure/validatorForm/empresaServicio.validator';
 
 
 @Component({
@@ -203,82 +204,9 @@ export class ModEmpresaServicioComponent implements OnInit {
     });
   }
   // -----------------------------------------------------------------------------
-  validarFormulario(dataPersona: PersonaModel, dataEmpresa: EmpresaModel, dataEmpresaServicio: EmpresaServicioModel): ErrorValidacion[] {
-    const errorValidacion: ErrorValidacion[] = [];
-    if (dataEmpresa.correo.length > 0) {
-      if (!Validators.validarCorreo(dataEmpresa.correo)) {
-        errorValidacion.push({ campo: 'Correo Empresa', mensaje: 'Campo no válido' });
-      }
-    }
-    if (dataEmpresa.telefono.length > 0) {
-      if (!Validators.validarTelefono(dataEmpresa.telefono)) {
-        errorValidacion.push({ campo: 'Telefono Empresa', mensaje: 'Campo no válido' });
-      }
-    }
-    if (!dataEmpresa.direccion) {
-      errorValidacion.push({ campo: 'Direccion Empresa', mensaje: 'Campo no válido' });
-    }
-    if (!dataEmpresa.razon_social) {
-      errorValidacion.push({ campo: 'Razón social Empresa', mensaje: 'Campo no válido' });
-    }
-    if (!dataEmpresa.departamento) {
-      errorValidacion.push({ campo: 'Departamento Empresa', mensaje: 'Campo no válido' });
-    }
-    if (!dataEmpresa.provincia) {
-      errorValidacion.push({ campo: 'Provincia Empresa', mensaje: 'Campo no válido' });
-    }
-    if (!dataEmpresa.distrito) {
-      errorValidacion.push({ campo: 'Distrito Empresa', mensaje: 'Campo no válido' });
-    }
-
-    if (!dataEmpresaServicio.fecha_inicial) {
-      errorValidacion.push({ campo: 'Fecha autorización', mensaje: 'Campo no válido' });
-    }
-    if (!dataEmpresaServicio.expediente) {
-      errorValidacion.push({ campo: 'Expediente', mensaje: 'Campo no válido' });
-    }
-
-    if (!dataPersona.nombres) {
-      errorValidacion.push({ campo: 'nombres del representante', mensaje: 'Campo requerido' });
-    }
-    if (!dataPersona.ap_paterno) {
-      errorValidacion.push({ campo: 'apellido paterno del representante', mensaje: 'Campo requerido' });
-    }
-    if (!dataPersona.ap_materno) {
-      errorValidacion.push({ campo: 'apellido materno del representante', mensaje: 'Campo requerido' });
-    }
-    if (dataPersona.telefono.length > 0) {
-      if (!Validators.validarTelefono(dataPersona.telefono)) {
-        errorValidacion.push({ campo: 'telefono representante', mensaje: 'Campo no válido' });
-      }
-    }
-    if (dataPersona.correo.length > 0) {
-      if (!Validators.validarCorreo(dataPersona.correo)) {
-        errorValidacion.push({ campo: 'Correo del representante', mensaje: 'Campo no válido' });
-      }
-    }
-    if (dataPersona.documento.length > 0) {
-      if (dataPersona.tipo_doc != "") {
-        if (dataPersona.tipo_doc == 'DNI' && dataPersona.documento.length != 8) {
-          errorValidacion.push({ campo: 'documento de identidad', mensaje: 'la cantidad en caracteres debe ser 8 para el tipo de documento DNI' });
-        }
-        else if (dataPersona.tipo_doc == 'CE' && dataPersona.documento.length != 12) {
-          errorValidacion.push({ campo: 'documento de identidad', mensaje: 'la cantidad en caracteres debe ser 12 para el tipo de documento CE' });
-        }
-      }
-      else {
-        errorValidacion.push({ campo: 'Documento de identidad', mensaje: 'Seleccione el tipo de documento' });
-      }
-    }
-
-
-
-    return errorValidacion;
-  }
-  // -----------------------------------------------------------------------------
   ModificarDatosFormulario() {
 
-    const erroresValidacion = this.validarFormulario(this.dataPersona, this.dataEmpresa, this.dataEmpresaServicio);
+    const erroresValidacion = mod_empresa_servicio_vf(this.dataPersona, this.dataEmpresa, this.dataEmpresaServicio);
     if (erroresValidacion.length > 0) {
       let errorMensaje = '';
       erroresValidacion.forEach(error => {

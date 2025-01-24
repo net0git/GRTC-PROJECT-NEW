@@ -139,7 +139,7 @@
                 </div>
 
                 <div class="my-4 d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary" (click)="nextStep()">Siguiente</button>
+                    <button type="button" class="btn btn-primary" (click)="validarDatosFormularioEmpresa()">Siguiente</button>
                 </div>
 
             </div>
@@ -157,19 +157,19 @@
                                         <label for="nombre_representante" class="form-label ">Nombres:</label>
                                         <input id="nombre_representante" type="text" class="form-control"
                                             name="nombre_representante" [(ngModel)]="dataPersonaRepresentante.nombres" 
-                                            [disabled]="deshabilitarFormRepresentante">
+                                            [disabled]="deshabilitarFormRepresentante" appSoloLetras>
                                     </div>
                                     <div class="form-group col-lg-4 col-sm-12">
                                         <label for="ap_paterno" class="form-label ">Apellido Paterno:</label>
                                         <input id="ap_paterno" type="text" class="form-control" name="ap_paterno"
                                             [(ngModel)]="dataPersonaRepresentante.ap_paterno"
-                                            [disabled]="deshabilitarFormRepresentante">
+                                            [disabled]="deshabilitarFormRepresentante" appSoloLetras>
                                     </div>
                                     <div class="form-group col-lg-4 col-sm-12">
                                         <label for="ap_materno" class="form-label ">Apellido Materno:</label>
                                         <input id="ap_materno" type="text" class="form-control" name="ap_materno"
                                             [(ngModel)]="dataPersonaRepresentante.ap_materno"
-                                            [disabled]="deshabilitarFormRepresentante">
+                                            [disabled]="deshabilitarFormRepresentante" appSoloLetras>
                                     </div>
                                 </div>
                                 <!-- fila de correo y telefono -->
@@ -184,7 +184,7 @@
                                         <label for="telefono_representante" class="form-label ">Telefono:</label>
                                         <input type="number" min="0" class="form-control" name="telefono_representante"
                                             [(ngModel)]="dataPersonaRepresentante.telefono"
-                                            [disabled]="deshabilitarFormRepresentante">
+                                            [disabled]="deshabilitarFormRepresentante" appSoloNumeros maxlength="9">
                                     </div>
                                 </div>
                                 <div>
@@ -200,7 +200,7 @@
                                     </select>
                                     <input type="text" class="form-control" name="documento"
                                         [(ngModel)]="dataPersonaRepresentante.documento"
-                                        [disabled]="deshabilitarFormRepresentante">
+                                        [disabled]="deshabilitarFormRepresentante" appSoloNumeros [attr.maxlength]="dataPersonaRepresentante.tipo_doc === 'CE' ? 12 : (dataPersonaRepresentante.tipo_doc === 'DNI' ? 8 : null)">
                                 </div>
 
                             </form>
@@ -209,7 +209,7 @@
                 </div>
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary mx-2" (click)="prevStep()">Anterior</button>
-                    <button type="button" class="btn btn-primary" (click)="nextStep()">Siguiente</button>
+                    <button type="button" class="btn btn-primary" (click)="validarDatosFormularioRepresentanteLegal()">Siguiente</button>
 
                 </div>
             </div>
@@ -342,10 +342,10 @@
 
                                         <th scope="row">{{i+1}}</th>
 
-                                        <td>{{ item.origen }}</td>
-                                        <td>{{item.destino}}</td>
-                                        <td>{{item.itinerario}}</td>
-                                        <td>{{item.frecuencia}}</td>
+                                        <td>{{ item.origen | uppercase  }}</td>
+                                        <td>{{item.destino | uppercase}}</td>
+                                        <td>{{item.itinerario | uppercase}}</td>
+                                        <td>{{item.frecuencia | uppercase}}</td>
                                         <td><i class="bi bi-trash3-fill" (click)="eliminarElementoItinerario(i)"></i> </td>
 
                                     </tr>
@@ -376,12 +376,12 @@
                                                 <label for="datos_arrendador" class="form-label ">Nombres y Apellidos
                                                     (Arrendador):</label>
                                                 <input type="text" class="form-control" name="arrendador"
-                                                    [(ngModel)]="dataArrendamiento.arrendador">
+                                                    [(ngModel)]="dataArrendamiento.arrendador" appSoloLetras>
                                             </div>
                                             <div class="form-group col-lg-5 col-sm-12">
                                                 <label for="datos_arrendador" class="form-label ">DNI:</label>
                                                 <input type="text" min="0" [maxLength]="8" class="form-control"
-                                                    name="dni_arrendario" [(ngModel)]="dataArrendamiento.dni">
+                                                    name="dni_arrendario" [(ngModel)]="dataArrendamiento.dni" appSoloNumeros maxlength="8">
                                             </div>
                                         </div>
 
@@ -479,9 +479,9 @@
                 
                                     <th scope="row">{{i+1}}</th>
                 
-                                    <td>{{item.arrendador}}</td>
-                                    <td>{{item.propiedad}}</td>
-                                    <td>{{item.direccion}}</td>
+                                    <td>{{item.arrendador | uppercase}}</td>
+                                    <td>{{item.propiedad | uppercase}}</td>
+                                    <td>{{item.direccion | uppercase}}</td>
                                     <td>{{item.fecha_inicio | date:'dd-MM-yyyy'}} </td>
                                     <td>{{item.fecha_fin | date:'dd-MM-yyyy'}}</td>
                                     <td><i class="bi bi-trash3-fill" (click)="eliminarElementoArrendamiento(i)"></i> </td>
@@ -510,27 +510,24 @@
                                     <fieldset>
                                         <div class="form-group mb-3">
                                             <label for="nombre_conductor " class="form-label ">Nombre(s)</label>
-
-                                            <input type="text" class="form-control" name="nombre" placeholder="Nombre(s)" [(ngModel)]="dataPersonaConductor.nombres">
+                                            <input type="text" class="form-control" name="nombre" placeholder="Nombre(s)" [(ngModel)]="dataPersonaConductor.nombres" appSoloLetras>
                                         </div>
                                         <div class="form-group mb-3">
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-6">
-                                                    <label for="ap_paterno" class="form-label ">Apellido
-                                                        Paterno:</label>
-                                                    <input type="text" class="form-control" name="ap_paterno" [(ngModel)]="dataPersonaConductor.ap_paterno">
+                                                    <label for="ap_paterno" class="form-label ">Apellido Paterno:</label>
+                                                    <input type="text" class="form-control" name="ap_paterno" [(ngModel)]="dataPersonaConductor.ap_paterno" appSoloLetras>
                                                 </div>
                                                 <div class="col-sm-12 col-md-6">
-                                                    <label for="ap_materno" class="form-label ">Apellido
-                                                        Materno:</label>
-                                                    <input type="text" class="form-control" name="ap_materno" [(ngModel)]="dataPersonaConductor.ap_materno">
+                                                    <label for="ap_materno" class="form-label ">Apellido Materno:</label>
+                                                    <input type="text" class="form-control" name="ap_materno" [(ngModel)]="dataPersonaConductor.ap_materno" appSoloLetras>
                                                 </div>
 
                                             </div>
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="correo" class="form-label ">Correo:</label>
-                                            <input type="email" class="form-control texto-form-minuscula" name="correo" placeholder="correo" [(ngModel)]="dataPersonaConductor.correo">
+                                            <input type="email" class="form-control texto-correo" name="correo" placeholder="correo" [(ngModel)]="dataPersonaConductor.correo">
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="documento_id" class="form-label ">Documento de Identidad:</label>
@@ -541,14 +538,14 @@
                                                     <option value="CE">CARNET DE ESTRANGERIA</option>
                                                     <option value="DNI">DNI</option>
                                                 </select>
-                                                <input type="text" class="form-control" name="documento" [(ngModel)]="dataPersonaConductor.documento">
+                                                <input type="text" class="form-control" name="documento" [(ngModel)]="dataPersonaConductor.documento" appSoloNumeros> 
                                             </div>
                                         </div>
                                         <div class="form-group mb-3">
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-4">
                                                     <label for="telefono" class="form-label ">Telefono/cel:</label>
-                                                    <input type="number" min="0" class="form-control" name="telefono"  placeholder="Telefono/cel" [(ngModel)]="dataPersonaConductor.telefono">
+                                                    <input type="number" min="0" class="form-control" name="telefono"  placeholder="Telefono/cel" [(ngModel)]="dataPersonaConductor.telefono" appSoloNumeros>
                                                 </div>
                                                 <div class="col-sm-12 col-md-4">
                                                     <label for="licencia" class="form-label ">Licencia:</label>
@@ -785,16 +782,16 @@
                                             </div>
                                             <div class="form-group mb-2">
                                                 <label for="itinerario" class="form-label">Itinerario:</label>
-                                                <select id="itinerario" name="itinerario"  class="form-control  form-control-sm " [(ngModel)]="dataVehiculo.id_detalle_ruta_itinerario">
+                                                <select id="itinerario" name="itinerario"  class="form-control  form-control-sm " [(ngModel)]="dataVehiculo.id_detalle_ruta_itinerario" required>
                                                     <option value=0 selected disabled>ITINERARIO</option>
-                                                    <option *ngFor="let itinerario of lista_itinerarios"
-                                                        [value]="itinerario.id_detalle_ruta_itinerario">{{itinerario.itinerario}}</option>
+                                                    <option *ngFor="let itinerario of lista_itinerarios ; let i = index"
+                                                        [value]="i+1">{{itinerario.itinerario}}</option>
                                                 </select>
                                             </div>
                                             <div class="form-group mb-2">
                                                 <label for="resolucion" class="form-label">Resolución:</label>
-                                                <select id="resolucion" name="resolucion" class="form-control form-control-sm" [(ngModel)]="dataVehiculo.id_resolucion">
-                                                    <option value=0 selected disabled>RESOLUCIÓN </option>
+                                                <select id="resolucion" name="resolucion" class="form-control form-control-sm">
+                                                    <!-- <option value=0 selected disabled>RESOLUCIÓN </option> -->
                                                     <option [value]="dataResolucion.id_resolucion">{{dataResolucion.nombre_resolucion}}</option>
                                                 </select>
                                             </div>
@@ -832,7 +829,7 @@
                                             <th scope="row">{{i+1}}</th>
             
             
-                                            <td>{{vehiculo.placa}}</td>
+                                            <td>{{vehiculo.placa | uppercase}}</td>
                                             <td>{{vehiculo.anio_fabricacion}}</td>
                                             <td>{{vehiculo.estado}}</td>
                                             <td><i class="bi bi-pencil-fill m-2" (click)="eliminarVehiculo(i)" ></i></td>

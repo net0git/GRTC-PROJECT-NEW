@@ -9,14 +9,11 @@ import { UsuarioService } from '../../../services/remoto/usuario/usuario.service
 import { CrearPersonaMessageResponse, ModificarPersonaMessageResponse } from '../../../../domain/dto/PersonasResponse.dto';
 import { switchMap } from 'rxjs/operators';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule
-import { CrearUsuarioResponse, ModificarDatosUsuarioResponse,ModificarPasswordUsuarioResponse } from '../../../../domain/dto/UsuariosResponse.dto';
-import { ErrorValidacion } from '../../../../domain/dto/ErrorValidacion.dto';
-import { Validators } from '../../../../../../public/utils/validators';
+import { CrearUsuarioResponse, ModificarDatosUsuarioResponse, ModificarPasswordUsuarioResponse } from '../../../../domain/dto/UsuariosResponse.dto';
 import { SoloLetrasDirective } from '../../../directives/solo-letras.directive';
 import { SoloNumerosDirective } from '../../../directives/solo-numeros.directive';
 import { SweetAlert } from '../../../shared/animated-messages/sweetAlert';
-
-
+import { ValidarFormulario } from '../../../validatorForm/usuario.validator';
 
 @Component({
   selector: 'app-form-usuario',
@@ -28,7 +25,7 @@ import { SweetAlert } from '../../../shared/animated-messages/sweetAlert';
 export class FormUsuarioComponent implements OnInit {
 
   dataPersona: PersonaModel = {
-    id_persona:0,
+    id_persona: 0,
     nombres: '',
     ap_paterno: '',
     ap_materno: '',
@@ -47,10 +44,9 @@ export class FormUsuarioComponent implements OnInit {
     estado: '',
   };
 
-  boton_text: string='Guardar';
-  titulo:string='Crear usuario';
-  modificar_usuario:boolean=false;
-  
+  boton_text: string = 'Guardar';
+  titulo: string = 'Crear usuario';
+  modificar_usuario: boolean = false;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private personaService: PersonaService, private usuarioService: UsuarioService, private sweetAlert: SweetAlert) { }
 
@@ -59,80 +55,28 @@ export class FormUsuarioComponent implements OnInit {
   }
 
   // ---------------------------------------------------------
-  CargarPagina(){
+  CargarPagina() {
     const params = this.activatedRoute.snapshot.params
     console.log(params['id_usuario'])
-    if(params['id_usuario']){
+    if (params['id_usuario']) {
       this.ObtenerDatosUsuario(params['id_usuario'])
     }
-    
+
   }
   // ---------------------------------------------------------
-  IdentificarAcciionFormulario(){
-    if(this.modificar_usuario){
+  IdentificarAcciionFormulario() {
+    if (this.modificar_usuario) {
       this.ModificarUsuarioFormulario()
-      if(this.dataUsuario.password){
-        this.ModificarPasswordUsuario(this.dataUsuario.password)
+      if (this.dataUsuario.password && this.dataUsuario.password.trim() !== "") {
+        this.ModificarPasswordUsuario(this.dataUsuario.password);
       }
-    }else{
+    } else {
       this.CrearUsuarioFormulario()
     }
   }
-  // ---------------------------------------------------------
-  ValidarFormulario(dataPersona: PersonaModel, dataUsuario: UsuarioModel): ErrorValidacion[] {
-    const errorValidacion: ErrorValidacion[] = [];
-    if (!dataPersona.nombres) {
-      errorValidacion.push({ campo: 'nombres', mensaje: 'Campo requerido' });
-    }
-    if (!dataPersona.ap_paterno) {
-      errorValidacion.push({ campo: 'ap_paterno', mensaje: 'Campo requerido' });
-    }
-    if (!dataPersona.ap_materno) {
-      errorValidacion.push({ campo: 'ap_materno', mensaje: 'Campo requerido' });
-    }
-    if (dataPersona.telefono.length > 0) {
-      if (!Validators.validarTelefono(dataPersona.telefono)) {
-        errorValidacion.push({ campo: 'telefono', mensaje: 'Campo no válido' });
-      }
-    }
-    if (dataPersona.correo.length > 0) {
-      if (!Validators.validarCorreo(dataPersona.correo)) {
-        errorValidacion.push({ campo: 'Correo', mensaje: 'Campo no válido' });
-      }
-    }
-    if (dataPersona.documento.length > 0) {
-      if (dataPersona.tipo_doc!=""){
-        if(dataPersona.tipo_doc=='DNI' && dataPersona.documento.length!=8 ){
-          errorValidacion.push({ campo: 'documento de identidad', mensaje: 'la cantidad en caracteres debe ser 8 para el tipo de documento DNI' });     
-        }
-        else if(dataPersona.tipo_doc=='CE' && dataPersona.documento.length!=12){
-          errorValidacion.push({ campo: 'documento de identidad', mensaje: 'la cantidad en caracteres debe ser 12 para el tipo de documento CE' });
-        }    
-      }
-      else{
-          errorValidacion.push({ campo: 'Documento de identidad', mensaje: 'Seleccione el tipo de documento' });
-      }
-    }
-    if (!dataUsuario.nombre_usuario) {
-      errorValidacion.push({ campo: 'nombre_usuario', mensaje: 'Campo requerido' });
-    }
-    if (!dataUsuario.rol) {
-      errorValidacion.push({ campo: 'rol', mensaje: 'Campo requerido' });
-    }
-    if (!dataUsuario.estado) {
-      errorValidacion.push({ campo: 'estado', mensaje: 'Campo requerido' });
-    }
-    if (!this.modificar_usuario){
-      if (!dataUsuario.password) {
-        errorValidacion.push({ campo: 'password', mensaje: 'Campo requerido' });
-      }
-    }
-    
-    return errorValidacion;
-  }
 
   CrearUsuarioFormulario() {
-    const erroresValidacion = this.ValidarFormulario(this.dataPersona, this.dataUsuario);
+    const erroresValidacion = ValidarFormulario(this.dataPersona, this.dataUsuario, this.modificar_usuario);
     if (erroresValidacion.length > 0) {
       let errorMensaje = '';
       erroresValidacion.forEach(error => {
@@ -150,7 +94,7 @@ export class FormUsuarioComponent implements OnInit {
         return this.usuarioService.crearUsuario(this.dataUsuario);
       })
     ).subscribe({
-      next: (usuarioResponse:CrearUsuarioResponse) => {
+      next: (usuarioResponse: CrearUsuarioResponse) => {
         console.log('Usuario creado con éxito:', usuarioResponse.text);
       },
       error: (err) => {
@@ -165,8 +109,8 @@ export class FormUsuarioComponent implements OnInit {
     });
   }
 
-  async ModificarUsuarioFormulario(){
-    const erroresValidacion = this.ValidarFormulario(this.dataPersona, this.dataUsuario);
+  async ModificarUsuarioFormulario() {
+    const erroresValidacion = ValidarFormulario(this.dataPersona, this.dataUsuario, this.modificar_usuario);
     if (erroresValidacion.length > 0) {
       let errorMensaje = '';
       erroresValidacion.forEach(error => {
@@ -177,19 +121,19 @@ export class FormUsuarioComponent implements OnInit {
     }
     this.ModificarDatosPersona()
     this.ModificarDatosUsuario()
-    
+
   }
-// ------------------------------------------------------------------
+  // ------------------------------------------------------------------
   ModificarDatosUsuario() {
-    this.usuarioService.modificarDatosUsuario(this.dataUsuario.id_usuario,this.dataUsuario).subscribe({
+    this.usuarioService.modificarDatosUsuario(this.dataUsuario.id_usuario, this.dataUsuario).subscribe({
       next: (res: ModificarDatosUsuarioResponse) => {
         console.log(res);
-     
+
         this.sweetAlert.MensajeExito('Datos actualizados con éxito')
       },
       error: (err) => {
         console.log(err);
-      
+
       },
       complete: () => {
         console.log('Proceso de modificación completado');
@@ -199,31 +143,30 @@ export class FormUsuarioComponent implements OnInit {
     });
 
   }
-  ModificarPasswordUsuario(password:string){
-    this.usuarioService.ModificarPasswordUsuario(this.dataUsuario.id_usuario,password).subscribe({
+  ModificarPasswordUsuario(password: string) {
+    this.usuarioService.ModificarPasswordUsuario(this.dataUsuario.id_usuario, password).subscribe({
       next: (res: ModificarPasswordUsuarioResponse) => {
         console.log(res);
-        
+
       },
       error: (err) => {
         console.log(err);
       },
       complete: () => {
         console.log('Proceso de modificación completado');
-        this.sweetAlert.MensajeExito('Contraseña actualizada con éxito')
       }
     })
   }
 
-  ModificarDatosPersona(){
-    this.personaService.ModificarPersona(this.dataPersona.id_persona,this.dataPersona).subscribe({
+  ModificarDatosPersona() {
+    this.personaService.ModificarPersona(this.dataPersona.id_persona, this.dataPersona).subscribe({
       next: (res: ModificarPersonaMessageResponse) => {
         console.log(res);
         this.sweetAlert.MensajeExito('Datos actualizados con éxito')
       },
       error: (err) => {
         console.log(err);
-      
+
       },
       complete: () => {
         console.log('Proceso de modificación completado');
@@ -232,12 +175,12 @@ export class FormUsuarioComponent implements OnInit {
 
   }
   // --------------------------------------------------------------
-  ObtenerDatosUsuario(id_usuario:number){
+  ObtenerDatosUsuario(id_usuario: number) {
     this.usuarioService.obtenerUsuarioDetalle(id_usuario).subscribe({
-      next: (usuario:UsuarioModel) => {
+      next: (usuario: UsuarioModel) => {
         delete usuario.password
         this.dataUsuario = usuario;
-        this.modificar_usuario=true
+        this.modificar_usuario = true
         console.log('Usuario encontrado:', usuario);
       },
       error: (err) => {
@@ -251,21 +194,21 @@ export class FormUsuarioComponent implements OnInit {
           console.error('Error desconocido:', err);
           alert('Ocurrió un error inesperado. Verifique el servidor.');
         }
-      } ,
+      },
       complete: () => {
         console.log('Proceso de recuperacion usuario completado');
         this.ObtenerDatosPersona(this.dataUsuario.id_persona)
       }
-          
+
     })
   }
 
-  ObtenerDatosPersona(id_persona:number){
+  ObtenerDatosPersona(id_persona: number) {
     this.personaService.ObtenerDatosPersona(id_persona).subscribe({
-      next: (persona:PersonaModel) => {
-        
+      next: (persona: PersonaModel) => {
+
         this.dataPersona = persona;
-        this.modificar_usuario=true
+        this.modificar_usuario = true
         console.log('Persona encontrado:', persona);
       },
       error: (err) => {
@@ -279,14 +222,12 @@ export class FormUsuarioComponent implements OnInit {
           console.error('Error desconocido:', err);
           alert('Ocurrió un error inesperado. Verifique el servidor.');
         }
-      } ,
+      },
       complete: () => {
         console.log('Proceso de recuperacion persona completado');
-        this.titulo='Modificar Usuario'
-        this.boton_text='Modificar'
+        this.titulo = 'Modificar Usuario'
+        this.boton_text = 'Modificar'
       }
     })
   }
-// ------------------------------------------------------------------
-
 }

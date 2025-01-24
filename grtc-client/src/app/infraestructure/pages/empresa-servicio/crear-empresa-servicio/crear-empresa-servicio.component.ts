@@ -31,12 +31,15 @@ import { EmpresaServicioService } from '../../../services/remoto/empresas-servic
 import { PersonaService } from '../../../services/remoto/persona/persona.service';
 import { SoloNumerosGuionDirective } from '../../../directives/solo-numeros-guion.directive';
 import { SoloNumerosDirective } from '../../../directives/solo-numeros.directive';
+import { SoloLetrasDirective } from '../../../directives/solo-letras.directive';
+
+import { crear_empresa_servicio_empresa_vf, crear_empresa_servicio_vehiculo_vf, crear_empresa_servicio_representante_vf } from '../../../../infraestructure/validatorForm/empresaServicio.validator';
 
 
 @Component({
   selector: 'app-crear-empresa-servicio',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavegadorComponent, SubnavegadorComponent, ProgressBarComponent, SoloNumerosGuionDirective, SoloNumerosDirective],
+  imports: [CommonModule, FormsModule, NavegadorComponent, SubnavegadorComponent, ProgressBarComponent, SoloNumerosGuionDirective, SoloNumerosDirective, SoloLetrasDirective],
   templateUrl: './crear-empresa-servicio.component.html',
   styleUrl: './crear-empresa-servicio.component.css'
 })
@@ -59,12 +62,12 @@ export class CrearEmpresaServicioComponent implements OnInit {
   idMarcaSeleccionada: number = 0;
   idModeloSeleccionado: number = 0;
 
-  desabilitarFormEmpresa=true
-  deshabilitarCampoTipoEmpresa=false
-  deshabilitarCampoRuc=false 
-  deshabilitarCampofechaInicio=true
-  deshabilitarCampoExpediente=true
-  deshabilitarFormRepresentante=true
+  desabilitarFormEmpresa = true
+  deshabilitarCampoTipoEmpresa = false
+  deshabilitarCampoRuc = false
+  deshabilitarCampofechaInicio = true
+  deshabilitarCampoExpediente = true
+  deshabilitarFormRepresentante = true
 
   dataEmpresa: EmpresaModel = {
     id_empresa: 0,
@@ -180,11 +183,11 @@ export class CrearEmpresaServicioComponent implements OnInit {
   }
 
   constructor(
-    private vehiculoService: VehiculoService, 
+    private vehiculoService: VehiculoService,
     private empresaService: EmpresaService,
-    private router: Router, 
-    private activatedRoute: ActivatedRoute, 
-    private sanitizer: DomSanitizer, 
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private sanitizer: DomSanitizer,
     private ubigeoService: UbigeoService,
     private sweetAlert: SweetAlert,
     private empresaServicioService: EmpresaServicioService,
@@ -268,6 +271,38 @@ export class CrearEmpresaServicioComponent implements OnInit {
     this.dataVehiculo.modelo = this.lista_modelos.find(x => x.id_modelo == this.idModeloSeleccionado)?.nombre_modelo || '';
   }
   // -----------------------------------------------------------------------------------------------------------
+  // VALIDACION DE DATOS FORMULARIO
+  validarDatosFormularioEmpresa() {
+    // const erroresValidacion = crear_empresa_servicio_empresa_vf(this.dataEmpresa, this.dataEmpresaServicio);
+    // if (erroresValidacion.length > 0) {
+    //   let errorMensaje = '';
+    //   erroresValidacion.forEach(error => {
+    //     errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
+    //   });
+    //   alert(errorMensaje)
+    // } else {
+    //   this.nextStep()
+    // }
+    this.nextStep()
+  }
+
+  validarDatosFormularioRepresentanteLegal() {
+    const erroresValidacion = crear_empresa_servicio_representante_vf(this.dataPersonaRepresentante);
+    if (erroresValidacion.length > 0) {
+      let errorMensaje = '';
+      erroresValidacion.forEach(error => {
+        errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
+      });
+      alert(errorMensaje)
+      console.log(errorMensaje)
+    } else {
+      this.nextStep()
+    }
+  }
+
+
+
+  // -----------------------------------------------------------------------------------------------------------
 
   // MANEJO DE ITINARARIOS
   enviarDatosListaItinearios() {
@@ -316,6 +351,8 @@ export class CrearEmpresaServicioComponent implements OnInit {
   // -----------------------------------------------------------------------------------------------------------
   // MANEJO DE CONDUCTORES
   inviarDatosListaConductores() {
+
+
     const dataBodyConductor: ListaConductoresResponse = {
       id_conductor: 0,
       id_persona: 0,
@@ -360,7 +397,17 @@ export class CrearEmpresaServicioComponent implements OnInit {
   // -----------------------------------------------------------------------------------------------------------
   // MANEJO DE VEHICULOS
   enviarDatosListaVehiculos() {
-    this.lista_vehiculos.push(this.dataVehiculo)
+    const erroresValidacion = crear_empresa_servicio_vehiculo_vf(this.dataVehiculo);
+    if (erroresValidacion.length > 0) {
+      let errorMensaje = '';
+      erroresValidacion.forEach(error => {
+        errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
+      });
+      alert(errorMensaje)
+    } else {
+      this.lista_vehiculos.push(this.dataVehiculo)
+    }
+
   }
 
   eliminarVehiculo(id_vehiculo: number) {
@@ -394,9 +441,9 @@ export class CrearEmpresaServicioComponent implements OnInit {
   }
   // -----------------------------------------------------------------------------------------------------------
   buscarEmpresaServicioPorRuc_tipoServicio() {
-    
-    
-    if(this.dataEmpresaServicio.id_tipo_servicio==0){
+
+
+    if (this.dataEmpresaServicio.id_tipo_servicio == 0) {
       alert('Seleccione el tipo de servicio')
       return
     }
@@ -405,9 +452,9 @@ export class CrearEmpresaServicioComponent implements OnInit {
       return;
     }
 
-    this.empresaServicioService.BuscarEmpresaPorRuc_TipoServicio(this.dataEmpresaServicio.id_tipo_servicio,this.dataEmpresa.ruc).subscribe({
-      next: (data: EmpresaServicioResponse) => { 
-        
+    this.empresaServicioService.BuscarEmpresaPorRuc_TipoServicio(this.dataEmpresaServicio.id_tipo_servicio, this.dataEmpresa.ruc).subscribe({
+      next: (data: EmpresaServicioResponse) => {
+
         console.log(data)
         this.sweetAlert.MensajeError(`ya existe la empresa registrada con el servicio `)
       },
@@ -415,53 +462,53 @@ export class CrearEmpresaServicioComponent implements OnInit {
         console.log('error al obtener empresa por ruc', err)
         this.buscarEmpresaPorRuc()
       },
-      complete: () => {console.log('otención con exito de empresa por ruc')},
+      complete: () => { console.log('otención con exito de empresa por ruc') },
     });
   }
   buscarEmpresaPorRuc() {
     this.empresaService.obtenerEmpresaPorRuc(this.dataEmpresa.ruc).subscribe({
-      next: (data: EmpresaResponse) => { 
-        this.dataEmpresa=data
+      next: (data: EmpresaResponse) => {
+        this.dataEmpresa = data
         console.log(this.dataEmpresa)
         this.onChangeDepartamentoEmpresa()
         this.onChangeProvinciaEmpresa()
         this.buscarRepresentanteLegal(this.dataEmpresa.id_representante_legal)
-        this.desabilitarFormEmpresa=true
-        this.deshabilitarCampoTipoEmpresa=true
-        this.deshabilitarCampoRuc=true 
-        this.deshabilitarCampofechaInicio=false
-        this.deshabilitarCampoExpediente=false
-        this.deshabilitarFormRepresentante=true
+        this.desabilitarFormEmpresa = true
+        this.deshabilitarCampoTipoEmpresa = true
+        this.deshabilitarCampoRuc = true
+        this.deshabilitarCampofechaInicio = false
+        this.deshabilitarCampoExpediente = false
+        this.deshabilitarFormRepresentante = true
       },
       error: (err) => {
         console.log('error al obtener empresa por ruc', err)
         this.sweetAlert.MensajeConfirmacion('no existe empresa con ese RUC, deseas habilitar formulario?')
-        .then((confirmado) => {
-          if (confirmado) {
-            this.desabilitarFormEmpresa=false
-            this.deshabilitarCampoTipoEmpresa=true
-            this.deshabilitarCampoRuc=true 
-            this.deshabilitarCampofechaInicio=false
-            this.deshabilitarCampoExpediente=false
-            this.deshabilitarFormRepresentante=false
-          } else {
-            console.log('Acción cancelada.');
-          }
-        });
+          .then((confirmado) => {
+            if (confirmado) {
+              this.desabilitarFormEmpresa = false
+              this.deshabilitarCampoTipoEmpresa = true
+              this.deshabilitarCampoRuc = true
+              this.deshabilitarCampofechaInicio = false
+              this.deshabilitarCampoExpediente = false
+              this.deshabilitarFormRepresentante = false
+            } else {
+              console.log('Acción cancelada.');
+            }
+          });
       },
-      complete: () => {console.log('otención con exito de empresa por ruc')},
+      complete: () => { console.log('otención con exito de empresa por ruc') },
     });
   }
-  buscarRepresentanteLegal(id_persona:number) {
+  buscarRepresentanteLegal(id_persona: number) {
     this.personaService.ObtenerDatosPersona(id_persona).subscribe({
-      next: (data:PersonaModel) => {
-        this.dataPersonaRepresentante=data
+      next: (data: PersonaModel) => {
+        this.dataPersonaRepresentante = data
         console.log(this.dataPersonaRepresentante)
       },
       error: (err) => {
         console.log('error al obtener persona', err)
       },
-      complete: () => {console.log('otención con exito de persona')},
+      complete: () => { console.log('otención con exito de persona') },
     })
   }
   //------------------------------------------------------------------------------------------------------------ 
