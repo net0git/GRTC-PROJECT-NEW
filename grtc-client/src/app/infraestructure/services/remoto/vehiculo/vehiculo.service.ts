@@ -24,23 +24,6 @@ export class VehiculoService {
   api_url_vehiculo = `${environment.urlApi}/vehiculo`
   constructor(private http: HttpClient) { }
 
-
-  // this.router.post('/api/marca',marcaController.CrearMarca)
-  // this.router.get('/api/marca',marcaController.listarMarcas)
-  // this.router.get('/api/marca/:id_marca',marcaController.ObtenerMarca)
-  // this.router.put('/api/marca/:id_marca',marcaController.ModificarMarca)
-  //  this.router.get('/api/vehiculo/empresaservicio',vehiculoController.listarVehiculosEmpresasServicio)
-
-  // this.router.post('/api/vehiculo',vehiculoController.CrearVehiculo)
-  // this.router.get('/api/vehiculo',vehiculoController.listarTotalVehiculos)
-  // this.router.get('/api/vehiculo/empresaservicio',vehiculoController.listarVehiculosEmpresasServicio)
-  // this.router.get('/api/vehiculo/lista/empresaservicio/:id_empresa_servicio',vehiculoController.listarVehiculosEmpresaServicio)
-  // this.router.get('/api/vehiculo/empresaservicio/:id_empresa_servicio',vehiculoController.obtenerVehiculosDetalleByEmpresaServicio)
-  // this.router.get('/api/vehiculo/placa/:placa',vehiculoController.ObtenerVehiculoPorPlaca)
-  // this.router.put('/api/vehiculo/:id_vehiculo',vehiculoController.ModificarVehiculo)    
-  // this.router.put('/api/vehiculo/tuc/:id_vehiculo', vehiculoController.ModificarTucVehiculoAsociado)
-  // this.router.put('/api/vehiculo/baja/:id_vehiculo', vehiculoController.DarBajaVehiculo)
-
   CrearMarca(cuerpo_marca: MarcaModel): Observable<CrearMarcaMessageResponse> {
     const erroresValidacion = ValidarMarcaForm(cuerpo_marca);
       if (erroresValidacion.length > 0) {
