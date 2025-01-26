@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { MarcaModel } from '../../../../domain/models/Marca.model';
 import { ModeloModel } from '../../../../domain/models/Modelo.model';
 import { VehiculoModel } from '../../../../domain/models/Vehiculo.model';
-import { CrearMarcaMessageResponse } from '../../../../domain/dto/MarcaResponse.dto';
+import { CrearMarcaMessageResponse, ListarMarcasResponse} from '../../../../domain/dto/MarcaResponse.dto';
 import { CrearModeloMessageResponse, ListarModelosResponse } from '../../../../domain/dto/ModeloResponse.dto';
 import { Observable, throwError } from 'rxjs';
 
@@ -12,10 +12,7 @@ import { ValidadVehiculoForm } from '../../../validatorForm/vehiculo.validator';
 import { ValidarModeloForm } from '../../../validatorForm/modelo.validator';
 import { ValidarMarcaForm } from '../../../validatorForm/marca.validator';
 
-import { ListarMarcasResponse } from '../../../../domain/dto/MarcaResponse.dto';
 import { ListaVehiculosDetalleResponse, ListaVehiculosResponse, CrearVehiculoMessageResponse, DarBajaVehiculoMessageResponse, ModificarTucVehiculoAsociadoMessageResponse } from '../../../../domain/dto/VehiculoResponse.dto';
-
-
 
 @Injectable({
   providedIn: 'root'
