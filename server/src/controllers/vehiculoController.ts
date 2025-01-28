@@ -184,7 +184,7 @@ class VehiculoController {
             const vehiculo = await db.query(consulta, [placa]);
 
             if (vehiculo && vehiculo['rows'].length > 0) {
-                res.json(vehiculo['rows']);
+                res.json(vehiculo['rows'][0]);
             } else {
                 res.status(404).json({ text: 'El vehiculo no existe' });
             }

@@ -70,6 +70,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
   deshabilitarCampofechaInicio = true
   deshabilitarCampoExpediente = true
   deshabilitarFormRepresentante = true
+  deshabilitarFormVehiculo = true
 
   dataEmpresa: EmpresaModel = {
     id_empresa: 0,
@@ -433,11 +434,13 @@ export class CrearEmpresaServicioComponent implements OnInit {
   // -----------------------------------------------------------------------------------------------------------
   // MANEJO DE CONDUCTORES
   conductorNextStep(){
-    if(this.lista_conductores.length>0){
-      this.nextStep()
-    }else{
-      alert('debes registrar por lo menos un conductor')
-    }
+    // if(this.lista_conductores.length>0){
+    //   this.nextStep()
+    // }else{
+    //   alert('debes registrar por lo menos un conductor')
+    // }
+
+    this.nextStep()
     
   }
   inviarDatosListaConductores() {
@@ -598,6 +601,47 @@ export class CrearEmpresaServicioComponent implements OnInit {
       complete: () => { console.log('otención con exito de persona') },
     })
   }
+  buscarVehiculoPorPlaca() {
+    this.vehiculoService.ObtererVehiculoPorPlaca(this.dataVehiculo.placa).subscribe({
+      next: (data: VehiculoModel) => {
+        if(data.id_empresa_servicio==null){     
+          this.dataVehiculo = data
+          this.deshabilitarFormVehiculo = false
+          console.log(this.dataVehiculo);
+        }else{
+          this.buscarEmpresaServicioPorId(data.id_empresa_servicio)
+        }
+      },
+      error: (err) => {
+        console.log('error al obtener vehiculo', err)
+        this.deshabilitarFormVehiculo = false
+      },
+      complete: () => { console.log('otención con exito de vehiculo') },
+    })
+  }
+  buscarEmpresaPorId(id_empresa: number) {
+    this.empresaService.ObtenerEmpresa(id_empresa).subscribe({
+      next: (data: EmpresaModel) => {
+        this.sweetAlert.MensajeSimpleIcon('Vehiculo encontrado en :', data.razon_social )
+      },
+      error: (err) => {
+        console.log('error al obtener empresa por ruc', err)
+        
+      },
+      complete: () => { console.log('otención con exito de empresa por ruc') },
+    })
+  }
+  buscarEmpresaServicioPorId(id_empresa_servicio: number) {
+    this.empresaServicioService.ObtenerEmpresaServicio(id_empresa_servicio).subscribe({
+      next: (data: EmpresaServicioResponse) => {
+        this.buscarEmpresaPorId(data.id_empresa)
+      },
+      error: (err) => {
+        console.log('error al obtener empresa por ruc', err)
+        
+      },
+      complete: () => { console.log('otención con exito de empresa por ruc') },
+  });}
   //------------------------------------------------------------------------------------------------------------ 
   mostrar() {
     console.log(this.dataPersonaRepresentante)

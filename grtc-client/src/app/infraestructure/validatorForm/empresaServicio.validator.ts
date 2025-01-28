@@ -304,22 +304,17 @@ export function crear_empresa_servicio_conductor_vf(dataPersonaConductor: Person
       errorValidacion.push({ campo: 'telefono', mensaje: 'Campo no válido' })
     }
   }
-  if(dataPersonaConductor.documento.length>0){
-    if(dataPersonaConductor.tipo_doc!='CE' && dataPersonaConductor.tipo_doc!='DNI'){
-      errorValidacion.push({ campo: 'documento de identidad', mensaje: 'Campo no válido' })
-    }
-    else{
-      if(dataPersonaConductor.documento.length!=12 && dataPersonaConductor.documento.length!=8){
-        errorValidacion.push({ campo: 'documento de identidad', mensaje: 'La cantidad de caracteres debe ser 8 para el tipo de documento DNI o 12 para el tipo de documento CE' })
+  if (!dataPersonaConductor.documento || dataPersonaConductor.documento.trim() === "") {
+    errorValidacion.push({ campo: 'documento de identidad', mensaje: 'El campo documento de identidad es obligatorio' });
+  } else {
+    if (dataPersonaConductor.tipo_doc !== "") {
+      if (dataPersonaConductor.tipo_doc === 'DNI' && dataPersonaConductor.documento.length !== 8) {
+        errorValidacion.push({ campo: 'documento de identidad', mensaje: 'La cantidad de caracteres debe ser 8 para el tipo de documento DNI' });
+      } else if (dataPersonaConductor.tipo_doc === 'CE' && dataPersonaConductor.documento.length !== 12) {
+        errorValidacion.push({ campo: 'documento de identidad', mensaje: 'La cantidad de caracteres debe ser 12 para el tipo de documento CE' });
       }
-      else{
-        if(dataPersonaConductor.tipo_doc=='DNI' && dataPersonaConductor.documento.length!=8){
-          errorValidacion.push({ campo: 'documento de identidad', mensaje: 'La cantidad de caracteres debe ser 8 para el tipo de documento DNI' })
-        }
-        else if(dataPersonaConductor.tipo_doc=='CE' && dataPersonaConductor.documento.length!=12){
-          errorValidacion.push({ campo: 'documento de identidad', mensaje: 'La cantidad de caracteres debe ser 12 para el tipo de documento CE' })
-        }
-      }
+    } else {
+      errorValidacion.push({ campo: 'documento de identidad', mensaje: 'Seleccione el tipo de documento' });
     }
   }
   if(!dataConductor.categoria){
