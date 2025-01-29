@@ -104,7 +104,7 @@ export class ModEmpresaServicioComponent implements OnInit {
     const params = this.activatedRoute.snapshot.params;
     this.empresaServicioService.ObtenerEmpresaServicio(params['id_empresa_servicio']).subscribe({
       next: (data: EmpresaServicioResponse) => {
-        this.dataEmpresaServicio = data;
+        this.dataEmpresaServicio =  data;
         this.dataEmpresaServicio.fecha_inicial = FechaConFormato(this.dataEmpresaServicio.fecha_inicial);
         console.log(data)
       },

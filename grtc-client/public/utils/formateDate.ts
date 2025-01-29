@@ -1,4 +1,4 @@
-export function FechaConFormato(fechaISO: string | Date): string {
+export function FechaConFormato(fechaISO: string | Date ): string {
     // Convierte la fecha ISO a formato "yyyy-mm-dd"
     const fecha = new Date(fechaISO);
     const dia = fecha.getDate().toString().padStart(2, '0'); // Obtiene el día

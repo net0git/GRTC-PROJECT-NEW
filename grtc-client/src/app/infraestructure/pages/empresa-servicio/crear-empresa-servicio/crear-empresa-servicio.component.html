@@ -633,7 +633,7 @@
                                                                 name="placa" [(ngModel)]="dataVehiculo.placa" appSoloPlaca maxlength="7" id="placa" [disabled]="!deshabilitarFormVehiculo">
                                                             <button class="btn btn-success btn-sm " type="button" id="button-addon2"
                                                                 style="background-color: rgba(24, 148, 7, 0.747); border-color: rgba(24, 148, 7, 0.747);"
-                                                                (click)="buscarVehiculoPorPlaca()">
+                                                                (click)="buscarVehiculoPorPlaca()" [disabled]="!deshabilitarFormVehiculo">
                                                                 <i class="bi bi-search"></i></button>
                                                         </div>
                                                     </div>
@@ -651,7 +651,7 @@
                                                     <div class="col-sm-12 col-md-6 col-lg-3">
                                                         <label for="estado" class="form-label">Condicion:</label>
                                                         <select id="estado" name="estado" class="form-control form-control-sm"
-                                                            [(ngModel)]="dataVehiculo.estado" [disabled]="deshabilitarFormVehiculo">
+                                                            [(ngModel)]="dataVehiculo.estado" [disabled]="deshabilitarFormVehiculo" disabled>
                                                             <option value="">CONDICION </option>
                                                             <option value="AUTORIZACION">AUTORIZACION</option>
                                                             <option value="INCREMENTO">INCREMENTO</option>
@@ -784,7 +784,7 @@
                                             <div class="form-group mb-2">
                                                 <label for="itinerario" class="form-label">Itinerario:</label>
                                                 <select id="itinerario" name="itinerario"  class="form-control  form-control-sm " [(ngModel)]="dataVehiculo.id_detalle_ruta_itinerario" [disabled]="deshabilitarFormVehiculo" >
-                                                    <option value=0 selected disabled>ITINERARIO</option>
+                                                    <option value=0  disabled>ITINERARIO</option>
                                                     <option *ngFor="let itinerario of lista_itinerarios ; let i = index"
                                                         [value]="i+1">{{itinerario.itinerario}}</option>
                                                 </select>

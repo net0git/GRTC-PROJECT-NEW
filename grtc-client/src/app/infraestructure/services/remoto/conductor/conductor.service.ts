@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../../environments/environment';
 import { ListaConductoresResponse, CrearConductorMessageResponse, ModificarConductorMessageResponse, EliminarConductorMessageResponse } from '../../../../domain/dto/ConductorResponse.dto';
+import { ConductorRequest } from '../../../../domain/dto/ConductorRequest.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class ConductorService {
     return this.http.get<ListaConductoresResponse[]>(this.api_uri_conductor+'/lista/empresa/'+id_empresa_servicio)
   }
 
-  CrearCondutor(cuerpo_conductor:any):Observable<CrearConductorMessageResponse>{
+  CrearConductor(cuerpo_conductor: any):Observable<CrearConductorMessageResponse>{
     return this.http.post<CrearConductorMessageResponse>(this.api_uri_conductor,cuerpo_conductor)
   }
 

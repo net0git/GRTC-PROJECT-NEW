@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../../environments/environment';
-import { EmpresaResponse, modificarEmpresaResponse } from '../../../../domain/dto/EmpresaResponse.dto';
+import { CrearEmpresaMessageResponse, EmpresaResponse, modificarEmpresaResponse } from '../../../../domain/dto/EmpresaResponse.dto';
+import { EmpresaModel } from '../../../../domain/models/Empresa.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,13 @@ export class EmpresaService {
 
   obtenerEmpresaPorRuc(ruc:string):Observable<EmpresaResponse>{
     return this.http.get<EmpresaResponse>(`${this.api_uri_empresa}/ruc/${ruc}`);
+  }
+
+  crearEmpresa(cuerpo_empresa:EmpresaModel):Observable<CrearEmpresaMessageResponse>{
+    cuerpo_empresa.razon_social=cuerpo_empresa.razon_social.trim().toUpperCase()
+    cuerpo_empresa.direccion=cuerpo_empresa.direccion.trim().toUpperCase()
+    cuerpo_empresa.correo=cuerpo_empresa.correo.trim().toLowerCase()
+    return this.http.post<CrearEmpresaMessageResponse>(`${this.api_uri_empresa}`,cuerpo_empresa)
   }
 
 }

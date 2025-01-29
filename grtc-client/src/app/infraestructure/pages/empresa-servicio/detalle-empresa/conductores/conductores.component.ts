@@ -141,7 +141,7 @@ export class ConductoresComponent implements OnInit {
         }
       });
     } else {
-      this.conductorService.CrearCondutor(this.dataConductor).subscribe({
+      this.conductorService.CrearConductor(this.dataConductor).subscribe({
         next: (data: CrearConductorMessageResponse) => {
           console.log(data)
         },

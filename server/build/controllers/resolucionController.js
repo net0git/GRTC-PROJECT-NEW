@@ -59,7 +59,7 @@ class ResoucionController {
                     }
                     else {
                         console.log('resolucion insertado correctamente');
-                        res.json({ text: 'La resolucion se creó correctamente' });
+                        res.json({ text: 'La resolucion se asocio correctamente' });
                     }
                 });
             }

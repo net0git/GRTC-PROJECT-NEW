@@ -9,6 +9,7 @@ export interface ListaItinerarioResponse {
 }
 
 export interface CrearItinerarioMessageResponse {
+    id_detalle_ruta_itinerario: number
     text: string
 }
 

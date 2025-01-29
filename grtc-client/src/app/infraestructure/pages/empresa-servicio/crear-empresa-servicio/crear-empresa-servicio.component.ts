@@ -11,22 +11,22 @@ import { EmpresaModel } from '../../../../domain/models/Empresa.model';
 import { PersonaModel } from '../../../../domain/models/Persona.model';
 import { ResolucionModel } from '../../../../domain/models/Resolucion.model';
 import { ItinerarioModel } from '../../../../domain/models/Itinerario.model';
-import { ListaItinerarioResponse } from '../../../../domain/dto/ItinerarioResponse.dto';
+import { CrearItinerarioMessageResponse, ListaItinerarioResponse } from '../../../../domain/dto/ItinerarioResponse.dto';
 import { ListarMarcasResponse } from '../../../../domain/dto/MarcaResponse.dto';
 import { ListarModelosResponse } from '../../../../domain/dto/ModeloResponse.dto';
 import { ConductorModel } from '../../../../domain/models/Conductor.model';
-import { ListaConductoresResponse } from '../../../../domain/dto/ConductorResponse.dto';
+import { CrearConductorMessageResponse, ListaConductoresResponse } from '../../../../domain/dto/ConductorResponse.dto';
 import { VehiculoModel } from '../../../../domain/models/Vehiculo.model';
 import { FormsModule } from '@angular/forms';
 import { fileToBase64 } from '../../../../../../public/utils/pdfFunctions';
 import { ArrendamientoModel } from '../../../../domain/models/Arrendamiento.model';
-import { ListaArrendamientoResponse } from '../../../../domain/dto/ArrendamientoResponse.dto';
+import { CrearArrendamientoMessageResponse, ListaArrendamientoResponse } from '../../../../domain/dto/ArrendamientoResponse.dto';
 import { VehiculoService } from '../../../services/remoto/vehiculo/vehiculo.service';
 import { ListaVehiculosResponse } from '../../../../domain/dto/VehiculoResponse.dto';
-import { EmpresaResponse } from '../../../../domain/dto/EmpresaResponse.dto';
+import { CrearEmpresaMessageResponse, EmpresaResponse } from '../../../../domain/dto/EmpresaResponse.dto';
 import { EmpresaService } from '../../../services/remoto/empresa/empresa.service';
 import { SweetAlert } from '../../../shared/animated-messages/sweetAlert';
-import { EmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
+import { crearEmpresaServicioResponse, EmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
 import { EmpresaServicioService } from '../../../services/remoto/empresas-servicio/empresa-servicio.service';
 import { PersonaService } from '../../../services/remoto/persona/persona.service';
 import { SoloNumerosGuionDirective } from '../../../directives/solo-numeros-guion.directive';
@@ -35,6 +35,14 @@ import { SoloLetrasDirective } from '../../../directives/solo-letras.directive';
 import { SoloLetrasGuionDirective } from '../../../directives/solo-letras-guion.directive';
 
 import { crear_empresa_servicio_empresa_vf, crear_empresa_servicio_vehiculo_vf, crear_empresa_servicio_representante_vf, crear_empresa_servicio_resolucion_vf, crear_empresa_servicio_itinerario_vf, crear_empresa_servicio_arrendamiento_vf, crear_empresa_servicio_conductor_vf } from '../../../../infraestructure/validatorForm/empresaServicio.validator';
+import { lastValueFrom } from 'rxjs';
+import { CrearPersonaMessageResponse } from '../../../../domain/dto/PersonasResponse.dto';
+import { CrearResolucionEmpresaServicioMessageResponse, CrearResolucionMessageResponse } from '../../../../domain/dto/ResolucionResponse.dto';
+import { ResolucionService } from '../../../services/remoto/resolucion/resolucion.service';
+import { ResolucionEmpresaModel } from '../../../../domain/models/ResolucionEmpresa.model';
+import { ItinerarioService } from '../../../services/remoto/itinerario/itinerario.service';
+import { ArrendamientoService } from '../../../services/remoto/arrendamiento/arrendamiento.service';
+import { ConductorService } from '../../../services/remoto/conductor/conductor.service';
 
 
 
@@ -72,6 +80,17 @@ export class CrearEmpresaServicioComponent implements OnInit {
   deshabilitarFormRepresentante = true
   deshabilitarFormVehiculo = true
 
+  dataPersonaRepresentante: PersonaModel = {
+    id_persona: 0,
+    nombres: '',
+    ap_paterno: '',
+    ap_materno: '',
+    tipo_doc: '',
+    documento: '',
+    telefono: '',
+    correo: ''
+  }
+
   dataEmpresa: EmpresaModel = {
     id_empresa: 0,
     id_representante_legal: 0,
@@ -95,16 +114,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
     expediente: '',
   }
 
-  dataPersonaRepresentante: PersonaModel = {
-    id_persona: 0,
-    nombres: '',
-    ap_paterno: '',
-    ap_materno: '',
-    tipo_doc: '',
-    documento: '',
-    telefono: '',
-    correo: ''
-  }
+  
 
   dataResolucion: ResolucionModel = {
     id_resolucion: 0,
@@ -194,11 +204,16 @@ export class CrearEmpresaServicioComponent implements OnInit {
     private ubigeoService: UbigeoService,
     private sweetAlert: SweetAlert,
     private empresaServicioService: EmpresaServicioService,
-    private personaService: PersonaService) { }
+    private personaService: PersonaService,
+    private resolucionService: ResolucionService,
+    private itinerarioService:ItinerarioService,
+    private arrendamientoService:ArrendamientoService,
+    private conductorService: ConductorService) { }
   ngOnInit(): void {
     this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`/doc/error_carga.pdf`);
     this.ListaDepartamentosEmpresa()
     this.ListaDepartamentosArrendamiento()
+    this.listarMarcas()
   }
 
   // -----------------------------------------------------------------------------------------------------------
@@ -253,15 +268,12 @@ export class CrearEmpresaServicioComponent implements OnInit {
     })
   }
 
-  listarModelos(id_marca: number) {
-    this.vehiculoService.ObtenerModelosPorMarca(id_marca).subscribe({
-      next: (data: ListarModelosResponse[]) => {
-        this.lista_modelos = data
-      },
-      error: (err) => {
-        console.error('Error al obtener modelos:', err);
-      }
-    })
+  listarModelos(id_marca: number): Promise<void> {
+    return lastValueFrom(this.vehiculoService.ObtenerModelosPorMarca(id_marca)).then((data: ListarModelosResponse[]) => {
+      this.lista_modelos = data;
+    }).catch(err => {
+      console.error('Error al obtener modelos:', err);
+    });
   }
   onMarcaSeleccionada() {
     console.log(this.idMarcaSeleccionada)
@@ -305,7 +317,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
     this.nextStep()
   }
 
-  validarDatosFormularioResolucion(){
+  validarDatosFormularioResolucion() {
     // const erroresValidacion = crear_empresa_servicio_resolucion_vf(this.dataResolucion);
     // if (erroresValidacion.length > 0) {
     //   let errorMensaje = '';
@@ -324,32 +336,32 @@ export class CrearEmpresaServicioComponent implements OnInit {
   validarDatosFormularioItinerario() {
     const erroresValidacion = crear_empresa_servicio_itinerario_vf(this.dataItinerario)
     if (erroresValidacion.length > 0) {
-        let errorMensaje = '';
-        erroresValidacion.forEach(error => {
-          errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
-        });
-        alert(errorMensaje)
-        console.log(errorMensaje)
-      } else {
-        this.enviarDatosListaItinearios()
-      }
+      let errorMensaje = '';
+      erroresValidacion.forEach(error => {
+        errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
+      });
+      alert(errorMensaje)
+      console.log(errorMensaje)
+    } else {
+      this.enviarDatosListaItinearios()
+    }
   }
 
   validarDatosFormularioArrendamiento() {
     const erroresValidacion = crear_empresa_servicio_arrendamiento_vf(this.dataArrendamiento)
     if (erroresValidacion.length > 0) {
-        let errorMensaje = '';
-        erroresValidacion.forEach(error => {
-          errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
-        });
-        alert(errorMensaje)
-        console.log(errorMensaje)
-      } else {
-        this.enviarDatosListaArrendamiento()
-      }
+      let errorMensaje = '';
+      erroresValidacion.forEach(error => {
+        errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
+      });
+      alert(errorMensaje)
+      console.log(errorMensaje)
+    } else {
+      this.enviarDatosListaArrendamiento()
+    }
   }
 
-  validarDatosListaConductores(){
+  validarDatosListaConductores() {
     const erroresValidacion = crear_empresa_servicio_conductor_vf(this.dataPersonaConductor, this.dataConductor);
     if (erroresValidacion.length > 0) {
       let errorMensaje = '';
@@ -368,7 +380,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
   // -----------------------------------------------------------------------------------------------------------
 
   // MANEJO DE ITINARARIOS
-  itinerarioNextStep(){
+  itinerarioNextStep() {
     // if(this.lista_itinerarios.length>0){
     //   this.nextStep()
     // }else{
@@ -398,7 +410,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
   }
   // -----------------------------------------------------------------------------------------------------------
   // MANEJO DE ARRENDAMIENTOS
-  arrendamientoNextStep(){
+  arrendamientoNextStep() {
     // if(this.lista_contratos_arrendamientos.length>0){
     //   this.nextStep()
     // }else{
@@ -433,7 +445,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
   }
   // -----------------------------------------------------------------------------------------------------------
   // MANEJO DE CONDUCTORES
-  conductorNextStep(){
+  conductorNextStep() {
     // if(this.lista_conductores.length>0){
     //   this.nextStep()
     // }else{
@@ -441,7 +453,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
     // }
 
     this.nextStep()
-    
+
   }
   inviarDatosListaConductores() {
     const dataBodyConductor: ListaConductoresResponse = {
@@ -495,7 +507,13 @@ export class CrearEmpresaServicioComponent implements OnInit {
       });
       alert(errorMensaje)
     } else {
-      this.lista_vehiculos.push(this.dataVehiculo)
+      if (this.dataVehiculo.id_detalle_ruta_itinerario == null) {
+        alert('Seleccione un itinerario')
+      } else {
+        this.lista_vehiculos.push(this.dataVehiculo);
+        this.limpiarFormularioVehiculo();
+      }
+
     }
 
   }
@@ -528,6 +546,10 @@ export class CrearEmpresaServicioComponent implements OnInit {
       id_detalle_ruta_itinerario: 0,
       id_resolucion: 0,
     }
+    this.deshabilitarFormVehiculo = true
+    this.idMarcaSeleccionada = 0
+    this.idModeloSeleccionado = 0
+
   }
   // -----------------------------------------------------------------------------------------------------------
   buscarEmpresaServicioPorRuc_tipoServicio() {
@@ -602,31 +624,48 @@ export class CrearEmpresaServicioComponent implements OnInit {
     })
   }
   buscarVehiculoPorPlaca() {
-    this.vehiculoService.ObtererVehiculoPorPlaca(this.dataVehiculo.placa).subscribe({
-      next: (data: VehiculoModel) => {
-        if(data.id_empresa_servicio==null){     
-          this.dataVehiculo = data
+    if (this.dataVehiculo.placa == '') {
+      alert('Ingrese un placa de vehiculo')
+    } else {
+      this.vehiculoService.ObtererVehiculoPorPlaca(this.dataVehiculo.placa).subscribe({
+        next: (data: VehiculoModel) => {
+          if (data.id_empresa_servicio == null) {
+            this.dataVehiculo = data
+            this.deshabilitarFormVehiculo = false
+            console.log(this.dataVehiculo);
+            this.idMarcaSeleccionada = this.lista_marcas.find(x => x.nombre_marca == this.dataVehiculo.marca)?.id_marca || 0;
+            if (this.idMarcaSeleccionada > 0) {
+              this.listarModelos(this.idMarcaSeleccionada).then(() => {
+                this.idModeloSeleccionado = this.lista_modelos.find(x => x.nombre_modelo == this.dataVehiculo.modelo)?.id_modelo || 0;
+                console.log('modelo:' + this.idModeloSeleccionado);
+              });
+            }
+            // this.listarModelos(this.idMarcaSeleccionada)
+            // this.idModeloSeleccionado = this.lista_modelos.find(x => x.nombre_modelo == this.dataVehiculo.modelo)?.id_modelo || 0;
+
+            console.log('marca: ' + this.idMarcaSeleccionada)
+            console.log('modelo:' + this.idModeloSeleccionado)
+          } else {
+            this.buscarEmpresaServicioPorId(data.id_empresa_servicio)
+          }
+        },
+        error: (err) => {
+          console.log('error al obtener vehiculo', err)
           this.deshabilitarFormVehiculo = false
-          console.log(this.dataVehiculo);
-        }else{
-          this.buscarEmpresaServicioPorId(data.id_empresa_servicio)
-        }
-      },
-      error: (err) => {
-        console.log('error al obtener vehiculo', err)
-        this.deshabilitarFormVehiculo = false
-      },
-      complete: () => { console.log('otención con exito de vehiculo') },
-    })
+        },
+        complete: () => { console.log('otención con exito de vehiculo') },
+      })
+    }
+
   }
   buscarEmpresaPorId(id_empresa: number) {
     this.empresaService.ObtenerEmpresa(id_empresa).subscribe({
       next: (data: EmpresaModel) => {
-        this.sweetAlert.MensajeSimpleIcon('Vehiculo encontrado en :', data.razon_social )
+        this.sweetAlert.MensajeSimpleIcon('Vehiculo encontrado en :', data.razon_social)
       },
       error: (err) => {
         console.log('error al obtener empresa por ruc', err)
-        
+
       },
       complete: () => { console.log('otención con exito de empresa por ruc') },
     })
@@ -638,12 +677,161 @@ export class CrearEmpresaServicioComponent implements OnInit {
       },
       error: (err) => {
         console.log('error al obtener empresa por ruc', err)
-        
+
       },
       complete: () => { console.log('otención con exito de empresa por ruc') },
-  });}
+    });
+  }
   //------------------------------------------------------------------------------------------------------------ 
-  mostrar() {
+
+ 
+async crearPersonaRepresentante(): Promise<void> {
+  if (this.dataPersonaRepresentante.id_persona == 0) {
+      try {
+          const data: CrearPersonaMessageResponse = await lastValueFrom(this.personaService.CrearPersona(this.dataPersonaRepresentante));
+          this.dataEmpresa.id_representante_legal = data.id_persona;
+          console.log(data);
+      } catch (err) {
+          console.log('Error al guardar persona', err);
+      }
+  } else {
+      console.log('La persona ya existe asociada a la empresa');
+  }
+}
+
+async crearEmpresa(): Promise<void> {
+  if (this.dataEmpresa.id_empresa == 0) {
+      try {
+          const data: CrearEmpresaMessageResponse = await lastValueFrom(this.empresaService.crearEmpresa(this.dataEmpresa));
+          console.log(data);
+          this.dataEmpresa.id_empresa = data.id_empresa;
+          this.dataEmpresaServicio.id_empresa = data.id_empresa;
+      } catch (err) {
+          console.log('Error al crear empresa', err);
+      }
+  } else {
+      console.log('La empresa ya existe');
+  }
+}
+
+async crearEmpresaServicio(): Promise<void> {
+  try {
+    // Asignar fecha_inicial como Date
+    this.dataEmpresaServicio.id_empresa = this.dataEmpresa.id_empresa;
+    this.dataEmpresaServicio.fecha_inicial = new Date(this.dataEmpresaServicio.fecha_inicial);
+    
+    // Calcular la fecha_final sumando 10 años y un día
+    this.dataEmpresaServicio.fecha_final = new Date(this.dataEmpresaServicio.fecha_inicial);
+    this.dataEmpresaServicio.fecha_final.setFullYear(this.dataEmpresaServicio.fecha_final.getFullYear() + 10); // Sumar 10 años
+    this.dataEmpresaServicio.fecha_final.setDate(this.dataEmpresaServicio.fecha_final.getDate() + 1); // Sumar un día
+
+    // Llamada al servicio para crear la empresa de servicio
+    const data: crearEmpresaServicioResponse = await lastValueFrom(
+      this.empresaServicioService.crearEmpresaServicio(this.dataEmpresaServicio)
+    );
+    
+    console.log(data);
+    this.dataEmpresaServicio.id_empresa_servicio=data.id_empresa_servicio;
+    
+  } catch (err) {
+    console.log('Error al crear empresa servicio', err);
+  }
+}
+
+async crearResolucion(){
+  try {
+    const data: CrearResolucionMessageResponse = await lastValueFrom(
+      this.resolucionService.CrearResolucion(this.dataResolucion)
+    );
+    console.log(data);
+    this.dataResolucion.id_resolucion=data.id_resolucion;
+  } catch (err) {
+    console.log('Error al crear empresa servicio', err);
+  }
+}
+
+async asociarResolucion() {
+  const dataResolucionEmpresaServicio:ResolucionEmpresaModel={
+    id_empresa_servicio:this.dataEmpresaServicio.id_empresa_servicio,
+    id_resolucion:this.dataResolucion.id_resolucion
+  }
+  try {
+    const data: CrearResolucionEmpresaServicioMessageResponse = await lastValueFrom(
+      this.resolucionService.CrearResolucionEmpresaServicio(dataResolucionEmpresaServicio)
+    );
+    console.log(data);
+  } catch (err) {
+    console.log('Error al crear empresa servicio', err);
+  }  
+}
+
+
+async crearItinerarios() {
+  for (let i = 0; i < this.lista_itinerarios.length; i++) {
+    try {
+      this.lista_itinerarios[i].id_empresa_servicio = this.dataEmpresaServicio.id_empresa_servicio;
+      const data: CrearItinerarioMessageResponse = await lastValueFrom(
+        this.itinerarioService.crearItinerario(this.lista_itinerarios[i])
+      );
+      this.lista_itinerarios[i].id_detalle_ruta_itinerario = data.id_detalle_ruta_itinerario;
+      console.log('Itinerario creado correctamente');
+      
+    } catch (err) {
+      console.error('Error al crear itinerario:', err);
+    }
+  }
+}
+
+async crearArrendamientos() {
+  for (let i = 0; i < this.lista_contratos_arrendamientos.length; i++) {
+    try {
+      this.lista_contratos_arrendamientos[i].id_empresa_servicio = this.dataEmpresaServicio.id_empresa_servicio;
+      const data: CrearArrendamientoMessageResponse = await lastValueFrom(
+        this.arrendamientoService.crearArrendamiento(this.lista_contratos_arrendamientos[i])
+      );
+      this.lista_contratos_arrendamientos[i].id_contrato = data.id_contrato;
+      console.log('Arrendamiento creado correctamente');
+    } catch (err) {
+      console.error('Error al crear arrendamiento:', err);
+    }
+  }
+}
+
+async crearConductores() {
+  for (let i = 0; i < this.lista_conductores.length; i++) {
+    try {
+      // 1. Crear persona y obtener el id_persona
+      this.lista_conductores[i].id_empresa_servicio = this.dataEmpresaServicio.id_empresa_servicio;
+      const personaData:CrearPersonaMessageResponse = await lastValueFrom(
+        this.personaService.CrearPersona(this.lista_conductores[i])
+      );
+
+      const id_persona = personaData.id_persona; // Suponiendo que la API devuelve esto
+
+      // 2. Asignar el id_persona al conductor y crear conductor
+      this.lista_conductores[i].id_persona = id_persona;
+
+      const conductorData:CrearConductorMessageResponse = await lastValueFrom(
+        this.conductorService.CrearConductor(this.lista_conductores[i])
+      );
+
+      console.log(conductorData);
+
+    } catch (err) {
+      console.error('Error al crear conductor:', err);
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+async  mostrar() {
     console.log(this.dataPersonaRepresentante)
     console.log(this.dataEmpresa)
     console.log(this.dataEmpresaServicio)
@@ -652,6 +840,19 @@ export class CrearEmpresaServicioComponent implements OnInit {
     console.log(this.lista_contratos_arrendamientos)
     console.log(this.lista_conductores)
     console.log(this.lista_vehiculos)
+
+    await this.crearPersonaRepresentante();
+    await this.crearEmpresa();
+    await this.crearEmpresaServicio();
+    await this.crearResolucion();
+    await this.asociarResolucion();
+    await this.crearItinerarios();
+    await this.crearArrendamientos();
+    await this.crearConductores();
+    
+
+
+    console.log(this.dataEmpresaServicio)
   }
 
   async onFileSelected(event: any): Promise<void> {
