@@ -43,6 +43,9 @@ import { ResolucionEmpresaModel } from '../../../../domain/models/ResolucionEmpr
 import { ItinerarioService } from '../../../services/remoto/itinerario/itinerario.service';
 import { ArrendamientoService } from '../../../services/remoto/arrendamiento/arrendamiento.service';
 import { ConductorService } from '../../../services/remoto/conductor/conductor.service';
+import { HistorialVehicularModel } from '../../../../domain/models/HistorialVehicular.model';
+import { HistorialVehicularService } from '../../../services/remoto/historial-vehicular/historial-vehicular.service';
+import { CrearHistorialVehicularMessageResponse } from '../../../../domain/dto/HistorialVehicularResponse.dto';
 
 
 
@@ -114,7 +117,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
     expediente: '',
   }
 
-  
+
 
   dataResolucion: ResolucionModel = {
     id_resolucion: 0,
@@ -206,9 +209,10 @@ export class CrearEmpresaServicioComponent implements OnInit {
     private empresaServicioService: EmpresaServicioService,
     private personaService: PersonaService,
     private resolucionService: ResolucionService,
-    private itinerarioService:ItinerarioService,
-    private arrendamientoService:ArrendamientoService,
-    private conductorService: ConductorService) { }
+    private itinerarioService: ItinerarioService,
+    private arrendamientoService: ArrendamientoService,
+    private conductorService: ConductorService,
+    private historialVehicularService: HistorialVehicularService) { }
   ngOnInit(): void {
     this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`/doc/error_carga.pdf`);
     this.ListaDepartamentosEmpresa()
@@ -267,7 +271,6 @@ export class CrearEmpresaServicioComponent implements OnInit {
       }
     })
   }
-
   listarModelos(id_marca: number): Promise<void> {
     return lastValueFrom(this.vehiculoService.ObtenerModelosPorMarca(id_marca)).then((data: ListarModelosResponse[]) => {
       this.lista_modelos = data;
@@ -280,7 +283,6 @@ export class CrearEmpresaServicioComponent implements OnInit {
     this.listarModelos(this.idMarcaSeleccionada)
     this.dataVehiculo.marca = this.lista_marcas.find(x => x.id_marca == this.idMarcaSeleccionada)?.nombre_marca || '';
   }
-
   onModeloSeleccionado() {
     console.log(this.idModeloSeleccionado)
     this.dataVehiculo.modelo = this.lista_modelos.find(x => x.id_modelo == this.idModeloSeleccionado)?.nombre_modelo || '';
@@ -288,49 +290,49 @@ export class CrearEmpresaServicioComponent implements OnInit {
   // -----------------------------------------------------------------------------------------------------------
   // VALIDACION DE DATOS FORMULARIO
   validarDatosFormularioEmpresa() {
-    // const erroresValidacion = crear_empresa_servicio_empresa_vf(this.dataEmpresa, this.dataEmpresaServicio);
-    // if (erroresValidacion.length > 0) {
-    //   let errorMensaje = '';
-    //   erroresValidacion.forEach(error => {
-    //     errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
-    //   });
-    //   alert(errorMensaje)
-    // } else {
-    //   this.nextStep()
-    // }
-    this.nextStep()
+    const erroresValidacion = crear_empresa_servicio_empresa_vf(this.dataEmpresa, this.dataEmpresaServicio);
+    if (erroresValidacion.length > 0) {
+      let errorMensaje = '';
+      erroresValidacion.forEach(error => {
+        errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
+      });
+      alert(errorMensaje)
+    } else {
+      this.nextStep()
+    }
+
   }
 
   validarDatosFormularioRepresentanteLegal() {
-    // const erroresValidacion = crear_empresa_servicio_representante_vf(this.dataPersonaRepresentante);
-    // if (erroresValidacion.length > 0) {
-    //   let errorMensaje = '';
-    //   erroresValidacion.forEach(error => {
-    //     errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
-    //   });
-    //   alert(errorMensaje)
-    //   console.log(errorMensaje)
-    // } else {
-    //   this.nextStep()
-    // }
+    const erroresValidacion = crear_empresa_servicio_representante_vf(this.dataPersonaRepresentante);
+    if (erroresValidacion.length > 0) {
+      let errorMensaje = '';
+      erroresValidacion.forEach(error => {
+        errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
+      });
+      alert(errorMensaje)
+      console.log(errorMensaje)
+    } else {
+      this.nextStep()
+    }
 
-    this.nextStep()
+  
   }
 
   validarDatosFormularioResolucion() {
-    // const erroresValidacion = crear_empresa_servicio_resolucion_vf(this.dataResolucion);
-    // if (erroresValidacion.length > 0) {
-    //   let errorMensaje = '';
-    //   erroresValidacion.forEach(error => {
-    //     errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
-    //   });
-    //   alert(errorMensaje)
-    //   console.log(errorMensaje)
-    // } else {
-    //   this.nextStep()
-    // }
+    const erroresValidacion = crear_empresa_servicio_resolucion_vf(this.dataResolucion);
+    if (erroresValidacion.length > 0) {
+      let errorMensaje = '';
+      erroresValidacion.forEach(error => {
+        errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
+      });
+      alert(errorMensaje)
+      console.log(errorMensaje)
+    } else {
+      this.nextStep()
+    }
 
-    this.nextStep()
+
   }
 
   validarDatosFormularioItinerario() {
@@ -374,19 +376,15 @@ export class CrearEmpresaServicioComponent implements OnInit {
       this.inviarDatosListaConductores()
     }
   }
-
-
-
   // -----------------------------------------------------------------------------------------------------------
 
   // MANEJO DE ITINARARIOS
   itinerarioNextStep() {
-    // if(this.lista_itinerarios.length>0){
-    //   this.nextStep()
-    // }else{
-    //   alert('debes registrar por lo menos una ruta a la empresa')
-    // }
-    this.nextStep()
+    if(this.lista_itinerarios.length>0){
+      this.nextStep()
+    }else{
+      alert('debes registrar por lo menos una ruta a la empresa')
+    }
   }
 
   enviarDatosListaItinearios() {
@@ -411,12 +409,11 @@ export class CrearEmpresaServicioComponent implements OnInit {
   // -----------------------------------------------------------------------------------------------------------
   // MANEJO DE ARRENDAMIENTOS
   arrendamientoNextStep() {
-    // if(this.lista_contratos_arrendamientos.length>0){
-    //   this.nextStep()
-    // }else{
-    //   alert('debes registrar por lo menos un contrato de arrendamiento')
-    // }
-    this.nextStep()
+    if(this.lista_contratos_arrendamientos.length>0){
+      this.nextStep()
+    }else{
+      alert('debes registrar por lo menos un contrato de arrendamiento')
+    } 
   }
 
   enviarDatosListaArrendamiento() {
@@ -446,14 +443,11 @@ export class CrearEmpresaServicioComponent implements OnInit {
   // -----------------------------------------------------------------------------------------------------------
   // MANEJO DE CONDUCTORES
   conductorNextStep() {
-    // if(this.lista_conductores.length>0){
-    //   this.nextStep()
-    // }else{
-    //   alert('debes registrar por lo menos un conductor')
-    // }
-
-    this.nextStep()
-
+    if(this.lista_conductores.length>0){
+      this.nextStep()
+    }else{
+      alert('debes registrar por lo menos un conductor')
+    }
   }
   inviarDatosListaConductores() {
     const dataBodyConductor: ListaConductoresResponse = {
@@ -640,11 +634,6 @@ export class CrearEmpresaServicioComponent implements OnInit {
                 console.log('modelo:' + this.idModeloSeleccionado);
               });
             }
-            // this.listarModelos(this.idMarcaSeleccionada)
-            // this.idModeloSeleccionado = this.lista_modelos.find(x => x.nombre_modelo == this.dataVehiculo.modelo)?.id_modelo || 0;
-
-            console.log('marca: ' + this.idMarcaSeleccionada)
-            console.log('modelo:' + this.idModeloSeleccionado)
           } else {
             this.buscarEmpresaServicioPorId(data.id_empresa_servicio)
           }
@@ -684,162 +673,213 @@ export class CrearEmpresaServicioComponent implements OnInit {
   }
   //------------------------------------------------------------------------------------------------------------ 
 
- 
-async crearPersonaRepresentante(): Promise<void> {
-  if (this.dataPersonaRepresentante.id_persona == 0) {
+  async crearPersonaRepresentante(): Promise<void> {
+    if (this.dataPersonaRepresentante.id_persona == 0) {
       try {
-          const data: CrearPersonaMessageResponse = await lastValueFrom(this.personaService.CrearPersona(this.dataPersonaRepresentante));
-          this.dataEmpresa.id_representante_legal = data.id_persona;
-          console.log(data);
+        const data: CrearPersonaMessageResponse = await lastValueFrom(this.personaService.CrearPersona(this.dataPersonaRepresentante));
+        this.dataEmpresa.id_representante_legal = data.id_persona;
+        console.log(data);
       } catch (err) {
-          console.log('Error al guardar persona', err);
+        console.log('Error al guardar persona', err);
       }
-  } else {
+    } else {
       console.log('La persona ya existe asociada a la empresa');
+    }
   }
-}
 
-async crearEmpresa(): Promise<void> {
-  if (this.dataEmpresa.id_empresa == 0) {
+  async crearEmpresa(): Promise<void> {
+    if (this.dataEmpresa.id_empresa == 0) {
       try {
-          const data: CrearEmpresaMessageResponse = await lastValueFrom(this.empresaService.crearEmpresa(this.dataEmpresa));
-          console.log(data);
-          this.dataEmpresa.id_empresa = data.id_empresa;
-          this.dataEmpresaServicio.id_empresa = data.id_empresa;
+        const data: CrearEmpresaMessageResponse = await lastValueFrom(this.empresaService.crearEmpresa(this.dataEmpresa));
+        console.log(data);
+        this.dataEmpresa.id_empresa = data.id_empresa;
+        this.dataEmpresaServicio.id_empresa = data.id_empresa;
       } catch (err) {
-          console.log('Error al crear empresa', err);
+        console.log('Error al crear empresa', err);
       }
-  } else {
+    } else {
       console.log('La empresa ya existe');
-  }
-}
-
-async crearEmpresaServicio(): Promise<void> {
-  try {
-    // Asignar fecha_inicial como Date
-    this.dataEmpresaServicio.id_empresa = this.dataEmpresa.id_empresa;
-    this.dataEmpresaServicio.fecha_inicial = new Date(this.dataEmpresaServicio.fecha_inicial);
-    
-    // Calcular la fecha_final sumando 10 años y un día
-    this.dataEmpresaServicio.fecha_final = new Date(this.dataEmpresaServicio.fecha_inicial);
-    this.dataEmpresaServicio.fecha_final.setFullYear(this.dataEmpresaServicio.fecha_final.getFullYear() + 10); // Sumar 10 años
-    this.dataEmpresaServicio.fecha_final.setDate(this.dataEmpresaServicio.fecha_final.getDate() + 1); // Sumar un día
-
-    // Llamada al servicio para crear la empresa de servicio
-    const data: crearEmpresaServicioResponse = await lastValueFrom(
-      this.empresaServicioService.crearEmpresaServicio(this.dataEmpresaServicio)
-    );
-    
-    console.log(data);
-    this.dataEmpresaServicio.id_empresa_servicio=data.id_empresa_servicio;
-    
-  } catch (err) {
-    console.log('Error al crear empresa servicio', err);
-  }
-}
-
-async crearResolucion(){
-  try {
-    const data: CrearResolucionMessageResponse = await lastValueFrom(
-      this.resolucionService.CrearResolucion(this.dataResolucion)
-    );
-    console.log(data);
-    this.dataResolucion.id_resolucion=data.id_resolucion;
-  } catch (err) {
-    console.log('Error al crear empresa servicio', err);
-  }
-}
-
-async asociarResolucion() {
-  const dataResolucionEmpresaServicio:ResolucionEmpresaModel={
-    id_empresa_servicio:this.dataEmpresaServicio.id_empresa_servicio,
-    id_resolucion:this.dataResolucion.id_resolucion
-  }
-  try {
-    const data: CrearResolucionEmpresaServicioMessageResponse = await lastValueFrom(
-      this.resolucionService.CrearResolucionEmpresaServicio(dataResolucionEmpresaServicio)
-    );
-    console.log(data);
-  } catch (err) {
-    console.log('Error al crear empresa servicio', err);
-  }  
-}
-
-
-async crearItinerarios() {
-  for (let i = 0; i < this.lista_itinerarios.length; i++) {
-    try {
-      this.lista_itinerarios[i].id_empresa_servicio = this.dataEmpresaServicio.id_empresa_servicio;
-      const data: CrearItinerarioMessageResponse = await lastValueFrom(
-        this.itinerarioService.crearItinerario(this.lista_itinerarios[i])
-      );
-      this.lista_itinerarios[i].id_detalle_ruta_itinerario = data.id_detalle_ruta_itinerario;
-      console.log('Itinerario creado correctamente');
-      
-    } catch (err) {
-      console.error('Error al crear itinerario:', err);
     }
   }
-}
 
-async crearArrendamientos() {
-  for (let i = 0; i < this.lista_contratos_arrendamientos.length; i++) {
+  async crearEmpresaServicio(): Promise<void> {
     try {
-      this.lista_contratos_arrendamientos[i].id_empresa_servicio = this.dataEmpresaServicio.id_empresa_servicio;
-      const data: CrearArrendamientoMessageResponse = await lastValueFrom(
-        this.arrendamientoService.crearArrendamiento(this.lista_contratos_arrendamientos[i])
-      );
-      this.lista_contratos_arrendamientos[i].id_contrato = data.id_contrato;
-      console.log('Arrendamiento creado correctamente');
-    } catch (err) {
-      console.error('Error al crear arrendamiento:', err);
-    }
-  }
-}
+      // Asignar fecha_inicial como Date
+      this.dataEmpresaServicio.id_empresa = this.dataEmpresa.id_empresa;
+      this.dataEmpresaServicio.fecha_inicial = new Date(this.dataEmpresaServicio.fecha_inicial);
 
-async crearConductores() {
-  for (let i = 0; i < this.lista_conductores.length; i++) {
-    try {
-      // 1. Crear persona y obtener el id_persona
-      this.lista_conductores[i].id_empresa_servicio = this.dataEmpresaServicio.id_empresa_servicio;
-      const personaData:CrearPersonaMessageResponse = await lastValueFrom(
-        this.personaService.CrearPersona(this.lista_conductores[i])
+      // Calcular la fecha_final sumando 10 años y un día
+      this.dataEmpresaServicio.fecha_final = new Date(this.dataEmpresaServicio.fecha_inicial);
+      this.dataEmpresaServicio.fecha_final.setFullYear(this.dataEmpresaServicio.fecha_final.getFullYear() + 10); // Sumar 10 años
+      this.dataEmpresaServicio.fecha_final.setDate(this.dataEmpresaServicio.fecha_final.getDate() + 1); // Sumar un día
+
+      // Llamada al servicio para crear la empresa de servicio
+      const data: crearEmpresaServicioResponse = await lastValueFrom(
+        this.empresaServicioService.crearEmpresaServicio(this.dataEmpresaServicio)
       );
 
-      const id_persona = personaData.id_persona; // Suponiendo que la API devuelve esto
-
-      // 2. Asignar el id_persona al conductor y crear conductor
-      this.lista_conductores[i].id_persona = id_persona;
-
-      const conductorData:CrearConductorMessageResponse = await lastValueFrom(
-        this.conductorService.CrearConductor(this.lista_conductores[i])
-      );
-
-      console.log(conductorData);
+      console.log(data);
+      this.dataEmpresaServicio.id_empresa_servicio = data.id_empresa_servicio;
 
     } catch (err) {
-      console.error('Error al crear conductor:', err);
+      console.log('Error al crear empresa servicio', err);
     }
   }
-}
+
+  async crearResolucion() {
+    try {
+      const data: CrearResolucionMessageResponse = await lastValueFrom(
+        this.resolucionService.CrearResolucion(this.dataResolucion)
+      );
+      console.log(data);
+      this.dataResolucion.id_resolucion = data.id_resolucion;
+    } catch (err) {
+      console.log('Error al crear empresa servicio', err);
+    }
+  }
+
+  async asociarResolucion() {
+    const dataResolucionEmpresaServicio: ResolucionEmpresaModel = {
+      id_empresa_servicio: this.dataEmpresaServicio.id_empresa_servicio,
+      id_resolucion: this.dataResolucion.id_resolucion
+    }
+    try {
+      const data: CrearResolucionEmpresaServicioMessageResponse = await lastValueFrom(
+        this.resolucionService.CrearResolucionEmpresaServicio(dataResolucionEmpresaServicio)
+      );
+      console.log(data);
+    } catch (err) {
+      console.log('Error al crear empresa servicio', err);
+    }
+  }
+
+  async crearItinerarios() {
+    for (let i = 0; i < this.lista_itinerarios.length; i++) {
+      try {
+        this.lista_itinerarios[i].id_empresa_servicio = this.dataEmpresaServicio.id_empresa_servicio;
+        const data: CrearItinerarioMessageResponse = await lastValueFrom(
+          this.itinerarioService.crearItinerario(this.lista_itinerarios[i])
+        );
+        this.lista_itinerarios[i].id_detalle_ruta_itinerario = data.id_detalle_ruta_itinerario;
+        console.log('Itinerario creado correctamente');
+
+      } catch (err) {
+        console.error('Error al crear itinerario:', err);
+      }
+    }
+  }
+
+  async crearArrendamientos() {
+    for (let i = 0; i < this.lista_contratos_arrendamientos.length; i++) {
+      try {
+        this.lista_contratos_arrendamientos[i].id_empresa_servicio = this.dataEmpresaServicio.id_empresa_servicio;
+        const data: CrearArrendamientoMessageResponse = await lastValueFrom(
+          this.arrendamientoService.crearArrendamiento(this.lista_contratos_arrendamientos[i])
+        );
+        this.lista_contratos_arrendamientos[i].id_contrato = data.id_contrato;
+        console.log('Arrendamiento creado correctamente');
+      } catch (err) {
+        console.error('Error al crear arrendamiento:', err);
+      }
+    }
+  }
+
+  async crearConductores() {
+    for (let i = 0; i < this.lista_conductores.length; i++) {
+      try {
+        // 1. Crear persona y obtener el id_persona
+        this.lista_conductores[i].id_empresa_servicio = this.dataEmpresaServicio.id_empresa_servicio;
+        const personaData: CrearPersonaMessageResponse = await lastValueFrom(
+          this.personaService.CrearPersona(this.lista_conductores[i])
+        );
+
+        const id_persona = personaData.id_persona; // Suponiendo que la API devuelve esto
+
+        // 2. Asignar el id_persona al conductor y crear conductor
+        this.lista_conductores[i].id_persona = id_persona;
+
+        const conductorData: CrearConductorMessageResponse = await lastValueFrom(
+          this.conductorService.CrearConductor(this.lista_conductores[i])
+        );
+
+        console.log(conductorData);
+
+      } catch (err) {
+        console.error('Error al crear conductor:', err);
+      }
+    }
+  }
+
+  crearVehiculo() {
+    for (let i = 0; i < this.lista_vehiculos.length; i++) {
+      try {
+        const itinerario = this.lista_itinerarios[this.lista_vehiculos[i].id_detalle_ruta_itinerario - 1].itinerario;
+        this.lista_vehiculos[i].id_detalle_ruta_itinerario = this.lista_itinerarios[this.lista_vehiculos[i].id_detalle_ruta_itinerario - 1].id_detalle_ruta_itinerario;
+        this.lista_vehiculos[i].id_empresa_servicio = this.dataEmpresaServicio.id_empresa_servicio;
+        this.lista_vehiculos[i].id_resolucion = this.dataResolucion.id_resolucion;
+        if (this.lista_vehiculos[i].id_vehiculo == 0 || this.lista_vehiculos[i].id_vehiculo == null) {
+          this.vehiculoService.CrearVehiculo(this.lista_vehiculos[i]).subscribe({
+            next: (res) => {
+              console.log(res)
+            },
+            error: (err) => {
+              alert(err)
+            },
+            complete: () => {
+              console.log('Vehiculos obtenidos correctamente');
+              this.crearHistorialVehicular(this.lista_vehiculos[i].placa, itinerario, this.lista_vehiculos[i].estado)
+            }
+          });
+        } else {
+          this.vehiculoService.ModificarVehiculo(this.lista_vehiculos[i].id_vehiculo, this.lista_vehiculos[i]).subscribe({
+            next: (res) => {
+              console.log(res)
+            },
+            error: (err) => {
+              alert(err)
+            },
+            complete: () => {
+              console.log('Vehiculos obtenidos correctamente');
+              this.crearHistorialVehicular(this.lista_vehiculos[i].placa, itinerario, this.lista_vehiculos[i].estado)
+            }
+          });
+        }
 
 
+      } catch (err) {
+        console.error('Error al crear vehiculo:', err);
+      }
+    }
+  }
 
+  async crearHistorialVehicular(placa: string, ruta: string, condicion: string) {
+    let dataHistorial: HistorialVehicularModel = {
+      id_empresa_servicio: this.dataEmpresaServicio.id_empresa_servicio,
+      condicion: condicion,
+      nombre_resolucion: this.dataResolucion.nombre_resolucion,
+      fecha_resolucion: new Date(this.dataResolucion.fecha_resolucion),
+      ruta: ruta,
+      placa: placa,
+      observaciones: null
+    }
 
+    const conductorData: CrearHistorialVehicularMessageResponse = await lastValueFrom(
+      this.historialVehicularService.CrearHistorialVehicular(dataHistorial)
+    );
 
+    console.log(conductorData);
 
+  }
 
-
-
-async  mostrar() {
-    console.log(this.dataPersonaRepresentante)
-    console.log(this.dataEmpresa)
-    console.log(this.dataEmpresaServicio)
-    console.log(this.dataResolucion)
-    console.log(this.lista_itinerarios)
-    console.log(this.lista_contratos_arrendamientos)
-    console.log(this.lista_conductores)
-    console.log(this.lista_vehiculos)
+  async mostrar() {
+    // console.log(this.dataPersonaRepresentante)
+    // console.log(this.dataEmpresa)
+    // console.log(this.dataEmpresaServicio)
+    // console.log(this.dataResolucion)
+    // console.log(this.lista_itinerarios)
+    // console.log(this.lista_contratos_arrendamientos)
+    // console.log(this.lista_conductores)
+    //console.log(this.lista_vehiculos)
 
     await this.crearPersonaRepresentante();
     await this.crearEmpresa();
@@ -849,10 +889,8 @@ async  mostrar() {
     await this.crearItinerarios();
     await this.crearArrendamientos();
     await this.crearConductores();
-    
+    this.crearVehiculo();
 
-
-    console.log(this.dataEmpresaServicio)
   }
 
   async onFileSelected(event: any): Promise<void> {
