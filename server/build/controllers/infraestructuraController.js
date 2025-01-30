@@ -92,7 +92,7 @@ class InfraestructuraController {
                      `;
                 const empresaInfraestructura = yield database_1.default.query(consulta, [id_infraestructura]);
                 if (empresaInfraestructura && empresaInfraestructura['rows'].length > 0) {
-                    res.json(empresaInfraestructura['rows']);
+                    res.json(empresaInfraestructura['rows'][0]);
                 }
                 else {
                     res.status(404).json({ text: 'La infraestructura no existe' });

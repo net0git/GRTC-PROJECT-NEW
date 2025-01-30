@@ -15,6 +15,7 @@ import vehiculoRoutes from './routes/vehiculoRoutes';
 import historialVehicularRoutes from './routes/historialVehicularRoutes'
 import empresaRoutes from './routes/empresaRoutes';
 import tucRuotes from './routes/tucRoutes'
+import infraestructuraRoutes from './routes/infraestructuraRoutes';
 
 
 class Server{
@@ -47,6 +48,7 @@ class Server{
         this.app.use('/',historialVehicularRoutes);
         this.app.use('/',empresaRoutes);
         this.app.use('/',tucRuotes);
+        this.app.use('/',infraestructuraRoutes);
         
     }
     star():void{

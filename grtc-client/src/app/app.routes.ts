@@ -20,7 +20,7 @@ import { ArrendamientoComponent } from './infraestructure/pages/empresa-servicio
 import { ItinerarioComponent } from './infraestructure/pages/empresa-servicio/detalle-empresa/itinerario/itinerario.component';
 import { VehiculosComponent } from './infraestructure/pages/empresa-servicio/detalle-empresa/vehiculos/vehiculos.component';
 import { ModEmpresaServicioResolucionComponent } from './infraestructure/pages/empresa-servicio/mod-empresa-servicio-resolucion/mod-empresa-servicio-resolucion.component';
-
+import { DetalleInfraestructuraComponent } from './infraestructure/pages/infraestructura/detalle-infraestructura/detalle-infraestructura.component';
 
 export const routes: Routes = [
     {
@@ -48,9 +48,12 @@ export const routes: Routes = [
       { path:'principal/mod-empresa-servicio-resolucion/:id_empresa_servicio', component: ModEmpresaServicioResolucionComponent },
 
 
+
       { path:'principal/consultas-tuc',component:ConsultasTucComponent },
 
       { path:'principal/lista-infraestructura', component: ListaInfraestructuraComponent },
+      { path:'principal/infraestructura/detalle/:id_infraestructura', component: DetalleInfraestructuraComponent },
+
       { path:'principal/lista-vehiculos', component:VehiculoComponent},
       { path:'principal/busqueda-historial', component:BusquedaHistorialComponent},
       { path:'principal/resolucion', component:ResolucionComponent},

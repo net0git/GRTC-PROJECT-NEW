@@ -111,7 +111,21 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     tomo_resolucion: null
   };
 
-  constructor(private tucService:TucService, private credencialesService: CredencialesService, private sweetAlert: SweetAlert, private personaService: PersonaService, private router: Router, private historialVehicularService: HistorialVehicularService, private vehiculoService: VehiculoService, private itinerarioService: ItinerarioService, private arrendamientoService: ArrendamientoService, private conductorService: ConductorService, private sanitizer: DomSanitizer, private empresaServicioService: EmpresaServicioService, private activatedRoute: ActivatedRoute, private resolucionService: ResolucionService) { }
+  constructor(
+    private tucService:TucService, 
+    private credencialesService: CredencialesService, 
+    private sweetAlert: SweetAlert, 
+    private personaService: PersonaService, 
+    private router: Router, 
+    private historialVehicularService: HistorialVehicularService, 
+    private vehiculoService: VehiculoService, 
+    private itinerarioService: ItinerarioService, 
+    private arrendamientoService: ArrendamientoService, 
+    private conductorService: ConductorService, 
+    private sanitizer: DomSanitizer, 
+    private empresaServicioService: EmpresaServicioService, 
+    private activatedRoute: ActivatedRoute, 
+    private resolucionService: ResolucionService) { }
 
   ngOnInit(): void {
     this.detalleEmpresa();

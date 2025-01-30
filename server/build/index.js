@@ -19,6 +19,7 @@ const vehiculoRoutes_1 = __importDefault(require("./routes/vehiculoRoutes"));
 const historialVehicularRoutes_1 = __importDefault(require("./routes/historialVehicularRoutes"));
 const empresaRoutes_1 = __importDefault(require("./routes/empresaRoutes"));
 const tucRoutes_1 = __importDefault(require("./routes/tucRoutes"));
+const infraestructuraRoutes_1 = __importDefault(require("./routes/infraestructuraRoutes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -46,6 +47,7 @@ class Server {
         this.app.use('/', historialVehicularRoutes_1.default);
         this.app.use('/', empresaRoutes_1.default);
         this.app.use('/', tucRoutes_1.default);
+        this.app.use('/', infraestructuraRoutes_1.default);
     }
     star() {
         this.app.listen(this.app.get('port'), () => {
