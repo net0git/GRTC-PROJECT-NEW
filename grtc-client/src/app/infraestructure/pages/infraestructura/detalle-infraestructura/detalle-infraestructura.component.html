@@ -14,7 +14,7 @@
                         </div>
                     </div>
                     <div class="">
-                        <i class="bi bi-gear icon-custom_gear" title="Modificar datos de la Empresa" ></i>
+                        <i class="bi bi-gear icon-custom_gear" title="Modificar datos de la Empresa" (click)="modificarInfraestructura()"></i>
                     </div>
                 </div>
                 <hr>
@@ -50,25 +50,15 @@
 
                                     </ul>
                                     <div class="text-start panel-resolucion">
-                                        <button class="my-button_resolucion" type="button"><i class="bi bi-filetype-pdf icon-custom-pdf"> </i> ver resolucion </button>
-                                        <button class="my-button_certificado" type="button"><i class="bi bi-filetype-pdf icon-custom-pdf"> </i> ver certificado </button>
+                                        <button class="my-button_resolucion" type="button" (click)="verDocumentoResolucionActivacion()"><i class="bi bi-filetype-pdf icon-custom-pdf"> </i> ver resolucion </button>
+                                        <button class="my-button_certificado" type="button" (click)="verUltimoCertificado()"><i class="bi bi-filetype-pdf icon-custom-pdf"> </i> ver certificado </button>
 
                                     </div>
-                                    <!-- <div class="text-start panel-resolucion">
-                                    <button class="my-button_resolucion" type="button" (click)="MostrarUltimaResolucion()"><i class="bi bi-filetype-pdf icon-custom-pdf"> </i> ver resolucion </button>
-                                    <button class="my-button_certificado"  (click)=" MostrarUltimoCertificado()"><i class="bi bi-clipboard-data icon-custom-pdf"></i> Generar Reporte</button>
-                                   
-                                    
-                                </div>   -->
-                                    <div class="container mt-4">
-                                        <div >
-                                            <h5>Resoluciones</h5>
-                                        </div>
-                                        <div class="mb-0" style="display: flex; justify-content: flex-end;">
 
-                                            <button  class="my-button_ingreso"
-                                                >
-                                                <i class="bi bi-arrow-down-square"></i> agregar Resolucion </button>
+                                    <div class="container mt-4">
+                                        <div class="d-flex justify-content-between">
+                                            <p class="subtitulo_menu mt-4">Resoluciones</p>
+                                            <button class="my-button_ingreso_resolucion" (click)="agregarResolucion()"> <i class="bi bi-arrow-down-square" ></i> agregar Resolucion</button>
                                         </div>
                                         <table class="table table-bordered table-striped">
                                             <thead>
@@ -88,23 +78,19 @@
                                                     <td>{{resolucion.nro_resolucion}}</td>
                                                     <td>{{resolucion.anio_resolucion}}</td>
                                                     <td>{{resolucion.tomo_resolucion}}</td>
-                                                    <td class="text-primary text_documento">{{resolucion.nombre_resolucion}}</td>
+                                                    <td class="text-primary text_documento" (click)=" verDocumento(resolucion.documento)" >{{resolucion.nombre_resolucion}}</td>
                                                     <td>{{resolucion.descripcion}}</td>
-                                                    <td> <i class="bi bi-pencil-square hand_cursor" ></i></td>
+                                                    <td> <i class="bi bi-pencil-square hand_cursor" (click)="editarResolucion(resolucion.id_resolucion)"></i></td>
                                                 </tr>
 
                                             </tbody>
                                         </table>
                                     </div>
                                     <div class="container">
-                                        <div >
-                                            <h5>Certificados</h5>
-                                        </div>
-
-                                        <div style="display: flex; justify-content: flex-end;">
-                                            <button  class="my-button_ingreso"
-                                               >
-                                                <i class="bi bi-arrow-down-square"></i> agregar Certificado</button>
+                                        <div class="d-flex justify-content-between">
+                                            <p class="subtitulo_menu mt-4">Certificados</p>
+                                            <button class="my-button_ingreso_resolucion"> <i
+                                                    class="bi bi-arrow-down-square"></i> agregar Certificado</button>
                                         </div>
                                         <table class="table table-bordered table-striped">
                                             <thead>
@@ -117,21 +103,17 @@
                                                     <th >Mod</th>
                                                 </tr>
                                             </thead>
-                                            <!-- <tbody>
-                                                <tr *ngFor="let certificado of certificados_infraestructura">
+                                            <tbody>
+                                                <tr *ngFor="let certificado of listaCertificados">
                                                     <td>{{certificado.fecha_certificado| date:'dd/MM/yyyy'}}</td>
                                                     <td>{{certificado.nro_certificado}}</td>
                                                     <td>{{certificado.anio_certificado}}</td>
                                                     <td>{{certificado.tomo_certificado}}</td>
-                                                    <td class="text-primary text_documento"
-                                                        (click)="showDocumentoPdf(certificado.documento)">
-                                                        {{certificado.nombre_certificado}}</td>
-                                                    <td [style]="disableInvitado"><img
-                                                            src="assets/imagenes/iconos/modificar_doc.png" width="25px"
-                                                            (click)="ModificarCertificado(infraestructura_detalle.id_infraestructura, certificado.id_certificado)">
-                                                    </td>
+                                                    <td class="text-primary text_documento" (click)="verDocumentoCertificado(certificado.documento)">{{certificado.nombre_certificado}}</td>
+                                                    <td><i class="bi bi-pencil-square hand_cursor"></i></td>
+                                                   
                                                 </tr>
-                                            </tbody> -->
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>

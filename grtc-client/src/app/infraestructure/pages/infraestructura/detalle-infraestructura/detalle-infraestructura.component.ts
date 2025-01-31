@@ -8,6 +8,12 @@ import { InfraestructuraService } from '../../../services/remoto/infraestructura
 import { CommonModule } from '@angular/common';
 import { ResolucionService } from '../../../services/remoto/resolucion/resolucion.service';
 import { ListaResolucionResponse } from '../../../../domain/dto/ResolucionResponse.dto';
+import { CertificadoService } from '../../../services/remoto/certificado/certificado.service';
+import { ListaCertificadoResponse } from '../../../../domain/dto/CertificadoResponse.dto';
+import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
+import { FechaConFormato_ddMMyyyy } from '../../../../../../public/utils/formateDate';
+import { ShowDocumentoPdfMarcado } from '../../../../../../public/utils/pdfFunctions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detalle-infraestructura',
@@ -19,42 +25,45 @@ import { ListaResolucionResponse } from '../../../../domain/dto/ResolucionRespon
 export class DetalleInfraestructuraComponent implements OnInit {
   pdfUrl: SafeResourceUrl | null = null;
   listaResoluciones: ListaResolucionResponse[] = [];
+  listaCertificados: ListaCertificadoResponse[] = [];
 
   dataInfraestructuraDetalle: detalleInfraestructuraResponse = {
     id_infraestructura: 0,
-    id_tipo_infraestructura:0,
+    id_tipo_infraestructura: 0,
     fecha_act: new Date(),
-    expediente:'',
-    ruc_empresa:'',
+    expediente: '',
+    ruc_empresa: '',
     nombre_infraestructura: '',
-    direccion:  '',
-    provincia:  '',
-    distrito:  '',
-    departamento:  '',
+    direccion: '',
+    provincia: '',
+    distrito: '',
+    departamento: '',
     mtc: null,
-    representante:  '',
-    dni_representante:  '',
-    empresa:  '',
-    tipo_infraestructura:  '',
+    representante: '',
+    dni_representante: '',
+    empresa: '',
+    tipo_infraestructura: '',
   };
 
-  constructor(private sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, private infraestructuraService:InfraestructuraService, private resolucionService:ResolucionService) {}
+  constructor(private router: Router, private credencialesService: CredencialesService, private sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, private infraestructuraService: InfraestructuraService, private resolucionService: ResolucionService, private certificadoService: CertificadoService) { }
   ngOnInit(): void {
     this.detalleInfraestructura()
     this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`/doc/error_carga.pdf`);
   }
 
-  detalleInfraestructura(){
+  detalleInfraestructura() {
     const params = this.activatedRoute.snapshot.params
-    this.infraestructuraService.detalleInfraestructura(params['id_infraestructura']).subscribe({
-      next:(res:detalleInfraestructuraResponse)=>{
-        this.dataInfraestructuraDetalle=res
+    this.infraestructuraService.obtenerInfraestructuraDetalle(params['id_infraestructura']).subscribe({
+      next: (res: detalleInfraestructuraResponse) => {
+        this.dataInfraestructuraDetalle = res
         this.listarResolucionesInfraestructura(res.id_infraestructura)
+        this.listarCertificadosInfraestructura(res.id_infraestructura)
+        
       },
-      error:(err)=>{
-        console.error('Error al obtener detalle de infraestructura:',err)
+      error: (err) => {
+        console.error('Error al obtener detalle de infraestructura:', err)
       },
-      complete:()=>{
+      complete: () => {
         console.log('Detalle de infraestructura obtenido correctamente')
       }
     })
@@ -71,9 +80,79 @@ export class DetalleInfraestructuraComponent implements OnInit {
       },
       complete: () => {
         console.log('complete')
+        this.verDocumentoResolucionActivacion()
       }
 
-    })  
+    })
   }
+
+  listarCertificadosInfraestructura(id_infraestructura: number) {
+    this.certificadoService.listarCertificadosInfraestructura(id_infraestructura).subscribe({
+      next: (date: ListaCertificadoResponse[]) => {
+        this.listaCertificados = date
+      },
+      error: (err) => {
+        console.error('Error al obtener certificados de infraestructura:', err)
+      },
+      complete: () => {
+        console.log('Certificados obtenidos correctamente')
+      }
+    })
+  }
+
+  async verDocumento(documento: string | undefined) {
+    if (!documento) {  // Maneja null y undefined
+      this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`/doc/error_carga.pdf`);
+      return;
+    }
+    const nombre_usuario = this.credencialesService.credenciales.nombre_usuario;
+    const fecha = FechaConFormato_ddMMyyyy(new Date());
+    const mensaje = `ARCHIVO CENTRAL GRTCC - ${nombre_usuario} - ${fecha}`;
+    this.pdfUrl = await ShowDocumentoPdfMarcado(documento, mensaje, this.sanitizer);
+  }
+
+  async verDocumentoResolucionActivacion() {
+    let resolucion = this.listaResoluciones.find(resolucion => resolucion.fecha_resolucion == this.dataInfraestructuraDetalle.fecha_act);
+    if (resolucion) {
+      this.verDocumento(resolucion.documento)
+    } else {
+      this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`/doc/error_carga.pdf`);
+    }
+  }
+
+  async verDocumentoCertificado(documento: string | undefined) {
+    if (documento) {
+      this.verDocumento(documento)
+    } else {
+      this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`/doc/error_carga.pdf`);
+    }
+  }
+
+  async verUltimoCertificado() {
+    const certificado = this.listaCertificados[this.listaCertificados.length-1];
+    if (certificado) {
+      this.verDocumento(certificado.documento)
+    } else {
+      this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`/doc/error_carga.pdf`);
+    }
+  }
+
+
+  // { path: 'principal/mod-infraestructura-certificado/:id_infraestructura/:id_certificado', component: ModInfraestructuraCertificadoComponent },
+  // { path: 'principal/mod-infraestructura-certificado/:id_infraestructura', component: ModInfraestructuraCertificadoComponent },
+  // { path: 'principal/mod-infraestructura-resolucion/:id_infraestructura/:id_resolucion', component: ModInfraestructuraResolucionComponent },
+  // { path: 'principal/mod-infraestructura-resolucion/:id_infraestructura', component: ModInfraestructuraResolucionComponent },
+  modificarInfraestructura() {
+    this.router.navigate(['/principal/mod-infraestructura', this.dataInfraestructuraDetalle.id_infraestructura]);
+  }
+
+  editarResolucion(id_resolucion: number) {
+    this.router.navigate(['principal/mod-infraestructura-resolucion/' + this.dataInfraestructuraDetalle.id_infraestructura + '/' + id_resolucion]);
+  }
+
+  agregarResolucion() {
+    this.router.navigate(['principal/mod-infraestructura-resolucion/' + this.dataInfraestructuraDetalle.id_infraestructura]);
+  }
+
 
 }

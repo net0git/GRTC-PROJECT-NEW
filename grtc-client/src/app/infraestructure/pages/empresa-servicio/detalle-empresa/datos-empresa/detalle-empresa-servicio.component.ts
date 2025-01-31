@@ -1,4 +1,4 @@
-import { Component, OnInit, viewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavegadorComponent } from '../../../../shared/components/navegador/navegador.component';
 import { SubnavegadorComponent } from '../../../../shared/components/subnavegador/subnavegador.component';
 import { DetalleEmpresaServicioResponse } from '../../../../../domain/dto/EmpresaServicioResponse.dto';

@@ -1,0 +1,135 @@
+<div class="panel">
+    <app-navegador></app-navegador>
+    <app-subnavegador [ruta]="'principal/lista-infraestructura'"></app-subnavegador>
+
+    <div class="col-md-8 col-lg-8 col-xl-6 offset-md-3">
+        <div class="encabezado_pages">
+            <i class="bi bi-building-fill  icon-custom-encabezado"></i>
+            <p class="titulo_menu">MODIFICAR INFRAESTRUCTURA</p>
+        </div>
+        <div class="container">
+            <div class="col-sm-6">
+                <label for="tipo_infraestructura" class="form-label mt-2">Tipo de Infraestructura</label>
+                <select id="tipo_infraestructura" name="tipo_infraestructura" class="form-control form-select"
+                    [(ngModel)]="dataInfraestructura.id_tipo_infraestructura" disabled="true">
+                    <option value=0>TIPO INFRAESTRUCTURA </option>
+                    <option value=1>TERMINAL TERRESTRE</option>
+                    <option value=2>ESTACION DE RUTA TIPO I</option>
+                    <option value=3>ESTACION DE RUTA TIPO II</option>
+                    <option value=4>ESTACION DE RUTA TIPO III</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tramite_infraestructura" class="form-label mt-2">Tramitado En:</label>
+                <div class="tramite">
+
+                    <input type="radio" id="regional" name="tramite" [value]="false"
+                        [(ngModel)]="dataInfraestructura.mtc">
+                    <label class="mx-2 " for="regional">Regional</label>
+
+                    <input type="radio" id="mtc" name="tramite" [value]="true" [(ngModel)]="dataInfraestructura.mtc">
+                    <label class="mx-2 m" for="mtc">MTC</label>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="nombre_infraestructura" class="form-label mt-2">Nombre de la infraestructura:</label>
+                <input id="nombre_infraestructura" type="text" class="form-control" name="nombre_infraestructura"
+                    [(ngModel)]="dataInfraestructura.nombre_infraestructura">
+            </div>
+
+            <div class="form-group">
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="departamento_empresa" class="form-label mt-3">Departamento:</label>
+                        <select id="departamento_empresa" name="departamento_empresa"
+                            class="form-control form-select" (change)="onChangeDepartamento()"
+                            [(ngModel)]="dataInfraestructura.departamento" [disabled]="!dataInfraestructura.provincia">
+                            <option value="">DEPARTAMENTO </option>
+                            <option *ngFor="let departamento of departamentos" [value]="departamento">{{ departamento }}</option>
+
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="provincia_empresa" class="form-label mt-3">Provincia:</label>
+                        <select id="provincia_empresa" name="provincia_empresa"
+                            class="form-control form-select" (change)="onChangeProvincia()"
+                            [(ngModel)]="dataInfraestructura.provincia" [disabled]="!dataInfraestructura.departamento">
+                            <option value="">PROVINCIA</option>
+                            <option *ngFor="let provincia of provincias" [value]="provincia">{{ provincia }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="distrito_empresa" class="form-label mt-3">Distrito:</label>
+                        <select id="distrito_empresa" name="distrito_empresa"
+                            class="form-control form-select" [disabled]="!dataInfraestructura.provincia"
+                            [(ngModel)]="dataInfraestructura.distrito">
+                            <option value="">DISTRITO</option>
+                            <option *ngFor="let distrito of distritos" [value]="distrito">{{ distrito }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="direccion_infraestructura" class="form-label mt-3">Direccion:</label>
+                <input id="direccion_infraestructura" type="text" class="form-control" name="direccion_infraestructura"
+                    [(ngModel)]="dataInfraestructura.direccion"
+                   >
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-sm-12">
+                    <label for="fecha_infraestructura" class="form-label mt-3">Fecha de Activacion:</label>
+                    <input id="fecha_infraestructura" type="date" class="form-control" name="fecha_infraestructura"
+                        [(ngModel)]="dataInfraestructura.fecha_act">
+                </div>
+
+                <div class="form-group col-lg-6 col-sm-12">
+                    <label for="expediente" class="form-label mt-3">Expediente:</label>
+                    <input id="expediente" type="text" class="form-control" name="expediente"
+                        [(ngModel)]="dataInfraestructura.expediente">
+                </div>
+            </div>
+
+        </div>
+        <div class="container mt-4">
+            <div class="row">
+                <div class="form-group col-lg-8 col-sm-12">
+                    <label for="nombre_representante" class="form-label mt-2">Datos del representante legal:</label>
+                    <input id="nombre_representante" type="text" class="form-control" name="nombre_representante"
+                        [(ngModel)]="dataInfraestructura.representante"
+                        >
+                </div>
+                <div class="form-group col-lg-4 col-sm-12">
+                    <label for="dni" class="form-label mt-2">DNI</label>
+                    <input id="dni" type="text" min="0" class="form-control" name="dni"
+                        [(ngModel)]="dataInfraestructura.dni_representante">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-8 col-sm-12">
+                    <label for="nombre_empresa" class="form-label mt-2">Emprersa(Razon Social):</label>
+                    <input id="nombre_empresa" type="text" class="form-control" name="nombre_empresa"
+                        [(ngModel)]="dataInfraestructura.empresa">
+                </div>
+                <div class="form-group col-lg-4 col-sm-12">
+                    <label for="ruc" class="form-label mt-2">RUC:</label>
+                    <input id="ruc_empresa" type="number" min="0" class="form-control" name="ruc_empresa"
+                        [(ngModel)]="dataInfraestructura.ruc_empresa">
+                </div>
+            </div>
+            <div class="d-grid gap-2">
+                <br>
+                <button class="btn btn-warning" type="button" style="color: #292b2dbd; font-weight: bold;">MODIFICAR INFRAESTRUCTURA</button>
+                <br>
+            </div>
+        </div>
+
+       
+
+    </div>
+</div>
