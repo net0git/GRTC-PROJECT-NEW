@@ -1,6 +1,6 @@
 <div class="panel">
     <app-navegador></app-navegador>
-    <app-subnavegador [ruta]="'principal/lista-infraestructura'"></app-subnavegador>
+    <app-subnavegador [ruta]="'/principal/infraestructura/detalle/'+dataInfraestructura.id_infraestructura"></app-subnavegador>
 
     <div class="col-md-8 col-lg-8 col-xl-6 offset-md-3">
         <div class="encabezado_pages">
@@ -124,7 +124,7 @@
             </div>
             <div class="d-grid gap-2">
                 <br>
-                <button class="btn btn-warning" type="button" style="color: #292b2dbd; font-weight: bold;">MODIFICAR INFRAESTRUCTURA</button>
+                <button class="btn btn-warning" type="button" style="color: #292b2dbd; font-weight: bold;" (click)="ModificarInfraestructura()">MODIFICAR INFRAESTRUCTURA</button>
                 <br>
             </div>
         </div>

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environment';
 import { detalleInfraestructuraResponse, InfraestructuraResponse, ListaInfraestructuraResponse, ModifcarInfraestructraMessageResponse } from '../../../../domain/dto/InfraestructuraResponse.dto';
-import { InfraestructuraModel } from '../../../../domain/models/InfraestructuraData.model';
+import { InfraestructuraModel } from '../../../../domain/models/Infraestructura.model'
 
 // import { InfraestructuraModel } from '../../../../domain/models/InfraEstructura.model';
 
@@ -35,4 +35,6 @@ export class InfraestructuraService {
   modificarInfraestructura(cuerpo_infraestructura:InfraestructuraModel):Observable<ModifcarInfraestructraMessageResponse>{
     return this.http.put<ModifcarInfraestructraMessageResponse>(this.api_uri_infraestructura+'/'+cuerpo_infraestructura.id_infraestructura,cuerpo_infraestructura)
   }
+
+  
 }

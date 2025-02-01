@@ -2,4 +2,53 @@
     <app-navegador></app-navegador>
     <app-subnavegador [ruta]="'principal/lista-infraestructura'"></app-subnavegador>
 
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-md-4 offset-md-2">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="documento_pdf" class="form-label">Documento PDF:</label>
+                                <input class="form-control" type="file" id="formFile" (change)="onFileSelected($event)"  accept=".pdf">
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" name="nombre_certificado" placeholder="titulo de certificado"
+                                    class="form-control" [(ngModel)]="dataCertificado.nombre_certificado">
+                            </div>
+                            <div class="mb-3">
+                                <input type="number" name="nro_certificado" placeholder="numero" class="form-control"
+                                    [(ngModel)]="dataCertificado.nro_certificado">
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" name="anio_certificado" placeholder="año" class="form-control"
+                                    [(ngModel)]="dataCertificado.anio_certificado">
+                            </div>
+                            <div class="mb-1">
+                                <input type="number" name="tomo_certificado" placeholder="tomo" class="form-control"
+                                    [(ngModel)]="dataCertificado.tomo_certificado">
+                            </div>
+                            <div class="mb-3">
+                                <label for="fecha_certificado" class="form-label mt-3">Fecha:</label>
+                                <input type="date" class="form-control" name="fecha_certificado"
+                                    [(ngModel)]="dataCertificado.fecha_certificado">
+                            </div>
+
+
+                            <div class="d-grid gap-2 mt-4">
+                                <button class="btn btn-success btn-lg" type="button"
+                                    (click)="GuardarDatos()">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="text-center">
+                    <iframe [src]="pdfUrl" type="application/pdf" width="100%" height="500px"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

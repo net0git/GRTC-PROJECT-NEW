@@ -77,9 +77,32 @@ class CertificadoController {
                         JOIN t_infraestructura_certificados ir ON ce.id_certificado = ir.id_certificado
                     WHERE ir.id_infraestructura =$1
                     ORDER BY ce.fecha_certificado`;
-                const tuc = yield database_1.default.query(consulta, [id_infraestructura]);
-                if (tuc && tuc['rows'].length > 0) {
-                    res.json(tuc['rows']);
+                const certificado = yield database_1.default.query(consulta, [id_infraestructura]);
+                if (certificado && certificado['rows'].length > 0) {
+                    res.json(certificado['rows']);
+                }
+                else {
+                    res.status(404).json({ text: 'los certificados correspondientes a la infraestrucutra no existen' });
+                }
+            }
+            catch (error) {
+                console.error('Error fatal al obtener certificado:', error);
+                res.status(500).json({ error: 'Error interno del servidor' });
+            }
+        });
+    }
+    ObtnerCertificadoById(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_certificado } = req.params;
+                const consulta = `
+                    SELECT *
+                    FROM d_certificado 
+                    WHERE id_certificado =$1
+             `;
+                const certificado = yield database_1.default.query(consulta, [id_certificado]);
+                if (certificado && certificado['rows'].length > 0) {
+                    res.json(certificado['rows'][0]);
                 }
                 else {
                     res.status(404).json({ text: 'los certificados correspondientes a la infraestrucutra no existen' });

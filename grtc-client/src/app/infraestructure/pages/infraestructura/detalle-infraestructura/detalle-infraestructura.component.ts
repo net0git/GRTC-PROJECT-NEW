@@ -146,13 +146,20 @@ export class DetalleInfraestructuraComponent implements OnInit {
     this.router.navigate(['/principal/mod-infraestructura', this.dataInfraestructuraDetalle.id_infraestructura]);
   }
 
-  editarResolucion(id_resolucion: number) {
-    this.router.navigate(['principal/mod-infraestructura-resolucion/' + this.dataInfraestructuraDetalle.id_infraestructura + '/' + id_resolucion]);
-  }
-
   agregarResolucion() {
     this.router.navigate(['principal/mod-infraestructura-resolucion/' + this.dataInfraestructuraDetalle.id_infraestructura]);
   }
 
+  editarResolucion(id_resolucion: number) {
+    this.router.navigate(['principal/mod-infraestructura-resolucion/' + this.dataInfraestructuraDetalle.id_infraestructura + '/' + id_resolucion]);
+  }
+
+  agregarCertificado(){
+    this.router.navigate(['principal/mod-infraestructura-certificado/'+ this.dataInfraestructuraDetalle.id_infraestructura])
+  }
+  
+  editarCertificado(id_certificado:number){  
+    this.router.navigate(['principal/mod-infraestructura-certificado/'+this.dataInfraestructuraDetalle.id_infraestructura+'/'+ id_certificado])
+  }
 
 }

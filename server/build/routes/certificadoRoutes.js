@@ -11,7 +11,8 @@ class CertificadoRoutes {
         this.config();
     }
     config() {
-        this.router.get('/api/certificado/:id_infraestructura', certificadoController_1.default.ObtnerCertificadosDeInfraestructura);
+        this.router.get('/api/certificado/lista/infraestructura/:id_infraestructura', certificadoController_1.default.ObtnerCertificadosDeInfraestructura);
+        this.router.get('/api/certificado/detalle/:id_certificado', certificadoController_1.default.ObtnerCertificadoById);
         this.router.post('/api/certificado', certificadoController_1.default.CrearCertificado);
         this.router.post('/api/certificado/asociar/infraestructura', certificadoController_1.default.AsociarCertificadoInfraestructura);
         this.router.put('/api/certificado/:id_certificado', certificadoController_1.default.ModificarCertificado);

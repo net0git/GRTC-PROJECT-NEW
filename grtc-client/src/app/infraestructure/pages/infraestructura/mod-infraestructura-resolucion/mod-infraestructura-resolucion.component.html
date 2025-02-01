@@ -1,5 +1,71 @@
 <div class="panel">
     <app-navegador></app-navegador>
-    <app-subnavegador [ruta]="'principal/lista-infraestructura'"></app-subnavegador>
+    <app-subnavegador [ruta]="'principal/infraestructura/detalle/'+this.dataInfraestructuraResolucion.id_infraestructura"></app-subnavegador>
+
+    <div class="encabezado_pages">
+        <i class="bi bi-building-fill  icon-custom-encabezado"></i>
+        <p class="titulo_menu">{{titulo}}</p>
+    </div>
+    <div class="container" style="width: 50%;">
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="documento_pdf" class="form-label">Documento PDF:</label>
+                                <input class="form-control" type="file" id="formFile" (change)="onFileSelected($event)"
+                                    accept=".pdf">
+                            </div>
+                            <div class="mb-3">
+                                <label for="titulo_resolucion" class="form-label">Titulo de resolución:</label>
+                                <input type="text" name="nombre_resolucion" placeholder="titulo de resolucion"
+                                    class="form-control " [(ngModel)]="dataResolucion.nombre_resolucion">
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="numero_resolucion" class="form-label">Numero de resolución:</label>
+                                    <input type="text" name="nro_resolucion" placeholder="numero" class="form-control"
+                                        [(ngModel)]="dataResolucion.nro_resolucion" appSoloNumeros maxlength="5">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="anio_resolucion" class="form-label">Año de resolución</label>
+                                    <input type="text" name="anio_resolucion" placeholder="año " class="form-control"
+                                        [(ngModel)]="dataResolucion.anio_resolucion" appSoloNumeros maxlength="4">
+                                </div>
+                            </div>
+
+                            <div class="mb-1">
+                                <label for="tomo" class="form-label">Tomo:</label>
+                                <input type="text" name="tomo_resolucion" placeholder="tomo" class="form-control"
+                                    [(ngModel)]="dataResolucion.tomo_resolucion" appSoloNumeros maxlength="2">
+                            </div>
+                            <div class="mb-3">
+                                <label for="fecha_resolucion" class="form-label mt-3">Fecha de resolucion:</label>
+                                <input type="date" class="form-control" name="fecha_resolucion"
+                                    [(ngModel)]="dataResolucion.fecha_resolucion">
+                            </div>
+                            <div class="mb-3">
+                                <label for="documento_pdf" class="form-label">Descripcion:</label>
+                                <textarea class="form-control" name="descripcion" rows="2"
+                                    [(ngModel)]="dataResolucion.descripcion"></textarea>
+                            </div>
+
+                            <div class="d-grid gap-2 mt-4">
+                                <button [ngClass]="modificar ? 'btn btn-warning' : ' btn btn-success'" type="button"
+                                    (click)="GuardarDatos()">{{modificar? 'Modificar' : 'Guardar'}}</button>
+                                <!-- <button class="btn btn-success btn-lg" type="button" (click)=" GuardarDatos()">Guardar</button> -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="text-center">
+                    <iframe *ngIf="pdfUrl" [src]="pdfUrl" type="application/pdf" width="100%"    [style.height]="'67vh'"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>

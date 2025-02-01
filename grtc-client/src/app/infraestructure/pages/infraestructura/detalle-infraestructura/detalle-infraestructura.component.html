@@ -89,8 +89,8 @@
                                     <div class="container">
                                         <div class="d-flex justify-content-between">
                                             <p class="subtitulo_menu mt-4">Certificados</p>
-                                            <button class="my-button_ingreso_resolucion"> <i
-                                                    class="bi bi-arrow-down-square"></i> agregar Certificado</button>
+                                            <button class="my-button_ingreso_resolucion" (click)="agregarCertificado()"> <i
+                                                    class="bi bi-arrow-down-square" ></i> agregar Certificado</button>
                                         </div>
                                         <table class="table table-bordered table-striped">
                                             <thead>
@@ -110,7 +110,7 @@
                                                     <td>{{certificado.anio_certificado}}</td>
                                                     <td>{{certificado.tomo_certificado}}</td>
                                                     <td class="text-primary text_documento" (click)="verDocumentoCertificado(certificado.documento)">{{certificado.nombre_certificado}}</td>
-                                                    <td><i class="bi bi-pencil-square hand_cursor"></i></td>
+                                                    <td><i class="bi bi-pencil-square hand_cursor" (click)="editarCertificado(certificado.id_certificado)"></i></td>
                                                    
                                                 </tr>
                                             </tbody>

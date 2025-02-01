@@ -79,7 +79,6 @@ export class ModEmpresaServicioResolucionComponent implements OnInit {
         this.verDocumentoResolucion(this.dataResolucion.documento)
       }
     })
-
   }
 
   verDocumentoResolucion(documento: string) {
