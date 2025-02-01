@@ -47,7 +47,7 @@ class ResoucionController {
                     console.error('Error al insertar resolucione a empresa por servicio:', error);
                 } else {
                     console.log('resolucion insertado correctamente');
-                    res.json({ text: 'La resolucion se creó correctamente' });
+                    res.json({ text: 'La resolucion se asocio correctamente' });
                 }
             });
 

@@ -28,7 +28,7 @@ class InfraestructuraController {
             res.status(500).json({ error: 'Error interno del servidor' });
         }
     }
-    
+
     public async listarAllInfraestructura(req: Request, res: Response): Promise<any> {
         try {
             const consulta = `
@@ -79,7 +79,31 @@ class InfraestructuraController {
             const empresaInfraestructura = await db.query(consulta, [id_infraestructura]);
 
             if (empresaInfraestructura && empresaInfraestructura['rows'].length > 0) {
-                res.json(empresaInfraestructura['rows']);
+                res.json(empresaInfraestructura['rows'][0]);
+            } else {
+                res.status(404).json({ text: 'La infraestructura no existe' });
+            }
+
+        } catch (error) {
+            console.error('Error al obtener la infraestructura:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+    }
+
+    public async ObtenerInfraestructura(req: Request, res: Response): Promise<void> {
+        try {
+            const { id_infraestructura } = req.params;
+            const consulta = `
+                            SELECT
+                                *
+                            FROM
+                                t_infraestructura 
+                            WHERE id_infraestructura=$1;
+                     `;
+            const empresaInfraestructura = await db.query(consulta, [id_infraestructura]);
+
+            if (empresaInfraestructura && empresaInfraestructura['rows'].length > 0) {
+                res.json(empresaInfraestructura['rows'][0]);
             } else {
                 res.status(404).json({ text: 'La infraestructura no existe' });
             }

@@ -48,3 +48,7 @@ export interface EmpresaServicioResponse {
 export interface modificarEmpresaServicioResponse{
   text:string
 }
+
+export interface crearEmpresaServicioResponse{
+  id_empresa_servicio: number
+}

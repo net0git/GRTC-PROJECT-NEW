@@ -14,6 +14,10 @@ export interface EmpresaResponse {
     
 }
 
+export interface CrearEmpresaMessageResponse{
+    id_empresa: number
+}
+
 export interface modificarEmpresaResponse{
     text: string
 }

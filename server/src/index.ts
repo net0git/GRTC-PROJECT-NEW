@@ -15,6 +15,8 @@ import vehiculoRoutes from './routes/vehiculoRoutes';
 import historialVehicularRoutes from './routes/historialVehicularRoutes'
 import empresaRoutes from './routes/empresaRoutes';
 import tucRuotes from './routes/tucRoutes'
+import infraestructuraRoutes from './routes/infraestructuraRoutes';
+import certificadoRoutes from './routes/certificadoRoutes';
 
 
 class Server{
@@ -40,6 +42,7 @@ class Server{
         this.app.use('/',modeloRoutes);
         this.app.use('/',empresaServicioRoutes);
         this.app.use('/',resolucionRoutes);
+        this.app.use('/',certificadoRoutes);
         this.app.use('/',conductorRoutes);
         this.app.use('/',arrendamientoRoutes);
         this.app.use('/',itinerarioRoutes);
@@ -47,6 +50,8 @@ class Server{
         this.app.use('/',historialVehicularRoutes);
         this.app.use('/',empresaRoutes);
         this.app.use('/',tucRuotes);
+        this.app.use('/',infraestructuraRoutes);
+        
         
     }
     star():void{

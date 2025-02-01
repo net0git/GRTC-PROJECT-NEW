@@ -14,6 +14,7 @@ export interface ListaArrendamientoResponse {
 }
 
 export interface CrearArrendamientoMessageResponse{
+    id_contrato: number
     text: string
 }
 

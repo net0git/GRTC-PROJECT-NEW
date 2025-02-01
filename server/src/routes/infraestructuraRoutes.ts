@@ -14,7 +14,8 @@ class EmpresaInfraestructuraRoutes{
     config():void{
         this.router.post('/api/infraestructura',infraestructuraController.CrearInfraestructura)
         this.router.get('/api/infraestructura',infraestructuraController.listarAllInfraestructura)
-        this.router.get('/api/infraestructura/:id_infraestructura',infraestructuraController.ObtenerInfraestructuraDetalle)
+        this.router.get('/api/infraestructura/detalle/:id_infraestructura',infraestructuraController.ObtenerInfraestructuraDetalle)
+        this.router.get('/api/infraestructura/:id_infraestructura',infraestructuraController.ObtenerInfraestructura)
         this.router.put('/api/infraestructura/:id_infraestructura',infraestructuraController.ModificarEmpresaInfraestuctura)  
         }
 }

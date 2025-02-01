@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environment';
 import { Observable } from 'rxjs';
-import { DetalleEmpresaServicioResponse, ListaEmpresaServicioResponse, modificarEmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
+import { crearEmpresaServicioResponse, DetalleEmpresaServicioResponse, ListaEmpresaServicioResponse, modificarEmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
 import { EmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
+import { EmpresaServicioModel } from '../../../../domain/models/EmpresaServicio.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,10 @@ export class EmpresaServicioService {
 
   api_uri_empresa_servicio=`${environment.urlApi}/empresaservicio`
   constructor(private http: HttpClient) { }
-//         this.router.get('/api/empresaservicio/:id_tipo_servicio/:empresa_ruc',empresaServicioController.BuscarEmpresaPorRuc_TipoServicio)
 
+  crearEmpresaServicio(cuerpo_empresa_servicio: EmpresaServicioModel): Observable<crearEmpresaServicioResponse> {
+    return this.http.post<crearEmpresaServicioResponse>(`${this.api_uri_empresa_servicio}`, cuerpo_empresa_servicio)
+  }
 
   listarEmpresasServicio():Observable<ListaEmpresaServicioResponse[]>{
     return this.http.get<ListaEmpresaServicioResponse[]>(this.api_uri_empresa_servicio)

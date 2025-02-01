@@ -92,7 +92,32 @@ class InfraestructuraController {
                      `;
                 const empresaInfraestructura = yield database_1.default.query(consulta, [id_infraestructura]);
                 if (empresaInfraestructura && empresaInfraestructura['rows'].length > 0) {
-                    res.json(empresaInfraestructura['rows']);
+                    res.json(empresaInfraestructura['rows'][0]);
+                }
+                else {
+                    res.status(404).json({ text: 'La infraestructura no existe' });
+                }
+            }
+            catch (error) {
+                console.error('Error al obtener la infraestructura:', error);
+                res.status(500).json({ error: 'Error interno del servidor' });
+            }
+        });
+    }
+    ObtenerInfraestructura(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_infraestructura } = req.params;
+                const consulta = `
+                            SELECT
+                                *
+                            FROM
+                                t_infraestructura 
+                            WHERE id_infraestructura=$1;
+                     `;
+                const empresaInfraestructura = yield database_1.default.query(consulta, [id_infraestructura]);
+                if (empresaInfraestructura && empresaInfraestructura['rows'].length > 0) {
+                    res.json(empresaInfraestructura['rows'][0]);
                 }
                 else {
                     res.status(404).json({ text: 'La infraestructura no existe' });

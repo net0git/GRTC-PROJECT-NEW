@@ -83,8 +83,8 @@ export class VehiculoService {
     return this.http.get(this.api_url_vehiculo + '/' + id_vehiculo);
   }
 
-  ObtererVehiculoPorPlaca(placa: string) {
-    return this.http.get(this.api_url_vehiculo + '/placa/' + placa);
+  ObtererVehiculoPorPlaca(placa: string):Observable<VehiculoModel> {
+    return this.http.get<VehiculoModel>(this.api_url_vehiculo + '/placa/' + placa);
   }
 
   ModificarVehiculo(id_vehiculo: number, vehiculo: VehiculoModel) {

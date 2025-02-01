@@ -1,5 +1,6 @@
 
 export interface ListaConductoresResponse {
+    id_empresa_servicio?: number
     id_conductor: number
     id_persona: number
     categoria: string

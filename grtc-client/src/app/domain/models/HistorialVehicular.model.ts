@@ -6,6 +6,6 @@ export interface HistorialVehicularModel {
     fecha_resolucion: Date;
     ruta: string;
     placa: string;
-    observaciones: string;
+    observaciones: string | null;
 
 }
