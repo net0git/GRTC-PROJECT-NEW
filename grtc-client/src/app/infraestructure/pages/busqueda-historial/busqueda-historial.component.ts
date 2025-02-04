@@ -24,7 +24,7 @@ export class BusquedaHistorialComponent {
     if (placa == '') {
       alert('Ingrese un placa de vehiculo')
     } else {
-      this.historialVehicularService.ObtenerHistorialVehicularPorPlaca('CFC-956').subscribe({
+      this.historialVehicularService.ObtenerHistorialVehicularPorPlaca(placa).subscribe({
         next: (res: HistorialVehicularDetalleResponse[]) => {
           this.dataHistorialVehicular = res
 
