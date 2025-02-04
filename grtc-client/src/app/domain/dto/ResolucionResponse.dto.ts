@@ -20,6 +20,22 @@ export interface ResolucionResponse {
   tomo_resolucion: number | null;
 }
 
+export interface ResolucionBusquedaResponse {
+  id_resolucion: number;
+  nro_resolucion: number | null;
+  anio_resolucion: string ;
+  fecha_resolucion: Date | string;
+  tomo_resolucion: number | null;
+  nombre_resolucion: string;
+  descripcion: string;
+  documento: string;
+  empresa_cod_id: number;
+  expediente: string;
+  nombre_empresa: string;
+  tipo: string | null;
+   
+}
+
 export interface CrearResolucionMessageResponse {
   id_resolucion: number
   text: string

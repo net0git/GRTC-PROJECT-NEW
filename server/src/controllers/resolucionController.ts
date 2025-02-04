@@ -87,30 +87,51 @@ class ResoucionController {
         try {
             const { nro_resolucion, anio_resolucion } = req.params;
             const consulta = `
-            -- Resoluciones de t_empresa_servicio_resoluciones
-            SELECT r.id_resolucion, r.nro_resolucion, r.anio_resolucion, r.fecha_resolucion, r.tomo_resolucion, r.nombre_resolucion,r.documento, r.descripcion,
-                        es.id_empresa_servicio AS empresa_cod_id,esv.expediente, e.razon_social AS nombre_empresa
-                    FROM d_resolucion AS r
-                    INNER JOIN t_empresa_servicio_resoluciones AS es ON r.id_resolucion = es.id_resolucion
-                    INNER JOIN t_empresa_servicio AS esv ON es.id_empresa_servicio = esv.id_empresa_servicio
-                    INNER JOIN t_empresa AS e ON esv.id_empresa = e.id_empresa
-                    WHERE r.nro_resolucion=$1 and r.anio_resolucion=$2
-            
-            UNION
-            
-            -- Resoluciones de t_infraestructura_resoluciones
-            SELECT r.id_resolucion, r.nro_resolucion, r.anio_resolucion, r.fecha_resolucion, r.tomo_resolucion, r.nombre_resolucion,r.documento, r.descripcion,
-                        ir.id_infraestructura AS empresa_cod_id,e.expediente, e.nombre_infraestructura AS nombre_empresa
-                    FROM d_resolucion AS r
-                    INNER JOIN t_infraestructura_resoluciones AS ir ON r.id_resolucion = ir.id_resolucion
-                    INNER JOIN t_infraestructura AS e ON ir.id_infraestructura = e.id_infraestructura
-                    WHERE r.nro_resolucion=$1 and r.anio_resolucion=$2;
+                            SELECT 
+                                r.id_resolucion, 
+                                r.nro_resolucion, 
+                                r.anio_resolucion, 
+                                r.fecha_resolucion, 
+                                r.tomo_resolucion, 
+                                r.nombre_resolucion, 
+                                r.documento, 
+                                r.descripcion,
+                                es.id_empresa_servicio AS empresa_cod_id,
+                                esv.expediente, 
+                                e.razon_social AS nombre_empresa,
+                                'e' AS tipo -- Empresa
+                            FROM d_resolucion AS r
+                            INNER JOIN t_empresa_servicio_resoluciones AS es ON r.id_resolucion = es.id_resolucion
+                            INNER JOIN t_empresa_servicio AS esv ON es.id_empresa_servicio = esv.id_empresa_servicio
+                            INNER JOIN t_empresa AS e ON esv.id_empresa = e.id_empresa
+                            WHERE r.nro_resolucion = $1 AND r.anio_resolucion = $2
+
+                            UNION
+
+                            -- Resoluciones de t_infraestructura_resoluciones
+                            SELECT 
+                                r.id_resolucion, 
+                                r.nro_resolucion, 
+                                r.anio_resolucion, 
+                                r.fecha_resolucion, 
+                                r.tomo_resolucion, 
+                                r.nombre_resolucion, 
+                                r.documento, 
+                                r.descripcion,
+                                ir.id_infraestructura AS empresa_cod_id,
+                                e.expediente, 
+                                e.nombre_infraestructura AS nombre_empresa,
+                                'i' AS tipo -- Infraestructura
+                            FROM d_resolucion AS r
+                            INNER JOIN t_infraestructura_resoluciones AS ir ON r.id_resolucion = ir.id_resolucion
+                            INNER JOIN t_infraestructura AS e ON ir.id_infraestructura = e.id_infraestructura
+                            WHERE r.nro_resolucion = $1 AND r.anio_resolucion = $2;
                 
             `;
             const resolucion = await db.query(consulta, [nro_resolucion, anio_resolucion]);
 
             if (resolucion && resolucion['rows'].length > 0) {
-                res.json(resolucion['rows']);
+                res.json(resolucion['rows'][0]);
             } else {
                 res.status(404).json({ text: 'La resolucion no existe' });
             }

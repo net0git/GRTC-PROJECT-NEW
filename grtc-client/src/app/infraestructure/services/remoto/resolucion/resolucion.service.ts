@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CrearResolucionEmpresaServicioMessageResponse, CrearResolucionInfraestructuraMessageResponse, CrearResolucionMessageResponse, ListaResolucionResponse, ModificarResolucionMessageResponse, ResolucionResponse } from '../../../../domain/dto/ResolucionResponse.dto';
+import { CrearResolucionEmpresaServicioMessageResponse, CrearResolucionInfraestructuraMessageResponse, CrearResolucionMessageResponse, ListaResolucionResponse, ModificarResolucionMessageResponse, ResolucionBusquedaResponse, ResolucionResponse } from '../../../../domain/dto/ResolucionResponse.dto';
 import { environment } from '../../../../../../environments/environment';
 import { ResolucionModel } from '../../../../domain/models/Resolucion.model';
 import { ResolucionEmpresaModel } from '../../../../domain/models/ResolucionEmpresa.model';
@@ -25,6 +25,8 @@ export class ResolucionService {
         // this.router.get('/api/resolucion/lista/empresa/:id_empresa_servicio',resolucionController.ObtenerResolucionesDeEmpresaServicio)
         // this.router.get('/api/resolucion/lista/infraestructura/:id_infraestructura',resolucionController.ObtnerResolucionesDeInfraestructura)
         // this.router.put('/api/resolucion/modificar/:id_resolucion',resolucionController.ModificarResolucion)
+       // this.router.get('/api/resolucion/busqueda/:nro_resolucion/:anio_resolucion',resolucionController.ObtenerResolucionPorNroAnio)
+
 
   CrearResolucion(cuerpo_resolucion:ResolucionModel):Observable<CrearResolucionMessageResponse>{
     cuerpo_resolucion.nombre_resolucion=cuerpo_resolucion.nombre_resolucion.trim().toUpperCase()
@@ -50,6 +52,10 @@ export class ResolucionService {
 
   ObtenerResolucionById(id_resolucion:number):Observable<ResolucionResponse>{
     return this.http.get<ResolucionResponse>(this.api_uri_resolucion+'/'+id_resolucion)
+  }
+
+  ObtenerResolucionByNroAnio(nro_resolucion:number,anio_resolucion:string):Observable<ResolucionBusquedaResponse>{
+    return this.http.get<ResolucionBusquedaResponse>(this.api_uri_resolucion+'/busqueda/'+nro_resolucion+'/'+anio_resolucion)
   }
 
   ModificarResolucion(id_resolucion:number,cuerpo_resolucion:ResolucionModel):Observable<ModificarResolucionMessageResponse>{

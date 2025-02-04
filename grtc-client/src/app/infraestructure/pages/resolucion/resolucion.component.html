@@ -14,22 +14,21 @@
                     <div class="card-body">
                         <form>
                             <div class="text-center mt-2 mb-4">
-                                <h4 class="subtitulo_resolucion">Busqueda por Numero y Año </h4>
+                                <h4 class="subtitulo_resolucion">Busqueda por Número y Año </h4>
                             </div>
                             <div class="row mb-4 ">
                                 <div class="col-auto">
                                     <span class="input-group-text" id="addon-wrapping">N° de resolucion:</span>
                                     <input type="number" id="floatingInput1" class="form-control" aria-label="tomo"
-                                        aria-describedby="addon-wrapping" name="nro_resolucion">
+                                        aria-describedby="addon-wrapping" name="nro_resolucion" [(ngModel)]="dataResolucion.nro_resolucion">
                                 </div>
                                 <div class="col-auto">
                                     <span class="input-group-text" id="addon-wrapping">Año de resolucion:</span>
                                     <input type="text" id="floatingInput2" class="form-control" aria-label="tomo"
-                                        aria-describedby="addon-wrapping" name="anio_resolucion">
+                                        aria-describedby="addon-wrapping" name="anio_resolucion" [(ngModel)]="dataResolucion.anio_resolucion">
                                 </div>
                                 <div class="col-auto pt-2">
-                                    <button class="btn btn-success btn-lg" type="button"
-                                        >Buscar <i class="bi bi-search"></i></button>
+                                    <button class="btn btn-success btn-lg" type="button" (click)="buscarResolucion()">Buscar <i class="bi bi-search"></i></button>
                                 </div>
                             </div>
                             <hr>
@@ -42,31 +41,32 @@
                                 <span class="input-group-text" id="addon-wrapping">Nombre de Resolucion:</span>
                                 <input type="text" class="form-control" aria-label="nombre_resolucion"
                                     aria-describedby="addon-wrapping" name="nombre_resolucion"
-                                    readonly>
+                                    readonly [(ngModel)]="dataResolucion.nombre_resolucion">
                             </div>
                             <div class=" mb-3 input-group flex-nowrap">
                                 <span class="input-group-text" id="addon-wrapping">Descripcion:</span>
                                 <input type="text" class="form-control" aria-label="descripcion"
                                     aria-describedby="addon-wrapping" name="descripcion"
-                                    readonly>
+                                    readonly [(ngModel)]="dataResolucion.descripcion">
                             </div>
-                            <div class=" mb-3 input-group flex-nowrap">
+                            <div class="mb-3 input-group flex-nowrap">
                                 <span class="input-group-text" id="addon-wrapping">Empresa / Infraestructura:</span>
                                 <input type="text" class="form-control" aria-label="nombre_empresa"
                                     aria-describedby="addon-wrapping" name="nombre_empresa"
-                                    readonly>
+                                    readonly [value]="dataResolucion.tipo =='e'  ? dataResolucion.nombre_empresa+' (e)' : dataResolucion.tipo =='i'  ? dataResolucion.nombre_empresa+' (i)' : ''">
                             </div>
+                            
                             <div class=" mb-3 input-group flex-nowrap">
                                 <span class="input-group-text" id="addon-wrapping">Expediente:</span>
                                 <input type="text" class="form-control" aria-label="expediente_empresa"
                                     aria-describedby="addon-wrapping" name="expediente_empresa"
-                                    readonly>
+                                    readonly [(ngModel)]="dataResolucion.expediente">
                             </div>
                             <div class=" mb-3 input-group flex-nowrap">
                                 <span class="input-group-text" id="addon-wrapping">Tomo:</span>
                                 <input type="number" class="form-control" aria-label="tomo"
                                     aria-describedby="addon-wrapping" name="tomo_resolucion"
-                                     readonly>
+                                     readonly [(ngModel)]="dataResolucion.tomo_resolucion">
                             </div>
 
                         </form>
