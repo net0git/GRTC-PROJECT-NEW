@@ -1,6 +1,6 @@
 <div class="panel">
     <app-navegador></app-navegador>
-    <app-subnavegador [ruta]="'principal/lista-infraestructura'"></app-subnavegador>
+    <app-subnavegador [ruta]="'principal/infraestructura/detalle/'+this.dataInfraestructuraCertificado.id_infraestructura"></app-subnavegador>
 
     <div class="container">
         <div class="row mt-4">
@@ -33,8 +33,6 @@
                                 <input type="date" class="form-control" name="fecha_certificado"
                                     [(ngModel)]="dataCertificado.fecha_certificado">
                             </div>
-
-
                             <div class="d-grid gap-2 mt-4">
                                 <button class="btn btn-success btn-lg" type="button"
                                     (click)="GuardarDatos()">Guardar</button>
@@ -50,5 +48,4 @@
             </div>
         </div>
     </div>
-
 </div>

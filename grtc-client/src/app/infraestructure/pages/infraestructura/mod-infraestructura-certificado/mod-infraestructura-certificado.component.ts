@@ -9,9 +9,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CertificadoService } from '../../../services/remoto/certificado/certificado.service';
 import { CertificadoModel } from '../../../../domain/models/Certificado.model';
 import { CertificadoInfraestructuraModel } from '../../../../domain/models/CertificadoInfraestructura.model';
-import { CertificadoResponse } from '../../../../domain/dto/CertificadoResponse.dto';
+import { CertificadoResponse, CrearCertificadoMessageResponse, ModificarCertificadoMessageResponse } from '../../../../domain/dto/CertificadoResponse.dto';
 import { FechaConFormato } from '../../../../../../public/utils/formateDate';
 import { fileToBase64, ShowDocumentoPdf } from '../../../../../../public/utils/pdfFunctions';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-mod-infraestructura-certificado',
@@ -98,20 +99,57 @@ export class ModInfraestructuraCertificadoComponent implements OnInit {
   GuardarDatos() {
     if (this.modificar) {
       this.ModificarCertificado();
+      this.sweetAlert.MensajeExito('se modifico con éxito') 
     } else {
       this.CrearCertificado();
+      this.sweetAlert.MensajeExito('se creo con éxito')
     }
+    
   }
   CrearCertificado() {
-    alert('listos para crear resolucion');
+    this.certificadoService.crearCertificado(this.dataCertificado).subscribe({
+      next:(data:CrearCertificadoMessageResponse)=>{
+        this.dataCertificado.id_certificado = data.id_certificado
+      },
+      error:(err)=>{
+        console.log("error al crea certificado: ", err)
+      },
+      complete:()=>{
+        console.log('el certificado se creo con éxito')
+        this.CrearCertificadoInfraestructura()}
+    })
   }
 
-  CrearResolucionEmpresaServicio() {
-    
+  CrearCertificadoInfraestructura() {
+    const params = this.activatedRoute.snapshot.params
+    this.dataInfraestructuraCertificado.id_infraestructura = params['id_infraestructura']
+    this.dataInfraestructuraCertificado.id_certificado = this.dataCertificado.id_certificado
+    this.certificadoService.crearCertificadoInfraestructura(this.dataInfraestructuraCertificado).subscribe({
+      next:(res)=>{
+        console.log(res)
+      },
+      error:(err)=>{
+        console.log('error al modificar certificado: ', err)
+      },
+      complete:()=>{
+        this.router.navigate(['/principal/infraestructura/detalle/',params['id_infraestructura']])
+      }
+    })
   }
 
   ModificarCertificado() {
-    alert('listos para modificar resolucion')
+    const params = this.activatedRoute.snapshot.params
+    this.certificadoService.modificarCertificado(this.dataCertificado.id_certificado, this.dataCertificado).subscribe({
+      next:(res:ModificarCertificadoMessageResponse)=>{
+        console.log(res)
+      },
+      error:(err)=>{
+        console.log('error al modificar certificado: ', err)
+      },
+      complete:()=>{
+        this.router.navigate(['/principal/infraestructura/detalle/',params['id_infraestructura']])
+      }
+    })
   }
 
   async onFileSelected(event: any): Promise<void> {

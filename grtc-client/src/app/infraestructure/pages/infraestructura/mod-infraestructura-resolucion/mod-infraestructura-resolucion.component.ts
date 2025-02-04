@@ -6,9 +6,17 @@ import { ResolucionModel } from '../../../../domain/models/Resolucion.model';
 import { SweetAlert } from '../../../shared/animated-messages/sweetAlert';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResolucionService } from '../../../services/remoto/resolucion/resolucion.service';
-import { ResolucionResponse } from '../../../../domain/dto/ResolucionResponse.dto';
+import {
+  CrearResolucionInfraestructuraMessageResponse,
+  CrearResolucionMessageResponse,
+  ModificarResolucionMessageResponse,
+  ResolucionResponse,
+} from '../../../../domain/dto/ResolucionResponse.dto';
 import { FechaConFormato } from '../../../../../../public/utils/formateDate';
-import { fileToBase64, ShowDocumentoPdf } from '../../../../../../public/utils/pdfFunctions';
+import {
+  fileToBase64,
+  ShowDocumentoPdf,
+} from '../../../../../../public/utils/pdfFunctions';
 import { ResolucionInfraestructuraModel } from '../../../../domain/models/ResolucionInfraestructura.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +24,12 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-mod-infraestructura-resolucion',
   standalone: true,
-  imports: [NavegadorComponent, SubnavegadorComponent, CommonModule, FormsModule],
+  imports: [
+    NavegadorComponent,
+    SubnavegadorComponent,
+    CommonModule,
+    FormsModule,
+  ],
   templateUrl: './mod-infraestructura-resolucion.component.html',
   styleUrl: './mod-infraestructura-resolucion.component.css',
 })
@@ -46,21 +59,23 @@ export class ModInfraestructuraResolucionComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private activatedRoute: ActivatedRoute,
     private resolucionService: ResolucionService
-  ) { }
+  ) {}
   ngOnInit(): void {
-    this.initPage()
+    this.initPage();
   }
 
   initPage() {
     this.activatedRoute.params.subscribe((params) => {
       if (params['id_resolucion']) {
         this.obtenerResolucion();
-        this.dataInfraestructuraResolucion.id_infraestructura = params['id_infraestructura'];
+        this.dataInfraestructuraResolucion.id_infraestructura =
+          params['id_infraestructura'];
         this.modificar = true;
       } else {
         const unsafeUrl = 'doc/error_carga.pdf';
         this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
-        this.dataInfraestructuraResolucion.id_infraestructura = params['id_infraestructura'];
+        this.dataInfraestructuraResolucion.id_infraestructura =
+          params['id_infraestructura'];
       }
     });
   }
@@ -90,27 +105,66 @@ export class ModInfraestructuraResolucionComponent implements OnInit {
     this.pdfUrl = ShowDocumentoPdf(documento, this.sanitizer);
   }
   GuardarDatos() {
+    const params = this.activatedRoute.snapshot.params
     if (this.modificar) {
-      this.ModificarResolucion()
+      this.ModificarResolucion();
+      this.sweetAlert.MensajeExito('se modifico con éxito') 
     } else {
-      this.CrearResolucion()
+      this.CrearResolucion();
+      this.sweetAlert.MensajeExito('se creo con éxito')
     }
-
+    this.router.navigate(['/principal/infraestructura/detalle/',params['id_infraestructura']])
   }
   CrearResolucion() {
-    alert('listos para crear resolucion')
-
+    this.resolucionService.CrearResolucion(this.dataResolucion).subscribe({
+      next: (data: CrearResolucionMessageResponse) => {
+        this.dataResolucion.id_resolucion = data.id_resolucion;
+      },
+      error: (err) => {
+        console.log('la resolucion no se creo correctamente: ', err);
+      },
+      complete: () => {
+        console.log('la resolucion se creo correctamente');
+        this.CrearResolucionInfraestructura();
+      },
+    });
   }
-
-  CrearResolucionEmpresaServicio() {
-    
-    alert('listos para modificar resolucion')
-  }
-
   ModificarResolucion() {
-    
+    this.resolucionService
+      .ModificarResolucion(
+        this.dataResolucion.id_resolucion,
+        this.dataResolucion
+      )
+      .subscribe({
+        next: (res: ModificarResolucionMessageResponse) => {
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(
+            'la modificacion de la resolucion no se realizo correctamente: ',
+            err
+          );
+        },
+      });
   }
 
+  CrearResolucionInfraestructura() {
+    const params = this.activatedRoute.snapshot.params;
+    this.dataInfraestructuraResolucion.id_infraestructura =
+      params['id_infraestructura'];
+    this.dataInfraestructuraResolucion.id_resolucion =
+      this.dataResolucion.id_resolucion;
+    this.resolucionService
+      .CrearResolucionInfraestructura(this.dataInfraestructuraResolucion)
+      .subscribe({
+        next: (res: CrearResolucionInfraestructuraMessageResponse) => {
+          console.log(res);
+        },
+        error: (err) => {
+          console.log('la resolucion asociada no se pudo crear', err);
+        },
+      });
+  }
 
   async onFileSelected(event: any): Promise<void> {
     const selectedFile = event.target.files[0];

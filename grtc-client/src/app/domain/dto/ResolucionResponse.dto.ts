@@ -29,6 +29,10 @@ export interface CrearResolucionEmpresaServicioMessageResponse{
   text:string
 }
 
+export interface CrearResolucionInfraestructuraMessageResponse{
+  text:string
+}
+
 export interface ModificarResolucionMessageResponse{
   text:string
 }

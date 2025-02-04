@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CrearResolucionEmpresaServicioMessageResponse, CrearResolucionMessageResponse, ListaResolucionResponse, ModificarResolucionMessageResponse, ResolucionResponse } from '../../../../domain/dto/ResolucionResponse.dto';
+import { CrearResolucionEmpresaServicioMessageResponse, CrearResolucionInfraestructuraMessageResponse, CrearResolucionMessageResponse, ListaResolucionResponse, ModificarResolucionMessageResponse, ResolucionResponse } from '../../../../domain/dto/ResolucionResponse.dto';
 import { environment } from '../../../../../../environments/environment';
 import { ResolucionModel } from '../../../../domain/models/Resolucion.model';
 import { ResolucionEmpresaModel } from '../../../../domain/models/ResolucionEmpresa.model';
+import { ResolucionInfraestructuraModel } from '../../../../domain/models/ResolucionInfraestructura.model';
+import { CrearItinerarioMessageResponse } from '../../../../domain/dto/ItinerarioResponse.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +32,12 @@ export class ResolucionService {
     return this.http.post<CrearResolucionMessageResponse>(this.api_uri_resolucion,cuerpo_resolucion)
   }
 
-  CrearResolucionEmpresaServicio(cuperpo_resolucion_empresa_servicio:ResolucionEmpresaModel):Observable<CrearResolucionEmpresaServicioMessageResponse>{
-    return this.http.post<CrearResolucionEmpresaServicioMessageResponse>(this.api_uri_resolucion+'/empresa',cuperpo_resolucion_empresa_servicio)
+  CrearResolucionEmpresaServicio(cuerpo_resolucion_empresa_servicio:ResolucionEmpresaModel):Observable<CrearResolucionEmpresaServicioMessageResponse>{
+    return this.http.post<CrearResolucionEmpresaServicioMessageResponse>(this.api_uri_resolucion+'/empresa',cuerpo_resolucion_empresa_servicio)
+  }
+
+  CrearResolucionInfraestructura(cuerpo_resolucion_infraestructura:ResolucionInfraestructuraModel):Observable<CrearResolucionInfraestructuraMessageResponse>{
+    return this.http.post<CrearResolucionInfraestructuraMessageResponse>(this.api_uri_resolucion+'/infraestructura', cuerpo_resolucion_infraestructura)
   }
 
   ObternerResolucionesPorEmpresaServicio(id_empresa_servicio:number):Observable<ListaResolucionResponse[]>{

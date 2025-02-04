@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../../environments/environment';
-import { CertificadoResponse, ListaCertificadoResponse } from '../../../../domain/dto/CertificadoResponse.dto';
+import { CertificadoResponse, CrearCertificadoInfraestructuraMessageResponse, CrearCertificadoMessageResponse, ListaCertificadoResponse, ModificarCertificadoMessageResponse } from '../../../../domain/dto/CertificadoResponse.dto';
+import { CertificadoModel } from '../../../../domain/models/Certificado.model';
+import { CertificadoInfraestructuraModel } from '../../../../domain/models/CertificadoInfraestructura.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -23,6 +25,18 @@ export class CertificadoService {
 
   obtenerCertificadoById(id_certificado:number):Observable<CertificadoResponse>{
     return this.http.get<CertificadoResponse>(`${this.api_uri_certificado}/detalle/${id_certificado}`)
+  }
+
+  crearCertificado(cuerpo_certificado: CertificadoModel):Observable<CrearCertificadoMessageResponse>{
+    return this.http.post<CrearCertificadoMessageResponse>(`${this.api_uri_certificado}`,cuerpo_certificado)
+  }
+
+  crearCertificadoInfraestructura(cuerpo_certificado_infraestructura: CertificadoInfraestructuraModel):Observable<CrearCertificadoInfraestructuraMessageResponse>{
+    return this.http.post<CrearCertificadoInfraestructuraMessageResponse>(`${this.api_uri_certificado}/asociar/infraestructura`,cuerpo_certificado_infraestructura)
+  }
+
+  modificarCertificado(id_certificado: number, cuerpo_certificado: CertificadoModel):Observable<ModificarCertificadoMessageResponse>{
+    return this.http.put<ModificarCertificadoMessageResponse>(`${this.api_uri_certificado}/${id_certificado}`,cuerpo_certificado)
   }
  
 }

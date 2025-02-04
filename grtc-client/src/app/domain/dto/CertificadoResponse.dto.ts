@@ -17,3 +17,16 @@ export interface CertificadoResponse {
   tomo_certificado: number | null;
   documento: string;
 }
+
+export interface CrearCertificadoMessageResponse {
+  id_certificado: number
+  text: string
+}
+
+export interface ModificarCertificadoMessageResponse{
+  text:string
+}
+
+export interface CrearCertificadoInfraestructuraMessageResponse{
+  text:string
+}
