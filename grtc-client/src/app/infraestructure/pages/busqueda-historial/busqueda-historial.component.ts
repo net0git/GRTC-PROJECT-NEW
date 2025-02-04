@@ -21,36 +21,23 @@ export class BusquedaHistorialComponent {
 
   BuscarHistorialVehicular() {
     let placa = (<HTMLInputElement>document.getElementById('placa_vehicular')).value;
-    this.historialVehicularService.ObtenerHistorialVehicularPorPlaca('CFC-956').subscribe({
-      next: (res: HistorialVehicularDetalleResponse[]) => {
-        this.dataHistorialVehicular = res
+    if (placa == '') {
+      alert('Ingrese un placa de vehiculo')
+    } else {
+      this.historialVehicularService.ObtenerHistorialVehicularPorPlaca('CFC-956').subscribe({
+        next: (res: HistorialVehicularDetalleResponse[]) => {
+          this.dataHistorialVehicular = res
 
-        console.log(this.dataHistorialVehicular)
-      },
-      error: (err) => {
-        console.error('Error al obtener historial vehicular:', err);
-      },
-      complete: () => {
-        console.log('Historial vehicular obtenido correctamente');
-      }
-    });
-    // if (placa == '') {
-    //   alert('Ingrese un placa de vehiculo')
-    // } else {
-    //   this.historialVehicularService.ObtenerHistorialVehicularPorPlaca('CFC-956').subscribe({
-    //     next: (res: HistorialVehicularDetalleResponse[]) => {
-    //       this.dataHistorialVehicular = res
-
-    //       console.log(this.dataHistorialVehicular)
-    //     },
-    //     error: (err) => {
-    //       console.error('Error al obtener historial vehicular:', err);
-    //     },
-    //     complete: () => {
-    //       console.log('Historial vehicular obtenido correctamente');
-    //     }
-    //   });
-    // }
+          console.log(this.dataHistorialVehicular)
+        },
+        error: (err) => {
+          console.error('Error al obtener historial vehicular:', err);
+        },
+        complete: () => {
+          console.log('Historial vehicular obtenido correctamente');
+        }
+      });
+    }
 
   }
 }
