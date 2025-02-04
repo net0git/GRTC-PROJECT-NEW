@@ -67,7 +67,7 @@ class HistorialVehicularController {
                 const { placa } = req.params;
                 const consulta = `
                         SELECT ehv.*,
-                            es.id_empresa AS id_empresa_servicio,
+                            e.id_empresa AS id_empresa,
                             e.razon_social AS nombre_empresa
                         FROM r_empre_histo_vehiculo ehv
                         INNER JOIN t_empresa_servicio es ON ehv.id_empresa_servicio = es.id_empresa_servicio

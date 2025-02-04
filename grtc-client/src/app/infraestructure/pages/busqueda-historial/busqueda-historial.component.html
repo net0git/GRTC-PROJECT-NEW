@@ -14,7 +14,7 @@
                             <input type="text" class="form-control mr-2" name="buscar" placeholder="BUSCAR POR PLACA" id="placa_vehicular">
                         </div>
                         <div class="col-auto">
-                            <button class="btn btn-primary" >BUSCAR</button>
+                            <button type="button" class="btn btn-primary" (click)="BuscarHistorialVehicular()">Buscar</button>
                         </div>
                     </form>
                 </div>
@@ -41,8 +41,8 @@
                             </tr>
                         </thead>
 
-                        <!-- <tbody>
-                            <tr *ngFor="let item of historial_vehicular, index as i">
+                        <tbody>
+                            <tr *ngFor="let item of dataHistorialVehicular, index as i">
 
                                 <th scope="row">{{i+1}}</th>
                                 <td>{{item.fecha_resolucion|date:'dd/MM/yyyy'}}</td>
@@ -51,7 +51,7 @@
                                 <td>{{item.nombre_resolucion}}</td>
                                 <td>{{item.nombre_empresa}}</td>
                             </tr>
-                        </tbody> -->
+                        </tbody>
                     </table>
                 </div>
             </div>

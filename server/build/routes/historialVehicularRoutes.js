@@ -12,8 +12,8 @@ class HistorialVehicularRoutes {
     }
     config() {
         this.router.post('/api/historialvehicular', historialVehicularController_1.default.CrearHistorialVehicular);
-        this.router.get('/api/historialvehicular/:id_empresa_servicio', historialVehicularController_1.default.ObtenerHistorialVehicularPorEmpresa);
-        this.router.get('/api/historialvehicular/:placa', historialVehicularController_1.default.ObtenerHistorialVehicularPorPlaca);
+        this.router.get('/api/historialvehicular/empresa-servicio/:id_empresa_servicio', historialVehicularController_1.default.ObtenerHistorialVehicularPorEmpresa);
+        this.router.get('/api/historialvehicular/placa/:placa', historialVehicularController_1.default.ObtenerHistorialVehicularPorPlaca);
     }
 }
 const historialVehicularRoutes = new HistorialVehicularRoutes;
