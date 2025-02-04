@@ -712,10 +712,7 @@ export class DetalleEmpresaServicioComponent implements OnInit {
 
             //PROCEDIMIENTO DE CREACION DE TUC
             console.log(formValues[0] + '  ' + formValues[1] + ' ' + vehiculo.id_vehiculo)
-            // this.data_tuc.nro_impresion=formValues[0]
-            // this.data_tuc.nro_tuc=formValues[1]
-            // this.InsertarTUCbd(id_vehiculo)
-
+            this.crearTUC(vehiculo, formValues[0], formValues[1])
           }
 
           const Toast = Swal.mixin({

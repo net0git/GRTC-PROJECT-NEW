@@ -84,7 +84,6 @@ class TucController{
         }
     }
 
-
     public async ModificarTuc(req: Request, res: Response): Promise<void> {
         try {
             const { id_tuc } = req.params;

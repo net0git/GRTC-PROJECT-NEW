@@ -30,4 +30,8 @@ export class TucService {
   modificarCopiaTUC(id_tuc:number, copia:string):Observable<ModificarTUCResponse>{
     return this.http.put<ModificarTUCResponse>(this.api_uri_tuc+'/modificar/'+id_tuc,{copia})
   }
+
+  obtenerTUCbyPlaca(placa:string):Observable<TUCResponse[]>{
+    return this.http.get<TUCResponse[]>(this.api_uri_tuc+'/listar/'+placa)
+  }
 }
