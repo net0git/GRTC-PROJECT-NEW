@@ -11,82 +11,8 @@
                 <p class="subtitulo_menu">Registro de Marca y Modelo</p>
             </div>
         </div>
-
-        <div class="card card-body rounded shadow border-2 mt-4">
-            <div class="row">
-                <div class="col col-lg-6 col-md-12">
-                    <div class="m-2">
-                        <input type="text" class="form-control" name="buscar" placeholder="BUSCAR MARCA">
-                    </div>
-                    <div
-                        style="max-height: 300px; overflow-y: auto; overflow-x: hidden; border: 2px solid rgba(0, 0, 0, 0.214); ">
-                        <table class="table text-center table-hover m-2 ">
-                            <thead class="text-white table-success">
-                                <tr>
-                                    <th scope="col">Nro</th>
-                                    <th scope="col">MARCA</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr *ngFor="let marca of listaMarcas; let i = index" (click)="ListarModelos(marca)">
-                                    <th scope="row">{{i + 1}}</th>
-                                    <td>{{marca.nombre_marca}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row  d-flex  mt-3">
-                        <div class="col  d-flex justify-content-end">
-                            <button type="button" class="btn btn-primary"
-                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                                Crear Marca
-                            </button>
-                        </div>
-                        <div class="col">
-                            <input type="text" class="form-control" name="marca" placeholder="ingrese marca"
-                                id="marcaForm">
-                        </div>
-                    </div>
-                </div>
-                <div class="col col-lg-6 col-md-12" >
-                    <br>
-                    <p class="subtitulo_menu">Marca : {{marcaSeleccionada}}</p>
-
-
-                    <div style="max-height: 300px; overflow-y: auto; overflow-x: hidden; margin-top: 5px;">
-                        <table class="table text-center  table-hover m-2">
-
-                            <thead class="text-white table-success">
-                                <tr>
-                                    <th scope="col">Nro</th>
-                                    <th scope="col">MODELO</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let modelo of listaModelos, index as i">
-                                    <th scope="row">{{i+1}}</th>
-                                    <td>{{modelo.nombre_modelo}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <label *ngIf="marcaSeleccionada!='sin seleccion' && listaModelos.length === 0 "
-                            class="text-danger">No registra modelos</label>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col d-flex justify-content-end ">
-                            <button type="button" class="btn btn-primary"
-                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                                Crear Modelo
-                            </button>
-                        </div>
-                        <div class="col">
-                            <input type="text" class="form-control" name="modelo" placeholder="ingrese modelo"
-                                id="modeloForm">
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="mt-4">
+            <app-registro-marca-modelo></app-registro-marca-modelo>
         </div>
     </div>
 </div>

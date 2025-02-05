@@ -20,12 +20,23 @@ import { PlacaDirective } from '../../../../directives/placa.directive';
 import { SoloLetrasGuionDirective } from '../../../../directives/solo-letras-guion.directive';
 import { HistorialVehicularModel } from '../../../../../domain/models/HistorialVehicular.model';
 import { HistorialVehicularService } from '../../../../services/remoto/historial-vehicular/historial-vehicular.service';
+import { RegistroMarcaModeloComponent } from '../../../../components/registro-marca-modelo/registro-marca-modelo.component';
 
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-vehiculos',
   standalone: true,
-  imports: [NavegadorComponent, SubnavegadorComponent, CommonModule, FormsModule, SoloLetrasDirective, SoloNumerosDirective, SoloLetrasGuionDirective, PlacaDirective],
+  imports: [
+    NavegadorComponent,
+    SubnavegadorComponent,
+    CommonModule, 
+    FormsModule, 
+    SoloLetrasDirective, 
+    SoloNumerosDirective, 
+    SoloLetrasGuionDirective, 
+    PlacaDirective,
+    RegistroMarcaModeloComponent],
   templateUrl: './vehiculos.component.html',
   styleUrl: './vehiculos.component.css'
 })
@@ -37,6 +48,8 @@ export class VehiculosComponent implements OnInit {
   lista_modelos: ListarModelosResponse[] = [];
   lista_resoluciones: ListaResolucionResponse[] = [];
   lista_itinerarios: ListaItinerarioResponse[] = [];
+
+  private myModal: any;
 
   dataVehiculo: VehiculoModel = {
 
@@ -64,19 +77,28 @@ export class VehiculosComponent implements OnInit {
 
   }
 
-  
+
 
   idMarcaSeleccionada: number = 0;
   idModeloSeleccionado: number = 0;
   modificar: boolean = false;
 
-  constructor(private historialVehicularService:HistorialVehicularService ,private sweetAlert:SweetAlert, private itinerarioService:ItinerarioService, private resolucionService: ResolucionService,private vehiculoService: VehiculoService, private activatedRoute: ActivatedRoute) { }
+  constructor(private historialVehicularService: HistorialVehicularService, private sweetAlert: SweetAlert, private itinerarioService: ItinerarioService, private resolucionService: ResolucionService, private vehiculoService: VehiculoService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.listarVehiculos()
     this.listarMarcas()
     this.listaResoluciones()
     this.listaItinerarios()
+  }
+
+  openModal() {
+      this.myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
+      this.myModal.show();
+  }
+
+  closeModal() {
+    this.myModal.hide();
   }
 
   listarMarcas() {
@@ -159,7 +181,7 @@ export class VehiculosComponent implements OnInit {
 
   GuardarDatosFormulario() {
     if (this.modificar) {
-       this.modificarVehiculo()
+      this.modificarVehiculo()
     } else {
       this.crearVehiculo()
     }
@@ -186,20 +208,20 @@ export class VehiculosComponent implements OnInit {
     });
   }
 
-  crearRegistroHistorialVehicular(){
+  crearRegistroHistorialVehicular() {
     const params = this.activatedRoute.snapshot.params;
     let id_resolucion = (<HTMLInputElement>document.getElementById('resolucion')).value;
     let id_itinerario = (<HTMLInputElement>document.getElementById('itinerario')).value;
     let estado = (<HTMLInputElement>document.getElementById('estado')).value;
     let placa = (<HTMLInputElement>document.getElementById('placa')).value;
-    let ruta=this.lista_itinerarios.filter((itinerario: { id_detalle_ruta_itinerario: number; }) => itinerario.id_detalle_ruta_itinerario == parseInt(id_itinerario))[0].itinerario;
+    let ruta = this.lista_itinerarios.filter((itinerario: { id_detalle_ruta_itinerario: number; }) => itinerario.id_detalle_ruta_itinerario == parseInt(id_itinerario))[0].itinerario;
     let resolucion = this.lista_resoluciones.filter((resolucion: { id_resolucion: number; }) => resolucion.id_resolucion == parseInt(id_resolucion));
 
-   let dataHistorialVehicular: HistorialVehicularModel = {
+    let dataHistorialVehicular: HistorialVehicularModel = {
       id_empresa_servicio: params['id_empresa_servicio'],
       condicion: estado,
       nombre_resolucion: resolucion[0].nombre_resolucion,
-      fecha_resolucion: new Date(resolucion[0].fecha_resolucion) ,
+      fecha_resolucion: new Date(resolucion[0].fecha_resolucion),
       ruta: ruta,
       placa: placa,
       observaciones: ""
@@ -237,7 +259,7 @@ export class VehiculosComponent implements OnInit {
     });
   }
 
-  listaResoluciones(){
+  listaResoluciones() {
     const params = this.activatedRoute.snapshot.params;
     this.resolucionService.ObternerResolucionesPorEmpresaServicio(params['id_empresa_servicio']).subscribe({
       next: (data) => {
@@ -251,47 +273,47 @@ export class VehiculosComponent implements OnInit {
         console.log('complete')
       }
 
-    })  
+    })
   }
 
-  listaItinerarios(){
+  listaItinerarios() {
     const params = this.activatedRoute.snapshot.params;
     this.itinerarioService.listarItinerarioByEmpresasServicio(params['id_empresa_servicio']).subscribe({
-      next:(data:ListaItinerarioResponse[])=>{
-        this.lista_itinerarios=data;
+      next: (data: ListaItinerarioResponse[]) => {
+        this.lista_itinerarios = data;
         console.log(this.lista_itinerarios)
       },
-      error:(err)=>{
+      error: (err) => {
         console.error('Error al obtener Itinerarios:', err);
       },
-      complete:()=>{
-        console.log('Itinerarios obtenidos correctamente'); 
+      complete: () => {
+        console.log('Itinerarios obtenidos correctamente');
       }
     });
   }
 
   limpiar() {
-    this.dataVehiculo.id_vehiculo= 0
-    this.dataVehiculo.placa= "",
-    this.dataVehiculo.nro_part_reg= "",
-    this.dataVehiculo.modalidad= "",
-    this.dataVehiculo.estado= "",
+    this.dataVehiculo.id_vehiculo = 0
+    this.dataVehiculo.placa = "",
+      this.dataVehiculo.nro_part_reg = "",
+      this.dataVehiculo.modalidad = "",
+      this.dataVehiculo.estado = "",
 
-    this.dataVehiculo.carga= "",
-    this.dataVehiculo.peso= "",
-    this.dataVehiculo.categoria= "",
-    this.dataVehiculo.anio_fabricacion= "",
-    this.dataVehiculo.color= "",
-    this.dataVehiculo.nro_chasis= "",
-    this.dataVehiculo.nro_asientos= "",
-    this.dataVehiculo. marca= "",
-    this.dataVehiculo.modelo= "",
-    this.dataVehiculo.serie= "",
-    this.dataVehiculo.carroceria= "",
+      this.dataVehiculo.carga = "",
+      this.dataVehiculo.peso = "",
+      this.dataVehiculo.categoria = "",
+      this.dataVehiculo.anio_fabricacion = "",
+      this.dataVehiculo.color = "",
+      this.dataVehiculo.nro_chasis = "",
+      this.dataVehiculo.nro_asientos = "",
+      this.dataVehiculo.marca = "",
+      this.dataVehiculo.modelo = "",
+      this.dataVehiculo.serie = "",
+      this.dataVehiculo.carroceria = "",
 
-    this.dataVehiculo.id_empresa_servicio= 0,
-    this.dataVehiculo.id_detalle_ruta_itinerario= 0,
-    this.dataVehiculo.id_resolucion= 0
+      this.dataVehiculo.id_empresa_servicio = 0,
+      this.dataVehiculo.id_detalle_ruta_itinerario = 0,
+      this.dataVehiculo.id_resolucion = 0
 
     this.idMarcaSeleccionada = 0;
     this.idModeloSeleccionado = 0;
