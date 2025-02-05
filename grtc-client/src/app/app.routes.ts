@@ -24,6 +24,7 @@ import { DetalleInfraestructuraComponent } from './infraestructure/pages/infraes
 import { ModInfraestructuraComponent } from './infraestructure/pages/infraestructura/mod-infraestructura/mod-infraestructura.component';
 import { ModInfraestructuraCertificadoComponent } from './infraestructure/pages/infraestructura/mod-infraestructura-certificado/mod-infraestructura-certificado.component';
 import { ModInfraestructuraResolucionComponent } from './infraestructure/pages/infraestructura/mod-infraestructura-resolucion/mod-infraestructura-resolucion.component';
+import { CrearInfraestructuraComponent } from './infraestructure/pages/infraestructura/crear-infraestructura/crear-infraestructura.component';
 
 export const routes: Routes = [
   {
@@ -55,6 +56,7 @@ export const routes: Routes = [
   { path: 'principal/consultas-tuc', component: ConsultasTucComponent },
 
   { path: 'principal/lista-infraestructura', component: ListaInfraestructuraComponent },
+  { path: 'principal/crear-infraestructura', component: CrearInfraestructuraComponent },
   { path: 'principal/infraestructura/detalle/:id_infraestructura', component: DetalleInfraestructuraComponent },
   { path: 'principal/mod-infraestructura/:id_infraestructura', component: ModInfraestructuraComponent },
   { path: 'principal/mod-infraestructura-certificado/:id_infraestructura/:id_certificado', component: ModInfraestructuraCertificadoComponent },

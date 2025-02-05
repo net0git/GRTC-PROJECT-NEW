@@ -33,7 +33,6 @@ import { SoloNumerosGuionDirective } from '../../../directives/solo-numeros-guio
 import { SoloNumerosDirective } from '../../../directives/solo-numeros.directive';
 import { SoloLetrasDirective } from '../../../directives/solo-letras.directive';
 import { SoloLetrasGuionDirective } from '../../../directives/solo-letras-guion.directive';
-
 import { crear_empresa_servicio_empresa_vf, crear_empresa_servicio_vehiculo_vf, crear_empresa_servicio_representante_vf, crear_empresa_servicio_resolucion_vf, crear_empresa_servicio_itinerario_vf, crear_empresa_servicio_arrendamiento_vf, crear_empresa_servicio_conductor_vf } from '../../../../infraestructure/validatorForm/empresaServicio.validator';
 import { lastValueFrom } from 'rxjs';
 import { CrearPersonaMessageResponse } from '../../../../domain/dto/PersonasResponse.dto';
@@ -116,8 +115,6 @@ export class CrearEmpresaServicioComponent implements OnInit {
     fecha_final: '',
     expediente: '',
   }
-
-
 
   dataResolucion: ResolucionModel = {
     id_resolucion: 0,

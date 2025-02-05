@@ -53,6 +53,11 @@ export interface InfraestructuraResponse {
 
 }
 
+export interface CrearInfraestructuraResponse {
+  id_infraestructura: number;
+  text: string;
+}
+
 export interface ModifcarInfraestructraMessageResponse {
   text: string
 }

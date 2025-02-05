@@ -1,0 +1,23 @@
+<div class="panel_stepper">
+    <div class="d-flex justify-content-center">
+        <div class="progress-container">
+            <div class="progress" role="progressbar" aria-label="Progreso del proceso" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar bg-warning opacity-50" [style.width.%]="progressValue"></div>
+            </div>
+            <div class="item d-flex flex-column" style="left: 0%;">
+                <div class="step-circle mt-2 " [style]="currentStep>=1 ? 'background-color: #a04000; color: aliceblue;' : null"> 1</div>
+                <p [style]="currentStep>=1 ? 'color: #284761e7;' : null">DATOS INFRAESTRUCTURA</p>
+            </div>
+            <div class="item d-flex flex-column" style="left: 50%;">
+                <div class="step-circle mt-2" [style]="currentStep>=2 ? 'background-color: #a04000; color: aliceblue;' : null" > 2</div>
+                <p [style]="currentStep>=2 ? 'color: #284761e7;' : null">REPRESENTANTE / EMPRESA</p>
+            </div>
+            <div class="item d-flex flex-column" style="left: 100%;">
+                <div class="step-circle mt-2" [style]="currentStep>=3 ? 'background-color: #a04000; color: aliceblue;' : null"> 3</div>
+                <p [style]="currentStep>=3 ? 'color: #284761e7;' : null">RESOLUCION</p>
+            </div>
+          
+           
+        </div>
+    </div>
+  </div>

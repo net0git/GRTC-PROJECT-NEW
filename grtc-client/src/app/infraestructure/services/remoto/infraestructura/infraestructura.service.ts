@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environment';
-import { detalleInfraestructuraResponse, InfraestructuraResponse, ListaInfraestructuraResponse, ModifcarInfraestructraMessageResponse } from '../../../../domain/dto/InfraestructuraResponse.dto';
+import { CrearInfraestructuraResponse, detalleInfraestructuraResponse, InfraestructuraResponse, ListaInfraestructuraResponse, ModifcarInfraestructraMessageResponse } from '../../../../domain/dto/InfraestructuraResponse.dto';
 import { InfraestructuraModel } from '../../../../domain/models/Infraestructura.model'
 
 // import { InfraestructuraModel } from '../../../../domain/models/InfraEstructura.model';
@@ -19,6 +19,10 @@ export class InfraestructuraService {
   //       this.router.put('/api/infraestructura/:id_infraestructura',infraestructuraController.ModificarEmpresaInfraestuctura)  
   api_uri_infraestructura=`${environment.urlApi}/infraestructura`
   constructor(private http: HttpClient) { }
+
+  crearInfraestructura(infraestructura:InfraestructuraModel):Observable<CrearInfraestructuraResponse>{
+    return this.http.post<CrearInfraestructuraResponse>(this.api_uri_infraestructura,infraestructura)
+  }
 
   listarInfraestructura():Observable<ListaInfraestructuraResponse[]>{
     return this.http.get<ListaInfraestructuraResponse[]>(this.api_uri_infraestructura)

@@ -43,4 +43,8 @@ export class ListaInfraestructuraComponent implements OnInit {
   detalleInfraestructura(id:number){
     this.router.navigate(['principal/infraestructura/detalle',id])
   }
+
+  crearInfraestructura(){
+    this.router.navigate(['principal/crear-infraestructura'])
+  }
 }
