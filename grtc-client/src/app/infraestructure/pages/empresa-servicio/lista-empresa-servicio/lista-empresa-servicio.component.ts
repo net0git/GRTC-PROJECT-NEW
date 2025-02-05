@@ -19,6 +19,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 export class ListaEmpresaServicioComponent implements OnInit {
 
   listaEmpresasServicio:ListaEmpresaServicioResponse[]=[]; 
+  listaEmpresasServicioTemp:ListaEmpresaServicioResponse[]=[]; 
   p:number=1;
   constructor(private router: Router, private empresaServicioService: EmpresaServicioService) { }
 
@@ -30,6 +31,7 @@ export class ListaEmpresaServicioComponent implements OnInit {
     this.empresaServicioService.listarEmpresasServicio().subscribe({
       next:(res:ListaEmpresaServicioResponse[])=>{
         this.listaEmpresasServicio=res
+        this.listaEmpresasServicioTemp=res
         console.log(this.listaEmpresasServicio)
       },
       error:(err)=>{
@@ -40,6 +42,63 @@ export class ListaEmpresaServicioComponent implements OnInit {
       } 
     })
   }
+  filtrarEmpresa(id: number) {
+    this.listaEmpresasServicio  = this.listaEmpresasServicioTemp.filter((empresa: { id_tipo_servicio: number; }) => empresa.id_tipo_servicio == id);
+    
+  }
+
+  seleccionarTipoTransporte(event: any) {
+    // Obtener el valor seleccionado
+    const valorSeleccionado = event.target.value;
+
+    // Aquí puedes ejecutar tu lógica según el valor seleccionado
+    switch (valorSeleccionado) {
+      case '1':
+        // Lógica para Transporte de personas
+        this.filtrarEmpresa(valorSeleccionado);
+       
+        break;
+      case '2':
+        // Lógica para Transporte turístico
+        this.filtrarEmpresa(valorSeleccionado);
+      
+        break;
+      case '3':
+        // Lógica para Transporte de trabajadores
+        this.filtrarEmpresa(valorSeleccionado);
+      
+        break;
+      case '4':
+        // Lógica para Transporte escolar
+        this.filtrarEmpresa(valorSeleccionado);
+
+        break;
+      default:
+        // Lógica para el caso por defecto (ninguna opción seleccionada)
+        this.restaurarEmpresas();
+       
+        break;
+    }
+  }
+  restaurarEmpresas() {
+    this.listaEmpresasServicio = this.listaEmpresasServicioTemp;
+    
+}
+
+  buscarEnObjeto(event: any) {
+    const textoBusqueda = event.target.value.toLowerCase();
+    this.listaEmpresasServicio = this.listaEmpresasServicioTemp.filter((objeto: ListaEmpresaServicioResponse) => {
+      const expediente = objeto.expediente ? objeto.expediente.toLowerCase() : '';
+      const empresa = objeto.empresa ? objeto.empresa.toLowerCase() : '';
+      const ruc = objeto.ruc ? objeto.ruc.toLowerCase() : '';
+      const estado = objeto.estado ? objeto.estado.toLowerCase() : '';
+
+      return expediente.includes(textoBusqueda) ||
+             empresa.includes(textoBusqueda) ||
+             ruc.includes(textoBusqueda) ||
+             estado.includes(textoBusqueda) 
+    });
+}
 
 
   crearEmpresaServicio(){

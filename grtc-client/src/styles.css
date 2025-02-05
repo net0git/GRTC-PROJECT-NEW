@@ -99,3 +99,36 @@ img{
 .form-control{
     text-transform:uppercase;
 }
+
+
+/* iconos */
+i{
+    cursor: pointer;
+}
+.bi-pencil-square {
+    display: inline-block; /* Permite que transform funcione correctamente */
+    transition: transform 0.1s ease-in-out, color 0.2s ease-in-out; /* Suaviza el efecto */
+}
+
+.bi-pencil-square:hover {
+    color: #206b1d;
+    transform: scale(1.2); /* Aumenta el tamaño sin alterar el diseño */
+}
+
+
+.bi-trash3-fill{
+    color: rgba(167, 62, 62, 0.836);
+}
+.bi-trash3-fill:hover{
+    color: rgb(211, 11, 11);
+}
+
+.bi-pencil-fill {
+    color: #176091;
+    
+}
+.bi-pencil-fill:hover {
+    color: #408ec2;
+}
+
+
