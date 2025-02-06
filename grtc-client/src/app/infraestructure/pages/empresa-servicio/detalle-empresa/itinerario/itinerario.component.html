@@ -28,7 +28,7 @@
                                 <div class="form-group ">
                                     <label for="itinerario" class="form-label mt-3 ">Itinerario:</label>
                                     <textarea class="form-control" name="itinerario" rows="4"
-                                        [(ngModel)]="dataItinerario.itinerario"></textarea>
+                                        [(ngModel)]="dataItinerario.itinerario" appSoloLetrasGuion></textarea>
                                 </div>
                                 <div class="form-group ">
                                     <label for="frecuencia" class="form-label mt-3 ">Frecuencia:</label>
@@ -37,7 +37,7 @@
                                 </div>
 
                             </fieldset>
-                            <div class="d-grid gap-2 mt-2">
+                            <div class="d-grid gap-2 mt-4">
                                 <button [ngClass]="modificar ? 'btn btn-warning' : ' btn btn-success'"  type="button" (click)="GuardarDatosFormulario()">{{modificar? 'Modificar' : 'Guardar'}}</button> 
                             </div>
                             <div class="d-grid gap-2 mt-2">

@@ -284,11 +284,18 @@
                                             <td (click)="toggleCollapse(i)">{{vehiculo.fecha_final |date:'dd/MM/yyyy'}}
                                             </td>
                                             <td>
-                                                <i
+                                                <!-- <i
                                                     [class.bi-postcard-fill]="vehiculo.id_tuc !== null"
                                                     (click)="openModal(vehiculo)"
                                                     [style.color]="vehiculo.id_tuc !== null ? '#007bff' : '#6c757d' "
-                                                ></i>
+                                                ></i> -->
+
+                                                <img  *ngIf="vehiculo.id_tuc !== null" 
+                                                class="hand_cursor"
+                                                src="/icon/empresa/tuc/tuc_2.png" 
+                                                width="32px"  alt="logo"
+                                                title="TUC asigado"
+                                                (click)="openModal(vehiculo)">
                                             </td>
 
                                             <!-- <td ><i class="bi bi-filetype-pdf icon-custom-pdf" (click)="openModal(vehiculo)"></i></td> -->

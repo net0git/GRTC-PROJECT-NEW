@@ -51,9 +51,7 @@ export function mod_empresa_servicio_vf(dataPersona: PersonaModel, dataEmpresa: 
   if (!dataPersona.ap_paterno) {
     errorValidacion.push({ campo: 'apellido paterno del representante', mensaje: 'Campo requerido' });
   }
-  if (!dataPersona.ap_materno) {
-    errorValidacion.push({ campo: 'apellido materno del representante', mensaje: 'Campo requerido' });
-  }
+  
   if (dataPersona.telefono.length > 0) {
     if (!Validators.validarTelefono(dataPersona.telefono)) {
       errorValidacion.push({ campo: 'telefono representante', mensaje: 'Campo no válido' });
@@ -204,7 +202,10 @@ export function crear_empresa_servicio_arrendamiento_vf(dataArrendamiento: Arren
     errorValidacion.push({ campo: 'arrendador', mensaje: 'Campo requerido' })
   }
   if (!dataArrendamiento.dni) {
-    errorValidacion.push({ campo: 'dni', mensaje: 'Campo requerido' })
+    
+    if(dataArrendamiento.dni?.length!==8){
+      errorValidacion.push({ campo: 'dni', mensaje: 'La cantidad de caracteres debe ser 8 para el tipo de documento DNI' })
+    }
   }
   if (!dataArrendamiento.departamento) {
     errorValidacion.push({ campo: 'departamento', mensaje: 'Campo requerido' })
@@ -221,7 +222,6 @@ export function crear_empresa_servicio_arrendamiento_vf(dataArrendamiento: Arren
   if (!dataArrendamiento.fecha_inicio) {
     errorValidacion.push({ campo: 'fecha_inicio', mensaje: 'Campo requerido' })
   }
-  
   return errorValidacion
 }
 

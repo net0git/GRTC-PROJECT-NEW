@@ -169,7 +169,7 @@ export class ModEmpresaServicioComponent implements OnInit {
       },
       complete: () => {
         console.log('empresa modificada correctamente');
-        this.sweetAlert.MensajeToast('La empresa se modifico correctamente')
+     
       }
     });
   }
@@ -184,7 +184,7 @@ export class ModEmpresaServicioComponent implements OnInit {
       },
       complete: () => {
         console.log('empresa modificada correctamente');
-        this.sweetAlert.MensajeToast('La empresa se modifico correctamente')
+     
       }
     });
   }
@@ -199,7 +199,7 @@ export class ModEmpresaServicioComponent implements OnInit {
       },
       complete: () => {
         console.log('persona modificada correctamente');
-        this.sweetAlert.MensajeToast('La persona se modifico correctamente')
+        
       }
     });
   }
@@ -219,7 +219,8 @@ export class ModEmpresaServicioComponent implements OnInit {
     this.ModificarEmpresa()
     this.ModificarEmpresaServicio()
     this.modificarDatosPersona()
-    this.router.navigate(['/principal/detalle-empresa-servicio/' + this.dataEmpresaServicio.id_empresa_servicio])
+    this.sweetAlert.MensajeToast('modificacion en proceso')
+    
 
   }
 

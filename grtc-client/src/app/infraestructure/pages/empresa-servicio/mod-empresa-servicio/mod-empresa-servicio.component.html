@@ -141,7 +141,7 @@
 
                                 <div class="col-sm-6">
                                     <input id="documento_id" type="text" class="form-control" name="documento_id"
-                                        [(ngModel)]="dataPersona.documento" appSoloNumeros>
+                                        [(ngModel)]="dataPersona.documento" appSoloNumeros [attr.maxlength]="dataPersona.tipo_doc === 'CE' ? 12 : (dataPersona.tipo_doc === 'DNI' ? 8 : null)">
                                 </div>
                             </div>
                         </div>

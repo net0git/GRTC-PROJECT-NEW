@@ -9,13 +9,14 @@ import { CrearItinerarioMessageResponse, EliminarItinerarioMessageResponse, List
 import { ActivatedRoute } from '@angular/router';
 import { SweetAlert } from '../../../../shared/animated-messages/sweetAlert';
 import { SoloLetrasDirective } from '../../../../directives/solo-letras.directive';
+import { SoloLetrasGuionDirective } from '../../../../directives/solo-letras-guion.directive';
 import { SoloNumerosDirective } from '../../../../directives/solo-numeros.directive';
 import { ErrorValidacion } from '../../../../../domain/dto/ErrorValidacion.dto';
 
 @Component({
   selector: 'app-itinerario',
   standalone: true,
-  imports: [NavegadorComponent, SubnavegadorComponent, FormsModule, CommonModule, SoloLetrasDirective, SoloNumerosDirective],
+  imports: [NavegadorComponent, SubnavegadorComponent, FormsModule, CommonModule, SoloLetrasDirective, SoloNumerosDirective, SoloLetrasGuionDirective],
   templateUrl: './itinerario.component.html',
   styleUrl: './itinerario.component.css'
 })
