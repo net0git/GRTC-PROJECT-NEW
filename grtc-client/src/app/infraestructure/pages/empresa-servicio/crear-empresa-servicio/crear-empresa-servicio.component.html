@@ -296,12 +296,12 @@
                                             <div class="form-group ">
                                                 <label for="origen_itinerario" class="form-label ">Origen:</label>
                                                 <input type="text" class="form-control" name="origen_itinerario"
-                                                    [(ngModel)]="dataItinerario.origen">
+                                                    [(ngModel)]="dataItinerario.origen" appSoloLetras>
                                             </div>
                                             <div class="form-group mt-3">
                                                 <label for="destino_itinerario" class="form-label ">Destino:</label>
                                                 <input type="text" class="form-control" name="destino_itinerario"
-                                                    [(ngModel)]="dataItinerario.destino">
+                                                    [(ngModel)]="dataItinerario.destino" appSoloLetras>
                                             </div>
                                             <div class="form-group mt-3">
                                                 <label for="itinerario" class="form-label  ">Itinerario:</label>
@@ -510,7 +510,7 @@
                                     <fieldset>
                                         <div class="form-group mb-3">
                                             <label for="nombre_conductor " class="form-label ">Nombre(s)</label>
-                                            <input type="text" class="form-control" name="nombre" placeholder="Nombre(s)" [(ngModel)]="dataPersonaConductor.nombres" appSoloLetras>
+                                            <input type="text" class="form-control" name="nombre"  [(ngModel)]="dataPersonaConductor.nombres" appSoloLetras>
                                         </div>
                                         <div class="form-group mb-3">
                                             <div class="row">
@@ -522,12 +522,11 @@
                                                     <label for="ap_materno" class="form-label ">Apellido Materno:</label>
                                                     <input type="text" class="form-control" name="ap_materno" [(ngModel)]="dataPersonaConductor.ap_materno" appSoloLetras>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="correo" class="form-label">Correo:</label>
-                                            <input type="email" class="form-control texto-correo" name="correo"  [(ngModel)]="dataPersonaConductor.correo">
+                                            <input type="email" class="form-control text-correo" name="correo"  [(ngModel)]="dataPersonaConductor.correo">
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="documento_id" class="form-label">Documento de Identidad:</label>
@@ -538,19 +537,18 @@
                                                     <option value="CE">CARNET DE ESTRANGERIA</option>
                                                     <option value="DNI">DNI</option>
                                                 </select>
-                                                <input type="text" class="form-control" name="documento" [(ngModel)]="dataPersonaConductor.documento" appSoloNumeros> 
+                                                <input type="text" class="form-control" name="documento" [(ngModel)]="dataPersonaConductor.documento" appSoloNumeros [attr.maxlength]="dataPersonaConductor.tipo_doc === 'CE' ? 12 : (dataPersonaConductor.tipo_doc === 'DNI' ? 8 : null)"> 
                                             </div>
                                         </div>
                                         <div class="form-group mb-3">
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-4">
                                                     <label for="telefono" class="form-label ">Telefono/cel:</label>
-                                                    <input type="number" min="0" class="form-control" name="telefono"  placeholder="Telefono/cel" [(ngModel)]="dataPersonaConductor.telefono" appSoloNumeros>
+                                                    <input type="text" min="0" class="form-control" name="telefono" [(ngModel)]="dataPersonaConductor.telefono" appSoloNumeros maxlength="9">
                                                 </div>
                                                 <div class="col-sm-12 col-md-4">
                                                     <label for="licencia" class="form-label ">Licencia:</label>
-                                                    <input type="text" class="form-control" name="nro_licencia" placeholder="Licencia" [(ngModel)]="dataConductor.nro_licencia">
-
+                                                    <input type="text" class="form-control" name="nro_licencia"  [(ngModel)]="dataConductor.nro_licencia">
                                                 </div>
                                                 <div class="col-sm-12 col-md-4 ">
                                                     <label for="categoria" class="form-label ">Categoria:</label>
@@ -562,7 +560,6 @@
                                                         <option value="A-IIIa">A-IIIa</option>
                                                         <option value="A-IIIb">A-IIIb</option>
                                                         <option value="A-IIIc">A-IIIc</option>
-
                                                     </select>
                                                 </div>
                                             </div>
@@ -752,7 +749,10 @@
             
                                                 <div class="row">
                                                     <div class="col-sm-3">
-                                                        <label for="marca" class="form-label">Marca:</label>
+                                                        <label for="marca" class="form-label d-flex justify-content-between align-items-center">
+                                                            <span>Marca:</span>
+                                                            <i class="bi bi-pencil-square" title="agregar marca y modelo" (click)="openModal()"></i>
+                                                        </label>
             
                                                         <select id="marca" name="marca" class="form-control form-control-sm select-reverse" [(ngModel)]="idMarcaSeleccionada" (click)="listarMarcas()" (change)="onMarcaSeleccionada()" [disabled]="deshabilitarFormVehiculo">
                                                             <option value=0  disabled selected>MARCA</option>
@@ -845,10 +845,21 @@
 
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary   mx-2" (click)="prevStep()">Anterior</button>
-                    <button type="button" class="btn btn-primary  mx-2" (click)="mostrar()">Registrar</button>
+                    <button type="button" class="btn btn-primary  mx-2" (click)="RegistrarEmpresaServicio()" [disabled]="desabilitarButtonCrearEmpresa">Registrar</button>
                 </div>
             </div>
         </div>
 
+    </div>
+</div>
+
+<div class="modal fade modal-xl" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content m-0 p-0 ">
+       
+        <div class="modal-body text-start p-0 m-0">
+            <app-registro-marca-modelo></app-registro-marca-modelo>
+        </div>
+      </div>
     </div>
 </div>

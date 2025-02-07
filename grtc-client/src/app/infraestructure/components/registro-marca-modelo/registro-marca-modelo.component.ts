@@ -108,6 +108,7 @@ export class RegistroMarcaModeloComponent implements OnInit {
   }
 
   buscarNombreMarca(nombre_marca_temp: string): boolean {
+    nombre_marca_temp = nombre_marca_temp.toUpperCase().trim()
     for (let i = 0; i < this.listaMarcasTemp.length; i++) {
       if (this.listaMarcasTemp[i].nombre_marca == nombre_marca_temp) {
         return true
@@ -117,6 +118,7 @@ export class RegistroMarcaModeloComponent implements OnInit {
   }
 
   buscarNombreModelo(nombre_modelo_temp:string):boolean{
+    nombre_modelo_temp = nombre_modelo_temp.toUpperCase().trim()
     for (let i=0;i<this.listaModelos.length;i++){
       if (this.listaModelos[i].nombre_modelo==nombre_modelo_temp){
         return true

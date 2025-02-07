@@ -167,9 +167,14 @@ export function crear_empresa_servicio_resolucion_vf(dataResolucion: ResolucionM
   }
   if (!dataResolucion.anio_resolucion) {
     errorValidacion.push({ campo: 'año de resolución', mensaje: 'Campo requerido' })
+  } else if ( dataResolucion.anio_resolucion.length < 4){
+    errorValidacion.push({ campo: 'año de resolución', mensaje: 'Año de resolución inválido' })
   }
   if (!dataResolucion.tomo_resolucion) {
     errorValidacion.push({ campo: 'tomo', mensaje: 'Campo requerido' })
+  }
+  if (!dataResolucion.fecha_resolucion) {
+    errorValidacion.push({ campo: 'fecha de resolución', mensaje: 'Campo requerido' })
   }
   if (!dataResolucion.descripcion) {
     errorValidacion.push({ campo: 'descripción', mensaje: 'Campo requerido' })
@@ -202,10 +207,9 @@ export function crear_empresa_servicio_arrendamiento_vf(dataArrendamiento: Arren
     errorValidacion.push({ campo: 'arrendador', mensaje: 'Campo requerido' })
   }
   if (!dataArrendamiento.dni) {
-    
-    if(dataArrendamiento.dni?.length!==8){
-      errorValidacion.push({ campo: 'dni', mensaje: 'La cantidad de caracteres debe ser 8 para el tipo de documento DNI' })
-    }
+    errorValidacion.push({ campo: 'dni', mensaje: 'Campo requerido' })
+  }else if (dataArrendamiento.dni.length !== 8) {
+    errorValidacion.push({ campo: 'dni', mensaje: 'El DNI debe tener 8 dígitos' })
   }
   if (!dataArrendamiento.departamento) {
     errorValidacion.push({ campo: 'departamento', mensaje: 'Campo requerido' })
@@ -272,8 +276,15 @@ export function crear_empresa_servicio_vehiculo_vf(cuerpo_vehiculo: VehiculoMode
   if (!cuerpo_vehiculo.placa) {
     errorValidacion.push({ campo: 'placa', mensaje: 'Campo requerido' });
   }
+  if (!cuerpo_vehiculo.anio_fabricacion) {
+    errorValidacion.push({ campo: 'anio_fabricacion', mensaje: 'Campo requerido' });
+  } else if (cuerpo_vehiculo.anio_fabricacion.length < 4) {
+    errorValidacion.push({ campo: 'anio_fabricacion', mensaje: 'El campo Anio Fabricacion debe tener 4 caracteres' });
+  }
   if (!cuerpo_vehiculo.nro_part_reg) {
     errorValidacion.push({ campo: 'nro_part_reg', mensaje: 'Campo requerido' });
+  } else if (cuerpo_vehiculo.nro_part_reg.length < 8) {
+    errorValidacion.push({ campo: 'nro_part_reg', mensaje: 'El campo Partida Registral debe tener 8 caracteres' });
   }
   if (!cuerpo_vehiculo.modalidad) {
     errorValidacion.push({ campo: 'modalidad', mensaje: 'Campo requerido' });
@@ -290,9 +301,7 @@ export function crear_empresa_servicio_vehiculo_vf(cuerpo_vehiculo: VehiculoMode
   if (!cuerpo_vehiculo.categoria) {
     errorValidacion.push({ campo: 'categoria', mensaje: 'Campo requerido' });
   }
-  if (!cuerpo_vehiculo.anio_fabricacion) {
-    errorValidacion.push({ campo: 'anio_fabricacion', mensaje: 'Campo requerido' });
-  }
+  
   if (!cuerpo_vehiculo.color) {
     errorValidacion.push({ campo: 'color', mensaje: 'Campo requerido' });
   }

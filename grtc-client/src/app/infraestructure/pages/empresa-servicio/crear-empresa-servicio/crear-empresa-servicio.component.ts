@@ -45,18 +45,21 @@ import { ConductorService } from '../../../services/remoto/conductor/conductor.s
 import { HistorialVehicularModel } from '../../../../domain/models/HistorialVehicular.model';
 import { HistorialVehicularService } from '../../../services/remoto/historial-vehicular/historial-vehicular.service';
 import { CrearHistorialVehicularMessageResponse } from '../../../../domain/dto/HistorialVehicularResponse.dto';
+import { RegistroMarcaModeloComponent } from '../../../components/registro-marca-modelo/registro-marca-modelo.component';
+import Swal from 'sweetalert2';
 
-
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-crear-empresa-servicio',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavegadorComponent, SubnavegadorComponent, ProgressBarComponent, SoloNumerosGuionDirective, SoloNumerosDirective, SoloLetrasDirective, SoloLetrasGuionDirective],
+  imports: [CommonModule, FormsModule, NavegadorComponent, SubnavegadorComponent, ProgressBarComponent, SoloNumerosGuionDirective, SoloNumerosDirective, SoloLetrasDirective, SoloLetrasGuionDirective, RegistroMarcaModeloComponent],
   templateUrl: './crear-empresa-servicio.component.html',
   styleUrl: './crear-empresa-servicio.component.css'
 })
 export class CrearEmpresaServicioComponent implements OnInit {
 
+  private myModal: any;
   currentStep: number = 1;
   progressValue = ((1) / 7) * 100;
   pdfUrl: SafeResourceUrl | null = null;
@@ -66,6 +69,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
   lista_conductores: ListaConductoresResponse[] = [];
   lista_vehiculos: ListaVehiculosResponse[] = [];
   lista_contratos_arrendamientos: ListaArrendamientoResponse[] = [];
+  
 
   departamentos: string[] = []
   provincias: string[] = []
@@ -81,6 +85,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
   deshabilitarCampoExpediente = true
   deshabilitarFormRepresentante = true
   deshabilitarFormVehiculo = true
+  desabilitarButtonCrearEmpresa = false
 
   dataPersonaRepresentante: PersonaModel = {
     id_persona: 0,
@@ -217,6 +222,14 @@ export class CrearEmpresaServicioComponent implements OnInit {
     this.listarMarcas()
   }
 
+  openModal() {
+    this.myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
+    this.myModal.show();
+  }
+
+  closeModal() {
+    this.myModal.hide();
+  }
   // -----------------------------------------------------------------------------------------------------------
   nextStep(): void {
     this.currentStep++;
@@ -313,7 +326,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
       this.nextStep()
     }
 
-  
+
   }
 
   validarDatosFormularioResolucion() {
@@ -377,9 +390,9 @@ export class CrearEmpresaServicioComponent implements OnInit {
 
   // MANEJO DE ITINARARIOS
   itinerarioNextStep() {
-    if(this.lista_itinerarios.length>0){
+    if (this.lista_itinerarios.length > 0) {
       this.nextStep()
-    }else{
+    } else {
       alert('debes registrar por lo menos una ruta a la empresa')
     }
   }
@@ -406,11 +419,11 @@ export class CrearEmpresaServicioComponent implements OnInit {
   // -----------------------------------------------------------------------------------------------------------
   // MANEJO DE ARRENDAMIENTOS
   arrendamientoNextStep() {
-    if(this.lista_contratos_arrendamientos.length>0){
+    if (this.lista_contratos_arrendamientos.length > 0) {
       this.nextStep()
-    }else{
+    } else {
       alert('debes registrar por lo menos un contrato de arrendamiento')
-    } 
+    }
   }
 
   enviarDatosListaArrendamiento() {
@@ -440,9 +453,9 @@ export class CrearEmpresaServicioComponent implements OnInit {
   // -----------------------------------------------------------------------------------------------------------
   // MANEJO DE CONDUCTORES
   conductorNextStep() {
-    if(this.lista_conductores.length>0){
+    if (this.lista_conductores.length > 0) {
       this.nextStep()
-    }else{
+    } else {
       alert('debes registrar por lo menos un conductor')
     }
   }
@@ -868,16 +881,9 @@ export class CrearEmpresaServicioComponent implements OnInit {
 
   }
 
-  async mostrar() {
-    // console.log(this.dataPersonaRepresentante)
-    // console.log(this.dataEmpresa)
-    // console.log(this.dataEmpresaServicio)
-    // console.log(this.dataResolucion)
-    // console.log(this.lista_itinerarios)
-    // console.log(this.lista_contratos_arrendamientos)
-    // console.log(this.lista_conductores)
-    //console.log(this.lista_vehiculos)
+  async RegistrarEmpresaServicio() {
 
+    this.desabilitarButtonCrearEmpresa = true
     await this.crearPersonaRepresentante();
     await this.crearEmpresa();
     await this.crearEmpresaServicio();
@@ -887,7 +893,32 @@ export class CrearEmpresaServicioComponent implements OnInit {
     await this.crearArrendamientos();
     await this.crearConductores();
     this.crearVehiculo();
+    this.finalizarCreacionEmpresa();
 
+  }
+
+  finalizarCreacionEmpresa(): void {
+    this.sweetAlert.MensajeToast('Creacion de empresa en proceso')
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "success",
+      title: "Creacion de empresa en proceso"
+    });
+
+    setTimeout(() => {
+      this.router.navigate(['/principal/detalle-empresa-servicio/', this.dataEmpresaServicio.id_empresa_servicio]);
+    }, 5500);
+    
   }
 
   async onFileSelected(event: any): Promise<void> {
