@@ -15,6 +15,8 @@ import { crear_infraestructura_representante_vf, crear_infraestructura_resolucio
 import { CrearInfraestructuraResponse } from '../../../../domain/dto/InfraestructuraResponse.dto';
 import { CrearResolucionInfraestructuraMessageResponse, CrearResolucionMessageResponse } from '../../../../domain/dto/ResolucionResponse.dto';
 import { ResolucionInfraestructuraModel } from '../../../../domain/models/ResolucionInfraestructura.model';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-infraestructura',
@@ -61,7 +63,7 @@ export class CrearInfraestructuraComponent implements OnInit {
   distritos: string[] = []
 
 
-  constructor(private sanitizer: DomSanitizer, private ubigeoService:UbigeoService, private infraestructuraService: InfraestructuraService, private resolucionService:ResolucionService) { }
+  constructor(private sanitizer: DomSanitizer, private ubigeoService:UbigeoService, private infraestructuraService: InfraestructuraService, private resolucionService:ResolucionService, private router: Router,) { }
 
   ngOnInit(): void {
     this.currentStep = 1;
@@ -130,6 +132,7 @@ export class CrearInfraestructuraComponent implements OnInit {
     } else {
       this.mostrarDatos()
       this.crearInfraestructura()
+      this.finalizarCreacionInfraestructura()
     }
   }
 
@@ -183,8 +186,33 @@ export class CrearInfraestructuraComponent implements OnInit {
       },
       error:(error:any) => {
         console.log(error)
+
       }   
     })
+  }
+
+  finalizarCreacionInfraestructura(): void {
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "success",
+      title: "Creacion de Infraestructura en proceso"
+    });
+
+    setTimeout(() => {
+      this.router.navigate(['principal/infraestructura/detalle/', this.dataInfraestructura.id_infraestructura]);
+    }, 5500);
+    
   }
 
   async onFileSelected(event: any): Promise<void> {

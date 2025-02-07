@@ -13,15 +13,15 @@ import { InfraestructuraModel } from '../../../../domain/models/Infraestructura.
   providedIn: 'root'
 })
 export class InfraestructuraService {
-  // this.router.post('/api/infraestructura',infraestructuraController.CrearInfraestructura)
-  //       this.router.get('/api/infraestructura',infraestructuraController.listarAllInfraestructura)
-  //       this.router.get('/api/infraestructura/:id_infraestructura',infraestructuraController.ObtenerInfraestructuraDetalle)
-  //       this.router.put('/api/infraestructura/:id_infraestructura',infraestructuraController.ModificarEmpresaInfraestuctura)  
+
   api_uri_infraestructura=`${environment.urlApi}/infraestructura`
   constructor(private http: HttpClient) { }
 
-  crearInfraestructura(infraestructura:InfraestructuraModel):Observable<CrearInfraestructuraResponse>{
-    return this.http.post<CrearInfraestructuraResponse>(this.api_uri_infraestructura,infraestructura)
+  crearInfraestructura(cuerpo_infraestructura:InfraestructuraModel):Observable<CrearInfraestructuraResponse>{
+    cuerpo_infraestructura.expediente=cuerpo_infraestructura.expediente.trim().toUpperCase()
+    cuerpo_infraestructura.nombre_infraestructura=cuerpo_infraestructura.nombre_infraestructura.trim().toUpperCase()
+    cuerpo_infraestructura.direccion=cuerpo_infraestructura.direccion.trim().toUpperCase()
+    return this.http.post<CrearInfraestructuraResponse>(this.api_uri_infraestructura,cuerpo_infraestructura)
   }
 
   listarInfraestructura():Observable<ListaInfraestructuraResponse[]>{
@@ -37,6 +37,9 @@ export class InfraestructuraService {
   }
 
   modificarInfraestructura(cuerpo_infraestructura:InfraestructuraModel):Observable<ModifcarInfraestructraMessageResponse>{
+    cuerpo_infraestructura.expediente=cuerpo_infraestructura.expediente.trim().toUpperCase()
+    cuerpo_infraestructura.nombre_infraestructura=cuerpo_infraestructura.nombre_infraestructura.trim().toUpperCase()
+    cuerpo_infraestructura.direccion=cuerpo_infraestructura.direccion.trim().toUpperCase()
     return this.http.put<ModifcarInfraestructraMessageResponse>(this.api_uri_infraestructura+'/'+cuerpo_infraestructura.id_infraestructura,cuerpo_infraestructura)
   }
 

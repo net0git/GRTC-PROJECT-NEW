@@ -42,7 +42,21 @@ export function crear_infraestructura_representante_vf(dataInfraestructura: Infr
     }
     if(!dataInfraestructura.dni_representante){
         errorValidacion.push({ campo: 'dni representante', mensaje: 'Campo requerido' })
+    } else if (dataInfraestructura.dni_representante.length !== 8) {
+        errorValidacion.push({ campo: 'dni representante', mensaje: 'El DNI debe tener 8 digitos' })
     }
+    if(dataInfraestructura.empresa.length > 0 && dataInfraestructura.ruc_empresa.length == 0){
+        errorValidacion.push({ campo: 'ruc_empresa', mensaje: 'El RUC debe tener 11 digitos' })
+    }
+    if(dataInfraestructura.ruc_empresa.length > 0 && dataInfraestructura.empresa.length == 0) {
+        errorValidacion.push({ campo: 'razon social', mensaje: 'Campo requerido' })
+    }
+    if(dataInfraestructura.ruc_empresa.length > 0 && dataInfraestructura.ruc_empresa.length < 11){
+        errorValidacion.push({ campo: 'ruc_empresa', mensaje: 'El RUC debe tener 11 digitos' })
+        
+    }
+      
+    
 
     return errorValidacion
 }  
@@ -61,9 +75,14 @@ export function crear_infraestructura_resolucion_vf(dataResolucion: ResolucionMo
     }
     if (!dataResolucion.anio_resolucion) {
       errorValidacion.push({ campo: 'año de resolución', mensaje: 'Campo requerido' })
+    } else if (dataResolucion.anio_resolucion.length < 4) {
+      errorValidacion.push({ campo: 'año de resolución', mensaje: 'El año debe tener 4 digitos' })
     }
     if (!dataResolucion.tomo_resolucion) {
       errorValidacion.push({ campo: 'tomo', mensaje: 'Campo requerido' })
+    }
+    if (!dataResolucion.fecha_resolucion) {
+      errorValidacion.push({ campo: 'fecha de resolución', mensaje: 'Campo requerido' })
     }
     if (!dataResolucion.descripcion) {
       errorValidacion.push({ campo: 'descripción', mensaje: 'Campo requerido' })

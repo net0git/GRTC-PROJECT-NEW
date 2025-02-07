@@ -204,7 +204,6 @@ export class CrearEmpresaServicioComponent implements OnInit {
     private vehiculoService: VehiculoService,
     private empresaService: EmpresaService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private ubigeoService: UbigeoService,
     private sweetAlert: SweetAlert,
@@ -898,7 +897,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
   }
 
   finalizarCreacionEmpresa(): void {
-    this.sweetAlert.MensajeToast('Creacion de empresa en proceso')
+
     const Toast = Swal.mixin({
       toast: true,
       position: "top-end",
