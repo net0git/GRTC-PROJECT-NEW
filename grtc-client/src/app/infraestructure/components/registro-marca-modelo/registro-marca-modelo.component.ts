@@ -175,6 +175,15 @@ export class RegistroMarcaModeloComponent implements OnInit {
     });
   }
 
+  buscarEnObjeto(event: any) {
+  
+      const textoBusqueda = event.target.value.toLowerCase();
+      this.listaMarcas = this.listaMarcasTemp.filter((objeto: ListarMarcasResponse) => {
+        const marca = objeto.nombre_marca ? objeto.nombre_marca.toLowerCase() : '';
+        return marca.includes(textoBusqueda)
+      });
+    }
+
   mostrarMensajeTemporalMarca(){
     this.mostrarMensajeMarca=true
     setTimeout(() => {

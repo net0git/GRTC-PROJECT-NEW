@@ -130,8 +130,6 @@ export class ListaEmpresaServicioComponent implements OnInit {
         ruc.includes(textoBusqueda) ||
         estado.includes(textoBusqueda)
     });
-
-
   }
 
   crearEmpresaServicio() {
