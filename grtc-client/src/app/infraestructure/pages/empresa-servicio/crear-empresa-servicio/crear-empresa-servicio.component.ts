@@ -15,7 +15,6 @@ import { CrearItinerarioMessageResponse, ListaItinerarioResponse } from '../../.
 import { ListarMarcasResponse } from '../../../../domain/dto/MarcaResponse.dto';
 import { ListarModelosResponse } from '../../../../domain/dto/ModeloResponse.dto';
 import { ConductorModel } from '../../../../domain/models/Conductor.model';
-import { CrearConductorMessageResponse, ListaConductoresResponse } from '../../../../domain/dto/ConductorResponse.dto';
 import { VehiculoModel } from '../../../../domain/models/Vehiculo.model';
 import { FormsModule } from '@angular/forms';
 import { fileToBase64 } from '../../../../../../public/utils/pdfFunctions';
@@ -46,7 +45,9 @@ import { HistorialVehicularModel } from '../../../../domain/models/HistorialVehi
 import { HistorialVehicularService } from '../../../services/remoto/historial-vehicular/historial-vehicular.service';
 import { CrearHistorialVehicularMessageResponse } from '../../../../domain/dto/HistorialVehicularResponse.dto';
 import { RegistroMarcaModeloComponent } from '../../../components/registro-marca-modelo/registro-marca-modelo.component';
+import { CrearConductorMessageResponse, ListaConductoresResponse } from '../../../../domain/dto/ConductorResponse.dto';
 import Swal from 'sweetalert2';
+
 
 declare var bootstrap: any;
 

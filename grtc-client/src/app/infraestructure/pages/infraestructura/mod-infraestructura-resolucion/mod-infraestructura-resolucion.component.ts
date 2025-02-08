@@ -20,6 +20,7 @@ import {
 import { ResolucionInfraestructuraModel } from '../../../../domain/models/ResolucionInfraestructura.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { crear_infraestructura_resolucion_vf } from '../../../validatorForm/infraestructrua.validator';
 
 @Component({
   selector: 'app-mod-infraestructura-resolucion',
@@ -71,6 +72,7 @@ export class ModInfraestructuraResolucionComponent implements OnInit {
         this.dataInfraestructuraResolucion.id_infraestructura =
           params['id_infraestructura'];
         this.modificar = true;
+        this.titulo = 'Modificar resolución'
       } else {
         const unsafeUrl = 'doc/error_carga.pdf';
         this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
@@ -105,15 +107,28 @@ export class ModInfraestructuraResolucionComponent implements OnInit {
     this.pdfUrl = ShowDocumentoPdf(documento, this.sanitizer);
   }
   GuardarDatos() {
-    const params = this.activatedRoute.snapshot.params
-    if (this.modificar) {
-      this.ModificarResolucion();
-      this.sweetAlert.MensajeExito('se modifico con éxito') 
-    } else {
-      this.CrearResolucion();
-      this.sweetAlert.MensajeExito('se creo con éxito')
-    }
-    this.router.navigate(['/principal/infraestructura/detalle/',params['id_infraestructura']])
+   const erroresValidacion = crear_infraestructura_resolucion_vf(
+         this.dataResolucion
+       );
+       if (erroresValidacion.length > 0) {
+         let errorMensaje = '';
+         erroresValidacion.forEach((error) => {
+           errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
+         });
+         alert(errorMensaje);
+         console.log(errorMensaje);
+       } else {
+        if (this.modificar) {
+          this.ModificarResolucion();
+          
+        } else {
+          this.CrearResolucion();
+          
+        }
+       } 
+
+
+    
   }
   CrearResolucion() {
     this.resolucionService.CrearResolucion(this.dataResolucion).subscribe({
@@ -130,6 +145,7 @@ export class ModInfraestructuraResolucionComponent implements OnInit {
     });
   }
   ModificarResolucion() {
+    const params = this.activatedRoute.snapshot.params;
     this.resolucionService
       .ModificarResolucion(
         this.dataResolucion.id_resolucion,
@@ -145,6 +161,10 @@ export class ModInfraestructuraResolucionComponent implements OnInit {
             err
           );
         },
+        complete:()=>{
+          this.sweetAlert.MensajeExito('se modifico con éxito') 
+          this.router.navigate(['/principal/infraestructura/detalle/',params['id_infraestructura']])
+        }
       });
   }
 
@@ -163,6 +183,10 @@ export class ModInfraestructuraResolucionComponent implements OnInit {
         error: (err) => {
           console.log('la resolucion asociada no se pudo crear', err);
         },
+        complete:()=>{
+         this.sweetAlert.MensajeExito('se creo con éxito')
+         this.router.navigate(['/principal/infraestructura/detalle/',params['id_infraestructura']])
+        }
       });
   }
 
