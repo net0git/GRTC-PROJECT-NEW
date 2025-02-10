@@ -2,201 +2,99 @@
     <app-navegador></app-navegador>
     <app-subnavegador></app-subnavegador>
 
-    <div class="container-fluid">
+    <div class="contenedor">
 
-        <div class="row" >
-            <div class="col-lg-3" >
+        <div class="row">
+            <div class="col-lg-3">
                 <div class="menu-listado-reportes">
                     <div class="titulo">OTROS REPORTES</div>
                     <div class="lista">
-                        <div class="item"><div class="name"><i class="bi bi-map"></i> Vehiculos por ruta</div></div>
+                        <div class="item">
+                            <div class="name"><i class="bi bi-map"></i> Vehiculos por ruta</div>
+                        </div>
                     </div>
                     <div class="lista">
-                        <div class="item"><div class="name"> <i class="bi bi-geo-alt"></i> Empresas por ruta</div></div>
+                        <div class="item">
+                            <div class="name"> <i class="bi bi-geo-alt"></i> Empresas por ruta</div>
+                        </div>
                     </div>
                     <div class="lista">
-                        <div class="item"><div class="name"><i class="bi bi-bus-front"></i> Vehiculos por empresa</div></div>
+                        <div class="item">
+                            <div class="name"><i class="bi bi-bus-front"></i> Vehiculos por empresa</div>
+                        </div>
                     </div>
                     <div class="lista">
-                        <div class="item"><div class="name"><i class="bi bi-person"></i> Conductores y licencias</div></div>
-                    </div>
-                    <div class="lista">
-                        <div class="item"><div class="name"> <i class="bi bi-card-list"></i> Historial de un vehiculo por placa</div></div>
+                        <div class="item">
+                            <div class="name"> <i class="bi bi-card-list"></i> Historial de un vehiculo por placa</div>
+                        </div>
                     </div>
                 </div>
-              
-                
+
+
             </div>
             <div class="col-lg-9">
-                <div class="presentacion_user ">
-                    <div class="encabezado_pages">
-                        <i class="bi bi-card-list icon-custom-encabezado"></i>
-                        <p class="titulo_menu"> REPORTES</p>
-                    </div>
-                    <div class="row">
-                        <!-- EMPRESAS POR SERVICIO-->
-                        <div class="col-xl-3 col-md-6 mb-4 hand_cursor" >
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col-auto">
-                                            <i class="bi bi-building-fill icon-custom" style="color: #68b3c8;"></i>
-                                        </div>
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Empresas por Servicio
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                20
-                                            </div>
-                                        </div>
-                                        
-                                        <hr>
-                                        
-                                        <!-- <div class="data-report" *ngIf="cantidad_empresas_por_tipoServicio && cantidad_empresas_por_tipoServicio.length >= 4">
-                                            <div class="data-report">
-                                                <div *ngFor="let empresa of cantidad_empresas_por_tipoServicio; let i = index">
-                                                    <div *ngIf="i < 4">
-                                                        <h6>{{ empresa.tipo_servicio }}: <samp>{{ empresa.cantidad_empresas }}</samp></h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> -->
-                                 
-                                     
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <!-- INFRAESTRUCTURA-->
-                        <div class="col-xl-3 col-md-6 mb-4 hand_cursor" >
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col-auto">
-                                            
-                                            <i class="bi bi-buildings-fill icon-custom" style="color: #eb5e28;"></i>
-                                        </div>
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Infraestructura
-                                            </div>
-                                        
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">50   </div>
-                                        </div>
-                                        <hr>
-                                        
-                                        <!-- <div class="data-report" *ngIf="cantidad_infraestructura && cantidad_infraestructura.length >= 4">
-                                            <div class="data-report">
-                                                <div *ngFor="let infraestructura of cantidad_infraestructura; let i = index">
-                                                    <div *ngIf="i < 4">
-                                                        <h6>{{ infraestructura.tipo_infraestructura }} : <samp>{{ infraestructura.cantidad_infraestructuras }}</samp></h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> -->
-                                       
-                                        
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- VEHICULOS -->
-                        <div class="col-xl-3 col-md-6 mb-4 hand_cursor"  >
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col-auto">
-                                            <i class="bi bi-bus-front icon-custom" style="color: #7ac29a;"></i>
-                                        </div>
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Vehiculos
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">50
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <!-- <div class="data-report" *ngIf="cantidad_vehiculos_servicio && cantidad_vehiculos_servicio.length >= 4">
-                                            <div class="data-report">
-                                                <div *ngFor="let vehiculo of cantidad_vehiculos_servicio; let i = index">
-                                                    <div *ngIf="i < 4">
-                                                        <h6>{{ vehiculo.tipo_servicio }} : <samp>{{ vehiculo.cantidad_vehiculos }}</samp></h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> -->
-                                        
-                                            
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <!-- REPORTE DE ESTADO DE EMPRESAS -->
-                        <div class="col-xl-3 col-md-6 mb-4 hand_cursor" >
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col-auto">
-                                            <i class="bi bi-clipboard-data icon-custom" style="color: #68b3c8;"></i>
-                                        </div>
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#68b3c8;">
-                                                Estado de empresas</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                        <hr>
-                                            <div class="data-report">
-                                               
-                                                <!-- <div><h6>EMPRESAS ACTIVAS : <samp>{{this.cantidad_empresas_por_estado.empresas_activas}}</samp></h6></div>
-                                                <div><h6>EMPRESAS EN ALERTA : <samp>{{this.cantidad_empresas_por_estado.empresas_en_alerta}}</samp></h6></div>
-                                                <div><h6>EMPRESAS INACTIVAS : <samp>{{this.cantidad_empresas_por_estado.empresas_de_baja}}</samp></h6></div> -->
-                                            </div>
-                                    </div>
-                                </div>
+                <div class="encabezado_pages d-flex justify-content-start">
+                    <i class="bi bi-card-list icon-custom-encabezado"></i>
+                    <p class="titulo_menu"> REPORTES</p>
+                </div>
+                <div class="container mb-3">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <div class="card custom-card-blue p-3 shadow-sm">
+                                <h5 class="custom-title-blue">Empresas por servicio</h5>
+                                <p class="text-muted mb-0">350</p>
                             </div>
                         </div>
 
+                        <div class="col-md-3">
+                            <div class="card custom-card-purple p-3 shadow-sm">
+                                <h5 class="custom-title-purple">Infraestructuras</h5>
+                                <p class="text-muted mb-0">78</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card custom-card-orange p-3 shadow-sm">
+                                <h5 class="custom-title-orange">Vehiculos</h5>
+                                <p class="text-muted mb-0">2448</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card custom-card-green p-3 shadow-sm">
+                                <h5 class="custom-title-green">Conductores</h5>
+                                <p class="text-muted mb-0">189</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-              
+                <div class="container">
+                    <div class="dashboard-grid">
+                        <div class="card card_dashboard">
+                            <apx-chart [series]="barOptionsColor.series" [chart]="barOptionsColor.chart"
+                                [xaxis]="barOptionsColor.xaxis" [title]="barOptionsColor.title">
+                            </apx-chart>
+                           
+                        </div>
+                        <div class="card card_dashboard">
+                            <apx-chart [series]="barOptions.series" [chart]="barOptions.chart"
+                            [xaxis]="barOptions.xaxis" [title]="barOptions.title">
+                        </apx-chart>
+                        </div>
+                        <div class="card card_dashboard">
+                            <apx-chart [series]="PieOptions.series" [chart]="PieOptions.chart"
+                                [labels]="PieOptions.labels" [title]="PieOptions.title">
+                            </apx-chart>
+                        </div>
+                        <div class="card card_dashboard">
+                            <apx-chart [series]="DonutOptions.series" [chart]="DonutOptions.chart"
+                                [labels]="DonutOptions.labels" [title]="DonutOptions.title">
+                            </apx-chart>
+                        </div>
+                    </div>
+                </div>
                 
-                     
-                  <!-- <div *ngIf="showComponent === 'reportesHistorialVehicular'">
-                    <app-reportes-historial-vehicular></app-reportes-historial-vehicular>
-                  </div>
-                  <div *ngIf="showComponent === 'reportesConductores'">
-                    <app-reportes-conductores></app-reportes-conductores>
-                  </div>
-                  <div *ngIf="showComponent === 'reportesEmpresasEstado'">
-                    <app-reportes-empresas-estado></app-reportes-empresas-estado>
-                  </div> -->
-
-            <!-- </div>
-            <div *ngIf="showComponent === 'reportesVehiculosPorRuta'">
-                <app-reportes-vehiculos-por-ruta></app-reportes-vehiculos-por-ruta>
             </div>
-            <div *ngIf="showComponent === 'reportesEmpresasPorRuta'">
-                <app-reportes-empresas-por-ruta></app-reportes-empresas-por-ruta>
-              </div>
-            <div *ngIf="showComponent === 'reportesVehiculosPorEmpresa'">
-                <app-reportes-vehiculos-por-empresa></app-reportes-vehiculos-por-empresa>
-              </div>
-            <div *ngIf="showComponent === 'reportesEmpresaServicio'">
-                <app-reportes-empresa-servicio></app-reportes-empresa-servicio>
-              </div>
-              <div *ngIf="showComponent === 'reportesInfraestructura'">
-                <app-reportes-infraestructura></app-reportes-infraestructura>
-              </div>
-              <div *ngIf="showComponent === 'reportesVehiculos'">
-                <app-reportes-vehiculos></app-reportes-vehiculos>
-              </div>
-
-            
-        </div> -->
-    </div>    
+        </div>
+    </div>
 </div>
