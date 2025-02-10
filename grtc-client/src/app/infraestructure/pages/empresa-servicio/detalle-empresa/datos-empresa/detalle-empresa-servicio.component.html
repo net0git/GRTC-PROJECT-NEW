@@ -28,7 +28,7 @@
                                 <a class="nav-link" id="section2-tab" data-bs-toggle="tab"
                                     href="#section2">Conductores</a>
                             </li>
-                            <li class="nav-item">
+                            <li *ngIf="this.dataEmpresaDetalle.id_tipo_servicio!=2" class="nav-item">
                                 <a class="nav-link" id="section2-tab" data-bs-toggle="tab"
                                     href="#section3">Arrendamiento</a>
                             </li>

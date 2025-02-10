@@ -124,9 +124,6 @@ export function crear_empresa_servicio_representante_vf(dataPersona: PersonaMode
   if (!dataPersona.ap_paterno) {
     errorValidacion.push({ campo: 'apellido paterno', mensaje: 'Campo requerido' });
   }
-  if (!dataPersona.ap_materno) {
-    errorValidacion.push({ campo: 'apellido materno', mensaje: 'Campo requerido' });
-  }
   if (dataPersona.telefono != '') {
     if (!Validators.validarTelefono(dataPersona.telefono)) {
       errorValidacion.push({ campo: 'telefono representante', mensaje: 'Campo no válido' });

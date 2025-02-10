@@ -390,6 +390,11 @@ export class CrearEmpresaServicioComponent implements OnInit {
 
   // MANEJO DE ITINARARIOS
   itinerarioNextStep() {
+    if(this.dataEmpresaServicio.id_tipo_servicio==2){
+      this.nextStep()
+      this.nextStep()
+      return
+    }
     if (this.lista_itinerarios.length > 0) {
       this.nextStep()
     } else {
@@ -475,6 +480,15 @@ export class CrearEmpresaServicioComponent implements OnInit {
     }
     this.lista_conductores.push(dataBodyConductor)
     this.limpiarFormularioConductor()
+  }
+
+  prevStepWithCondition(): void {
+    if (this.dataEmpresaServicio.id_tipo_servicio == 2) {
+      this.prevStep();
+      this.prevStep();
+    } else {
+      this.prevStep();
+    }
   }
 
   eliminarConductor(index: number) {
