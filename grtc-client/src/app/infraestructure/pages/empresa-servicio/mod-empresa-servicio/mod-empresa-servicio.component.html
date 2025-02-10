@@ -20,7 +20,7 @@
                             <label for="tipo_empresa_servicio" class="form-label mt-2">Tipo de servicio:</label>
                             <select id="tipo_empresa_servicio" name="tipo_empresa_servicio" class="form-control"
                                 [(ngModel)]="dataEmpresaServicio.id_tipo_servicio" disabled="true">
-                                <option value=0>TIPO SERVICIO </option>
+                                <option value=0 disabledd selected>TIPO SERVICIO </option>
                                 <option value=1>TRANSPORTE DE PERSONAS</option>
                                 <option value=2>TRANSPORTE TURISTICO</option>
                                 <option value=3>TRANSPORTE DE TRABAJADORES</option>
@@ -64,7 +64,7 @@
                                     <select id="departamento_empresa" name="departamento_empresa"
                                         class="form-control form-select" (change)="onChangeDepartamento()"
                                         [(ngModel)]="dataEmpresa.departamento" [disabled]="!dataEmpresa.provincia">
-                                        <option value="">DEPARTAMENTO </option>
+                                        <option value="" disabledd selected>DEPARTAMENTO </option>
                                         <option *ngFor="let departamento of departamentos" [value]="departamento">{{
                                             departamento }}</option>
 
@@ -75,7 +75,7 @@
                                     <select id="provincia_empresa" name="provincia_empresa"
                                         class="form-control form-select" (change)="onChangeProvincia()"
                                         [(ngModel)]="dataEmpresa.provincia" [disabled]="!dataEmpresa.departamento">
-                                        <option value="">PROVINCIA</option>
+                                        <option value="" disabledd selected>PROVINCIA</option>
                                         <option *ngFor="let provincia of provincias" [value]="provincia">{{ provincia }}
                                         </option>
                                     </select>
@@ -85,7 +85,7 @@
                                     <select id="distrito_empresa" name="distrito_empresa"
                                         class="form-control form-select" [disabled]="!dataEmpresa.provincia"
                                         [(ngModel)]="dataEmpresa.distrito">
-                                        <option value="">DISTRITO</option>
+                                        <option value="" disabledd selected>DISTRITO</option>
                                         <option *ngFor="let distrito of distritos" [value]="distrito">{{ distrito }}
                                         </option>
                                     </select>

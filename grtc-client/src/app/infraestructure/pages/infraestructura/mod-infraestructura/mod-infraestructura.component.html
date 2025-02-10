@@ -12,7 +12,7 @@
                 <label for="tipo_infraestructura" class="form-label mt-2">Tipo de Infraestructura</label>
                 <select id="tipo_infraestructura" name="tipo_infraestructura" class="form-control form-select"
                     [(ngModel)]="dataInfraestructura.id_tipo_infraestructura" disabled="true">
-                    <option value=0>TIPO INFRAESTRUCTURA </option>
+                    <option value=0 disabledd selected>TIPO INFRAESTRUCTURA </option>
                     <option value=1>TERMINAL TERRESTRE</option>
                     <option value=2>ESTACION DE RUTA TIPO I</option>
                     <option value=3>ESTACION DE RUTA TIPO II</option>
@@ -46,7 +46,7 @@
                         <select id="departamento_empresa" name="departamento_empresa"
                             class="form-control form-select" (change)="onChangeDepartamento()"
                             [(ngModel)]="dataInfraestructura.departamento" [disabled]="!dataInfraestructura.provincia">
-                            <option value="">DEPARTAMENTO </option>
+                            <option value="" disabled selected>DEPARTAMENTO </option>
                             <option *ngFor="let departamento of departamentos" [value]="departamento">{{ departamento }}</option>
 
                         </select>
@@ -56,7 +56,7 @@
                         <select id="provincia_empresa" name="provincia_empresa"
                             class="form-control form-select" (change)="onChangeProvincia()"
                             [(ngModel)]="dataInfraestructura.provincia" [disabled]="!dataInfraestructura.departamento">
-                            <option value="">PROVINCIA</option>
+                            <option value="" disabled selected >PROVINCIA</option>
                             <option *ngFor="let provincia of provincias" [value]="provincia">{{ provincia }}
                             </option>
                         </select>
@@ -66,7 +66,7 @@
                         <select id="distrito_empresa" name="distrito_empresa"
                             class="form-control form-select" [disabled]="!dataInfraestructura.provincia"
                             [(ngModel)]="dataInfraestructura.distrito">
-                            <option value="">DISTRITO</option>
+                            <option value="" disabled selected >DISTRITO</option>
                             <option *ngFor="let distrito of distritos" [value]="distrito">{{ distrito }}
                             </option>
                         </select>
@@ -100,13 +100,12 @@
                 <div class="form-group col-lg-8 col-sm-12">
                     <label for="nombre_representante" class="form-label mt-2">Datos del representante legal:</label>
                     <input id="nombre_representante" type="text" class="form-control" name="nombre_representante"
-                        [(ngModel)]="dataInfraestructura.representante"
-                        >
+                        [(ngModel)]="dataInfraestructura.representante">
                 </div>
                 <div class="form-group col-lg-4 col-sm-12">
                     <label for="dni" class="form-label mt-2">DNI</label>
                     <input id="dni" type="text" min="0" class="form-control" name="dni"
-                        [(ngModel)]="dataInfraestructura.dni_representante">
+                        [(ngModel)]="dataInfraestructura.dni_representante" maxlength="8" appSoloNumeros>
                 </div>
             </div>
 
@@ -114,12 +113,12 @@
                 <div class="form-group col-lg-8 col-sm-12">
                     <label for="nombre_empresa" class="form-label mt-2">Emprersa(Razon Social):</label>
                     <input id="nombre_empresa" type="text" class="form-control" name="nombre_empresa"
-                        [(ngModel)]="dataInfraestructura.empresa">
+                        [(ngModel)]="dataInfraestructura.empresa" >
                 </div>
                 <div class="form-group col-lg-4 col-sm-12">
                     <label for="ruc" class="form-label mt-2">RUC:</label>
-                    <input id="ruc_empresa" type="number" min="0" class="form-control" name="ruc_empresa"
-                        [(ngModel)]="dataInfraestructura.ruc_empresa">
+                    <input id="ruc_empresa" type="text" min="0" class="form-control" name="ruc_empresa"
+                        [(ngModel)]="dataInfraestructura.ruc_empresa" maxlength="11" appSoloNumeros>
                 </div>
             </div>
             <div class="d-grid gap-2">

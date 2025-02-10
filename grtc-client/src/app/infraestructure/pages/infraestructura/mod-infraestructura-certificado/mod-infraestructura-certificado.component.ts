@@ -12,7 +12,8 @@ import { CertificadoInfraestructuraModel } from '../../../../domain/models/Certi
 import { CertificadoResponse, CrearCertificadoMessageResponse, ModificarCertificadoMessageResponse } from '../../../../domain/dto/CertificadoResponse.dto';
 import { FechaConFormato } from '../../../../../../public/utils/formateDate';
 import { fileToBase64, ShowDocumentoPdf } from '../../../../../../public/utils/pdfFunctions';
-import { combineLatest } from 'rxjs';
+import { mod_infraestructura_certificado_vf } from '../../../validatorForm/infraestructrua.validator';
+import { SoloNumerosDirective } from '../../../directives/solo-numeros.directive';
 
 @Component({
   selector: 'app-mod-infraestructura-certificado',
@@ -22,13 +23,14 @@ import { combineLatest } from 'rxjs';
     SubnavegadorComponent,
     CommonModule,
     FormsModule,
+    SoloNumerosDirective
   ],
   templateUrl: './mod-infraestructura-certificado.component.html',
   styleUrl: './mod-infraestructura-certificado.component.css',
 })
 export class ModInfraestructuraCertificadoComponent implements OnInit {
   pdfUrl: SafeResourceUrl | null = null;
-  titulo: string = 'REGISTRAR NUEVA CERTIFICADO';
+  titulo: string = 'REGISTRAR NUEVO CERTIFICADO';
   modificar: boolean = false;
 
   dataCertificado: CertificadoModel = {
@@ -97,6 +99,16 @@ export class ModInfraestructuraCertificadoComponent implements OnInit {
     this.pdfUrl = ShowDocumentoPdf(documento, this.sanitizer);
   }
   GuardarDatos() {
+    const erroresValidacion = mod_infraestructura_certificado_vf( this.dataCertificado );
+    if (erroresValidacion.length > 0) {
+      let errorMensaje = '';
+      erroresValidacion.forEach((error) => {
+        errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje}`;
+      });
+      alert(errorMensaje);
+      console.log(errorMensaje);
+    } else {
+
     if (this.modificar) {
       this.ModificarCertificado();
       this.sweetAlert.MensajeExito('se modifico con éxito') 
@@ -104,6 +116,7 @@ export class ModInfraestructuraCertificadoComponent implements OnInit {
       this.CrearCertificado();
       this.sweetAlert.MensajeExito('se creo con éxito')
     }
+  }
     
   }
   CrearCertificado() {

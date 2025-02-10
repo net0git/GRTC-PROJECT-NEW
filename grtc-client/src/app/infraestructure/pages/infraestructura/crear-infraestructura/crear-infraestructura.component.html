@@ -22,7 +22,7 @@
                                 <select id="tipo_infraestructura" name="tipo_infraestructura"
                                     class="form-control form-select"
                                     [(ngModel)]="dataInfraestructura.id_tipo_infraestructura">
-                                    <option value=0>TIPO INFRAESTRUCTURA </option>
+                                    <option value=0 disabledd selected>TIPO INFRAESTRUCTURA </option>
                                     <option value=1>TERMINAL TERRESTRE</option>
                                     <option value=2>ESTACION DE RUTA TIPO I</option>
                                     <option value=3>ESTACION DE RUTA TIPO II</option>
@@ -60,7 +60,7 @@
                                         <select id="departamento_infraestructura" name="departamento_infraestructura"
                                             class="form-control" (change)="onChangeDepartamento()"
                                             [(ngModel)]="dataInfraestructura.departamento">
-                                            <option value="">DEPARTAMENTO </option>
+                                            <option value="" disabledd selected>DEPARTAMENTO </option>
                                             <option *ngFor="let departamento of departamentos" [value]="departamento">{{ departamento }}</option>
 
                                         </select>
@@ -73,7 +73,7 @@
                                             class="form-control" (change)="onChangeProvincia()"
                                             [(ngModel)]="dataInfraestructura.provincia"
                                             [disabled]="!dataInfraestructura.departamento">
-                                            <option value="">PROVINCIA</option>
+                                            <option value="" disabledd selected>PROVINCIA</option>
                                             <option *ngFor="let provincia of provincias" [value]="provincia">{{ provincia }}</option>
                                         </select>
                                     </div>
@@ -82,7 +82,7 @@
                                         <select id="distrito_infraestructura" name="distrito_infraestructura"
                                             class="form-control" [disabled]="!dataInfraestructura.provincia"
                                             [(ngModel)]="dataInfraestructura.distrito">
-                                            <option value="">DISTRITO</option>
+                                            <option value="" disabledd selected>DISTRITO</option>
                                             <option *ngFor="let distrito of distritos" [value]="distrito">{{ distrito }}</option>
                                         </select>
                                     </div>

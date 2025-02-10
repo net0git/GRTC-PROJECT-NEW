@@ -221,7 +221,6 @@ export class ModEmpresaServicioComponent implements OnInit {
     this.modificarDatosPersona()
     this.sweetAlert.MensajeToast('modificacion en proceso')
     
-
   }
 
 }

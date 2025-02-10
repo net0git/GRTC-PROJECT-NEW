@@ -67,7 +67,7 @@
                                                 class="form-control form-select" (change)="onChangeDepartamentoEmpresa()"
                                                 [(ngModel)]="dataEmpresa.departamento"
                                                 [disabled]="desabilitarFormEmpresa">
-                                                <option value="">DEPARTAMENTO </option>
+                                                <option value="" disabledd selected>DEPARTAMENTO </option>
                                                 <option *ngFor="let departamento of departamentos"
                                                     [value]="departamento">{{ departamento }}</option>
 
@@ -79,7 +79,7 @@
                                                 class="form-control form-select" (change)="onChangeProvinciaEmpresa()"      
                                                 [disabled]="!dataEmpresa.departamento || desabilitarFormEmpresa"
                                                 [(ngModel)]="dataEmpresa.provincia">
-                                                <option value="">PROVINCIA</option>
+                                                <option value="" disabledd selected>PROVINCIA</option>
                                                 <option *ngFor="let provincia of provincias" [value]="provincia">{{provincia}}
                                                 </option>
                                             </select>
@@ -89,7 +89,7 @@
                                             <select id="distrito_empresa" name="distrito_empresa"
                                                 class="form-control form-select" [disabled]="!dataEmpresa.provincia || desabilitarFormEmpresa"
                                                 [(ngModel)]="dataEmpresa.distrito">
-                                                <option value="">DISTRITO</option>
+                                                <option value="" disabledd selected>DISTRITO</option>
                                                 <option *ngFor="let distrito of distritos" [value]="distrito">{{distrito}}
                                                 </option>
                                             </select>
@@ -398,7 +398,7 @@
                                                 <select id="departamento_empresa" name="departamento_empresa"
                                                     class="form-control form-select" (change)="onChangeDepartamentoArrendamiento()"
                                                     [(ngModel)]="dataArrendamiento.departamento">
-                                                    <option value="">DEPARTAMENTO </option>
+                                                    <option value="" disabledd selected>DEPARTAMENTO </option>
                                                     <option *ngFor="let departamento of departamentos"
                                                         [value]="departamento">{{
                                                         departamento }}</option>
@@ -412,7 +412,7 @@
                                                     class="form-control form-select" (change)="onChangeProvinciaArrendamiento()"
                                                     [(ngModel)]="dataArrendamiento.provincia"
                                                     [disabled]="!dataArrendamiento.departamento">
-                                                    <option value="">PROVINCIA</option>
+                                                    <option value="" disabledd selected>PROVINCIA</option>
                                                     <option *ngFor="let provincia of provincias" [value]="provincia">{{
                                                         provincia }}
                                                     </option>
@@ -424,7 +424,7 @@
                                                     class="form-control form-select"
                                                     [(ngModel)]="dataArrendamiento.distrito"
                                                     [disabled]="!dataArrendamiento.provincia">
-                                                    <option value="">DISTRITO</option>
+                                                    <option value="" disabledd selected>DISTRITO</option>
                                                     <option *ngFor="let distrito of distritos" [value]="distrito">{{
                                                         distrito }}
                                                     </option>
@@ -649,7 +649,7 @@
                                                         <label for="estado" class="form-label">Condicion:</label>
                                                         <select id="estado" name="estado" class="form-control form-control-sm"
                                                             [(ngModel)]="dataVehiculo.estado" [disabled]="deshabilitarFormVehiculo" disabled>
-                                                            <option value="">CONDICION </option>
+                                                            <option value="" disabledd selected>CONDICION </option>
                                                             <option value="AUTORIZACION">AUTORIZACION</option>
                                                             <option value="INCREMENTO">INCREMENTO</option>
                                                             <option value="SUSTITUCION">SUSTITUCION</option>

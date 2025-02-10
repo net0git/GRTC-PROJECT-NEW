@@ -2,9 +2,13 @@
     <app-navegador></app-navegador>
     <app-subnavegador [ruta]="'principal/infraestructura/detalle/'+this.dataInfraestructuraCertificado.id_infraestructura"></app-subnavegador>
 
-    <div class="container">
+    <div class="encabezado_pages">
+        <i class="bi bi-building-fill  icon-custom-encabezado"></i>
+        <p class="titulo_menu">{{titulo}}</p>
+    </div>
+    <div class="container" style="width: 50%;">      
         <div class="row mt-4">
-            <div class="col-md-4 offset-md-2">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <form>
@@ -13,20 +17,24 @@
                                 <input class="form-control" type="file" id="formFile" (change)="onFileSelected($event)"  accept=".pdf">
                             </div>
                             <div class="mb-3">
-                                <input type="text" name="nombre_certificado" placeholder="titulo de certificado"
+                                <label for="titulo_certificado" class="form-label">Titulo Certificado:</label>
+                                <input type="text" name="nombre_certificado" 
                                     class="form-control" [(ngModel)]="dataCertificado.nombre_certificado">
                             </div>
                             <div class="mb-3">
-                                <input type="number" name="nro_certificado" placeholder="numero" class="form-control"
-                                    [(ngModel)]="dataCertificado.nro_certificado">
+                                <label for="nro_certificado" class="form-label">Número del certificado:</label>
+                                <input type="text" name="nro_certificado"  class="form-control"
+                                    [(ngModel)]="dataCertificado.nro_certificado" maxlength="6">
                             </div>
                             <div class="mb-3">
-                                <input type="text" name="anio_certificado" placeholder="año" class="form-control"
-                                    [(ngModel)]="dataCertificado.anio_certificado">
+                                <label for="anio_certificado" class="form-label">Año:</label>
+                                <input type="text" name="anio_certificado"  class="form-control"
+                                    [(ngModel)]="dataCertificado.anio_certificado" maxlength="4" appSoloNumeros>
                             </div>
                             <div class="mb-1">
-                                <input type="number" name="tomo_certificado" placeholder="tomo" class="form-control"
-                                    [(ngModel)]="dataCertificado.tomo_certificado">
+                                <label for="tomo_certificado" class="form-label">Tomo:</label>
+                                <input type="text" name="tomo_certificado"  class="form-control"
+                                    [(ngModel)]="dataCertificado.tomo_certificado" maxlength="2" appSoloNumeros>
                             </div>
                             <div class="mb-3">
                                 <label for="fecha_certificado" class="form-label mt-3">Fecha:</label>
@@ -41,9 +49,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 text-center">
+            <div class="col-md-6 text-center">
                 <div class="text-center">
-                    <iframe [src]="pdfUrl" type="application/pdf" width="100%" height="500px"></iframe>
+                    <iframe *ngIf="pdfUrl" [src]="pdfUrl" type="application/pdf" width="100%"    [style.height]="'65vh'"></iframe>
                 </div>
             </div>
         </div>

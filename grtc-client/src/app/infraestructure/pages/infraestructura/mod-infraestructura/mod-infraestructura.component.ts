@@ -10,6 +10,8 @@ import { FechaConFormato } from '../../../../../../public/utils/formateDate';
 import { CommonModule } from '@angular/common';
 import { ModifcarInfraestructraMessageResponse } from '../../../../domain/dto/InfraestructuraResponse.dto';
 import { SweetAlert } from '../../../shared/animated-messages/sweetAlert';
+import { SoloNumerosDirective } from '../../../directives/solo-numeros.directive';
+import { mod_infraestructura_vf } from '../../../validatorForm/infraestructrua.validator';
 
 @Component({
   selector: 'app-mod-infraestructura',
@@ -19,6 +21,7 @@ import { SweetAlert } from '../../../shared/animated-messages/sweetAlert';
     SubnavegadorComponent,
     FormsModule,
     CommonModule,
+    SoloNumerosDirective
   ],
   templateUrl: './mod-infraestructura.component.html',
   styleUrl: './mod-infraestructura.component.css',
@@ -103,7 +106,15 @@ export class ModInfraestructuraComponent implements OnInit {
 
   ModificarInfraestructura() {
    
-    
+    const erroresValidacion = mod_infraestructura_vf(this.dataInfraestructura);
+    if (erroresValidacion.length > 0) {
+      let errorMensaje = '';
+      erroresValidacion.forEach(error => {
+        errorMensaje += `Error en el campo :"${error.campo}": ${error.mensaje} \n`;
+      });
+      alert(errorMensaje);
+      return;
+    }
     this.infraestructuraService
       .modificarInfraestructura(this.dataInfraestructura)
       .subscribe({
