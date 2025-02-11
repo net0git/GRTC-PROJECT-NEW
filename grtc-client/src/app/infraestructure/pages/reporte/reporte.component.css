@@ -1,12 +1,8 @@
-
-
-
 .panel{
     /* background-color: #cfc9c913; */
     background-color:  #f5f4f42f !important;
     /* background-color:  #eaf0f794 !important; */
 }
-
 
 .contenedor{
     margin: 1.2% 4%;
@@ -58,10 +54,14 @@
 }
 
 
-
 .custom-card-purple {
     background-color: #EDE7F6; /* Morado tenue */
     border: none;
+}
+.custom-card-purple:hover {
+    background-color: #e5d7fa; /* Morado tenue */
+    border: none;
+    cursor: pointer;
 }
 .custom-title-purple {
     color: #673AB7; /* Morado más claro */
@@ -72,14 +72,24 @@
     background-color: #E3F2FD; /* Azul tenue */
     border: none;
 }
+.custom-card-blue:hover {
+    background-color: #c5e2f7; /* Azul tenue */
+    border: none;
+    cursor: pointer;
+}
 .custom-title-blue {
     color: #1976D2; /* Azul más oscuro */
 }
 
 /* Estilos para tarjeta naranja */
 .custom-card-orange {
-    background-color: #fae5c9; /* Naranja tenue */
+    background-color: #faecdb; /* Naranja tenue */
     border: none;
+}
+.custom-card-orange:hover {
+    background-color: #fce6c9; /* Naranja tenue */
+    border: none;
+    cursor: pointer;
 }
 .custom-title-orange {
     color: #e68049; /* Naranja más oscuro */
@@ -89,6 +99,11 @@
 .custom-card-green {
     background-color: #E8F5E9; /* Verde tenue */
     border: none;
+}
+.custom-card-green:hover {
+    background-color: #d1f5d3; /* Verde tenue */
+    border: none;
+    cursor: pointer;
 }
 .custom-title-green {
     color: #2E7D32; /* Verde más oscuro */
@@ -100,10 +115,21 @@
     padding: 16px;
 }
 
+
+.card-tag{
+    position: relative;
+}
+.button-card-tag{
+    position: absolute;
+    bottom: 5px;
+    right: 20px;
+}
+
 .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
     gap: 16px;
     padding: 16px;
     margin-top: -8px;
+    
 }

@@ -12,7 +12,7 @@ import { ListaInfraestructuraComponent } from './infraestructure/pages/infraestr
 import { VehiculoComponent } from './infraestructure/pages/vehiculo/vehiculo.component';
 import { BusquedaHistorialComponent } from './infraestructure/pages/busqueda-historial/busqueda-historial.component';
 import { ResolucionComponent } from './infraestructure/pages/resolucion/resolucion.component';
-import { ReportePanelComponent } from './infraestructure/pages/reporte/reporte-panel/reporte-panel.component';
+import { ReporteComponent } from './infraestructure/pages/reporte/reporte.component';
 import { DetalleEmpresaServicioComponent } from './infraestructure/pages/empresa-servicio/detalle-empresa/datos-empresa/detalle-empresa-servicio.component';
 import { ModEmpresaServicioComponent } from './infraestructure/pages/empresa-servicio/mod-empresa-servicio/mod-empresa-servicio.component';
 import { ConductoresComponent } from './infraestructure/pages/empresa-servicio/detalle-empresa/conductores/conductores.component';
@@ -67,7 +67,7 @@ export const routes: Routes = [
   { path: 'principal/lista-vehiculos', component: VehiculoComponent },
   { path: 'principal/busqueda-historial', component: BusquedaHistorialComponent },
   { path: 'principal/resolucion', component: ResolucionComponent },
-  { path: 'principal/panel-reportes', component: ReportePanelComponent },
+  { path: 'principal/panel-reportes', component: ReporteComponent },
 
   { path: '**', redirectTo: '/login' }
 ];
