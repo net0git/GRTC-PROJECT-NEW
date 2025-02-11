@@ -133,3 +133,9 @@
     margin-top: -8px;
     
 }
+
+
+#modalEmpresasServicio .modal-dialog {
+    max-width: 90%;
+    width: 90%;
+  }

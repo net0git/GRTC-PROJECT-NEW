@@ -3,16 +3,33 @@ import { NavegadorComponent } from '../../shared/components/navegador/navegador.
 import { SubnavegadorComponent } from '../../shared/components/subnavegador/subnavegador.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { ChartComponent, ApexChart, ApexXAxis, ApexYAxis, ApexTitleSubtitle, ApexPlotOptions, ApexDataLabels } from "ng-apexcharts";
-
+import { EmpresasServicioComponent } from '../../components/reportes/empresas-servicio/empresas-servicio.component';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-reporte',
   standalone: true,
-  imports: [NavegadorComponent, SubnavegadorComponent, NgApexchartsModule],
+  imports: [NavegadorComponent, SubnavegadorComponent, NgApexchartsModule, EmpresasServicioComponent],
   templateUrl: './reporte.component.html',
   styleUrl: './reporte.component.css'
 })
 export class ReporteComponent {
+
+  private myModal: any;
+
+  openModal() {
+    this.myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
+    this.myModal.show();
+  }
+
+  openModalEmpresaServicio() {
+    this.myModal = new bootstrap.Modal(document.getElementById('modalEmpresasServicio'));
+    this.myModal.show();
+  }
+
+  closeModal() {
+    this.myModal.hide();
+  }
 
   barOptionsColor = {
     series: [
@@ -32,9 +49,9 @@ export class ReporteComponent {
     xaxis: {
       categories: ['PERSONAS', 'TURISMO', 'ESTUDIANTES', 'TRABAJADORES']
     } as ApexXAxis,
-    
+
   };
-  
+
   barOptions: any = {
     series: [
       {
@@ -68,26 +85,26 @@ export class ReporteComponent {
       }
     } as ApexYAxis
   };
-  
+
   PieOptions = {
-    series: [106, 40, 30], 
+    series: [106, 40, 30],
     chart: {
       height: 250,
       type: 'pie'
     } as ApexChart,
-    labels: ['ACTIVO', 'INACTIVO', 'ALERTA'], 
+    labels: ['ACTIVO', 'INACTIVO', 'ALERTA'],
     title: {
       text: 'ESTADO DE EMPRESAS POR SERVICIO'
     } as ApexTitleSubtitle
   };
-  
+
   DonutOptions = {
-    series: [56, 30, 10,14], 
+    series: [56, 30, 10, 14],
     chart: {
       height: 250,
       type: 'donut'
     } as ApexChart,
-    labels: [`PERSONAS`, 'TURISMO', 'ESTUDIANTES', 'TRABAJADORES'], 
+    labels: [`PERSONAS`, 'TURISMO', 'ESTUDIANTES', 'TRABAJADORES'],
     title: {
       text: 'VEHICULOS POR SERVICIO'
     } as ApexTitleSubtitle

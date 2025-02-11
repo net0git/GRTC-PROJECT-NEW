@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-end my-4">
-                    <button class="btn btn-success shadow"> Reporte a medida</button>
+                    <button class="btn btn-success shadow" (click)="openModal()"> Reporte a medida</button>
                 </div>
 
             </div>
@@ -42,28 +42,28 @@
                 <div class="container mb-3">
                     <div class="row g-3">
                         <div class="col-md-3">
-                            <div class="card card-tag custom-card-blue p-3 shadow-sm">
+                            <div class="card card-tag custom-card-blue p-3 shadow-sm" title="ver detalle" (click)="openModalEmpresaServicio()">
                                 <h5 class="custom-title-blue">Empresas por servicio</h5>
                                 <p class="text-muted mb-0">350</p>
                             </div>
                         </div>
 
                         <div class="col-md-3">
-                            <div class="card custom-card-purple p-3 shadow-sm">
+                            <div class="card custom-card-purple p-3 shadow-sm" title="ver detalle">
                                 <h5 class="custom-title-purple">Infraestructuras</h5>
                                 <p class="text-muted mb-0">78</p>
                             </div>
                         </div>
 
                         <div class="col-md-3">
-                            <div class="card custom-card-orange p-3 shadow-sm">
+                            <div class="card custom-card-orange p-3 shadow-sm" title="ver detalle">
                                 <h5 class="custom-title-orange">Vehiculos</h5>
                                 <p class="text-muted mb-0">2448</p>
                             </div>
                         </div>
 
                         <div class="col-md-3">
-                            <div class="card custom-card-green p-3 shadow-sm">
+                            <div class="card custom-card-green p-3 shadow-sm" title="ver detalle">
                                 <h5 class="custom-title-green">Conductores</h5>
                                 <p class="text-muted mb-0">189</p>
                             </div>
@@ -100,5 +100,44 @@
                 </div>
             </div>
         </div>
+    </div>
+    
+</div>
+
+<!-- Scrollable modal -->
+<div class="modal fade modal-dialog-scrollable" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="subtitulo_menu">reporte a medida</p>
+          
+          <!-- <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button> -->
+        </div>
+        <div class="modal-body text-start">
+           <h1>cuerpo del reporte a medida</h1>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
+          
+        </div>
+      </div>
+    </div>
+</div>
+<!-- modal: EMPRESAS POR SERVICIO -->
+<div class="modal fade" id="modalEmpresasServicio" tabindex="-1" role="dialog" aria-labelledby="modalEmpresasServicioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="subtitulo_menu">Reporte de empresas por servicio</p>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+           <app-empresas-servicio></app-empresas-servicio>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">cerrar</button>
+        </div> -->
+      </div>
     </div>
 </div>
