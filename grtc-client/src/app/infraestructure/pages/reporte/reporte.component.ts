@@ -4,12 +4,13 @@ import { SubnavegadorComponent } from '../../shared/components/subnavegador/subn
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { ChartComponent, ApexChart, ApexXAxis, ApexYAxis, ApexTitleSubtitle, ApexPlotOptions, ApexDataLabels } from "ng-apexcharts";
 import { EmpresasServicioComponent } from '../../components/reportes/empresas-servicio/empresas-servicio.component';
+import { InfraestructuraComponent } from '../../components/reportes/infraestructura/infraestructura.component';
 declare var bootstrap: any;
 
 @Component({
   selector: 'app-reporte',
   standalone: true,
-  imports: [NavegadorComponent, SubnavegadorComponent, NgApexchartsModule, EmpresasServicioComponent],
+  imports: [NavegadorComponent, SubnavegadorComponent, NgApexchartsModule, EmpresasServicioComponent, InfraestructuraComponent],
   templateUrl: './reporte.component.html',
   styleUrl: './reporte.component.css'
 })
@@ -24,6 +25,21 @@ export class ReporteComponent {
 
   openModalEmpresaServicio() {
     this.myModal = new bootstrap.Modal(document.getElementById('modalEmpresasServicio'));
+    this.myModal.show();
+  }
+
+  openModalVehiculos() {
+    this.myModal = new bootstrap.Modal(document.getElementById('modalVehiculos'));
+    this.myModal.show();
+  }
+
+  openModalConductores() {
+    this.myModal = new bootstrap.Modal(document.getElementById('modalConductores'));
+    this.myModal.show();
+  }
+
+  openModalInfraestructura(){
+    this.myModal = new bootstrap.Modal(document.getElementById('modalInfraestructura'));
     this.myModal.show();
   }
 

@@ -3,7 +3,7 @@
     
     
     
-            <select id="tipo_doc" name="tipo_doc" class="form-control mx-4"  >
+            <select id="tipo_doc" name="tipo_doc" class=" form-select mx-4"  >
                 <option value="">TIPO DE TRASPORTE </option>
                 <option value="1">TRANSPORTE DE REGULAR DE PERSONAS</option>
                 <option value="2">TRANSPORTE TURISTICO</option>
@@ -40,9 +40,9 @@
                         <tr *ngFor="let empresa of ListaEmpresas, index as i"  >
                         
                         <th scope="row">{{i+1}}</th>
-                            <td>{{empresa.empresa}}</td>
+                            <td class="text-start">{{empresa.empresa}}</td>
                             <td>{{empresa.ruc}}</td>
-                            <td>{{empresa.tipo_servicio}}</td>
+                            <td >{{empresa.tipo_servicio}}</td>
                             <td>{{empresa.fecha_inicial| date:'dd/MM/yyyy'}}</td>
                             <td>{{empresa.fecha_final| date:'dd/MM/yyyy'}}</td>
                             <td>{{empresa.estado}}</td>

@@ -49,21 +49,21 @@
                         </div>
 
                         <div class="col-md-3">
-                            <div class="card custom-card-purple p-3 shadow-sm" title="ver detalle">
+                            <div class="card custom-card-purple p-3 shadow-sm" title="ver detalle" (click)="openModalInfraestructura()">
                                 <h5 class="custom-title-purple">Infraestructuras</h5>
                                 <p class="text-muted mb-0">78</p>
                             </div>
                         </div>
 
                         <div class="col-md-3">
-                            <div class="card custom-card-orange p-3 shadow-sm" title="ver detalle">
+                            <div class="card custom-card-orange p-3 shadow-sm" title="ver detalle" (click)="openModalVehiculos()">
                                 <h5 class="custom-title-orange">Vehiculos</h5>
                                 <p class="text-muted mb-0">2448</p>
                             </div>
                         </div>
 
                         <div class="col-md-3">
-                            <div class="card custom-card-green p-3 shadow-sm" title="ver detalle">
+                            <div class="card custom-card-green p-3 shadow-sm" title="ver detalle" (click)="openModalConductores()">
                                 <h5 class="custom-title-green">Conductores</h5>
                                 <p class="text-muted mb-0">189</p>
                             </div>
@@ -105,13 +105,12 @@
 </div>
 
 <!-- Scrollable modal -->
-<div class="modal fade modal-dialog-scrollable" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <p class="subtitulo_menu">reporte a medida</p>
-          
-          <!-- <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button> -->
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
         </div>
         <div class="modal-body text-start">
            <h1>cuerpo del reporte a medida</h1>
@@ -134,6 +133,60 @@
         </div>
         <div class="modal-body text-start">
            <app-empresas-servicio></app-empresas-servicio>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">cerrar</button>
+        </div> -->
+      </div>
+    </div>
+</div>
+
+<!-- modal: INFRAESTRUCTURA -->
+<div class="modal fade" id="modalInfraestructura" tabindex="-1" role="dialog" aria-labelledby="modalEmpresasServicioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="subtitulo_menu">Reporte de empresas por servicio</p>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+           <app-infraestructura-reporte></app-infraestructura-reporte>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">cerrar</button>
+        </div> -->
+      </div>
+    </div>
+</div>
+
+<!-- modal: VEHICULOS -->
+<div class="modal fade" id="modalVehiculos" tabindex="-1" role="dialog" aria-labelledby="modalEmpresasServicioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="subtitulo_menu">Reporte de empresas por servicio</p>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+           <app-infraestructura-reporte></app-infraestructura-reporte>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">cerrar</button>
+        </div> -->
+      </div>
+    </div>
+</div>
+
+<!-- modal: CONDUCTORES -->
+<div class="modal fade" id="modalConductores" tabindex="-1" role="dialog" aria-labelledby="modalConductoresLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="subtitulo_menu">Reporte de empresas por servicio</p>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+           <app-infraestructura-reporte></app-infraestructura-reporte>
         </div>
         <!-- <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="closeModal()">cerrar</button>
