@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../../environments/environment';
-import { ListaConductoresResponse, CrearConductorMessageResponse, ModificarConductorMessageResponse, EliminarConductorMessageResponse } from '../../../../domain/dto/ConductorResponse.dto';
-import { ConductorRequest } from '../../../../domain/dto/ConductorRequest.dto';
+import { ListaConductoresResponse, CrearConductorMessageResponse, ModificarConductorMessageResponse, EliminarConductorMessageResponse, ListaTotalConductorResponse } from '../../../../domain/dto/ConductorResponse.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +17,10 @@ export class ConductorService {
         //  this.router.delete('/api/conductor/:id_conductor',conductorController.EliminarConductor)
 
   constructor(private http: HttpClient) { }
+
+  listarTotalConductores():Observable<ListaTotalConductorResponse[]>{
+    return this.http.get<ListaTotalConductorResponse[]>(this.api_uri_conductor)
+  }
 
   listarConductoresByEmpresaServicio(id_empresa_servicio:number):Observable<ListaConductoresResponse[]>{
     return this.http.get<ListaConductoresResponse[]>(this.api_uri_conductor+'/lista/empresa/'+id_empresa_servicio)

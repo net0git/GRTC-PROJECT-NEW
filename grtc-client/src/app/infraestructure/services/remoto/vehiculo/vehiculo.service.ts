@@ -107,5 +107,8 @@ export class VehiculoService {
     return this.http.put<ModificarTucVehiculoAsociadoMessageResponse>(this.api_url_vehiculo + '/modificar/tuc', {id_vehiculo, id_tuc});
   }
 
+  ListarTotalVehiculos(): Observable<ListaVehiculosDetalleResponse[]> {
+    return this.http.get<ListaVehiculosDetalleResponse[]>(this.api_url_vehiculo);
+  }
 
 }

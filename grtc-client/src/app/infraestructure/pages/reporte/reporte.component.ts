@@ -5,12 +5,14 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { ChartComponent, ApexChart, ApexXAxis, ApexYAxis, ApexTitleSubtitle, ApexPlotOptions, ApexDataLabels } from "ng-apexcharts";
 import { EmpresasServicioComponent } from '../../components/reportes/empresas-servicio/empresas-servicio.component';
 import { InfraestructuraComponent } from '../../components/reportes/infraestructura/infraestructura.component';
+import { VehiculosComponent } from '../../components/reportes/vehiculos/vehiculos.component';
+import { ConductoresComponent } from '../../components/reportes/conductores/conductores.component';
 declare var bootstrap: any;
 
 @Component({
   selector: 'app-reporte',
   standalone: true,
-  imports: [NavegadorComponent, SubnavegadorComponent, NgApexchartsModule, EmpresasServicioComponent, InfraestructuraComponent],
+  imports: [NavegadorComponent, SubnavegadorComponent, NgApexchartsModule, EmpresasServicioComponent, InfraestructuraComponent, VehiculosComponent, ConductoresComponent],
   templateUrl: './reporte.component.html',
   styleUrl: './reporte.component.css'
 })
@@ -125,4 +127,5 @@ export class ReporteComponent {
       text: 'VEHICULOS POR SERVICIO'
     } as ApexTitleSubtitle
   };
+
 }

@@ -1,125 +1,153 @@
-.panel{
+.panel {
     /* background-color: #cfc9c913; */
-    background-color:  #f5f4f42f !important;
+    background-color: #f5f4f42f !important;
     /* background-color:  #eaf0f794 !important; */
 }
 
-.contenedor{
+.contenedor {
     margin: 1.2% 4%;
-    
+
 }
 
 /* menu listado de resportes */
-.menu-listado-reportes{
+.menu-listado-reportes {
     box-sizing: border-box;
     background-color: #F6F4EE;
     padding: 20px;
     border-radius: 16px;
 }
-.menu-listado-reportes .titulo{
+
+.menu-listado-reportes .titulo {
     text-transform: uppercase;
     font-size: 1rem;
     font-weight: 600;
     color: #6E7A89;
 }
-.menu-listado-reportes .lista{
+
+.menu-listado-reportes .lista {
     margin: 10px 0;
 }
-.menu-listado-reportes .lista .item .name{
+
+.menu-listado-reportes .lista .item .name {
     display: inline-block;
     padding: 0 0 0 8px;
     font-size: 1rem;
     font-weight: 500;
     color: #434343;
 }
+
 /* titulo reporte */
 .icon-title-container {
     display: flex;
     align-items: center;
-  }
+}
+
 /* cuerpo de tarjetas  */
-.data-report{
+.data-report {
     color: #6E7A89;
 }
 
 /* titulo reportes */
-.titulo_reporte{
+.titulo_reporte {
     font-size: 2rem;
     font-weight: 700;
     color: #404B5A;
 }
 
-.name,.hand_cursor{
-    cursor: pointer; /*convierte el cursor en una mano*/
+.name,
+.hand_cursor {
+    cursor: pointer;
+    /*convierte el cursor en una mano*/
 }
 
 
 .custom-card-purple {
-    background-color: #EDE7F6; /* Morado tenue */
+    background-color: #EDE7F6;
+    /* Morado tenue */
     border: none;
 }
+
 .custom-card-purple:hover {
-    background-color: #e5d7fa; /* Morado tenue */
+    background-color: #e5d7fa;
+    /* Morado tenue */
     border: none;
     cursor: pointer;
 }
+
 .custom-title-purple {
-    color: #673AB7; /* Morado más claro */
+    color: #673AB7;
+    /* Morado más claro */
 }
 
 /* Estilos para tarjeta azul */
 .custom-card-blue {
-    background-color: #E3F2FD; /* Azul tenue */
+    background-color: #E3F2FD;
+    /* Azul tenue */
     border: none;
 }
+
 .custom-card-blue:hover {
-    background-color: #c5e2f7; /* Azul tenue */
+    background-color: #c5e2f7;
+    /* Azul tenue */
     border: none;
     cursor: pointer;
 }
+
 .custom-title-blue {
-    color: #1976D2; /* Azul más oscuro */
+    color: #1976D2;
+    /* Azul más oscuro */
 }
 
 /* Estilos para tarjeta naranja */
 .custom-card-orange {
-    background-color: #faecdb; /* Naranja tenue */
+    background-color: #faecdb;
+    /* Naranja tenue */
     border: none;
 }
+
 .custom-card-orange:hover {
-    background-color: #fce6c9; /* Naranja tenue */
+    background-color: #fce6c9;
+    /* Naranja tenue */
     border: none;
     cursor: pointer;
 }
+
 .custom-title-orange {
-    color: #e68049; /* Naranja más oscuro */
+    color: #e68049;
+    /* Naranja más oscuro */
 }
 
 /* Estilos para tarjeta verde */
 .custom-card-green {
-    background-color: #E8F5E9; /* Verde tenue */
+    background-color: #E8F5E9;
+    /* Verde tenue */
     border: none;
 }
+
 .custom-card-green:hover {
-    background-color: #d1f5d3; /* Verde tenue */
+    background-color: #d1f5d3;
+    /* Verde tenue */
     border: none;
     cursor: pointer;
 }
+
 .custom-title-green {
-    color: #2E7D32; /* Verde más oscuro */
+    color: #2E7D32;
+    /* Verde más oscuro */
 }
 
-.card_dashboard{
+.card_dashboard {
     box-shadow: 0px 1px 22px -12px #358f8fc9 !important;
     border: 2px solid #557a8d36 !important;
     padding: 16px;
 }
 
 
-.card-tag{
+.card-tag {
     position: relative;
 }
-.button-card-tag{
+
+.button-card-tag {
     position: absolute;
     bottom: 5px;
     right: 20px;
@@ -131,16 +159,25 @@
     gap: 16px;
     padding: 16px;
     margin-top: -8px;
-    
-}
 
+}
 
 #modalEmpresasServicio .modal-dialog {
     max-width: 90%;
     width: 90%;
-  }
+}
 
-  #modalInfraestructura .modal-dialog {
+#modalInfraestructura .modal-dialog {
     max-width: 80%;
     width: 80%;
-  }
+}
+
+#modalVehiculos .modal-dialog {
+    max-width: 80%;
+    width: 80%;
+}
+
+#modalConductores .modal-dialog {
+    max-width: 80%;
+    width: 80%;
+}
