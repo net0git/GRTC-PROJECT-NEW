@@ -1,0 +1,42 @@
+.custom-card-gray {
+    background-color: #acabad; /* Morado tenue */
+    border: none;
+}
+.custom-title-gray {
+    color: #767579; /* Morado más claro */
+}
+
+.custom-card-purple {
+    background-color: #EDE7F6; /* Morado tenue */
+    border: none;
+}
+.custom-title-purple {
+    color: #673AB7; /* Morado más claro */
+}
+
+/* Estilos para tarjeta azul */
+.custom-card-blue {
+    background-color: #E3F2FD; /* Azul tenue */
+    border: none;
+}
+.custom-title-blue {
+    color: #1976D2; /* Azul más oscuro */
+}
+
+/* Estilos para tarjeta naranja */
+.custom-card-orange {
+    background-color: #fae5c9; /* Naranja tenue */
+    border: none;
+}
+.custom-title-orange {
+    color: #e68049; /* Naranja más oscuro */
+}
+
+/* Estilos para tarjeta verde */
+.custom-card-green {
+    background-color: #E8F5E9; /* Verde tenue */
+    border: none;
+}
+.custom-title-green {
+    color: #2E7D32; /* Verde más oscuro */
+}

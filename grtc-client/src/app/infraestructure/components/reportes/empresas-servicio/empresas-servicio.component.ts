@@ -2,55 +2,82 @@ import { Component, OnInit } from '@angular/core';
 import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
 import { EmpresaServicioService } from '../../../services/remoto/empresas-servicio/empresa-servicio.service';
 import { CommonModule } from '@angular/common';
-
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ListaEmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-empresas-servicio',
   standalone: true,
-  imports: [ CommonModule],
+  imports: [ CommonModule, NgxPaginationModule],
   templateUrl: './empresas-servicio.component.html',
   styleUrl: './empresas-servicio.component.css'
 })
 export class EmpresasServicioComponent implements OnInit {
 
-  ListaEmpresas: any = [];//en este arreglo se almanara la informacion que deseamos mostrar en la tabla
-  ListaEmpresasTemp: any = [];//en este arreglo reservaremos una copia de la informacion de empresas
-
+  listaEmpresasServicio: ListaEmpresaServicioResponse[] = [];
+  listaEmpresasServicioTemp: ListaEmpresaServicioResponse[] = [];
+  cantidad_t_personas:number=0;
+  cantidad_t_turismo:number=0;
+  cantidad_t_estudiantes:number=0;
+  cantidad_t_trabajadores:number=0;
 
   cantidadEmpresas: any = []; //cantidad de empresas por servicio
 
   disableInvitado = ''//variable temporal para cambiar el estado del html
 
+  p: number = 1;
   constructor(private empresaServicioService: EmpresaServicioService, private credencialesService: CredencialesService) { }
   ngOnInit(): void {
     this.listarEmpresasSevicios()
     console.log('entro al ngOnInit')
-    // this.actualizarDatos()
-    this.obtenerCantidadEmpresas()
-    if (this.credencialesService.credenciales.rol == 'INVITADO') {
-      this.disableInvitado = 'display: none';
-    }
   }
 
+  selectedButton: number | null = null; // Índice del botón seleccionado
+
+  selectButton(index: number) {
+    this.selectedButton = index;
+  }
 
 
   listarEmpresasSevicios() {
     this.empresaServicioService.listarEmpresasServicio().subscribe({
-      next: (data) => {
-        this.ListaEmpresasTemp = data;
-        this.ListaEmpresas = data;
-        console.log(this.ListaEmpresasTemp);
+      next: (res: ListaEmpresaServicioResponse[]) => {
+        this.listaEmpresasServicio = res
+        this.listaEmpresasServicioTemp = res
+        console.log(this.listaEmpresasServicio)
       },
-      error: (error) => {
-        console.log(error);
+      error: (err) => {
+        console.error('Error al obtener empresas de servicio:', err)
       },
       complete: () => {
-        console.log('Lista Empresas Servicios Completada');
+        console.log('Obtención de empresas de servicio completada')
+        this.contador_tipo_transporte()
       }
     })
   }
-  obtenerCantidadEmpresas() {
-    
+
+
+  contador_tipo_transporte(){
+    this.listaEmpresasServicioTemp.forEach((empresa: ListaEmpresaServicioResponse) => {
+      switch (empresa.id_tipo_servicio) {
+        case 1:
+          this.cantidad_t_personas++;
+          break;
+        case 2:
+          this.cantidad_t_turismo++;
+          break;
+        case 3:
+          this.cantidad_t_trabajadores++;
+          break;
+        case 4:
+          this.cantidad_t_estudiantes++;
+          break;
+        default:
+          // Si el valor no coincide con ninguno, puedes manejarlo aquí si lo necesitas.
+          break;
+      }
+    });
   }
 
   restaurarEmpresas() {
@@ -58,54 +85,77 @@ export class EmpresasServicioComponent implements OnInit {
   }
 
   filtrarEmpresa(id: number) {
-    this.ListaEmpresas = this.ListaEmpresasTemp.filter((empresa: { id_tipo_servicio: number; }) => empresa.id_tipo_servicio == id);
-    this.ListaEmpresasTemp = this.ListaEmpresas
+    this.p = 1;
+    this.listaEmpresasServicio = this.listaEmpresasServicioTemp.filter((empresa: { id_tipo_servicio: number; }) => empresa.id_tipo_servicio == id);
+  }
+
+  seleccionarTipoTransporte(event: any) {
+    // Obtener el valor seleccionado
+    const valorSeleccionado = event.target.value;
+
+    // Aquí puedes ejecutar tu lógica según el valor seleccionado
+    switch (valorSeleccionado) {
+      case '1':
+        // Lógica para Transporte de personas
+        this.filtrarEmpresa(valorSeleccionado);
+
+        break;
+      case '2':
+        // Lógica para Transporte turístico
+        this.filtrarEmpresa(valorSeleccionado);
+
+        break;
+      case '3':
+        // Lógica para Transporte de trabajadores
+        this.filtrarEmpresa(valorSeleccionado);
+
+        break;
+      case '4':
+        // Lógica para Transporte escolar
+        this.filtrarEmpresa(valorSeleccionado);
+
+        break;
+      default:
+        // Lógica para el caso por defecto (ninguna opción seleccionada)
+        this.restaurarEmpresas();
+
+        break;
+    }
   }
 
   buscarEnObjeto(event: any) {
+    
+    this.p=1;
     const textoBusqueda = event.target.value.toLowerCase();
-    let objetosFiltrados: any = [];
-    // Filtrar los objetos según el texto de búsqueda
-    objetosFiltrados = this.ListaEmpresasTemp.filter((objeto: 
-      { empresa: string;
-        ruc: string; 
-        estado: string;
-        fecha_inicial: string;
-        fecha_final: string;
-        tipo_servicio: string;
-       }) => {
-      const empresa = objeto.empresa.toLowerCase();
-      const ruc = objeto.ruc.toLowerCase();
-      const estado = objeto.estado.toLowerCase();
-      const fecha_inicial = objeto.fecha_inicial.toLowerCase();
-      const fecha_final = objeto.fecha_final.toLowerCase();
-      
-      const tipo_servicio = objeto.tipo_servicio.toLowerCase();
-      
-      return empresa.includes(textoBusqueda) || ruc.includes(textoBusqueda)|| estado.includes(textoBusqueda)|| fecha_inicial.includes(textoBusqueda) ||fecha_final.includes(textoBusqueda) || tipo_servicio.includes(textoBusqueda);
+    this.listaEmpresasServicio = this.listaEmpresasServicioTemp.filter((objeto: ListaEmpresaServicioResponse) => {
+      const empresa = objeto.empresa ? objeto.empresa.toLowerCase() : '';
+      const ruc = objeto.ruc ? objeto.ruc.toLowerCase() : '';
+
+      return  empresa.includes(textoBusqueda) ||
+        ruc.includes(textoBusqueda) 
     });
-    this.ListaEmpresas=this.ListaEmpresasTemp
   }
 
-  // ExporToExcel():void{
-  //   //import * as XLSX from 'xlsx';
-  //   // Obtenemos una referencia al elemento que contiene la tabla que deseamos exportar a Excel
-  //   let element = document.getElementById('excel-table');
+  ExporToExcel():void{
+    
+    let allData = this.listaEmpresasServicio; // Asegúrate de obtener todos los registros
+
+    let filteredData = allData.map(({ id_empresa_servicio, id_tipo_servicio,expediente,porcentaje, fecha_inicial, fecha_final, ...rest }) => ({
+        ...rest,
+        fecha_inicial: fecha_inicial ? new Date(fecha_inicial).toLocaleDateString('es-ES') : '',
+        fecha_final: fecha_final ? new Date(fecha_final).toLocaleDateString('es-ES') : ''
+    }));
+
+    // Convertimos los datos a una hoja de trabajo de Excel
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(filteredData);
+
+    // Creamos un nuevo libro de trabajo
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    // Guardamos el archivo Excel
+    XLSX.writeFile(wb, 'reporte_empresas_servicio.xlsx');
   
-  //   // Convertimos la tabla en una hoja de trabajo (WorkSheet) de Excel utilizando la función table_to_sheet
-  //   const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
-  
-  //   // Creamos una nueva hoja de trabajo (WorkBook) de Excel
-  //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  
-  //   // Agregamos la hoja de trabajo que creamos anteriormente al libro de trabajo
-  //   // La hoja de trabajo se llama 'Sheet1', pero puedes personalizar este nombre
-  //   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-  
-  //   // Utilizamos la función writeFile para guardar el libro de trabajo como un archivo Excel
-  //   // this.fileNameExcel debe ser una variable que contiene el nombre que deseas darle al archivo
-  //   XLSX.writeFile(wb, 'reporte.xlsx');
-  
-  // }
+  }
   
 }

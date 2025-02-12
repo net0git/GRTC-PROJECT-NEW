@@ -1,9 +1,9 @@
-<div class="card rounded shadow border-2 ">
+<div class="card rounded shadow border-2 mb-4 mt-2 mx-3">
     <div class="card-header d-flex justify-content-between align-items-center ">
     
     
     
-            <select id="tipo_doc" name="tipo_doc" class=" form-select mx-4"  >
+            <select id="tipo_doc" name="tipo_doc" class=" form-select mx-4" (change)="seleccionarTipoTransporte($event)" >
                 <option value="">TIPO DE TRASPORTE </option>
                 <option value="1">TRANSPORTE DE REGULAR DE PERSONAS</option>
                 <option value="2">TRANSPORTE TURISTICO</option>
@@ -11,19 +11,81 @@
                 <option value="4">TRANSPORTE DE ESTUDIANTES</option>        
             </select>
     
-            <input type="text" class="form-control mr-2" name="buscar" placeholder="BUSCAR" (input)="buscarEnObjeto($event)" >
+            <input type="text" class="form-control mx-2 " name="buscar" placeholder="BUSCAR POR EMPRESA/RUC" (input)="buscarEnObjeto($event)" >
         
     </div>
     <div class="card-body px-4 bg-white rounded">
         <div class="table-responsive px-4">
         
-        <div class="form-group">
+        <div class="form-group ">
             <div class="row">
-                <div [style]="disableInvitado">
-                    <button class="btn btn-success mb-2"  ><i class="bi bi-file-earmark-excel-fill"></i> Descargar</button>
+                <!-- <div >
+                    <button class="btn btn-success mb-2"  (click)="ExporToExcel()"><i class="bi bi-file-earmark-excel-fill"></i> Descargar</button>
+                </div> -->
+                <div >
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-2">
+                            <div class="card card-tag custom-card-gray text-white p-3 shadow-sm"  >
+                                <h6 class="custom-title-gray text-white m-0">Total: ({{cantidad_t_personas + cantidad_t_turismo +cantidad_t_trabajadores + cantidad_t_estudiantes}})</h6>
+                                <!-- <h5 class="custom-title-blue">Empresas por servicio</h5>
+                                <p class="text-muted mb-0">350</p> -->
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="card card-tag custom-card-blue p-3 shadow-sm"  >
+                                <!-- <strong class="custom-title-blue">Transporte de personas: ({{cantidad_t_personas}})</strong> -->
+                                <h6 class="custom-title-blue m-0">T. Personas: ({{cantidad_t_personas}})</h6>
+                                <!-- <p class="text-muted mb-0">350</p> -->
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="card custom-card-purple p-3 shadow-sm"  >
+                                <h6 class="custom-title-purple m-0">T. Turismo ({{cantidad_t_turismo}})</h6>
+    
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="card custom-card-orange p-3 shadow-sm" >
+                                <h6 class="custom-title-orange m-0">T. Trabajadores ({{cantidad_t_trabajadores}})</h6>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="card custom-card-green p-3 shadow-sm" >
+                                <h6 class="custom-title-green m-0">T. Estudiantes ({{cantidad_t_estudiantes}})</h6>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <table class="table text-center  table-hover" id="excel-table">
+                  <!-- <div class=" d-flex justify-content-between  mb-3">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="horizontal radio toggle button group">
+                        <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1"  checked>
+                        <label class="btn btn-outline-primary" for="vbtn-radio1">Total: ({{cantidad_t_personas + cantidad_t_turismo +cantidad_t_trabajadores + cantidad_t_estudiantes}})</label>
+                        <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio2"  >
+                        <label class="btn btn-outline-primary" for="vbtn-radio2" (click)="filtrarEmpresa(1)">T. Personas ({{cantidad_t_personas}}) </label>
+                        <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" >
+                        <label class="btn btn-outline-primary" for="vbtn-radio3" (click)="filtrarEmpresa(2)">T. Turismo ({{cantidad_t_turismo}})</label>
+                        <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio4" >
+                        <label class="btn btn-outline-primary" for="vbtn-radio4" (click)="filtrarEmpresa(3)">T. Trabajadores ({{cantidad_t_trabajadores}})</label>
+                        <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio5" >
+                        <label class="btn btn-outline-primary" for="vbtn-radio5" (click)="filtrarEmpresa(4)">T. Estudiantes ({{cantidad_t_estudiantes}})</label>
+                    </div>
+
+                    <div class="btn-group btn-group-sm" role="group" aria-label="horizontal radio toggle button group">
+                        <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-activo" >
+                        <label class="btn btn-outline-success" for="vbtn-activo">Activo</label>
+                        <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-alerta" >
+                        <label class="btn btn-outline-warning" for="vbtn-alerta">Alerta</label>
+                        <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-inactivo">
+                        <label class="btn btn-outline-secondary" for="vbtn-inactivo">Inactivo</label>
+                    </div>
+                  </div> -->
+                  
+                
+                <table class="table text-center  table-hover " id="excel-table">
                     <thead class="thead-ligth bg-secondary text-white table-success"  >
                         <tr >
                         <th scope="col">Nro</th>
@@ -37,19 +99,25 @@
                         </tr>
                     </thead>
                     <tbody >
-                        <tr *ngFor="let empresa of ListaEmpresas, index as i"  >
+                        <tr *ngFor="let empresa of listaEmpresasServicio | paginate: { itemsPerPage: 10, currentPage: p }; let i = index"  >
                         
-                        <th scope="row">{{i+1}}</th>
+                        <th scope="row">{{ i + (p - 1) * 10 + 1 }}</th>
                             <td class="text-start">{{empresa.empresa}}</td>
                             <td>{{empresa.ruc}}</td>
                             <td >{{empresa.tipo_servicio}}</td>
                             <td>{{empresa.fecha_inicial| date:'dd/MM/yyyy'}}</td>
                             <td>{{empresa.fecha_final| date:'dd/MM/yyyy'}}</td>
                             <td>{{empresa.estado}}</td>
+
                         </tr> 
                     </tbody>
                 </table> 
-            </div>        
+            </div>  
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-success mb-2"  (click)="ExporToExcel()"><i class="bi bi-file-earmark-excel-fill"></i> Descargar</button>
+                <pagination-controls (pageChange)="p = $event" previousLabel="Anterior"
+                    nextLabel="Siguiente"></pagination-controls>
+            </div>      
         </div>
         </div>
     </div>
