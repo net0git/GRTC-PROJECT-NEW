@@ -15,11 +15,15 @@ import { ListaVehiculosDetalleResponse } from '../../../../domain/dto/VehiculoRe
 export class VehiculosComponent implements OnInit {
 
   listaVehiculos: ListaVehiculosDetalleResponse[] = []; listaVehiculosTemp: ListaVehiculosDetalleResponse[] = [];
-  p: number = 1;
+  paginaActual: number = 1;
   constructor(private vehiculoService: VehiculoService) { }
 
   ngOnInit(): void {
     this.listarVehiculos()
+  }
+
+  cambiarPagina(event: number) {
+    this.paginaActual = event;
   }
 
   listarVehiculos() {
@@ -38,7 +42,7 @@ export class VehiculosComponent implements OnInit {
   }
 
   buscarEnObjeto(event: any) {
-
+    this.paginaActual = 1;
     const textoBusqueda = event.target.value.toLowerCase();
     this.listaVehiculos = this.listaVehiculosTemp.filter((objeto: ListaVehiculosDetalleResponse) => {
       const placa = objeto.placa ? objeto.placa.toLowerCase() : '';
@@ -46,12 +50,14 @@ export class VehiculosComponent implements OnInit {
       const marca = objeto.marca ? objeto.marca.toLowerCase() : '';
       const modelo = objeto.modelo ? objeto.modelo.toLowerCase() : '';
       const categoria = objeto.categoria ? objeto.categoria.toLowerCase() : '';
+      const razon_social = objeto.razon_social ? objeto.razon_social.toLowerCase() : '';
   
       return placa.includes(textoBusqueda) ||
       anio_fabricacion.includes(textoBusqueda) ||
       marca.includes(textoBusqueda) ||
       modelo.includes(textoBusqueda) ||
-      categoria.includes(textoBusqueda)
+      categoria.includes(textoBusqueda) ||
+      razon_social.includes(textoBusqueda)
       
     });
   }

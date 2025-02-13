@@ -1,42 +1,44 @@
-.custom-card-gray {
-    background-color: #acabad; /* Morado tenue */
+/* Azul 1: Muy tenue */
+.custom-card-blue-1 {
+    background-color: #E3F2FD; /* Azul muy tenue */
     border: none;
-}
-.custom-title-gray {
-    color: #767579; /* Morado más claro */
-}
-
-.custom-card-purple {
-    background-color: #EDE7F6; /* Morado tenue */
-    border: none;
-}
-.custom-title-purple {
-    color: #673AB7; /* Morado más claro */
-}
-
-/* Estilos para tarjeta azul */
-.custom-card-blue {
-    background-color: #E3F2FD; /* Azul tenue */
-    border: none;
-}
-.custom-title-blue {
+  }
+  .custom-title-blue-1 {
     color: #1976D2; /* Azul más oscuro */
-}
-
-/* Estilos para tarjeta naranja */
-.custom-card-orange {
-    background-color: #fae5c9; /* Naranja tenue */
+  }
+  
+  /* Azul 2: Claro */
+  .custom-card-blue-2 {
+    background-color: #BBDEFB; /* Azul claro */
     border: none;
-}
-.custom-title-orange {
-    color: #e68049; /* Naranja más oscuro */
-}
-
-/* Estilos para tarjeta verde */
-.custom-card-green {
-    background-color: #E8F5E9; /* Verde tenue */
+  }
+  .custom-title-blue-2 {
+    color: #1565C0; /* Azul oscuro intermedio */
+  }
+  
+  /* Azul 3: Intermedio */
+  .custom-card-blue-3 {
+    background-color: #90CAF9; /* Azul intermedio */
     border: none;
-}
-.custom-title-green {
-    color: #2E7D32; /* Verde más oscuro */
-}
+  }
+  .custom-title-blue-3 {
+    color: #0D47A1; /* Azul oscuro */
+  }
+  
+  /* Azul 4: Más saturado */
+  .custom-card-blue-4 {
+    background-color: #64B5F6; /* Azul más saturado */
+    border: none;
+  }
+  .custom-title-blue-4 {
+    color: #0B3C91; /* Azul aún más oscuro */
+  }
+  
+
+  .custom-card-gray-4 {
+    background-color: #e2cffd; /* Morado tenue */
+    border: none;
+  }
+  .custom-title-gray-4 {
+    color: #482670; /* Gris oscuro para contraste */
+  }

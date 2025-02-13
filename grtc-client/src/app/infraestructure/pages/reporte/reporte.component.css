@@ -178,13 +178,21 @@
 
 
 #modalInfraestructura .modal-dialog {
-    max-width: 80%;
-    width: 80%;
+    max-width: 90%;
+    width: 90%;
+}
+
+#modalInfraestructura .modal-content {
+    height: 100%; /* Ocupa todo el espacio disponible */
 }
 
 #modalVehiculos .modal-dialog {
-    max-width: 80%;
-    width: 80%;
+    max-width: 90%;
+    width: 90%;
+}
+
+#modalVehiculos .modal-content {
+    height: 100%; /* Ocupa todo el espacio disponible */
 }
 
 #modalConductores .modal-dialog {

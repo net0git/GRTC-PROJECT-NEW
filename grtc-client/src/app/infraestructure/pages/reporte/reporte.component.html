@@ -76,25 +76,25 @@
                             <apx-chart [series]="barOptionsColor.series" [chart]="barOptionsColor.chart"
                                 [xaxis]="barOptionsColor.xaxis" [title]="barOptionsColor.title">
                             </apx-chart>
-                            <button class="btn btn-info btn-sm text-white mx-4" whit>Ver detalle</button>
+                            <button class="btn btn-info btn-sm text-white mx-4" (click)="openModalEmpresaServicio()">Ver detalle</button>
                         </div>
                         <div class="card card_dashboard">
                             <apx-chart [series]="barOptions.series" [chart]="barOptions.chart"
                                 [xaxis]="barOptions.xaxis" [title]="barOptions.title">
                             </apx-chart>
-                            <button class="btn btn-info btn-sm text-white mx-4">Ver detalle</button>
+                            <button class="btn btn-info btn-sm text-white mx-4" (click)="openModalInfraestructura()">Ver detalle</button>
                         </div>
                         <div class="card card_dashboard">
                             <apx-chart [series]="PieOptions.series" [chart]="PieOptions.chart"
                                 [labels]="PieOptions.labels" [title]="PieOptions.title">
                             </apx-chart>
-                            <button class="btn btn-info btn-sm text-white mx-4">Ver detalle</button>
+                            <button class="btn btn-info btn-sm text-white mx-4" (click)="openModalEmpresaServicio()">Ver detalle</button>
                         </div>
                         <div class="card card_dashboard">
                             <apx-chart [series]="DonutOptions.series" [chart]="DonutOptions.chart"
                                 [labels]="DonutOptions.labels" [title]="DonutOptions.title">
                             </apx-chart>
-                            <button class="btn btn-info btn-sm text-white mx-4">Ver detalle</button>
+                            <button class="btn btn-info btn-sm text-white mx-4" (click)="openModalVehiculos()">Ver detalle</button>
                         </div>
                     </div>
                 </div>

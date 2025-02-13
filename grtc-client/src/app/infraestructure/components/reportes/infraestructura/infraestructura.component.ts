@@ -14,7 +14,7 @@ import * as XLSX from 'xlsx';
 })
 export class InfraestructuraComponent implements OnInit {
   listaInfraestructura:ListaInfraestructuraResponse[]=[]; listaInfraestructuraTemp:ListaInfraestructuraResponse[]=[];
-  p:number=1;
+  paginaActual:number=1;
   cantidad_t_terrestre:number=0;
   cantidad_er_tipo1:number=0;
   cantidad_er_tipo2:number=0;
@@ -24,6 +24,17 @@ export class InfraestructuraComponent implements OnInit {
   ngOnInit(): void {
     this.listarInfraestructura()
   }
+
+  cambiarPagina(event: number) {
+    this.paginaActual = event;
+  }
+
+  restaurar() {
+    this.paginaActual = 1;
+    this.listaInfraestructura = this.listaInfraestructuraTemp;
+    (<HTMLSelectElement>document.getElementById('tipo_infra_table')).value = '';
+  }
+
 
   listarInfraestructura(){
     this.infraestructuraService.listarInfraestructura().subscribe({
@@ -65,7 +76,7 @@ export class InfraestructuraComponent implements OnInit {
   }
 
   filtrarInfraestructura(id: number) {
-    this.p = 1;
+    this.paginaActual = 1;
     this.listaInfraestructura = this.listaInfraestructuraTemp.filter((infraestructura: { id_tipo_infraestructura: number; }) => infraestructura.id_tipo_infraestructura == id);
   }
 
@@ -138,4 +149,41 @@ export class InfraestructuraComponent implements OnInit {
   
   }
 
+
+  filtrarInfraestructuraCombinada(): void {
+    // Obtener el estado de los checkboxes
+    this.paginaActual = 1;
+    const filtros: any = {
+        terminal: (document.getElementById("flexCheckTerminal") as HTMLInputElement).checked,
+        estacionTipo1: (document.getElementById("flexCheckEstacionI") as HTMLInputElement).checked,
+        estacionTipo2: (document.getElementById("flexCheckEstacionII") as HTMLInputElement).checked,
+        estacionTipo3: (document.getElementById("flexCheckEstacionIII") as HTMLInputElement).checked,
+    };
+
+    // Definir los valores esperados para cada tipo de transporte
+    const idTipoInfraestructuraMap: Record<string, number> = {
+      terminal: 1,
+      estacionTipo1: 2,
+      estacionTipo2: 3, 
+      estacionTipo3: 4,
+    };
+
+    // Obtener los tipos seleccionados
+    const tiposSeleccionados = Object.keys(idTipoInfraestructuraMap)
+        .filter(key => filtros[key])  // Solo los checkboxes marcados
+        .map(key => idTipoInfraestructuraMap[key]);
+
+   
+    // Filtrar la lista en función de los checkboxes seleccionados
+    this.listaInfraestructura = this.listaInfraestructuraTemp.filter((infraestructura: ListaInfraestructuraResponse) => {
+        const cumpleTipo = tiposSeleccionados.length === 0 || tiposSeleccionados.includes(infraestructura.id_tipo_infraestructura);
+
+        return cumpleTipo  // Ahora ambos deben cumplirse
+    });
+
+    // Si no hay resultados, mostrar mensaje en consola
+    if (this.listaInfraestructura.length === 0) {
+        console.log("No se encontraron coincidencias con los filtros seleccionados.");
+    }
+}
 }
