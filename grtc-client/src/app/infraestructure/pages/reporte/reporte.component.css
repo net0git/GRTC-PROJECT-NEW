@@ -162,10 +162,20 @@
 
 }
 
+
+
 #modalEmpresasServicio .modal-dialog {
-    max-width: 90%;
-    width: 90%;
+    max-width: 95%;
+    width: 95%;
+
+    display: flex;
+    align-items: center; /* Centrar verticalmente */
 }
+
+#modalEmpresasServicio .modal-content {
+    height: 100%; /* Ocupa todo el espacio disponible */
+}
+
 
 #modalInfraestructura .modal-dialog {
     max-width: 80%;

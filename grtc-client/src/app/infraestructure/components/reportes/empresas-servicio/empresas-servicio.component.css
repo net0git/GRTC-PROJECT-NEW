@@ -1,42 +1,71 @@
 .custom-card-gray {
-    background-color: #acabad; /* Morado tenue */
+    background-color: #acabad;
+    /* Morado tenue */
     border: none;
 }
+
 .custom-title-gray {
-    color: #767579; /* Morado más claro */
+    color: #767579;
+    /* Morado más claro */
 }
 
 .custom-card-purple {
-    background-color: #EDE7F6; /* Morado tenue */
+    background-color: #EDE7F6;
+    /* Morado tenue */
     border: none;
 }
+
 .custom-title-purple {
-    color: #673AB7; /* Morado más claro */
+    color: #673AB7;
+    /* Morado más claro */
 }
 
 /* Estilos para tarjeta azul */
 .custom-card-blue {
-    background-color: #E3F2FD; /* Azul tenue */
+    background-color: #E3F2FD;
+    /* Azul tenue */
     border: none;
 }
+
 .custom-title-blue {
-    color: #1976D2; /* Azul más oscuro */
+    color: #1976D2;
+    /* Azul más oscuro */
 }
 
 /* Estilos para tarjeta naranja */
 .custom-card-orange {
-    background-color: #fae5c9; /* Naranja tenue */
+    background-color: #fae5c9;
+    /* Naranja tenue */
     border: none;
 }
+
 .custom-title-orange {
-    color: #e68049; /* Naranja más oscuro */
+    color: #e68049;
+    /* Naranja más oscuro */
 }
 
 /* Estilos para tarjeta verde */
 .custom-card-green {
-    background-color: #E8F5E9; /* Verde tenue */
+    background-color: #E8F5E9;
+    /* Verde tenue */
     border: none;
 }
+
 .custom-title-green {
-    color: #2E7D32; /* Verde más oscuro */
+    color: #2E7D32;
+    /* Verde más oscuro */
+}
+
+
+.text-limit {
+
+    max-width: 500px;
+    /* Ajusta el ancho máximo */
+    white-space: nowrap;
+    /* Evita el salto de línea */
+    overflow: hidden;
+    /* Oculta el contenido que no cabe */
+    text-overflow: ellipsis;
+    /* Muestra "..." si el texto es muy largo */
+
 }
