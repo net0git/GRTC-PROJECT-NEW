@@ -7,12 +7,22 @@ import { EmpresasServicioComponent } from '../../components/reportes/empresas-se
 import { InfraestructuraComponent } from '../../components/reportes/infraestructura/infraestructura.component';
 import { VehiculosComponent } from '../../components/reportes/vehiculos/vehiculos.component';
 import { ConductoresComponent } from '../../components/reportes/conductores/conductores.component';
+import { VehiculosRutaComponent } from '../../components/reportes/vehiculos-ruta/vehiculos-ruta.component';
 declare var bootstrap: any;
 
 @Component({
   selector: 'app-reporte',
   standalone: true,
-  imports: [NavegadorComponent, SubnavegadorComponent, NgApexchartsModule, EmpresasServicioComponent, InfraestructuraComponent, VehiculosComponent, ConductoresComponent],
+  imports: [
+    NavegadorComponent, 
+    SubnavegadorComponent, 
+    NgApexchartsModule, 
+    EmpresasServicioComponent, 
+    InfraestructuraComponent, 
+    VehiculosComponent, 
+    ConductoresComponent,
+    VehiculosRutaComponent
+  ],
   templateUrl: './reporte.component.html',
   styleUrl: './reporte.component.css'
 })

@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-lg-4 col-md-12 col-sm-12 ">
+      <div class="card rounded shadow border-2   ">
+                    
+        <div class="card-header  ">
+          <h5>Cantidad de Vehiculos por Ruta</h5>
+        </div>
+        <div class="card-body px-5 bg-white rounded">
+      
+          <div class="table-responsive">
+           
+            <table class="table text-center table-hover">
+               
+                <thead class="text-white table-success">
+                    <tr>
+                      <th scope="col">Nro</th>
+                      <th scope="col">ORIGEN</th>
+                      <th scope="col">DESTINO</th>                                                
+                      <th scope="col">CANTIDAD</th> 
+                    </tr>
+                  </thead>
+      
+                  <tbody >
+                    <tr *ngFor="let item of nroVehiculosRuta, index as i" (click)="ObtenerVehiculosPorRutaOrigenDestino(item.origen_ruta,item.destino_ruta)">
+                     <th scope="row">{{i+1}}</th>
+                      <td>{{item.origen_ruta}}</td>
+                      <td>{{item.destino_ruta}}</td>
+                      <td>{{item.cantidad_vehiculos}}</td>
+                    </tr> 
+                  </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div  class="col-lg-8 col-md-12 col-sm-12 ">
+      <div class="card rounded shadow border-2 ">
+                    
+        <div class="card-header  ">
+    
+            
+            <h5>Detalle vehiculos</h5>
+    
+        </div>
+        <div class="card-body px-5 bg-white rounded">
+            <div >
+                <button class="btn btn-success mb-2" (click)="ExporToExcel()" ><i class="bi bi-file-earmark-excel-fill"></i> Descargar</button>
+                
+            </div>
+            
+          <div class="table-responsive">
+           
+            <table class="table text-center  table-hover" id="excel-table">
+               
+                <thead class="text-white table-success">
+                    <tr>
+                      <th scope="col">Nro</th>
+                      <th scope="col">ORIGEN</th>
+                      <th scope="col">DESTINO</th>                                                
+                      <th scope="col">PLACA</th> 
+                      <th scope="col">MODALIDAD</th> 
+                      <th scope="col">EMPRESA</th> 
+                    </tr>
+                  </thead>
+      
+                  <tbody > 
+                    <tr *ngFor="let item of listaVehiculosRutaOrigen, index as i"  >  
+                     <th scope="row">{{i+1}}</th>
+                      <td>{{item.origen_ruta}}</td>
+                      <td>{{item.destino_ruta}}</td>
+                      <td>{{item.placa_vehiculo}}</td>
+                      <td>{{item.modalidad_vehiculo}}</td>
+                      <td>{{item.nombre_empresa}}</td>
+                    </tr> 
+                  </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+    </div>
+  </div>

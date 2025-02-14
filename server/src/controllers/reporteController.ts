@@ -357,7 +357,8 @@ class ReporteController{
                                     INNER JOIN t_vehiculo AS v ON dr.id_detalle_ruta_itinerario = v.id_detalle_ruta_itinerario
                                     INNER JOIN t_empresa_servicio AS tes ON v.id_empresa_servicio = tes.id_empresa_servicio
                                     INNER JOIN t_empresa AS te ON tes.id_empresa = te.id_empresa
-                                    WHERE dr.origen = $1 AND dr.destino = $2;
+                                    WHERE dr.origen = $1 AND dr.destino = $2
+                                    ORDER BY te.razon_social;
                              `;
             const vehiculos=await db.query(consulta,[origen,destino])
             res.json(vehiculos['rows']);
