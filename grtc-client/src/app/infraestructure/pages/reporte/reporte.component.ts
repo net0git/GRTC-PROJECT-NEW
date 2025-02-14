@@ -8,6 +8,10 @@ import { InfraestructuraComponent } from '../../components/reportes/infraestruct
 import { VehiculosComponent } from '../../components/reportes/vehiculos/vehiculos.component';
 import { ConductoresComponent } from '../../components/reportes/conductores/conductores.component';
 import { VehiculosRutaComponent } from '../../components/reportes/vehiculos-ruta/vehiculos-ruta.component';
+import { EmpresaServicioRutaComponent } from '../../components/reportes/empresa-servicio-ruta/empresa-servicio-ruta.component';
+import { VehiculosHistorialComponent } from '../../components/reportes/vehiculos-historial/vehiculos-historial.component';
+import { VehiculosEmpresaComponent } from '../../components/reportes/vehiculos-empresa/vehiculos-empresa.component';
+import { EmpresaServicioAnioComponent } from '../../components/reportes/empresa-servicio-anio/empresa-servicio-anio.component';
 declare var bootstrap: any;
 
 @Component({
@@ -21,7 +25,11 @@ declare var bootstrap: any;
     InfraestructuraComponent, 
     VehiculosComponent, 
     ConductoresComponent,
-    VehiculosRutaComponent
+    VehiculosRutaComponent,
+    EmpresaServicioRutaComponent,
+    VehiculosHistorialComponent,
+    VehiculosEmpresaComponent,
+    EmpresaServicioAnioComponent
   ],
   templateUrl: './reporte.component.html',
   styleUrl: './reporte.component.css'

@@ -186,6 +186,7 @@
     height: 100%; /* Ocupa todo el espacio disponible */
 }
 
+
 #modalVehiculos .modal-dialog {
     max-width: 90%;
     width: 90%;
@@ -193,6 +194,11 @@
 
 #modalVehiculos .modal-content {
     height: 100%; /* Ocupa todo el espacio disponible */
+}
+
+#modalConductores .modal-dialog {
+    max-width: 80%;
+    width: 80%;
 }
 
 #modalVehiculosRutas .modal-dialog {
@@ -204,7 +210,14 @@
     height: 100%; /* Ocupa todo el espacio disponible */
 }
 
-#modalConductores .modal-dialog {
-    max-width: 80%;
-    width: 80%;
+
+#modalEmpresasRutas .modal-dialog {
+    max-width: 90%;
+    width: 90%;
 }
+
+#modalEmpresasRutas .modal-content {
+    height: 100%; /* Ocupa todo el espacio disponible */
+}
+
+
