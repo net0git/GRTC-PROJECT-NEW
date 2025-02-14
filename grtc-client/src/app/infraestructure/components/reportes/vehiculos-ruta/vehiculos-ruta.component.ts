@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ReporteService } from '../../../../infraestructure/services/remoto/reporte/reporte.service';
-import { VehiculoService } from '../../../../infraestructure/services/remoto/vehiculo/vehiculo.service';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -17,10 +16,16 @@ export class VehiculosRutaComponent implements OnInit {
   nroVehiculosRuta: any=[];
   listaVehiculosRutaOrigen: any=[];
 
+  paginaActual: number = 1;
+
   constructor(private reporteService: ReporteService) { }
   ngOnInit(): void {
     this.CantidadVehiculosRuta()
 
+  }
+
+  cambiarPagina(event: number) {
+    this.paginaActual = event;
   }
 
   CantidadVehiculosRuta(): void {
@@ -39,6 +44,7 @@ export class VehiculosRutaComponent implements OnInit {
   }
 
   ObtenerVehiculosPorRutaOrigenDestino(origen: string, destino: string){
+    this.paginaActual=1
     this.reporteService.ObtenerVehiculosPorRutaOrigenDestino(origen, destino).subscribe({
       next: (data: any) => {
         console.log(data);

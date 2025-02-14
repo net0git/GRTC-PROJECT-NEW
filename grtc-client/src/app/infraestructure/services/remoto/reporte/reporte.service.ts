@@ -30,8 +30,17 @@ export class ReporteService {
     return this.http.get<any>(`${this.api_url_reporte}/cantidad/vehiculos/ruta`);
   }
 
+  CantidadEmpresasRuta(): Observable<any> {
+    return this.http.get<any>(`${this.api_url_reporte}/cantidad/empresas/ruta`);
+  }
+
   ObtenerVehiculosPorRutaOrigenDestino(origen: string, destino: string): Observable<any> {
     return this.http.get<any>(`${this.api_url_reporte}/vehiculos/ruta/origen/${origen}/destino/${destino}`);
+  }
+
+  // /api/reporte/empresas/ruta/origen/:origen/destino/:destino
+  ObtenerEmpresasPorRutaOrigenDestino(origen: string, destino: string): Observable<any> {
+    return this.http.get<any>(`${this.api_url_reporte}/empresas/ruta/origen/${origen}/destino/${destino}`);
   }
 
 

@@ -7,7 +7,7 @@
             </div>
             <div class="card-body px-5 bg-white rounded">
 
-                <div class="table-responsive">
+                <div class="table-responsive" style="max-height: 67vh; overflow-y: auto;">
 
                     <table class="table text-center table-hover">
 
@@ -20,14 +20,14 @@
                             </tr>
                         </thead>
 
-                        <!-- <tbody>
-                            <tr *ngFor="let item of cantidadEmpresaPorRuta, index as i">
+                        <tbody>
+                            <tr *ngFor="let item of nroEmpresasRuta, index as i" (click)="ObtenerEmpresasPorRutaOrigenDestino(item.origen_ruta,item.destino_ruta)">
                                 <th scope="row">{{i+1}}</th>
                                 <td>{{item.origen_ruta}}</td>
                                 <td>{{item.destino_ruta}}</td>
                                 <td>{{item.cantidad_empresas}}</td>
                             </tr>
-                        </tbody> -->
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -87,14 +87,14 @@
                             </tr>
                         </thead>
 
-                        <!-- <tbody>
-                            <tr *ngFor="let item of lista_empresas_por_ruta, index as i">
+                        <tbody>
+                            <tr *ngFor="let item of listaVehiculosRutaOrigen, index as i">
                                 <th scope="row">{{i+1}}</th>
                                 <td>{{item.origen_ruta}}</td>
                                 <td>{{item.destino_ruta}}</td>
                                 <td>{{item.nombre_empresa}}</td>
                             </tr>
-                        </tbody> -->
+                        </tbody>
                     </table>
                 </div>
             </div>

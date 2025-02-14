@@ -15,7 +15,7 @@ class ReporteRoutes{
         this.router.get('/api/reporte/lista/empresas/ruta',reporteController.listarEmpresasByRuta)
         this.router.post('/api/reporte/lista/empresas/ruta/origen/:origen',reporteController.listarEmpresasPorRutaOrigen)
         this.router.post('/api/reporte/lista/empresas/ruta/destino/:destino',reporteController.listarEmpresasPorRutaDestino)
-        this.router.post('/api/reporte/lista/empresas/ruta/origen/:origen/destino/:destino',reporteController.ObtenerEmpresasPorRutaOrigenDestino)
+        this.router.get('/api/reporte/empresas/ruta/origen/:origen/destino/:destino',reporteController.ObtenerEmpresasPorRutaOrigenDestino)
         this.router.get('/api/reporte/cantidad/empresas/tiposervicio',reporteController.CantidadDeEmpresasPorTipoServicio)
         this.router.get('/api/reporte/cantidad/empresas/ruta',reporteController.CantidadDeEmpresasPorRuta)
         this.router.get('/api/reporte/estado/empresas',reporteController.CantidadEstadoEmpresas)
