@@ -66,6 +66,7 @@ class VehiculoController {
                             v.id_tuc,
                             r.fecha_resolucion as fecha_inicial,
                             es.fecha_final,
+                            es.id_tipo_servicio,
                             r.nombre_resolucion,
                             i.itinerario
                         FROM

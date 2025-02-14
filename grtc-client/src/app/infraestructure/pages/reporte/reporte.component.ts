@@ -45,6 +45,31 @@ export class ReporteComponent {
     this.myModal.show();
   }
 
+  openModalVehiculosRutas(){
+    this.myModal = new bootstrap.Modal(document.getElementById('modalVehiculosRutas'));
+    this.myModal.show();
+  }
+
+  openModalEmpresasRutas(){
+    this.myModal = new bootstrap.Modal(document.getElementById('modalEmpresasRutas'));
+    this.myModal.show();
+  }
+
+  openModalEmpresasAnio(){
+    this.myModal = new bootstrap.Modal(document.getElementById('modalEmpresasAnio'));
+    this.myModal.show();
+  }
+
+  openModalVehiculosEmpresa(){
+    this.myModal = new bootstrap.Modal(document.getElementById('modalVehiculosEmpresa'));
+    this.myModal.show();
+  }
+
+  openModalhistorialVehiculo(){
+    this.myModal = new bootstrap.Modal(document.getElementById('modalhistorialVehiculo'));
+    this.myModal.show();
+  }
+
   closeModal() {
     this.myModal.hide();
   }

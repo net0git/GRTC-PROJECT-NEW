@@ -247,6 +247,7 @@ export class EmpresasServicioComponent implements OnInit {
     if (this.listaEmpresasServicio.length === 0) {
         console.log("No se encontraron coincidencias con los filtros seleccionados.");
     }
+    console.log(filtros)
 }
 
 }

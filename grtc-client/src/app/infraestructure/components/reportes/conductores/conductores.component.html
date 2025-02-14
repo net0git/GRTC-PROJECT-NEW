@@ -26,7 +26,7 @@
                 </tr>
               </thead>
               <tbody >
-                <tr *ngFor="let conductor of listaConductores | paginate: { itemsPerPage: 10, currentPage: p }; let i = index"  >
+                <tr *ngFor="let conductor of listaConductores | paginate: { itemsPerPage: 10, currentPage: paginaActual, id: 'conductores-pagination' }; let i = index"  >
                  <th scope="row">{{i+1}}</th>
                   <td>{{conductor.numero_documento}}</td>
                   <td>{{conductor.nombre_conductor +' '+conductor.apellido_paterno+' '+conductor.apellido_materno}}</td>
@@ -39,7 +39,7 @@
       </div>
       <div class="d-flex justify-content-between">
         <button class="btn btn-success mb-2" (click)="ExporToExcel()"><i class="bi bi-file-earmark-excel-fill"></i> Descargar</button>
-        <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" extLabel="Siguiente"></pagination-controls>
+        <pagination-controls (pageChange)="paginaActual = $event" previousLabel="Anterior" extLabel="Siguiente" id="conductores-pagination"></pagination-controls>
       </div>
     </div>
   </div>

@@ -10,22 +10,27 @@
                     <div class="titulo">OTROS REPORTES</div>
                     <div class="lista">
                         <div class="item">
-                            <div class="name"><i class="bi bi-map"></i> Vehiculos por ruta</div>
+                            <div class="name" (click)="openModalVehiculosRutas()"><i class="bi bi-map mx-2"></i> Vehiculos por ruta</div>
                         </div>
                     </div>
                     <div class="lista">
                         <div class="item">
-                            <div class="name"> <i class="bi bi-geo-alt"></i> Empresas por ruta</div>
+                            <div class="name" (click)="openModalEmpresasRutas()"> <i class="bi bi-geo-alt mx-2"></i> Empresas por ruta</div>
                         </div>
                     </div>
                     <div class="lista">
                         <div class="item">
-                            <div class="name"><i class="bi bi-bus-front"></i> Vehiculos por empresa</div>
+                            <div class="name" (click)="openModalEmpresasAnio()"><i class="bi bi-calendar-check mx-2"></i> Empesas autorizadas por año</div>
+                        </div>
+                    </div>
+                    <div class="lista">
+                        <div class="item">
+                            <div class="name" (click)="openModalVehiculosEmpresa()"><i class="bi bi-bus-front mx-2"></i> Vehiculos por empresa</div>
                         </div>
                     </div>
                     <div class="lista ">
                         <div class="item">
-                            <div class="name"> <i class="bi bi-card-list"></i> Historial de un vehiculo por placa</div>
+                            <div class="name" (click)="openModalhistorialVehiculo()"> <i class="bi bi-card-list mx-2"></i> Historial de un vehiculo por placa</div>
                         </div>
                     </div>
                 </div>
@@ -115,10 +120,8 @@
         <div class="modal-body text-start">
            <h1>cuerpo del reporte a medida</h1>
         </div>
-        
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
-          
         </div>
       </div>
     </div>
@@ -196,4 +199,100 @@
       </div>
     </div>
 </div>
+
+
+<!-- modal: VEHICULOS POR RUTA -->
+<div class="modal fade" id="modalVehiculosRutas" tabindex="-1" role="dialog" aria-labelledby="modalVehiculosRutasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="subtitulo_menu">REPORTE DE VEHICULOS POR RUTA</p>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+           <H1>HOLA DESDE REPORTE DE VEHICULOS POR RUTA</H1>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<!-- modal: EMPRESAS POR RUTA -->
+<div class="modal fade" id="modalEmpresasRutas" tabindex="-1" role="dialog" aria-labelledby="modalEmpresasRutasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="subtitulo_menu">REPORTE DE EMPRESAS POR RUTA</p>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+           <H1>EMPRESAS POR RUTA</H1>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- modal: EMPRESAS AUTORIZADAS POR AÑO -->
+<div class="modal fade" id="modalEmpresasAnio" tabindex="-1" role="dialog" aria-labelledby="modalEmpresasAnioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="subtitulo_menu">REPORTE DE EMPRESAS AUTORIZADAS POR AÑO</p>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+           <H1>EMPRESAS AUTORIZADAS POR AÑO</H1>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<!-- modal: VEHICULOS POR EMPRESA -->
+<div class="modal fade" id="modalVehiculosEmpresa" tabindex="-1" role="dialog" aria-labelledby="modalVehiculosEmpresaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="subtitulo_menu">REPORTE DE VEHICULOS POR EMPRESA</p>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+           <H1>VEHICULOS POR EMPRESA</H1>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<!-- modal: HISTORIAL VEHICULAR -->
+<div class="modal fade" id="modalhistorialVehiculo" tabindex="-1" role="dialog" aria-labelledby="modalhistorialVehiculoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="subtitulo_menu">REPORTE DE HISTORIAL VEHICULAR</p>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+           <H1>HISTORIAL VEHICULAR</H1>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
 

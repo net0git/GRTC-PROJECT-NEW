@@ -16,7 +16,11 @@ export class ConductoresComponent implements OnInit {
 
   constructor(private conductorService: ConductorService) { }
   listaConductores: ListaTotalConductorResponse[] = []; listaConductoresTemp: ListaTotalConductorResponse[] = [];
-  p: number = 1;
+  paginaActual: number = 1;
+
+  cambiarPagina(event: number) {
+    this.paginaActual = event;
+  }
   
   ngOnInit(): void {
     this.listarConductores()
@@ -58,7 +62,7 @@ export class ConductoresComponent implements OnInit {
 
   ExporToExcel():void{
     
-    // let allData = this.listaVehiculos; // Asegúrate de obtener todos los registros
+    let allData = this.listaConductores; // Asegúrate de obtener todos los registros
 
     // let filteredData = allData.map(({ id_vehiculo, id_tuc, nombre_resolucion,fecha_inicial, fecha_final, ...rest }) => ({
     //     ...rest,
@@ -66,15 +70,15 @@ export class ConductoresComponent implements OnInit {
     //     fecha_act: fecha_final ? new Date(fecha_final).toLocaleDateString('es-ES') : '',
     // }));
 
-    // // Convertimos los datos a una hoja de trabajo de Excel
-    // const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(filteredData);
+    // Convertimos los datos a una hoja de trabajo de Excel
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(allData);
 
-    // // Creamos un nuevo libro de trabajo
-    // const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    // XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    // Creamos un nuevo libro de trabajo
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
-    // // Guardamos el archivo Excel
-    // XLSX.writeFile(wb, 'reporte_vehiculos.xlsx');
+    // Guardamos el archivo Excel
+    XLSX.writeFile(wb, 'reporte_vehiculos.xlsx');
   
   }
 

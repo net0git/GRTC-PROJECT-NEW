@@ -195,6 +195,15 @@
     height: 100%; /* Ocupa todo el espacio disponible */
 }
 
+#modalVehiculosRutas .modal-dialog {
+    max-width: 90%;
+    width: 90%;
+}
+
+#modalVehiculosRutas .modal-content {
+    height: 100%; /* Ocupa todo el espacio disponible */
+}
+
 #modalConductores .modal-dialog {
     max-width: 80%;
     width: 80%;

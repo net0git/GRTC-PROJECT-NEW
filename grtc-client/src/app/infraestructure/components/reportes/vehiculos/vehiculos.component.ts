@@ -15,6 +15,10 @@ import { ListaVehiculosDetalleResponse } from '../../../../domain/dto/VehiculoRe
 export class VehiculosComponent implements OnInit {
 
   listaVehiculos: ListaVehiculosDetalleResponse[] = []; listaVehiculosTemp: ListaVehiculosDetalleResponse[] = [];
+  cantidad_v_personas: number = 0;
+  cantidad_v_turismo: number = 0;
+  cantidad_v_estudiantes: number = 0;
+  cantidad_v_trabajadores: number = 0;
   paginaActual: number = 1;
   constructor(private vehiculoService: VehiculoService) { }
 
@@ -37,6 +41,7 @@ export class VehiculosComponent implements OnInit {
       },
       complete: () => {
         console.log('Vehiculos obtenidos correctamente')
+        this.contador_tipo_servicio()
       }
     })
   }
@@ -62,6 +67,28 @@ export class VehiculosComponent implements OnInit {
     });
   }
 
+  contador_tipo_servicio() {
+    this.listaVehiculosTemp.forEach((vehiculo: ListaVehiculosDetalleResponse) => {
+      switch (vehiculo.id_tipo_servicio) {
+        case 1:
+          this.cantidad_v_personas++;
+          break;
+        case 2:
+          this.cantidad_v_turismo++;
+          break;
+        case 3:
+          this.cantidad_v_estudiantes++;
+          break;
+        case 4:
+          this.cantidad_v_trabajadores++;
+          break;
+        default:
+          // Si el valor no coincide con ninguno, puedes manejarlo aquí si lo necesitas.
+          break;
+      }
+    });
+  }
+
   ExporToExcel():void{
     
     let allData = this.listaVehiculos; // Asegúrate de obtener todos los registros
@@ -82,6 +109,40 @@ export class VehiculosComponent implements OnInit {
     // Guardamos el archivo Excel
     XLSX.writeFile(wb, 'reporte_vehiculos.xlsx');
   
+  }
+
+  filtrarVehiculos(): void {
+
+    
+    // Obtener el estado de los checkboxes
+    this.paginaActual = 1;
+    const filtros: any = {
+        persona: (document.getElementById("flexCheckVehiculosPersona") as HTMLInputElement).checked,
+        turismo: (document.getElementById("flexCheckVehiculosTurismo") as HTMLInputElement).checked,
+        estudiante: (document.getElementById("flexCheckVehiculosEstudiante") as HTMLInputElement).checked,
+        trabajador: (document.getElementById("flexCheckVehiculosTrabajador") as HTMLInputElement).checked,
+    };
+
+    // Definir los valores esperados para cada tipo de transporte
+    const idTipoServicioMap: Record<string, number> = {
+        persona: 1,
+        turismo: 2,
+        trabajador: 3,
+        estudiante: 4,  
+    };
+
+    // Obtener los tipos seleccionados
+    const tiposSeleccionados = Object.keys(idTipoServicioMap)
+        .filter(key => filtros[key])  // Solo los checkboxes marcados
+        .map(key => idTipoServicioMap[key]);
+
+  
+    // Filtrar la lista en función de los checkboxes seleccionados
+    this.listaVehiculos = this.listaVehiculosTemp.filter((vehiculo: ListaVehiculosDetalleResponse) => {
+        const cumpleTipo = tiposSeleccionados.length === 0 || tiposSeleccionados.includes(vehiculo.id_tipo_servicio)
+        return cumpleTipo ; // Ahora ambos deben cumplirse
+    })
+    console.log(filtros)
   }
 
 }

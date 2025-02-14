@@ -12,66 +12,70 @@
     <div class="card-body px-5 bg-white rounded">
       <div class="table-responsive">
         <div class="d-flex justify-content-center mb-3">
-          <div class="card custom-card-blue p-2 shadow-sm ">
+          <div class="card custom-card-blue p-2 shadow-sm">
               <div class="px-3">
                   <p class="custom-title-blue mb-0">T. de Personas</p>
-                  <p class="text-muted mb-0 opacity-75"><i class="bi bi-person-fill "
-                          style="cursor: auto;"> </i> <strong> </strong></p>
+                  <p class="text-muted mb-0 opacity-75"><i class="bi bi-bus-front "
+
+
+                          style="cursor: auto;"> </i> <strong> {{cantidad_v_personas}}  </strong></p>
               </div>
           </div>
           <div class="card custom-card-purple p-2 shadow-sm  mx-3">
               <div class="px-3">
                   <p class="custom-title-purple mb-0">T. de Turismo</p>
-                  <p class="text-muted mb-0 opacity-75"> <i class="bi bi-map-fill "
-                          style="cursor: auto;"></i> <strong> </strong></p>
+                  <p class="text-muted mb-0 opacity-75"> <i class="bi bi-car-front"
+                          style="cursor: auto;"></i> <strong> {{cantidad_v_turismo}}  </strong></p>
               </div>
           </div>
           <div class="card custom-card-orange p-2 shadow-sm ">
               <div class="px-3">
                   <p class="custom-title-orange mb-0">T. de Estudiantes</p>
-                  <p class="text-muted mb-0 opacity-75"><i class="bi bi-mortarboard-fill "
-                          style="cursor: auto;"></i><strong> </strong></p>
+                  <p class="text-muted mb-0 opacity-75"><i class="bi bi-bus-front "
+                          style="cursor: auto;"></i><strong> {{cantidad_v_estudiantes}} </strong></p>
               </div>
           </div>
           <div class="card custom-card-green p-2 shadow-sm  mx-3">
               <div class="px-3">
                   <p class="custom-title-green mb-0">T. de Trabajadores</p>
-                  <p class="text-muted mb-0 opacity-75"> <i class="bi bi-briefcase-fill"
-                          style="cursor: auto;"></i> <strong> </strong></p>
+                  <p class="text-muted mb-0 opacity-75"> <i class="bi bi-bus-front"
+                          style="cursor: auto;"></i> <strong> {{cantidad_v_trabajadores}}  </strong></p>
               </div>
           </div>
 
           <div class="card  shadow-sm p-2 " style="width: 55%;">
-              <div class="d-flex justify-content-start">
+              <div class="d-flex justify-content-between ">
+                <div class="d-flex justify-content-start">
                   <div class="form-check mx-2">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckPersona">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckVehiculosPersona">
                       <label class="form-check-label" for="flexCheckDefault">
                           t. personas
                       </label>
                   </div>
                   <div class="form-check mx-2">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckTurismo"
-                          >
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckVehiculosTurismo">
                       <label class="form-check-label" for="flexCheckDefault">
                           t. turístico
                       </label>
                   </div>
                   <div class="form-check mx-2">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckEstudiante">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckVehiculosEstudiante">
                       <label class="form-check-label" for="flexCheckDefault">
                           t. de estudiantes
                       </label>
                   </div>
                   <div class="form-check mx-2">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckTrabajador">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckVehiculosTrabajador">
                       <label class="form-check-label" for="flexCheckDefault">
                           t. trabajadores
                       </label>
                   </div>
               </div>
-              
-              
+              <button class="btn btn-primary btn-sm mx-2 my-0 py-0" type="button"  (click)="filtrarVehiculos()" >filtrar</button>
+              </div> 
+             
           </div>
+          
       </div>
         
         <table class="table text-center  table-hover" id="excel-table">
