@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
 import { EmpresaServicioService } from '../../../services/remoto/empresas-servicio/empresa-servicio.service';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -27,7 +26,7 @@ export class EmpresasServicioComponent implements OnInit {
   disableInvitado = ''//variable temporal para cambiar el estado del html
 
   paginaActual: number = 1;
-  constructor(private empresaServicioService: EmpresaServicioService, private credencialesService: CredencialesService) { }
+  constructor(private empresaServicioService: EmpresaServicioService) { }
   ngOnInit(): void {
     this.listarEmpresasSevicios()
     console.log('entro al ngOnInit')
@@ -35,9 +34,7 @@ export class EmpresasServicioComponent implements OnInit {
 
   selectedButton: number | null = null; // Índice del botón seleccionado
 
-  selectButton(index: number) {
-    this.selectedButton = index;
-  }
+  
 
   cambiarPagina(event: number) {
     this.paginaActual = event;
@@ -201,8 +198,6 @@ export class EmpresasServicioComponent implements OnInit {
     XLSX.writeFile(wb, 'reporte_empresas_servicio.xlsx');
 
   }
-
-
 
   filtrarEmpresas(): void {
     // Obtener el estado de los checkboxes

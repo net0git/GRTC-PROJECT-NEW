@@ -229,4 +229,21 @@
     height: 100%; /* Ocupa todo el espacio disponible */
 }
 
+#modalEmpresasAnio .modal-dialog {
+    max-width: 90%;
+    width: 90%;
+}
+
+#modalEmpresasAnio .modal-content {
+    height: 100%; /* Ocupa todo el espacio disponible */
+}
+
+#modalVehiculosEmpresa .modal-dialog {
+    max-width: 90%;
+    width: 90%;
+}
+
+#modalVehiculosEmpresa .modal-content {
+    height: 100%; /* Ocupa todo el espacio disponible */
+}
 

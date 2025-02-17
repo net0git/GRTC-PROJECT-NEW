@@ -10,8 +10,8 @@ import { ConductoresComponent } from '../../components/reportes/conductores/cond
 import { VehiculosRutaComponent } from '../../components/reportes/vehiculos-ruta/vehiculos-ruta.component';
 import { EmpresaServicioRutaComponent } from '../../components/reportes/empresa-servicio-ruta/empresa-servicio-ruta.component';
 import { VehiculosHistorialComponent } from '../../components/reportes/vehiculos-historial/vehiculos-historial.component';
-import { VehiculosEmpresaComponent } from '../../components/reportes/vehiculos-empresa/vehiculos-empresa.component';
 import { EmpresaServicioAnioComponent } from '../../components/reportes/empresa-servicio-anio/empresa-servicio-anio.component';
+import { HistorialVehiculoComponent } from '../../components/historial-vehiculo/historial-vehiculo.component';
 declare var bootstrap: any;
 
 @Component({
@@ -28,8 +28,8 @@ declare var bootstrap: any;
     VehiculosRutaComponent,
     EmpresaServicioRutaComponent,
     VehiculosHistorialComponent,
-    VehiculosEmpresaComponent,
-    EmpresaServicioAnioComponent
+    EmpresaServicioAnioComponent,
+    HistorialVehiculoComponent
   ],
   templateUrl: './reporte.component.html',
   styleUrl: './reporte.component.css'

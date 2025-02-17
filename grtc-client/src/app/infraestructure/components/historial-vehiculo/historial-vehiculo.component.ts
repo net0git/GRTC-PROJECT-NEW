@@ -1,21 +1,17 @@
 import { Component } from '@angular/core';
-import { NavegadorComponent } from '../../shared/components/navegador/navegador.component';
-import { SubnavegadorComponent } from '../../shared/components/subnavegador/subnavegador.component';
 import { HistorialVehicularDetalleResponse } from '../../../domain/dto/HistorialVehicularResponse.dto';
 import { HistorialVehicularService } from '../../services/remoto/historial-vehicular/historial-vehicular.service';
-import { HistorialVehiculoComponent } from '../../components/historial-vehiculo/historial-vehiculo.component';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
-  selector: 'app-busqueda-historial',
+  selector: 'app-historial-vehiculo',
   standalone: true,
-  imports: [NavegadorComponent, SubnavegadorComponent, CommonModule, HistorialVehiculoComponent],
-  templateUrl: './busqueda-historial.component.html',
-  styleUrl: './busqueda-historial.component.css'
+  imports: [CommonModule],
+  templateUrl: './historial-vehiculo.component.html',
+  styleUrl: './historial-vehiculo.component.css'
 })
-export class BusquedaHistorialComponent {
-
+export class HistorialVehiculoComponent {
+  
   dataHistorialVehicular: HistorialVehicularDetalleResponse[] = []
 
   constructor(private historialVehicularService: HistorialVehicularService) { }
