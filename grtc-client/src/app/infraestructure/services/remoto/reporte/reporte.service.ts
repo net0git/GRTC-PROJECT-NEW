@@ -43,5 +43,13 @@ export class ReporteService {
     return this.http.get<any>(`${this.api_url_reporte}/empresas/ruta/origen/${origen}/destino/${destino}`);
   }
 
+  CantidadEmpresasPorTipoServicio(): Observable<any> {
+    return this.http.get<any>(`${this.api_url_reporte}/cantidad/empresas/tiposervicio`);
+  }
+
+  CantidadEstadoEmpresas(): Observable<any> {
+    return this.http.get<any>(`${this.api_url_reporte}/estado/empresas`);
+  }
+
 
 }

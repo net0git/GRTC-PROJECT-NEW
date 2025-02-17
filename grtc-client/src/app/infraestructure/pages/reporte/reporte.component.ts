@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavegadorComponent } from '../../shared/components/navegador/navegador.component';
 import { SubnavegadorComponent } from '../../shared/components/subnavegador/subnavegador.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -12,6 +12,7 @@ import { EmpresaServicioRutaComponent } from '../../components/reportes/empresa-
 import { VehiculosHistorialComponent } from '../../components/reportes/vehiculos-historial/vehiculos-historial.component';
 import { EmpresaServicioAnioComponent } from '../../components/reportes/empresa-servicio-anio/empresa-servicio-anio.component';
 import { HistorialVehiculoComponent } from '../../components/historial-vehiculo/historial-vehiculo.component';
+import { ReporteService } from '../../../infraestructure/services/remoto/reporte/reporte.service';
 declare var bootstrap: any;
 
 @Component({
@@ -34,9 +35,70 @@ declare var bootstrap: any;
   templateUrl: './reporte.component.html',
   styleUrl: './reporte.component.css'
 })
-export class ReporteComponent {
+export class ReporteComponent implements OnInit {
 
   private myModal: any;
+  cantidadEmpresasSercicio: any;
+
+  cantidad_t_Personas:number=0;
+  cantidad_t_Turismo:number=0;
+  cantidad_t_Estudiantes:number=0;
+  cantidad_t_Trabajadores:number=0;
+
+  totalEmpresas:number=0;
+  cantidad_estado_empresas:any={}
+
+  barOptionsColor:any
+  PieOptions:any
+  
+
+
+
+  constructor(private reporteService: ReporteService) { }
+  ngOnInit(): void {
+    this.cantidadEmpresasPorTipoServicio()
+    this.cantidadEstadoEmpresas()
+    
+  }
+
+  cantidadEmpresasPorTipoServicio() {
+    this.reporteService.CantidadEmpresasPorTipoServicio().subscribe({
+      next: (data: any) => {
+        this.cantidad_t_Personas=Number(data[0].cantidad_empresas) 
+        this.cantidad_t_Turismo=Number(data[1].cantidad_empresas) 
+        this.cantidad_t_Trabajadores=Number(data[2].cantidad_empresas) 
+        this.cantidad_t_Estudiantes=Number(data[3].cantidad_empresas) 
+        this.totalEmpresas=this.cantidad_t_Personas + this.cantidad_t_Turismo + this.cantidad_t_Trabajadores + this.cantidad_t_Estudiantes
+        
+        
+      },
+      error: (err) => {
+        console.error('Error al obtener cantidad de empresas por tipo de servicio:', err);
+      },
+      complete: () => {
+        console.log('cantidad de empresas por tipo de servicio obtenida');
+        this.GraficarEmpreasServicio()
+        
+      }
+    });
+  }
+
+  cantidadEstadoEmpresas() {
+    this.reporteService.CantidadEstadoEmpresas().subscribe({
+      next: (data: any) => {
+        this.cantidad_estado_empresas = data
+        console.log(this.cantidad_estado_empresas)
+      },
+      error: (err) => {
+        console.error('Error al obtener cantidades de estado de empresas:', err);
+      },
+      complete: () => {
+        console.log('cantidades de estado de empresas obtenidas');
+        this.graficaEstadosEmpresasServicio()
+      }
+    });
+  }
+
 
   openModal() {
     this.myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
@@ -92,26 +154,53 @@ export class ReporteComponent {
     this.myModal.hide();
   }
 
-  barOptionsColor = {
-    series: [
-      { name: 'PERSONAS', data: [106, 0, 0, 0] },
-      { name: 'TURISMO', data: [0, 50, 0, 0] },
-      { name: 'ESTUDIANTES', data: [0, 0, 6, 0] },
-      { name: 'TRABAJADORES', data: [0, 0, 0, 1] }
-    ],
-    chart: {
-      height: 250,
-      type: 'bar',
-      stacked: true // Esto evitará que las barras se solapen
-    } as ApexChart,
-    title: {
-      text: 'EMPRESAS POR SERVICIO'
-    } as ApexTitleSubtitle,
-    xaxis: {
-      categories: ['PERSONAS', 'TURISMO', 'ESTUDIANTES', 'TRABAJADORES']
-    } as ApexXAxis,
+ 
 
-  };
+    // barOptionsColor:any = {
+    //   series: [
+    //     { name: 'PERSONAS', data: [this.cantidad_t_Personas || 0, 0, 0, 0] },
+    //     { name: 'TURISMO', data: [0, this.cantidad_t_Turismo || 0, 0, 0] },
+    //     { name: 'ESTUDIANTES', data: [0, 0, this.cantidad_t_Estudiantes || 0, 0] },
+    //     { name: 'TRABAJADORES', data: [0, 0, 0, this.cantidad_t_Trabajadores || 0] }
+    //   ],
+    //   chart: {
+    //     height: 250,
+    //     type: 'bar',
+    //     stacked: true
+    //   } as ApexChart,
+    //   title: {
+    //     text: 'EMPRESAS POR SERVICIO'
+    //   } as ApexTitleSubtitle,
+    //   xaxis: {
+    //     categories: ['PERSONAS', 'TURISMO', 'ESTUDIANTES', 'TRABAJADORES']
+    //   } as ApexXAxis,
+    // };
+  
+    GraficarEmpreasServicio() {
+      this.barOptionsColor = {
+        series: [
+          { name: 'PERSONAS', data: [this.cantidad_t_Personas || 0, 0, 0, 0] },
+          { name: 'TURISMO', data: [0, this.cantidad_t_Turismo || 0, 0, 0] },
+          { name: 'ESTUDIANTES', data: [0, 0, this.cantidad_t_Estudiantes || 0, 0] },
+          { name: 'TRABAJADORES', data: [0, 0, 0, this.cantidad_t_Trabajadores || 0] }
+        ],
+        chart: {
+          height: 250,
+          type: 'bar',
+          stacked: true
+        } as ApexChart,
+        title: {
+          text: 'EMPRESAS POR SERVICIO'
+        } as ApexTitleSubtitle,
+        xaxis: {
+          categories: ['PERSONAS', 'TURISMO', 'ESTUDIANTES', 'TRABAJADORES']
+        } as ApexXAxis,
+      };
+    }
+
+    
+
+  
 
   barOptions: any = {
     series: [
@@ -147,17 +236,21 @@ export class ReporteComponent {
     } as ApexYAxis
   };
 
-  PieOptions = {
-    series: [106, 40, 30],
-    chart: {
-      height: 250,
-      type: 'pie'
-    } as ApexChart,
-    labels: ['ACTIVO', 'INACTIVO', 'ALERTA'],
-    title: {
-      text: 'ESTADO DE EMPRESAS POR SERVICIO'
-    } as ApexTitleSubtitle
-  };
+  graficaEstadosEmpresasServicio(){
+    this.PieOptions = {
+      series: [Number(this.cantidad_estado_empresas.activo), Number(this.cantidad_estado_empresas.inactivo), Number(this.cantidad_estado_empresas.alerta)],
+      chart: {
+        height: 250,
+        type: 'pie'
+      } as ApexChart,
+      labels: ['ACTIVO', 'INACTIVO', 'ALERTA'],
+      title: {
+        text: 'ESTADO DE EMPRESAS POR SERVICIO'
+      } as ApexTitleSubtitle
+    };
+  }
+
+  
 
   DonutOptions = {
     series: [56, 30, 10, 14],

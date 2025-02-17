@@ -128,28 +128,15 @@ class ReporteController{
     public async CantidadDeEmpresasPorTipoServicio(req: Request, res: Response): Promise<void>{
         try {
             const consulta = `
-                SELECT tipo_servicio, cantidad_empresas
-                FROM (
-                    SELECT
-                        ts.denominacion AS tipo_servicio,
-                        COUNT(te.id_empresa) AS cantidad_empresas,
-                        1 AS orden
-                    FROM 
-                        d_tipo_servicio AS ts
-                    LEFT JOIN 
-                        t_empresa_servicio AS te ON ts.id_tipo_servicio = te.id_tipo_servicio
-                    GROUP BY tipo_servicio
-                
-                    UNION ALL
-                
-                    SELECT
-                        'Total' AS tipo_servicio,
-                        COUNT(te.id_empresa) AS cantidad_empresas,
-                        2 AS orden
-                    FROM 
-                        t_empresa_servicio AS te
-                ) AS result
-                ORDER BY orden;`;
+                SELECT 
+                    dts.id_tipo_servicio,
+                    dts.denominacion AS tipo_servicio, 
+                    COUNT(te.id_empresa) AS cantidad_empresas
+                FROM t_empresa_servicio tes
+                JOIN d_tipo_servicio dts ON tes.id_tipo_servicio = dts.id_tipo_servicio
+                JOIN t_empresa te ON tes.id_empresa = te.id_empresa
+                GROUP BY dts.id_tipo_servicio, dts.denominacion
+                ORDER BY id_tipo_servicio ASC;`;
             const tuc = await db.query(consulta);
     
             if (tuc && tuc['rows'].length > 0) {
@@ -205,9 +192,9 @@ class ReporteController{
         try {
             const consulta = `
                     SELECT
-                        COUNT(CASE WHEN estado = 'Activo' THEN 1 ELSE NULL END) AS empresas_activas,
-                        COUNT(CASE WHEN estado = 'Alerta' THEN 1 ELSE NULL END) AS empresas_en_alerta,
-                        COUNT(CASE WHEN estado = 'Inactivo' THEN 1 ELSE NULL END) AS empresas_de_baja
+                        COUNT(CASE WHEN estado = 'Activo' THEN 1 ELSE NULL END) AS activo,
+                        COUNT(CASE WHEN estado = 'Alerta' THEN 1 ELSE NULL END) AS alerta,
+                        COUNT(CASE WHEN estado = 'Inactivo' THEN 1 ELSE NULL END) AS inactivo
                     FROM (
                         SELECT tes.id_empresa_servicio, te.*, CONCAT(pe.nombres, ' ', pe.ap_paterno, ' ', pe.ap_materno) AS representante_legal, tes.expediente, tes.fecha_inicial, tes.fecha_final,
                             CASE
@@ -222,7 +209,7 @@ class ReporteController{
             const EstadoEmpresaServicio = await db.query(consulta);
     
             if (EstadoEmpresaServicio && EstadoEmpresaServicio['rows'].length > 0) {
-                res.json(EstadoEmpresaServicio['rows']);
+                res.json(EstadoEmpresaServicio['rows'][0]);
             } else {
                 res.status(404).json({ text: 'los detalles de la empresa no existe' });
             }

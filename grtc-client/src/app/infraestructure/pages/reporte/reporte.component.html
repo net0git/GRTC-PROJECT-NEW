@@ -49,7 +49,7 @@
                         <div class="col-md-3">
                             <div class="card card-tag custom-card-blue p-3 shadow-sm" title="ver detalle" (click)="openModalEmpresaServicio()">
                                 <h5 class="custom-title-blue">Empresas por servicio</h5>
-                                <p class="text-muted mb-0">350</p>
+                                <p class="text-muted mb-0">{{ totalEmpresas }}</p>
                             </div>
                         </div>
 
@@ -78,9 +78,9 @@
                 <div class="container">
                     <div class="dashboard-grid">
                         <div class="card card_dashboard">
-                            <apx-chart [series]="barOptionsColor.series" [chart]="barOptionsColor.chart"
-                                [xaxis]="barOptionsColor.xaxis" [title]="barOptionsColor.title">
-                            </apx-chart>
+                          <apx-chart #chart [series]="barOptionsColor.series" [chart]="barOptionsColor.chart"
+                          [xaxis]="barOptionsColor.xaxis" [title]="barOptionsColor.title">
+                        </apx-chart>
                             <button class="btn btn-info btn-sm text-white mx-4" (click)="openModalEmpresaServicio()">Ver detalle</button>
                         </div>
                         <div class="card card_dashboard">
