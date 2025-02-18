@@ -747,9 +747,9 @@ export class CrearEmpresaServicioComponent implements OnInit {
       this.dataEmpresaServicio.fecha_inicial = new Date(this.dataEmpresaServicio.fecha_inicial);
 
       // Calcular la fecha_final sumando 10 años y un día
-      this.dataEmpresaServicio.fecha_final = new Date(this.dataEmpresaServicio.fecha_inicial);
-      this.dataEmpresaServicio.fecha_final.setFullYear(this.dataEmpresaServicio.fecha_final.getFullYear() + 10); // Sumar 10 años
-      this.dataEmpresaServicio.fecha_final.setDate(this.dataEmpresaServicio.fecha_final.getDate() + 1); // Sumar un día
+      // this.dataEmpresaServicio.fecha_final = new Date(this.dataEmpresaServicio.fecha_inicial);
+      // this.dataEmpresaServicio.fecha_final.setFullYear(this.dataEmpresaServicio.fecha_final.getFullYear() + 10); // Sumar 10 años
+      // this.dataEmpresaServicio.fecha_final.setDate(this.dataEmpresaServicio.fecha_final.getDate() + 1); // Sumar un día
 
       // Llamada al servicio para crear la empresa de servicio
       const data: crearEmpresaServicioResponse = await lastValueFrom(
@@ -761,6 +761,14 @@ export class CrearEmpresaServicioComponent implements OnInit {
 
     } catch (err) {
       console.log('Error al crear empresa servicio', err);
+    }
+  }
+
+  actualizarFechaFinal() {
+    if (this.dataEmpresaServicio.fecha_inicial) {
+      let fechaInicio = new Date(this.dataEmpresaServicio.fecha_inicial);
+      fechaInicio.setFullYear(fechaInicio.getFullYear() + 10); // Sumamos 10 años
+      this.dataEmpresaServicio.fecha_final = fechaInicio.toISOString().split('T')[0]; // Formato YYYY-MM-DD
     }
   }
 

@@ -18,18 +18,30 @@
                         <div class="card-body">
                             <form>
                                 <fieldset>
-                                    <div class="col-sm-12 col-lg-6 mb-4">
-                                        <label for="tipo_empresa_servicio" class="form-label mt-2">Tipo de servicio:</label>
-                                        <select id="tipo_empresa_servicio" name="tipo_empresa_servicio"
-                                            class="form-control form-select"
-                                            [(ngModel)]="dataEmpresaServicio.id_tipo_servicio"
-                                            [disabled]="deshabilitarCampoTipoEmpresa" >
-                                            <option value=0 disabled selected>TIPO SERVICIO</option>
-                                            <option value=1>TRANSPORTE DE PERSONAS</option>
-                                            <option value=2>TRANSPORTE TURISTICO</option>
-                                            <option value=3>TRASNPORTE DE TRABAJADORES</option>
-                                            <option value=4>TRANSPORTE DE ESTUDIANTES</option>
-                                        </select>
+
+                                    <div class="row mb-3">
+                                        <div class="form-group col-lg-6 col-sm-12">
+
+                                            <label for="tipo_empresa_servicio" class="form-label ">Tipo de
+                                                servicio:</label>
+                                            <select id="tipo_empresa_servicio" name="tipo_empresa_servicio"
+                                                class="form-control form-select"
+                                                [(ngModel)]="dataEmpresaServicio.id_tipo_servicio"
+                                                [disabled]="deshabilitarCampoTipoEmpresa">
+                                                <option value=0 disabled selected>TIPO SERVICIO</option>
+                                                <option value=1>TRANSPORTE DE PERSONAS</option>
+                                                <option value=2>TRANSPORTE TURISTICO</option>
+                                                <option value=3>TRASNPORTE DE TRABAJADORES</option>
+                                                <option value=4>TRANSPORTE DE ESTUDIANTES</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group col-lg-6 col-sm-12">
+                                            <label for="expediente_empresa" class="form-label ">Expediente:</label>
+                                            <input id="expediente_empresa" type="text" class="form-control"
+                                                name="expediente_empresa" [(ngModel)]="dataEmpresaServicio.expediente"
+                                                [disabled]="deshabilitarCampoExpediente">
+                                        </div>
                                     </div>
 
                                     <!-- DATOS DE LA EMPRESA-->
@@ -41,8 +53,8 @@
                                             <div class="input-group mb-3">
                                                 <input type="text" min="0" class="form-control "
                                                     placeholder="Ingrese RUC" name="empresa_ruc"
-                                                    [(ngModel)]="dataEmpresa.ruc"
-                                                    [disabled]="deshabilitarCampoRuc" maxlength="11" appSoloNumeros>
+                                                    [(ngModel)]="dataEmpresa.ruc" [disabled]="deshabilitarCampoRuc"
+                                                    maxlength="11" appSoloNumeros>
                                                 <button class="btn btn-success " type="button" id="button-addon2"
                                                     style="background-color: rgba(24, 148, 7, 0.747); border-color: rgba(24, 148, 7, 0.747);"
                                                     (click)="buscarEmpresaServicioPorRuc_tipoServicio()"
@@ -64,7 +76,8 @@
                                             <label for="departamento_empresa"
                                                 class="form-label mt-3">Departamento:</label>
                                             <select id="departamento_empresa" name="departamento_empresa"
-                                                class="form-control form-select" (change)="onChangeDepartamentoEmpresa()"
+                                                class="form-control form-select"
+                                                (change)="onChangeDepartamentoEmpresa()"
                                                 [(ngModel)]="dataEmpresa.departamento"
                                                 [disabled]="desabilitarFormEmpresa">
                                                 <option value="" disabledd selected>DEPARTAMENTO </option>
@@ -76,21 +89,24 @@
                                         <div class="col-sm-4">
                                             <label for="provincia_empresa" class="form-label mt-3">Provincia:</label>
                                             <select id="provincia_empresa" name="provincia_empresa"
-                                                class="form-control form-select" (change)="onChangeProvinciaEmpresa()"      
+                                                class="form-control form-select" (change)="onChangeProvinciaEmpresa()"
                                                 [disabled]="!dataEmpresa.departamento || desabilitarFormEmpresa"
                                                 [(ngModel)]="dataEmpresa.provincia">
                                                 <option value="" disabledd selected>PROVINCIA</option>
-                                                <option *ngFor="let provincia of provincias" [value]="provincia">{{provincia}}
+                                                <option *ngFor="let provincia of provincias" [value]="provincia">
+                                                    {{provincia}}
                                                 </option>
                                             </select>
                                         </div>
                                         <div class="col-sm-4">
                                             <label for="distrito_empresa" class="form-label mt-3">Distrito:</label>
                                             <select id="distrito_empresa" name="distrito_empresa"
-                                                class="form-control form-select" [disabled]="!dataEmpresa.provincia || desabilitarFormEmpresa"
+                                                class="form-control form-select"
+                                                [disabled]="!dataEmpresa.provincia || desabilitarFormEmpresa"
                                                 [(ngModel)]="dataEmpresa.distrito">
                                                 <option value="" disabledd selected>DISTRITO</option>
-                                                <option *ngFor="let distrito of distritos" [value]="distrito">{{distrito}}
+                                                <option *ngFor="let distrito of distritos" [value]="distrito">
+                                                    {{distrito}}
                                                 </option>
                                             </select>
                                         </div>
@@ -101,35 +117,64 @@
                                         <div class="form-group col-lg-4 col-sm-12">
                                             <label for="direccion_empresa" class="form-label ">Direccion:</label>
                                             <input id="direccion_empresa" type="text" class="form-control "
-                                                name="direccion_empresa" [(ngModel)]="dataEmpresa.direccion" [disabled]="desabilitarFormEmpresa">
+                                                name="direccion_empresa" [(ngModel)]="dataEmpresa.direccion"
+                                                [disabled]="desabilitarFormEmpresa">
                                         </div>
                                         <div class="form-group col-lg-4 col-sm-12">
                                             <label for="correo_empresa " class="form-label ">Correo:</label>
-                                            <input type="email" class="form-control text-correo"
-                                                name="correo_empresa" [(ngModel)]="dataEmpresa.correo" [disabled]="desabilitarFormEmpresa">
+                                            <input type="email" class="form-control text-correo" name="correo_empresa"
+                                                [(ngModel)]="dataEmpresa.correo" [disabled]="desabilitarFormEmpresa">
                                         </div>
                                         <div class="form-group  col-lg-4 col-sm-12">
                                             <label for="telefono_empresa" class="form-label">Telefono:</label>
                                             <input type="text" inputmode="numeric" min="0" class="form-control "
-                                                name="telefono_empresa" [(ngModel)]="dataEmpresa.telefono" [disabled]="desabilitarFormEmpresa" appSoloNumerosGuion>
+                                                name="telefono_empresa" [(ngModel)]="dataEmpresa.telefono"
+                                                [disabled]="desabilitarFormEmpresa" appSoloNumerosGuion>
                                         </div>
                                     </div>
 
                                     <!-- FILA DE FECHA DE HABILITACION Y EXPEDIENTE -->
-                                    <div class="row mb-3">
+                                    <!-- <div class="row mb-3">
                                         <div class="form-group col-lg-6 col-sm-12">
                                             <div class="mb-1">
-                                                <label for="fecha_empresa" class="form-label ">Fecha de Autorización:</label>
-                                                <input id="fecha_empresa" type="date" class="form-control" name="fecha_resolucion"
+                                                <label for="fecha_empresa" class="form-label ">Fecha de
+                                                    Autorización:</label>
+                                                <input id="fecha_inicial_empresa" type="date" class="form-control"
+                                                    name="fecha_resolucion"
                                                     [(ngModel)]="dataEmpresaServicio.fecha_inicial"
                                                     [disabled]="deshabilitarCampofechaInicio">
                                             </div>
                                         </div>
                                         <div class="form-group col-lg-6 col-sm-12">
-                                            <label for="expediente_empresa" class="form-label ">Expediente:</label>
-                                            <input id="expediente_empresa" type="text" class="form-control"
-                                                name="expediente_empresa" [(ngModel)]="dataEmpresaServicio.expediente"
-                                                [disabled]="deshabilitarCampoExpediente">
+                                            <div class="mb-1">
+                                                <label for="fecha_empresa" class="form-label ">Fecha de
+                                                    Finalización:</label>
+                                                <input id="fecha_final_empresa" type="date" class="form-control"
+                                                    name="fecha_resolucion"
+                                                    [(ngModel)]="dataEmpresaServicio.fecha_final"
+                                                    [disabled]="deshabilitarCampofechaInicio">
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="row mb-3">
+                                        <div class="form-group col-lg-6 col-sm-12">
+                                            <div class="mb-1">
+                                                <label for="fecha_empresa" class="form-label">Fecha de Autorización:</label>
+                                                <input id="fecha_inicial_empresa" type="date" class="form-control"
+                                                    name="fecha_resolucion"
+                                                    [(ngModel)]="dataEmpresaServicio.fecha_inicial"
+                                                    (change)="actualizarFechaFinal()"
+                                                    [disabled]="deshabilitarCampofechaInicio">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-sm-12">
+                                            <div class="mb-1">
+                                                <label for="fecha_empresa" class="form-label">Fecha de Finalización:</label>
+                                                <input id="fecha_final_empresa" type="date" class="form-control"
+                                                    name="fecha_resolucion"
+                                                    [(ngModel)]="dataEmpresaServicio.fecha_final"
+                                                    [disabled]="deshabilitarCampofechaInicio">
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -139,7 +184,8 @@
                 </div>
 
                 <div class="my-4 d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary" (click)="validarDatosFormularioEmpresa()">Siguiente</button>
+                    <button type="button" class="btn btn-primary"
+                        (click)="validarDatosFormularioEmpresa()">Siguiente</button>
                 </div>
 
             </div>
@@ -156,7 +202,7 @@
                                     <div class="form-group col-lg-4 col-sm-12">
                                         <label for="nombre_representante" class="form-label ">Nombres:</label>
                                         <input id="nombre_representante" type="text" class="form-control"
-                                            name="nombre_representante" [(ngModel)]="dataPersonaRepresentante.nombres" 
+                                            name="nombre_representante" [(ngModel)]="dataPersonaRepresentante.nombres"
                                             [disabled]="deshabilitarFormRepresentante" appSoloLetras>
                                     </div>
                                     <div class="form-group col-lg-4 col-sm-12">
@@ -176,8 +222,8 @@
                                 <div class="row mb-3">
                                     <div class="form-group col-lg-8 col-sm-12">
                                         <label for="correo_representante" class="form-label ">Correo:</label>
-                                        <input type="email" class="form-control text-correo"
-                                            name="correo_representante" [(ngModel)]="dataPersonaRepresentante.correo"
+                                        <input type="email" class="form-control text-correo" name="correo_representante"
+                                            [(ngModel)]="dataPersonaRepresentante.correo"
                                             [disabled]="deshabilitarFormRepresentante">
                                     </div>
                                     <div class="form-group col-lg-4 col-sm-12">
@@ -193,14 +239,16 @@
                                 <div class="input-group mb-3">
                                     <label class="input-group-text" for="inputGroupSelect01">Opciones:</label>
                                     <select class="form-select form-select " id="tipo_doc" name="tipo_doc"
-                                        [(ngModel)]="dataPersonaRepresentante.tipo_doc" [disabled]="deshabilitarFormRepresentante">
+                                        [(ngModel)]="dataPersonaRepresentante.tipo_doc"
+                                        [disabled]="deshabilitarFormRepresentante">
                                         <option value="" disabled selected>TIPO DE DOCUMENTO</option>
                                         <option value="CE">CARNET DE ESTRANGERIA</option>
                                         <option value="DNI">DNI</option>
                                     </select>
                                     <input type="text" class="form-control" name="documento"
                                         [(ngModel)]="dataPersonaRepresentante.documento"
-                                        [disabled]="deshabilitarFormRepresentante" appSoloNumeros [attr.maxlength]="dataPersonaRepresentante.tipo_doc === 'CE' ? 12 : (dataPersonaRepresentante.tipo_doc === 'DNI' ? 8 : null)">
+                                        [disabled]="deshabilitarFormRepresentante" appSoloNumeros
+                                        [attr.maxlength]="dataPersonaRepresentante.tipo_doc === 'CE' ? 12 : (dataPersonaRepresentante.tipo_doc === 'DNI' ? 8 : null)">
                                 </div>
 
                             </form>
@@ -209,7 +257,8 @@
                 </div>
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary mx-2" (click)="prevStep()">Anterior</button>
-                    <button type="button" class="btn btn-primary" (click)="validarDatosFormularioRepresentanteLegal()">Siguiente</button>
+                    <button type="button" class="btn btn-primary"
+                        (click)="validarDatosFormularioRepresentanteLegal()">Siguiente</button>
 
                 </div>
             </div>
@@ -233,25 +282,28 @@
 
                                             <input type="text" name="nombre_resolucion"
                                                 class="form-control form-control-sm"
-                                                [(ngModel)]="dataResolucion.nombre_resolucion" >
+                                                [(ngModel)]="dataResolucion.nombre_resolucion">
                                         </div>
                                         <div class="mb-2">
                                             <label for="nro_resolucion" class="form-label  mb-0">Nro resolución</label>
                                             <input type="text" name="nro_resolucion"
                                                 class="form-control form-control-sm"
-                                                [(ngModel)]="dataResolucion.nro_resolucion" appSoloNumeros maxlength="8">
+                                                [(ngModel)]="dataResolucion.nro_resolucion" appSoloNumeros
+                                                maxlength="8">
                                         </div>
                                         <div class="mb-2">
                                             <label for="anio_resolucion" class="form-label  mb-0">Año</label>
                                             <input type="text" name="anio_resolucion"
                                                 class="form-control form-control-sm"
-                                                [(ngModel)]="dataResolucion.anio_resolucion" appSoloNumeros maxlength="4">
+                                                [(ngModel)]="dataResolucion.anio_resolucion" appSoloNumeros
+                                                maxlength="4">
                                         </div>
                                         <div class="mb-2">
                                             <label for="tomo_resolucion" class="form-label  mb-0">Tomo</label>
                                             <input type="text" name="tomo_resolucion"
                                                 class="form-control form-control-sm"
-                                                [(ngModel)]="dataResolucion.tomo_resolucion" appSoloNumeros maxlength="2">
+                                                [(ngModel)]="dataResolucion.tomo_resolucion" appSoloNumeros
+                                                maxlength="2">
                                         </div>
                                         <div class=" mb-2">
                                             <label for="fecha_resolucion" class="form-label   mb-0">Fecha</label>
@@ -277,7 +329,8 @@
                 </div>
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary mx-2" (click)="prevStep()">Anterior</button>
-                    <button type="button" class="btn btn-primary" (click)="validarDatosFormularioResolucion()">Siguiente</button>
+                    <button type="button" class="btn btn-primary"
+                        (click)="validarDatosFormularioResolucion()">Siguiente</button>
                 </div>
             </div>
 
@@ -306,7 +359,8 @@
                                             <div class="form-group mt-3">
                                                 <label for="itinerario" class="form-label  ">Itinerario:</label>
                                                 <textarea class="form-control" name="itinerario" rows="4"
-                                                    [(ngModel)]="dataItinerario.itinerario" appSoloLetrasGuion></textarea>
+                                                    [(ngModel)]="dataItinerario.itinerario"
+                                                    appSoloLetrasGuion></textarea>
                                             </div>
                                             <div class="form-group mt-3 mb-3">
                                                 <label for="frecuencia" class="form-label  ">Frecuencia:</label>
@@ -316,10 +370,12 @@
 
                                         </fieldset>
                                         <div class="d-grid gap-2 mt-2">
-                                            <button type="button " class="btn btn-success" (click)="validarDatosFormularioItinerario()">Crear</button>
+                                            <button type="button " class="btn btn-success"
+                                                (click)="validarDatosFormularioItinerario()">Crear</button>
                                         </div>
                                         <div class="d-grid gap-2 mt-2">
-                                            <button class="btn  btn-secondary text-white" type="button" (click)="limpiarFormularioItinerario()">limpiar</button>
+                                            <button class="btn  btn-secondary text-white" type="button"
+                                                (click)="limpiarFormularioItinerario()">limpiar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -342,11 +398,12 @@
 
                                         <th scope="row">{{i+1}}</th>
 
-                                        <td>{{ item.origen | uppercase  }}</td>
+                                        <td>{{ item.origen | uppercase }}</td>
                                         <td>{{item.destino | uppercase}}</td>
                                         <td>{{item.itinerario | uppercase}}</td>
                                         <td>{{item.frecuencia | uppercase}}</td>
-                                        <td><i class="bi bi-trash3-fill" (click)="eliminarElementoItinerario(i)"></i> </td>
+                                        <td><i class="bi bi-trash3-fill" (click)="eliminarElementoItinerario(i)"></i>
+                                        </td>
 
                                     </tr>
                                 </tbody>
@@ -381,7 +438,8 @@
                                             <div class="form-group col-lg-5 col-sm-12">
                                                 <label for="datos_arrendador" class="form-label ">DNI:</label>
                                                 <input type="text" min="0" [maxLength]="8" class="form-control"
-                                                    name="dni_arrendario" [(ngModel)]="dataArrendamiento.dni" appSoloNumeros maxlength="8">
+                                                    name="dni_arrendario" [(ngModel)]="dataArrendamiento.dni"
+                                                    appSoloNumeros maxlength="8">
                                             </div>
                                         </div>
 
@@ -396,7 +454,8 @@
                                                 <label for="departamento_empresa"
                                                     class="form-label mt-3">Departamento:</label>
                                                 <select id="departamento_empresa" name="departamento_empresa"
-                                                    class="form-control form-select" (change)="onChangeDepartamentoArrendamiento()"
+                                                    class="form-control form-select"
+                                                    (change)="onChangeDepartamentoArrendamiento()"
                                                     [(ngModel)]="dataArrendamiento.departamento">
                                                     <option value="" disabledd selected>DEPARTAMENTO </option>
                                                     <option *ngFor="let departamento of departamentos"
@@ -409,7 +468,8 @@
                                                 <label for="provincia_empresa"
                                                     class="form-label mt-3">Provincia:</label>
                                                 <select id="provincia_empresa" name="provincia_empresa"
-                                                    class="form-control form-select" (change)="onChangeProvinciaArrendamiento()"
+                                                    class="form-control form-select"
+                                                    (change)="onChangeProvinciaArrendamiento()"
                                                     [(ngModel)]="dataArrendamiento.provincia"
                                                     [disabled]="!dataArrendamiento.departamento">
                                                     <option value="" disabledd selected>PROVINCIA</option>
@@ -434,26 +494,31 @@
                                         <!--  -->
                                         <div class="form-group mb-3">
                                             <label for="direccion" class="form-label  ">Direccion:</label>
-                                            <input type="text" class="form-control" name="direccion" [(ngModel)]="dataArrendamiento.direccion">
+                                            <input type="text" class="form-control" name="direccion"
+                                                [(ngModel)]="dataArrendamiento.direccion">
                                         </div>
                                         <div class="row mb-3">
                                             <div class="form-group col-lg-6 col-sm-12  ">
                                                 <label for="fecha_inicio " class="form-label ">Fecha inicio:</label>
-                                                <input type="date" class="form-control" name="fecha_inicio" [(ngModel)]="dataArrendamiento.fecha_inicio">
+                                                <input type="date" class="form-control" name="fecha_inicio"
+                                                    [(ngModel)]="dataArrendamiento.fecha_inicio">
                                             </div>
                                             <div class="form-group col-lg-6  col-sm-12">
                                                 <label for="fecha_final" class="form-label ">Fecha final:</label>
-                                                <input type="date" class="form-control" name="fecha_final" [(ngModel)]="dataArrendamiento.fecha_fin">
+                                                <input type="date" class="form-control" name="fecha_final"
+                                                    [(ngModel)]="dataArrendamiento.fecha_fin">
                                             </div>
                                         </div>
 
 
                                     </fieldset>
                                     <div class="d-grid gap-2 mt-2">
-                                        <button class="btn btn-success" type="button" (click)="validarDatosFormularioArrendamiento()">crear</button>
+                                        <button class="btn btn-success" type="button"
+                                            (click)="validarDatosFormularioArrendamiento()">crear</button>
                                     </div>
                                     <div class="d-grid gap-2 mt-2">
-                                        <button class="btn btn-secondary text-white" (click)="limpiarFormularioArrendamiento()">limpiar</button>
+                                        <button class="btn btn-secondary text-white"
+                                            (click)="limpiarFormularioArrendamiento()">limpiar</button>
                                     </div>
                                 </form>
                             </div>
@@ -476,17 +541,18 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of lista_contratos_arrendamientos, index as i">
-                
+
                                     <th scope="row">{{i+1}}</th>
-                
+
                                     <td>{{item.arrendador | uppercase}}</td>
                                     <td>{{item.propiedad | uppercase}}</td>
                                     <td>{{item.direccion | uppercase}}</td>
                                     <td>{{item.fecha_inicio | date:'dd-MM-yyyy'}} </td>
                                     <td>{{item.fecha_fin | date:'dd-MM-yyyy'}}</td>
-                                    <td><i class="bi bi-trash3-fill" (click)="eliminarElementoArrendamiento(i)"></i> </td>
-                
-                
+                                    <td><i class="bi bi-trash3-fill" (click)="eliminarElementoArrendamiento(i)"></i>
+                                    </td>
+
+
                                 </tr>
                             </tbody>
                         </table>
@@ -510,49 +576,64 @@
                                     <fieldset>
                                         <div class="form-group mb-3">
                                             <label for="nombre_conductor " class="form-label ">Nombre(s)</label>
-                                            <input type="text" class="form-control" name="nombre"  [(ngModel)]="dataPersonaConductor.nombres" appSoloLetras>
+                                            <input type="text" class="form-control" name="nombre"
+                                                [(ngModel)]="dataPersonaConductor.nombres" appSoloLetras>
                                         </div>
                                         <div class="form-group mb-3">
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-6">
-                                                    <label for="ap_paterno" class="form-label ">Apellido Paterno:</label>
-                                                    <input type="text" class="form-control" name="ap_paterno" [(ngModel)]="dataPersonaConductor.ap_paterno" appSoloLetras>
+                                                    <label for="ap_paterno" class="form-label ">Apellido
+                                                        Paterno:</label>
+                                                    <input type="text" class="form-control" name="ap_paterno"
+                                                        [(ngModel)]="dataPersonaConductor.ap_paterno" appSoloLetras>
                                                 </div>
                                                 <div class="col-sm-12 col-md-6">
-                                                    <label for="ap_materno" class="form-label ">Apellido Materno:</label>
-                                                    <input type="text" class="form-control" name="ap_materno" [(ngModel)]="dataPersonaConductor.ap_materno" appSoloLetras>
+                                                    <label for="ap_materno" class="form-label ">Apellido
+                                                        Materno:</label>
+                                                    <input type="text" class="form-control" name="ap_materno"
+                                                        [(ngModel)]="dataPersonaConductor.ap_materno" appSoloLetras>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="correo" class="form-label">Correo:</label>
-                                            <input type="email" class="form-control text-correo" name="correo"  [(ngModel)]="dataPersonaConductor.correo">
+                                            <input type="email" class="form-control text-correo" name="correo"
+                                                [(ngModel)]="dataPersonaConductor.correo">
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="documento_id" class="form-label">Documento de Identidad:</label>
                                             <div class="input-group mb-3">
-                                                <label class="input-group-text" for="inputGroupSelect01">Opciones:</label>
-                                                <select class="form-select form-select " id="tipo_doc" name="tipo_doc" [(ngModel)]="dataPersonaConductor.tipo_doc">
+                                                <label class="input-group-text"
+                                                    for="inputGroupSelect01">Opciones:</label>
+                                                <select class="form-select form-select " id="tipo_doc" name="tipo_doc"
+                                                    [(ngModel)]="dataPersonaConductor.tipo_doc">
                                                     <option value="" disabled selected>TIPO DE DOCUMENTO</option>
                                                     <option value="CE">CARNET DE ESTRANGERIA</option>
                                                     <option value="DNI">DNI</option>
                                                 </select>
-                                                <input type="text" class="form-control" name="documento" [(ngModel)]="dataPersonaConductor.documento" appSoloNumeros [attr.maxlength]="dataPersonaConductor.tipo_doc === 'CE' ? 12 : (dataPersonaConductor.tipo_doc === 'DNI' ? 8 : null)"> 
+                                                <input type="text" class="form-control" name="documento"
+                                                    [(ngModel)]="dataPersonaConductor.documento" appSoloNumeros
+                                                    [attr.maxlength]="dataPersonaConductor.tipo_doc === 'CE' ? 12 : (dataPersonaConductor.tipo_doc === 'DNI' ? 8 : null)">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3">
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-4">
                                                     <label for="telefono" class="form-label ">Telefono/cel:</label>
-                                                    <input type="text" min="0" class="form-control" name="telefono" [(ngModel)]="dataPersonaConductor.telefono" appSoloNumeros maxlength="9">
+                                                    <input type="text" min="0" class="form-control" name="telefono"
+                                                        [(ngModel)]="dataPersonaConductor.telefono" appSoloNumeros
+                                                        maxlength="9">
                                                 </div>
                                                 <div class="col-sm-12 col-md-4">
                                                     <label for="licencia" class="form-label ">Licencia:</label>
-                                                    <input type="text" class="form-control" name="nro_licencia"  [(ngModel)]="dataConductor.nro_licencia">
+                                                    <input type="text" class="form-control" name="nro_licencia"
+                                                        [(ngModel)]="dataConductor.nro_licencia">
                                                 </div>
                                                 <div class="col-sm-12 col-md-4 ">
                                                     <label for="categoria" class="form-label ">Categoria:</label>
-                                                    <select id="categoria" name="categoria" class="form-control form-select" [(ngModel)]="dataConductor.categoria">
+                                                    <select id="categoria" name="categoria"
+                                                        class="form-control form-select"
+                                                        [(ngModel)]="dataConductor.categoria">
                                                         <option value="" disabled selected>CATEGORIA </option>
                                                         <option value="A-I">A-I</option>
                                                         <option value="A-IIa">A-IIa</option>
@@ -567,10 +648,12 @@
 
                                     </fieldset>
                                     <div class="d-grid gap-2 mt-2">
-                                        <button class="btn btn-success " type="button" (click)="validarDatosListaConductores()">crear</button>
+                                        <button class="btn btn-success " type="button"
+                                            (click)="validarDatosListaConductores()">crear</button>
                                     </div>
                                     <div class="d-grid gap-2 mt-2">
-                                        <button class="btn btn-secondary text-whit" type="button" (click)="limpiarFormularioConductor()">limpiar</button>
+                                        <button class="btn btn-secondary text-whit" type="button"
+                                            (click)="limpiarFormularioConductor()">limpiar</button>
                                     </div>
                                 </form>
                             </div>
@@ -591,15 +674,15 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of lista_conductores, index as i">
-                
+
                                     <th scope="row">{{i+1}}</th>
-                
+
                                     <td>{{ item.nombres + ' ' + item.ap_paterno + ' ' +item.ap_materno}}</td>
                                     <td>{{item.documento}}</td>
                                     <td>{{item.nro_licencia | uppercase}}</td>
                                     <td>{{item.categoria}}</td>
                                     <td><i class="bi bi-trash3-fill" (click)="eliminarConductor(i)"></i> </td>
-                
+
                                 </tr>
                             </tbody>
                         </table>
@@ -607,7 +690,8 @@
                 </div>
 
                 <div class="my-4 d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary mx-2" (click)="prevStepWithCondition()">Anterior</button>
+                    <button type="button" class="btn btn-primary mx-2"
+                        (click)="prevStepWithCondition()">Anterior</button>
                     <button type="button" class="btn btn-primary" (click)="conductorNextStep()">Siguiente</button>
                 </div>
             </div>
@@ -626,29 +710,41 @@
                                                     <div class="col-sm-12 col-md-6 col-lg-3">
                                                         <label for="placa" class="form-label">Placa:</label>
                                                         <div class="input-group mb-3">
-                                                            <input type="text" min="0" class="form-control form-control-sm"
-                                                                name="placa" [(ngModel)]="dataVehiculo.placa" appSoloPlaca maxlength="7" id="placa" [disabled]="!deshabilitarFormVehiculo">
-                                                            <button class="btn btn-success btn-sm " type="button" id="button-addon2"
+                                                            <input type="text" min="0"
+                                                                class="form-control form-control-sm" name="placa"
+                                                                [(ngModel)]="dataVehiculo.placa" appSoloPlaca
+                                                                maxlength="7" id="placa"
+                                                                [disabled]="!deshabilitarFormVehiculo">
+                                                            <button class="btn btn-success btn-sm " type="button"
+                                                                id="button-addon2"
                                                                 style="background-color: rgba(24, 148, 7, 0.747); border-color: rgba(24, 148, 7, 0.747);"
-                                                                (click)="buscarVehiculoPorPlaca()" [disabled]="!deshabilitarFormVehiculo">
+                                                                (click)="buscarVehiculoPorPlaca()"
+                                                                [disabled]="!deshabilitarFormVehiculo">
                                                                 <i class="bi bi-search"></i></button>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-12 col-md-6 col-lg-3">
                                                         <label for="anio" class="form-label">Año:</label>
-                                                        <input type="text" class="form-control form-control-sm" name="anio"
-                                                            [(ngModel)]="dataVehiculo.anio_fabricacion" appSoloNumeros maxlength="4" [disabled]="deshabilitarFormVehiculo">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            name="anio" [(ngModel)]="dataVehiculo.anio_fabricacion"
+                                                            appSoloNumeros maxlength="4"
+                                                            [disabled]="deshabilitarFormVehiculo">
                                                     </div>
                                                     <div class="col-sm-12 col-md-6 col-lg-3 ">
-                                                        <label for="nro_registro" class="form-label">Partida Registral:</label>
-                                                        <input type="text" class="form-control form-control-sm" name="nro_part_reg"
-                                                            [(ngModel)]="dataVehiculo.nro_part_reg" maxlength="8" appSoloNumeros [disabled]="deshabilitarFormVehiculo">
+                                                        <label for="nro_registro" class="form-label">Partida
+                                                            Registral:</label>
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            name="nro_part_reg" [(ngModel)]="dataVehiculo.nro_part_reg"
+                                                            maxlength="8" appSoloNumeros
+                                                            [disabled]="deshabilitarFormVehiculo">
                                                     </div>
-            
+
                                                     <div class="col-sm-12 col-md-6 col-lg-3">
                                                         <label for="estado" class="form-label">Condicion:</label>
-                                                        <select id="estado" name="estado" class="form-control form-control-sm"
-                                                            [(ngModel)]="dataVehiculo.estado" [disabled]="deshabilitarFormVehiculo" disabled>
+                                                        <select id="estado" name="estado"
+                                                            class="form-control form-control-sm"
+                                                            [(ngModel)]="dataVehiculo.estado"
+                                                            [disabled]="deshabilitarFormVehiculo" disabled>
                                                             <option value="" disabledd selected>CONDICION </option>
                                                             <option value="AUTORIZACION">AUTORIZACION</option>
                                                             <option value="INCREMENTO">INCREMENTO</option>
@@ -656,36 +752,41 @@
                                                             <option value="RENOVACION">RENOVACION</option>
                                                         </select>
                                                     </div>
-            
+
                                                 </div>
-            
+
                                             </div>
-            
+
                                             <div class="form-group mb-2">
-            
+
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-6 col-lg-3">
                                                         <label for="peso" class="form-label">Peso Neto(Tn):</label>
-                                                        <input type="number" class="form-control form-control-sm" name="peso"
-                                                            min="0" [(ngModel)]="dataVehiculo.peso" [disabled]="deshabilitarFormVehiculo">
+                                                        <input type="number" class="form-control form-control-sm"
+                                                            name="peso" min="0" [(ngModel)]="dataVehiculo.peso"
+                                                            [disabled]="deshabilitarFormVehiculo">
                                                     </div>
-            
+
                                                     <div class="col-sm-12 col-md-6 col-lg-3">
                                                         <label for="carga" class="form-label">Carga Util(Tn):</label>
-                                                        <input type="number" class="form-control form-control-sm" name="carga"
-                                                            min="0" [(ngModel)]="dataVehiculo.carga" [disabled]="deshabilitarFormVehiculo">
+                                                        <input type="number" class="form-control form-control-sm"
+                                                            name="carga" min="0" [(ngModel)]="dataVehiculo.carga"
+                                                            [disabled]="deshabilitarFormVehiculo">
                                                     </div>
-            
+
                                                     <div class="col-sm-12 col-md-6 col-lg-3">
                                                         <label for="carroceria" class="form-label">Carroceria:</label>
-                                                        <input type="text" class="form-control form-control-sm" name="carroceria"
-                                                            [(ngModel)]="dataVehiculo.carroceria" appSoloLetras [disabled]="deshabilitarFormVehiculo">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            name="carroceria" [(ngModel)]="dataVehiculo.carroceria"
+                                                            appSoloLetras [disabled]="deshabilitarFormVehiculo">
                                                     </div>
-            
+
                                                     <div class="col-sm-12 col-md-6 col-lg-3">
                                                         <label for="categoria" class="form-label">Categoria:</label>
-                                                        <select id="Categoria" name="categoria" class="form-control form-control-sm"
-                                                            [(ngModel)]="dataVehiculo.categoria" [disabled]="deshabilitarFormVehiculo">
+                                                        <select id="Categoria" name="categoria"
+                                                            class="form-control form-control-sm"
+                                                            [(ngModel)]="dataVehiculo.categoria"
+                                                            [disabled]="deshabilitarFormVehiculo">
                                                             <option value="" disabled selected>CATEGORÍA</option>
                                                             <option value="L">L</option>
                                                             <option value="L1">L1</option>
@@ -707,106 +808,136 @@
                                                             <option value="N2">N2</option>
                                                             <option value="N3">N3</option>
                                                         </select>
-            
+
                                                     </div>
                                                 </div>
-            
+
                                             </div>
                                             <div class="form-group mb-2">
-            
+
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-6 col-lg-3">
                                                         <label for="serie" class="form-label">Nro Serie:</label>
-                                                        <input type="text" class="form-control form-control-sm" name="serie"
-                                                            [(ngModel)]="dataVehiculo.serie" maxlength="17" [disabled]="deshabilitarFormVehiculo">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            name="serie" [(ngModel)]="dataVehiculo.serie" maxlength="17"
+                                                            [disabled]="deshabilitarFormVehiculo">
                                                     </div>
                                                     <div class="col-sm-12 col-md-6 col-lg-3">
-                                                        <label for="nro_chasis" class="form-label">Nro chasis/VIN:</label>
-                                                        <input type="text" class="form-control form-control-sm" name="nro_chasis"
-                                                            [(ngModel)]="dataVehiculo.nro_chasis" maxlength="17" [disabled]="deshabilitarFormVehiculo">
+                                                        <label for="nro_chasis" class="form-label">Nro
+                                                            chasis/VIN:</label>
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            name="nro_chasis" [(ngModel)]="dataVehiculo.nro_chasis"
+                                                            maxlength="17" [disabled]="deshabilitarFormVehiculo">
                                                     </div>
-            
+
                                                     <div class="col-sm-12 col-md-6 col-lg-3">
                                                         <label for="asientos" class="form-label">Nro Asientos:</label>
                                                         <input type="text" class="form-control form-control-sm"
-                                                            name="nro_asientos" min="0" [(ngModel)]="dataVehiculo.nro_asientos" max="3" appSoloNumeros [disabled]="deshabilitarFormVehiculo">
+                                                            name="nro_asientos" min="0"
+                                                            [(ngModel)]="dataVehiculo.nro_asientos" max="3"
+                                                            appSoloNumeros [disabled]="deshabilitarFormVehiculo">
                                                     </div>
-            
+
                                                     <div class="col-sm-12 col-md-6 col-lg-3">
                                                         <label for="modalidad" class="form-label">modalidad:</label>
-                                                        <select id="modalidad" type="text" class="form-control form-control-sm"
-                                                            name="modalidad" [(ngModel)]="dataVehiculo.modalidad" [disabled]="deshabilitarFormVehiculo">
+                                                        <select id="modalidad" type="text"
+                                                            class="form-control form-control-sm" name="modalidad"
+                                                            [(ngModel)]="dataVehiculo.modalidad"
+                                                            [disabled]="deshabilitarFormVehiculo">
                                                             <option value="" disabled selected>MODALIDAD </option>
                                                             <option value="ESTANDAR">ESTANDAR</option>
                                                             <option value="DIFERENCIADO">DIFERENCIADO</option>
                                                         </select>
                                                     </div>
                                                 </div>
-            
+
                                             </div>
-            
+
                                             <div class="form-group mb-2">
-            
+
                                                 <div class="row">
                                                     <div class="col-sm-3">
-                                                        <label for="marca" class="form-label d-flex justify-content-between align-items-center">
+                                                        <label for="marca"
+                                                            class="form-label d-flex justify-content-between align-items-center">
                                                             <span>Marca:</span>
-                                                            <i class="bi bi-pencil-square" title="agregar marca y modelo" (click)="openModal()"></i>
+                                                            <i class="bi bi-pencil-square"
+                                                                title="agregar marca y modelo"
+                                                                (click)="openModal()"></i>
                                                         </label>
-            
-                                                        <select id="marca" name="marca" class="form-control form-control-sm select-reverse" [(ngModel)]="idMarcaSeleccionada" (click)="listarMarcas()" (change)="onMarcaSeleccionada()" [disabled]="deshabilitarFormVehiculo">
-                                                            <option value=0  disabled selected>MARCA</option>
-                                                            <option *ngFor="let marca of lista_marcas" [value]="marca.id_marca" >{{ marca.nombre_marca }}</option>
+
+                                                        <select id="marca" name="marca"
+                                                            class="form-control form-control-sm select-reverse"
+                                                            [(ngModel)]="idMarcaSeleccionada" (click)="listarMarcas()"
+                                                            (change)="onMarcaSeleccionada()"
+                                                            [disabled]="deshabilitarFormVehiculo">
+                                                            <option value=0 disabled selected>MARCA</option>
+                                                            <option *ngFor="let marca of lista_marcas"
+                                                                [value]="marca.id_marca">{{ marca.nombre_marca }}
+                                                            </option>
                                                         </select>
                                                     </div>
-            
+
                                                     <div class="col-sm-3">
                                                         <label for="modelo" class="form-label">Modelo:</label>
                                                         <select id="modelo" name="modelo"
                                                             class="form-control form-control-sm select-reverse"
-                                                            [(ngModel)]="idModeloSeleccionado" (change)="onModeloSeleccionado()" [disabled]="deshabilitarFormVehiculo">
-                                                            
+                                                            [(ngModel)]="idModeloSeleccionado"
+                                                            (change)="onModeloSeleccionado()"
+                                                            [disabled]="deshabilitarFormVehiculo">
+
                                                             <option value=0 disabled selected>MODELO</option>
                                                             <option *ngFor="let modelo of lista_modelos"
                                                                 [value]="modelo.id_modelo">{{modelo.nombre_modelo}}
                                                             </option>
                                                         </select>
                                                     </div>
-            
+
                                                     <div class="col-sm-6">
                                                         <label for="color" class="form-label">Color(es):</label>
-                                                        <input type="text" class="form-control form-control-sm" name="color" [(ngModel)]="dataVehiculo.color" appSoloLetrasGuion [disabled]="deshabilitarFormVehiculo">
-            
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            name="color" [(ngModel)]="dataVehiculo.color"
+                                                            appSoloLetrasGuion [disabled]="deshabilitarFormVehiculo">
+
                                                     </div>
-            
+
                                                 </div>
                                             </div>
                                             <div class="form-group mb-2">
                                                 <label for="itinerario" class="form-label">Itinerario:</label>
-                                                <select id="itinerario" name="itinerario"  class="form-control  form-control-sm " [(ngModel)]="dataVehiculo.id_detalle_ruta_itinerario" [disabled]="deshabilitarFormVehiculo" >
-                                                    <option value=0  disabled>ITINERARIO</option>
+                                                <select id="itinerario" name="itinerario"
+                                                    class="form-control  form-control-sm "
+                                                    [(ngModel)]="dataVehiculo.id_detalle_ruta_itinerario"
+                                                    [disabled]="deshabilitarFormVehiculo">
+                                                    <option value=0 disabled>ITINERARIO</option>
                                                     <option *ngFor="let itinerario of lista_itinerarios ; let i = index"
                                                         [value]="i+1">{{itinerario.itinerario}}</option>
                                                 </select>
                                             </div>
                                             <div class="form-group mb-2">
                                                 <label for="resolucion" class="form-label">Resolución:</label>
-                                                <select id="resolucion" name="resolucion" class="form-control form-control-sm" [disabled]="deshabilitarFormVehiculo">
+                                                <select id="resolucion" name="resolucion"
+                                                    class="form-control form-control-sm"
+                                                    [disabled]="deshabilitarFormVehiculo">
                                                     <!-- <option value=0 selected disabled>RESOLUCIÓN </option> -->
-                                                    <option [value]="dataResolucion.id_resolucion">{{dataResolucion.nombre_resolucion}}</option>
+                                                    <option [value]="dataResolucion.id_resolucion">
+                                                        {{dataResolucion.nombre_resolucion}}</option>
                                                 </select>
                                             </div>
                                         </fieldset>
-            
+
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <button class="btn btn-success mt-3 text-white w-100"  type="button" (click)="enviarDatosListaVehiculos()" [disabled]="deshabilitarFormVehiculo">Crear</button>
+                                                <button class="btn btn-success mt-3 text-white w-100" type="button"
+                                                    (click)="enviarDatosListaVehiculos()"
+                                                    [disabled]="deshabilitarFormVehiculo">Crear</button>
                                             </div>
-            
+
                                             <div class="col-md-6">
-                                                <button class="btn btn-secondary mt-3 text-white w-100"  type="button" (click)="limpiarFormularioVehiculo()" [disabled]="deshabilitarFormVehiculo">Limpiar</button>
+                                                <button class="btn btn-secondary mt-3 text-white w-100" type="button"
+                                                    (click)="limpiarFormularioVehiculo()"
+                                                    [disabled]="deshabilitarFormVehiculo">Limpiar</button>
                                             </div>
-            
+
                                         </div>
                                     </form>
                                 </div>
@@ -826,15 +957,15 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let vehiculo of lista_vehiculos, index as i">
-            
+
                                             <th scope="row">{{i+1}}</th>
-            
-            
+
+
                                             <td>{{vehiculo.placa | uppercase}}</td>
                                             <td>{{vehiculo.anio_fabricacion}}</td>
                                             <td>{{vehiculo.estado}}</td>
-                                            <td><i class="bi bi-pencil-fill m-2" (click)="eliminarVehiculo(i)" ></i></td>
-            
+                                            <td><i class="bi bi-pencil-fill m-2" (click)="eliminarVehiculo(i)"></i></td>
+
                                         </tr>
                                     </tbody>
                                 </table>
@@ -845,7 +976,8 @@
 
                 <div class="my-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-primary   mx-2" (click)="prevStep()">Anterior</button>
-                    <button type="button" class="btn btn-primary  mx-2" (click)="RegistrarEmpresaServicio()" [disabled]="desabilitarButtonCrearEmpresa">Registrar</button>
+                    <button type="button" class="btn btn-primary  mx-2" (click)="RegistrarEmpresaServicio()"
+                        [disabled]="desabilitarButtonCrearEmpresa">Registrar</button>
                 </div>
             </div>
         </div>
@@ -853,13 +985,14 @@
     </div>
 </div>
 
-<div class="modal fade modal-xl" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade modal-xl" id="exampleModalCenter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content m-0 p-0 ">
-       
-        <div class="modal-body text-start p-0 m-0">
-            <app-registro-marca-modelo></app-registro-marca-modelo>
+        <div class="modal-content m-0 p-0 ">
+
+            <div class="modal-body text-start p-0 m-0">
+                <app-registro-marca-modelo></app-registro-marca-modelo>
+            </div>
         </div>
-      </div>
     </div>
 </div>
