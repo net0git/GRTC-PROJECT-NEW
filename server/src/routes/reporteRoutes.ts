@@ -26,6 +26,7 @@ class ReporteRoutes{
         this.router.get('/api/reporte/vehiculos/ruta/origen/:origen/destino/:destino',reporteController.obtenerVehiculosPorRutaOrigenDestino)
         this.router.get('/api/reporte/cantidad/vehiculos',reporteController.CantidadVehiculosPorTipoServicio)
         this.router.get('/api/reporte/cantidad/vehiculos/ruta',reporteController.CantidadVehiculosPorRuta)
+        this.router.get('/api/reporte/cantidad/conductores',reporteController.CantidadDeConductores)
     }
 
 

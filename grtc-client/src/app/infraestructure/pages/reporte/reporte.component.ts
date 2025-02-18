@@ -58,6 +58,7 @@ export class ReporteComponent implements OnInit {
   totalEmpresas: number = 0;
   totalVehiculos: number = 0;
   totalInfraestructura: number = 0;
+  totalConductores: number = 0;
   cantidad_estado_empresas: any = {}
 
   barOptionsColor: any
@@ -74,6 +75,7 @@ export class ReporteComponent implements OnInit {
     this.cantidadEstadoEmpresas()
     this.cantidadVehiculosPorTipoServicio()
     this.cantidadDeInfraestructura()
+    this.cantidoConductores()
 
   }
 
@@ -155,6 +157,22 @@ export class ReporteComponent implements OnInit {
     });
   }
 
+  cantidoConductores() {
+    this.reporteService.CantidadDeConductores().subscribe({
+      next: (res) => {
+        console.log('cantidad de conductores:', res);
+        this.totalConductores=res.cantidad_conductores;
+     
+      },
+      error: (err) => {
+        console.error('Error al obtener cantidad de conductores:', err);
+      },
+      complete: () => {
+        console.log('cantidad de conductores obtenida');
+
+      }
+    });
+  }
 
   openModal() {
     this.myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));

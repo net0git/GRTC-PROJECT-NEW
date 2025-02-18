@@ -25,6 +25,7 @@ class ReporteRoutes {
         this.router.get('/api/reporte/vehiculos/ruta/origen/:origen/destino/:destino', reporteController_1.default.obtenerVehiculosPorRutaOrigenDestino);
         this.router.get('/api/reporte/cantidad/vehiculos', reporteController_1.default.CantidadVehiculosPorTipoServicio);
         this.router.get('/api/reporte/cantidad/vehiculos/ruta', reporteController_1.default.CantidadVehiculosPorRuta);
+        this.router.get('/api/reporte/cantidad/conductores', reporteController_1.default.CantidadDeConductores);
     }
 }
 const reporteRoutes = new ReporteRoutes;

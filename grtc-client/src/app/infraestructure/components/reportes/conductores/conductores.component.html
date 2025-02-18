@@ -27,7 +27,7 @@
               </thead>
               <tbody >
                 <tr *ngFor="let conductor of listaConductores | paginate: { itemsPerPage: 10, currentPage: paginaActual, id: 'conductores-pagination' }; let i = index"  >
-                 <th scope="row">{{i+1}}</th>
+                 <th scope="row">{{ i + (paginaActual - 1) * 10 + 1 }}</th>
                   <td>{{conductor.numero_documento}}</td>
                   <td>{{conductor.nombre_conductor +' '+conductor.apellido_paterno+' '+conductor.apellido_materno}}</td>
                   <td>{{conductor.nro_licencia}}</td>

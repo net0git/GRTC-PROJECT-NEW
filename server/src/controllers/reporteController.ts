@@ -247,6 +247,23 @@ class ReporteController{
 
     }
 
+    public async CantidadDeConductores(req: Request, res: Response): Promise<any> {
+        try {
+            const consulta = `
+                    SELECT COUNT(id_conductor) AS cantidad_conductores
+                    FROM t_conductor
+                        `;
+
+            const conductores = await db.query(consulta)
+
+            res.json(conductores['rows'][0]);
+        } catch (error) {
+            console.error('Error fatal al obtener las cantidades de conductores:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+
+    }
+
     public async listarVehiculosPorRuta(req:Request, res:Response):Promise<any>{
         try {
             const consulta = ` 

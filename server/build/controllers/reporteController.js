@@ -265,6 +265,22 @@ class ReporteController {
             }
         });
     }
+    CantidadDeConductores(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const consulta = `
+                    SELECT COUNT(id_conductor) AS cantidad_conductores
+                    FROM t_conductor
+                        `;
+                const conductores = yield database_1.default.query(consulta);
+                res.json(conductores['rows'][0]);
+            }
+            catch (error) {
+                console.error('Error fatal al obtener las cantidades de conductores:', error);
+                res.status(500).json({ error: 'Error interno del servidor' });
+            }
+        });
+    }
     listarVehiculosPorRuta(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

@@ -59,5 +59,9 @@ export class ReporteService {
     return this.http.get<any>(`${this.api_url_reporte}/cantidad/infraestructura`);
   }
 
+  CantidadDeConductores(): Observable<any> {
+    return this.http.get<any>(`${this.api_url_reporte}/cantidad/conductores`);
+  }
+
 
 }
