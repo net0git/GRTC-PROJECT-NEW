@@ -25,7 +25,7 @@
                     </div>
                     <div class="lista">
                         <div class="item">
-                            <div class="name" (click)="openModalVehiculosEmpresa()"><i class="bi bi-bus-front mx-2"></i> Vehiculos por empresa</div>
+                            <div class="name" (click)="openModalVehiculos()"><i class="bi bi-bus-front mx-2"></i> Vehiculos por empresa</div>
                         </div>
                     </div>
                     <div class="lista ">
@@ -56,14 +56,14 @@
                         <div class="col-md-3">
                             <div class="card custom-card-purple p-3 shadow-sm" title="ver detalle" (click)="openModalInfraestructura()">
                                 <h5 class="custom-title-purple">Infraestructuras</h5>
-                                <p class="text-muted mb-0">78</p>
+                                <p class="text-muted mb-0">{{totalInfraestructura}}</p>
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="card custom-card-orange p-3 shadow-sm" title="ver detalle" (click)="openModalVehiculos()">
                                 <h5 class="custom-title-orange">Vehiculos</h5>
-                                <p class="text-muted mb-0">2448</p>
+                                <p class="text-muted mb-0">{{totalVehiculos}}</p>
                             </div>
                         </div>
 
@@ -257,23 +257,6 @@
 </div>
 
 
-<!-- modal: VEHICULOS POR EMPRESA -->
-<div class="modal fade" id="modalVehiculosEmpresa" tabindex="-1" role="dialog" aria-labelledby="modalVehiculosEmpresaLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <p class="subtitulo_menu">REPORTE DE VEHICULOS POR EMPRESA</p>
-          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-start">
-          <app-reporte-vehiculos></app-reporte-vehiculos>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="closeModal()">cerrar</button>
-        </div>
-      </div>
-    </div>
-</div>
 
 
 <!-- modal: HISTORIAL VEHICULAR -->

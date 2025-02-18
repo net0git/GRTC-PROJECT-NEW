@@ -223,26 +223,19 @@ class ReporteController{
     public async CantidadDeInfraestructura(req: Request, res: Response): Promise<any> {
         try {
             const consulta = `
-                        SELECT tipo_infraestructura, cantidad_infraestructuras
+                        SELECT id_tipo_infraestructura,tipo_infraestructura, cantidad_infraestructuras
                         FROM (
                             SELECT
+								ti.id_tipo_infraestructura,
                                 ti.denominacion AS tipo_infraestructura,
                                 COUNT(inf.id_infraestructura) AS cantidad_infraestructuras
                             FROM 
                                 d_tipo_infraestructura AS ti
                             LEFT JOIN 
                                 t_infraestructura AS inf ON ti.id_tipo_infraestructura = inf.id_tipo_infraestructura
-                            GROUP BY tipo_infraestructura
-
-                            UNION ALL
-
-                            SELECT
-                                'Total' AS tipo_infraestructura,
-                                COUNT(*) AS cantidad_infraestructuras
-                            FROM 
-                                t_infraestructura AS inf
+                            GROUP BY tipo_infraestructura, ti.id_tipo_infraestructura
                         ) AS result
-                        ORDER BY tipo_infraestructura;`;
+                        ORDER BY id_tipo_infraestructura`;
 
             const emrpesaInfraestructura = await db.query(consulta)
 
@@ -361,6 +354,7 @@ class ReporteController{
         try {
             const consulta = `
                             SELECT
+                                ts.id_tipo_servicio,
                                 ts.denominacion AS tipo_servicio,
                                 COUNT(tv.id_vehiculo) AS cantidad_vehiculos
                             FROM 
@@ -369,18 +363,9 @@ class ReporteController{
                                 t_empresa_servicio AS tes ON ts.id_tipo_servicio = tes.id_tipo_servicio
                             LEFT JOIN 
                                 t_vehiculo AS tv ON tes.id_empresa_servicio = tv.id_empresa_servicio
-                            GROUP BY tipo_servicio
-                            
-                            UNION ALL
-                            
-                            -- Consulta para obtener el total general de vehículos
-                            SELECT
-                                'Total General' AS tipo_servicio,
-                                COUNT(tv.id_vehiculo) AS cantidad_vehiculos
-                            FROM 
-                                t_vehiculo AS tv
-                            where 
-                                tv.id_empresa_servicio is not null`;
+                            GROUP BY tipo_servicio, ts.id_tipo_servicio
+                            ORDER BY ts.id_tipo_servicio
+                            `;
             const vehiculos=await db.query(consulta)
             res.json(vehiculos['rows']);
         } catch (error) {

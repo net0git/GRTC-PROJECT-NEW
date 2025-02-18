@@ -77,10 +77,10 @@ export class VehiculosComponent implements OnInit {
           this.cantidad_v_turismo++;
           break;
         case 3:
-          this.cantidad_v_estudiantes++;
+          this.cantidad_v_trabajadores++;
           break;
         case 4:
-          this.cantidad_v_trabajadores++;
+          this.cantidad_v_estudiantes++;
           break;
         default:
           // Si el valor no coincide con ninguno, puedes manejarlo aquí si lo necesitas.

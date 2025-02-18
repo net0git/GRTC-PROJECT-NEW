@@ -51,5 +51,13 @@ export class ReporteService {
     return this.http.get<any>(`${this.api_url_reporte}/estado/empresas`);
   }
 
+  CantidadVehiculosPorTipoServicio(): Observable<any> {
+    return this.http.get<any>(`${this.api_url_reporte}/cantidad/vehiculos`);
+  }
+
+  CantidadDeInfraestructura(): Observable<any> {
+    return this.http.get<any>(`${this.api_url_reporte}/cantidad/infraestructura`);
+  }
+
 
 }
