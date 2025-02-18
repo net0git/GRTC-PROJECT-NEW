@@ -47,6 +47,7 @@ import { CrearHistorialVehicularMessageResponse } from '../../../../domain/dto/H
 import { RegistroMarcaModeloComponent } from '../../../components/registro-marca-modelo/registro-marca-modelo.component';
 import { CrearConductorMessageResponse, ListaConductoresResponse } from '../../../../domain/dto/ConductorResponse.dto';
 import Swal from 'sweetalert2';
+import { FechaConFormato_ddMMyyyy } from '../../../../../../public/utils/formateDate';
 
 
 declare var bootstrap: any;
@@ -54,7 +55,17 @@ declare var bootstrap: any;
 @Component({
   selector: 'app-crear-empresa-servicio',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavegadorComponent, SubnavegadorComponent, ProgressBarComponent, SoloNumerosGuionDirective, SoloNumerosDirective, SoloLetrasDirective, SoloLetrasGuionDirective, RegistroMarcaModeloComponent],
+  imports: [
+      CommonModule, 
+      FormsModule, 
+      NavegadorComponent, 
+      SubnavegadorComponent, 
+      ProgressBarComponent, 
+      SoloNumerosGuionDirective, 
+      SoloNumerosDirective, 
+      SoloLetrasDirective, 
+      SoloLetrasGuionDirective, 
+      RegistroMarcaModeloComponent],
   templateUrl: './crear-empresa-servicio.component.html',
   styleUrl: './crear-empresa-servicio.component.css'
 })
@@ -222,6 +233,8 @@ export class CrearEmpresaServicioComponent implements OnInit {
     this.listarMarcas()
   }
 
+
+
   openModal() {
     this.myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
     this.myModal.show();
@@ -308,6 +321,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
       });
       alert(errorMensaje)
     } else {
+      this.dataResolucion.fecha_resolucion = this.dataEmpresaServicio.fecha_inicial
       this.nextStep()
     }
 
