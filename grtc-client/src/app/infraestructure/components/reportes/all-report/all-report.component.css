@@ -1,0 +1,5 @@
+.table-responsive {
+    overflow-x: auto; /* Agrega scroll horizontal */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    max-width: 100%; /* Ajusta el ancho máximo */
+}

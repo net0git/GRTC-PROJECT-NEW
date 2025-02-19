@@ -3,6 +3,7 @@ export interface ListaVehiculosDetalleResponse {
         id_vehiculo: number; // v.id_vehiculo
         id_tuc: number; // v.id_tuc
         id_tipo_servicio: number; // es.id_tipo_servicio
+        id_empresa_servicio: number; // es.id_empresa_servicio
         tipo_servicio: string; // ts.denominacion
         razon_social: string; // e.razon_social 
         placa: string; // v.placa

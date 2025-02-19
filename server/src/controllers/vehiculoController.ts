@@ -21,6 +21,7 @@ class VehiculoController {
                     res.json({ text: 'El vehiculo se creó correctamente' });
                 }
             });
+        
 
         } catch (error) {
             console.error('Error al crear vehiculo:', error);
@@ -54,6 +55,7 @@ class VehiculoController {
                             r.fecha_resolucion as fecha_inicial,
                             es.fecha_final,
                             es.id_tipo_servicio,
+                            es.id_empresa_servicio,
                             r.nombre_resolucion,
                             i.itinerario
                         FROM
@@ -71,6 +73,7 @@ class VehiculoController {
 
             const vehiculos = await db.query(consulta)
             res.json(vehiculos['rows']);
+            
         } catch (error) {
             console.error('Error al obtener vehiculos:', error);
             res.status(500).json({ error: 'Error interno del servidor' });
@@ -103,6 +106,7 @@ class VehiculoController {
                             t_empresa AS e ON te.id_empresa=e.id_empresa `;
             const vehiculos = await db.query(consulta)
             res.json(vehiculos['rows']);
+         
         } catch (error) {
             console.error('Error al obtener vehiculos:', error);
             res.status(500).json({ error: 'Error interno del servidor' });
@@ -122,6 +126,7 @@ class VehiculoController {
                             id_empresa_servicio = $1 `;
             const vehiculos = await db.query(consulta, [id_empresa_servicio])
             res.json(vehiculos['rows']);
+          
         } catch (error) {
             console.error('Error al obtener vehiculos:', error);
             res.status(500).json({ error: 'Error interno del servidor' });
@@ -172,6 +177,7 @@ class VehiculoController {
                             es.id_empresa_servicio=$1 `;
             const vehiculos = await db.query(consulta, [id_empresa_servicio])
             res.json(vehiculos['rows']);
+         
         } catch (error) {
             console.error('Error al obtener vehiculos:', error);
             res.status(500).json({ error: 'Error interno del servidor' });
@@ -186,10 +192,11 @@ class VehiculoController {
 
             if (vehiculo && vehiculo['rows'].length > 0) {
                 res.json(vehiculo['rows'][0]);
+                
             } else {
                 res.status(404).json({ text: 'El vehiculo no existe' });
             }
-
+            
         } catch (error) {
             console.error('Error al obtener vehiculo:', error);
             res.status(500).json({ error: 'Error interno del servidor' });
@@ -216,6 +223,7 @@ class VehiculoController {
                     res.json({ text: 'El vehiculo se modifico correctamente' });
                 }
             });
+           
         } catch (error) {
             console.error('Error al modificar vehiculo:', error);
             res.status(500).json({ error: 'Error interno del servidor' });
@@ -239,6 +247,7 @@ class VehiculoController {
                     res.json({ text: 'La tuc del vehiculo se modifico correctamente' });
                 }
             });
+        
         } catch (error) {
             console.error('Error al modificar vehiculo:', error);
             res.status(500).json({ text: 'Error interno del servidor' });
@@ -262,6 +271,7 @@ class VehiculoController {
                     res.json({ text: 'Baja de vehiculo exitoso' });
                 }
             });
+           
         } catch (error) {
             console.error('Error al modificar la baja del vehiculo:', error);
             res.status(500).json({ text: 'Error interno del servidor' });

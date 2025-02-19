@@ -1,0 +1,61 @@
+<div class="table-responsive">
+    <table class="table text-center table-hover" id="excel-table">
+        <thead class="thead-light bg-secondary text-white table-success">
+            <tr>
+                <th scope="col">Nro</th>
+                <th scope="col">EXP</th>
+                <th scope="col">EMPRESA</th>
+                <th scope="col">RUC</th>
+                <th scope="col">TIPO DE TRANSPORTE</th>
+                <th scope="col">FECH_INICIO</th>
+                <th scope="col">FECH_FINAL</th>
+                <th scope="col">ESTADO</th>
+                <th scope="col">VEHICULOS</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let empresa of listaEmpresasServicio | paginate: { itemsPerPage: 10, currentPage: paginaActual, id:'allReport' }; let i = index"
+                class="table-barra hand_cursor" title="Click para ver detalle empresa">
+                <th scope="row">{{ i + (paginaActual - 1) * 10 + 1 }}</th>
+                <td>{{ empresa.expediente }}</td>
+                <td class="text-start">{{ empresa.empresa }}</td>
+                <td>{{ empresa.ruc }}</td>
+                <td>{{ empresa.tipo_servicio }}</td>
+                <td>{{ empresa.fecha_inicial | date:'dd/MM/yyyy' }}</td>
+                <td>{{ empresa.fecha_final | date:'dd/MM/yyyy' }}</td>
+                <td>{{ empresa.estado }}</td>
+
+                <td>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <tr>
+                                <th>Placa</th>
+                                <th>Modelo</th>
+                                <th>Marca</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Final</th>
+                            </tr>
+                            <tr *ngFor="let vehiculo of obtenerVehiculosPorEmpresa(empresa.id_empresa_servicio)">
+                                <td>{{ vehiculo.placa }}</td>
+                                <td>{{ vehiculo.modelo }}</td>
+                                <td>{{ vehiculo.marca }}</td>
+                                <td>{{ vehiculo.fecha_inicial | date: 'dd/MM/yyyy' }}</td>
+                                <td>{{ vehiculo.fecha_final | date: 'dd/MM/yyyy' }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-between">
+    <button class="btn btn-success mb-2" (click)="ExporToExcel()"><i
+        class="bi bi-file-earmark-excel-fill"></i> Descargar</button>
+    <pagination-controls [id]="'allReport'" (pageChange)="paginaActual = $event"
+        previousLabel="Anterior" nextLabel="Siguiente">
+    </pagination-controls>
+</div>
+

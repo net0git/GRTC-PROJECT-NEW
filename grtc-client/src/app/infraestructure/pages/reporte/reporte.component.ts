@@ -13,6 +13,8 @@ import { VehiculosHistorialComponent } from '../../components/reportes/vehiculos
 import { EmpresaServicioAnioComponent } from '../../components/reportes/empresa-servicio-anio/empresa-servicio-anio.component';
 import { HistorialVehiculoComponent } from '../../components/historial-vehiculo/historial-vehiculo.component';
 import { ReporteService } from '../../../infraestructure/services/remoto/reporte/reporte.service';
+import { AllReportComponent } from '../../components/reportes/all-report/all-report.component';
+
 declare var bootstrap: any;
 
 @Component({
@@ -30,7 +32,8 @@ declare var bootstrap: any;
     EmpresaServicioRutaComponent,
     VehiculosHistorialComponent,
     EmpresaServicioAnioComponent,
-    HistorialVehiculoComponent
+    HistorialVehiculoComponent,
+    AllReportComponent
   ],
   templateUrl: './reporte.component.html',
   styleUrl: './reporte.component.css'
