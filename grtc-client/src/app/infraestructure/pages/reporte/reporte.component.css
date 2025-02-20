@@ -164,6 +164,20 @@
 
 
 
+#exampleModalCenter .modal-body{
+    max-width: 100%;
+    width: 100%;
+    overflow-x: hidden; 
+}
+
+#exampleModalCenter .modal-header{
+    /* background-color: #176091; */
+    background-color: #1f88ce;
+    padding: 0.5%;
+    margin: 0px;
+
+}
+
 #modalEmpresasServicio .modal-dialog {
     max-width: 95%;
     width: 95%;
@@ -175,6 +189,10 @@
 #modalEmpresasServicio .modal-content {
     height: 100%; /* Ocupa todo el espacio disponible */
 }
+
+
+
+
 
 
 #modalInfraestructura .modal-dialog {

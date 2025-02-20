@@ -3,3 +3,53 @@
     white-space: nowrap; /* Evita que el texto se divida en varias líneas */
     max-width: 100%; /* Ajusta el ancho máximo */
 }
+
+.menu-filtro-medida{
+    background-color:  #F6F4EE;
+}
+
+/*  */
+/* Contenedor del popover */
+.popover-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Estilo del botón */
+  .popover-btn {
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  /* Escondemos el checkbox real */
+  .popover-toggle {
+    display: none;
+  }
+  
+  /* Estilo del popover */
+  .popover-content {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    bottom: -120px; /* Ajusta la posición vertical */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    opacity: 0; /* Invisible por defecto */
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  /* Mostrar el popover cuando el checkbox está activado */
+  .popover-toggle:checked + .popover-btn + .popover-content {
+    display: block;
+    opacity: 1; /* Hacerlo visible */
+  }
+  
