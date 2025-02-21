@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AllReportComponent } from './all-report.component';
+import { ReporteDinamicoComponent } from './reporte-dinamico.component';
 
-describe('AllReportComponent', () => {
-  let component: AllReportComponent;
-  let fixture: ComponentFixture<AllReportComponent>;
+describe('ReporteDinamicoComponent', () => {
+  let component: ReporteDinamicoComponent;
+  let fixture: ComponentFixture<ReporteDinamicoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AllReportComponent]
+      imports: [ReporteDinamicoComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AllReportComponent);
+    fixture = TestBed.createComponent(ReporteDinamicoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

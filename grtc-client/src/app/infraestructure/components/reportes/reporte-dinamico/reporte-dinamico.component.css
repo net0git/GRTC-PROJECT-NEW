@@ -1,0 +1,73 @@
+.table-responsive {
+    overflow-x: auto; /* Agrega scroll horizontal */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    max-width: 98%; /* Ajusta el ancho máximo */
+    border: 2px solid #ccc;
+
+}
+
+.table-responsive_sub {
+    overflow-x: auto; /* Agrega scroll horizontal */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    max-width: 100%; /* Ajusta el ancho máximo */
+    border: 2px solid #ccc;
+
+}
+/* Contenedor del popover */
+.popover-container {
+    position: relative; /* Hace que el popover se posicione en relación con este */
+    display: inline-block;
+  }
+  
+  /* Estilo del botón */
+  .popover-btn {
+    padding: 4px 20px;
+    background-color: #a8a7a3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 5px 5px 10px 0px;
+  }
+  
+  /* Escondemos el checkbox real */
+  .popover-toggle {
+    display: none;
+  }
+  
+  /* Estilo del popover */
+  .popover-content {
+    position: absolute;
+    top: 100%; /* Justo debajo del botón */
+    left: 0; /* Alinea el popover con el inicio del botón */
+    transform: scale(0.5); /* Mantiene el efecto de crecimiento */
+    margin-top: 4px;
+    padding: 10px;
+    background-color: #f7f6f2;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    opacity: 0; /* Invisible por defecto */
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Mostrar el popover cuando el checkbox está marcado */
+.popover-toggle:checked ~ .popover-content {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1); 
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, visibility 0s linear 0s;
+}
+  
+ 
+  /* Mostrar el popover con efecto de crecimiento */
+  /* .popover-toggle:checked ~ .popover-content */
+  /* .popover-toggle:checked + .popover-btn + .popover-content {
+    opacity: 1; 
+    visibility: visible; 
+    transform: translateX(-50%) scale(1); 
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, visibility 0s linear 0s;
+  } */
+

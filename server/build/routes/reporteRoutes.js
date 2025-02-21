@@ -19,6 +19,8 @@ class ReporteRoutes {
         this.router.get('/api/reporte/cantidad/empresas/ruta', reporteController_1.default.CantidadDeEmpresasPorRuta);
         this.router.get('/api/reporte/estado/empresas', reporteController_1.default.CantidadEstadoEmpresas);
         this.router.get('/api/reporte/cantidad/infraestructura', reporteController_1.default.CantidadDeInfraestructura);
+        this.router.get('/api/reporte/lista/detalle/empresas-servicio', reporteController_1.default.listarReporteEmpresasServicios);
+        this.router.get('/api/reporte/lista/detalle/vehiculos', reporteController_1.default.listarReporteTotalVehiculos);
         this.router.get('/api/reporte/vehiculos/ruta', reporteController_1.default.listarVehiculosPorRuta);
         this.router.get('/api/reporte/vehiculos/ruta/origen/:origen', reporteController_1.default.listarVehiculosPorRutaOrigen);
         this.router.get('/api/reporte/vehiculos/ruta/destino/:destino', reporteController_1.default.listarVehiculosPorDestinoRuta);

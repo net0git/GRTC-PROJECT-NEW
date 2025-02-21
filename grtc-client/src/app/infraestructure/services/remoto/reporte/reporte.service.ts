@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environment';
 import { Observable } from 'rxjs';
+import { ListaEmpresaServicioReporteResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
+import { ListaVehiculosDetallReporteResponse } from '../../../../domain/dto/VehiculoResponse.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +26,9 @@ export class ReporteService {
   // this.router.get('/api/reporte/vehiculos/ruta/origen/:origen/destino/:destino',reporteController.obtenerVehiculosPorRutaOrigenDestino)
   // this.router.get('/api/reporte/cantidad/vehiculos',reporteController.CantidadVehiculosPorTipoServicio)
   // this.router.get('/api/reporte/cantidad/vehiculos/ruta',reporteController.CantidadVehiculosPorRuta)
+
+  //this.router.get('/api/reporte/lista/detalle/empresas-servicio', reporteController.listarReporteEmpresasServicios)
+
   constructor(private http: HttpClient) { }
 
   CantidadVehiculosRuta(): Observable<any> {
@@ -63,5 +68,12 @@ export class ReporteService {
     return this.http.get<any>(`${this.api_url_reporte}/cantidad/conductores`);
   }
 
+  ListarEmpresasServicios(): Observable<ListaEmpresaServicioReporteResponse[]> {
+    return this.http.get<ListaEmpresaServicioReporteResponse[]>(`${this.api_url_reporte}/lista/detalle/empresas-servicio`);
+  }
 
+  //         this.router.get('/api/reporte/lista/detalle/vehiculos',reporteController.listarReporteTotalVehiculos)
+  ListarReporteTotalVehiculos(): Observable<ListaVehiculosDetallReporteResponse[]> {
+    return this.http.get<ListaVehiculosDetallReporteResponse[]>(`${this.api_url_reporte}/lista/detalle/vehiculos`);
+  }
 }

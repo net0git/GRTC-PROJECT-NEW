@@ -281,6 +281,109 @@ class ReporteController {
             }
         });
     }
+    listarReporteEmpresasServicios(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                //devuelve todas las empresas que estan registradas como servicio, juntamente con su estado de acuerdo a la fecha inicial de apertura
+                // --empresas activas, inactivas y encondicion de alerta (empresa, id_tipo_servicio, tipo_servicio, fecha_activacion, fecha_vencimiento)
+                const consulta = `
+                            SELECT
+                               es.expediente, 
+								es.id_empresa_servicio,
+                                e.razon_social,
+                                e.ruc,
+								 e.departamento,
+								 e.distrito,
+								 e.provincia,
+								 p.nombres,
+								 p.ap_paterno,
+								 p.ap_materno,
+								 p.documento,
+								 p.telefono,
+                                es.id_tipo_servicio AS id_tipo_servicio, 
+                                ts.denominacion AS tipo_servicio,
+                                es.fecha_inicial,
+                                es.fecha_final,
+                                
+                                CASE
+                                    WHEN CURRENT_DATE < es.fecha_final - INTERVAL '6 months' THEN 'Activo'
+                                    WHEN CURRENT_DATE >= es.fecha_final - INTERVAL '6 months' AND CURRENT_DATE <= es.fecha_final THEN 'Alerta'
+                                    WHEN CURRENT_DATE > es.fecha_final THEN 'Inactivo'
+                                END AS estado,
+                                CASE
+                                    WHEN CURRENT_DATE < es.fecha_final THEN 
+                                        ROUND(CAST(EXTRACT(EPOCH FROM AGE(CURRENT_DATE, es.fecha_inicial)) / 
+                                            EXTRACT(EPOCH FROM AGE(es.fecha_final, es.fecha_inicial)) * 100 AS numeric), 2)
+                                    ELSE 100.00
+                                END AS porcentaje
+                            FROM
+                                t_empresa_servicio es
+                            JOIN t_empresa e ON es.id_empresa = e.id_empresa
+                            JOIN d_tipo_servicio ts ON es.id_tipo_servicio = ts.id_tipo_servicio
+							JOIN t_persona p ON e.id_representante_legal = p.id_persona
+                            ORDER BY
+                                es.expediente;
+                    `;
+                const empresaServicios = yield database_1.default.query(consulta);
+                res.status(200).json(empresaServicios['rows']);
+            }
+            catch (error) {
+                console.error('Error faltal al obtener empresas por servicio:', error);
+                res.status(500).json({ error: 'Error interno del servidor' });
+            }
+        });
+    }
+    listarReporteTotalVehiculos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const consulta = `
+                        SELECT
+                            ts.denominacion as tipo_servicio,
+                            e.razon_social,
+                            v.id_vehiculo,
+                            v.placa,
+                            v.nro_part_reg,
+                            v.modalidad,
+                            v.estado,
+                            v.carga,
+                            v.peso,
+                            v.categoria,
+                            v.anio_fabricacion,
+                            v.color,
+                            v.nro_chasis,
+                            v.nro_asientos,
+                            v.marca,
+                            v.modelo,
+                            v.serie,
+                            v.carroceria,
+                            v.id_tuc,
+                            r.fecha_resolucion as fecha_inicial,
+                            es.fecha_final,
+                            es.id_tipo_servicio,
+                            es.id_empresa_servicio,
+                            r.nombre_resolucion,
+                            i.itinerario
+                        FROM
+                            t_vehiculo v
+                        JOIN
+                            t_empresa_servicio es ON v.id_empresa_servicio = es.id_empresa_servicio
+                        JOIN 
+                            d_tipo_servicio ts ON es.id_tipo_servicio=ts.id_tipo_servicio
+                        JOIN
+                            t_empresa e ON es.id_empresa=e.id_empresa
+                        JOIN 
+                            d_resolucion r ON v.id_resolucion=r.id_resolucion
+                        JOIN 
+                            t_detalle_ruta_itinerario i ON v.id_detalle_ruta_itinerario=i.id_detalle_ruta_itinerario`;
+                const vehiculos = yield database_1.default.query(consulta);
+                res.json(vehiculos['rows']);
+            }
+            catch (error) {
+                console.error('Error al obtener vehiculos:', error);
+                res.status(500).json({ error: 'Error interno del servidor' });
+            }
+        });
+    }
     listarVehiculosPorRuta(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

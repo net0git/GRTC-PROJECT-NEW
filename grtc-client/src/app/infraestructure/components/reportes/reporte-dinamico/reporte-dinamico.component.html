@@ -1,0 +1,140 @@
+<div class="container-fluid m-4">
+
+    <div *ngFor="let popover of popovers; let i = index" class="popover-container">
+        <!-- Checkbox controlado con ngModel -->
+        <input type="checkbox" [id]="'popover' + (i + 1)" class="popover-toggle" [(ngModel)]="popover.isOpen">
+    
+        <!-- Etiqueta que actúa como el botón para abrir/cerrar el popover -->
+        <label [for]="'popover' + (i + 1)" class="popover-btn" [attr.aria-expanded]="popover.isOpen ? 'true' : 'false'">
+            {{popover.title}}: 
+            <span>{{ getSelectedCount(popover.options) === 0 ? 'Todos' : getSelectedCount(popover.options) + ' seleccionados' }}</span>
+            <i class="bi bi-caret-down-fill mx-1"></i>
+        </label>
+    
+        <!-- Contenido del popover que se muestra cuando isOpen es true -->
+        <div class="popover-content" *ngIf="popover.isOpen" (click)="preventClosePopover($event)">
+            <div class="m-2">
+                <div class="mx-2">
+                    <div *ngFor="let option of popover.options" class="form-check">
+                        <input class="form-check-input" type="checkbox" [(ngModel)]="option.selected">
+                        <label class="form-check-label" [for]="option.id">{{option.label}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <button class="btn-primary btn btn-sm  px-4 " (click)="getSelectedOptions()">filtrar</button>
+    <!-- <div class="popover-container">
+        <input type="checkbox" id="popover11" class="popover-toggle">
+        <label for="popover11" class="popover-btn">Popover 1</label>
+        <div class="popover-content">Este es el contenido del popover 1.</div>
+      </div>
+      
+      <div class="popover-container">
+        <input type="checkbox" id="popover22" class="popover-toggle">
+        <label for="popover22" class="popover-btn">Popover 2</label>
+        <div class="popover-content">Este es el contenido del popover 2.</div>
+      </div> -->
+
+    <div class="d-flex justify-content-between align-items-center">
+        <button class="btn btn-success " (click)="ExporToExcel()"><i class="bi bi-file-earmark-excel-fill"></i>
+            Descargar</button>
+        <pagination-controls [id]="'allReport'" (pageChange)="paginaActual = $event" previousLabel="Anterior" class=" mx-4"
+            nextLabel="Siguiente">
+        </pagination-controls>
+    </div>
+
+    <div class="table-responsive" style="overflow-x: auto; white-space: nowrap;">
+        <table class="table text-center table-hover" id="excel-table">
+            <thead class="thead-light bg-secondary text-white table-success">
+                <tr>
+                    <th scope="col">Nro</th>
+                    <th scope="col">EXP</th>
+                    <th scope="col">RAZON SOCIAL</th>
+                    <th scope="col">RUC</th>
+                    <th scope="col">REPRESENTANTE</th>
+                    <th scope="col">DOCUMENTO</th>
+                    <th scope="col">DEPARTAMENTO</th>
+                    <th scope="col">DISTRITO</th>         
+                    <th scope="col">PROVINCIA</th>
+                    <th scope="col">TIPO DE TRANSPORTE</th>
+                    <th scope="col">FECH_INICIO</th>
+                    <th scope="col">FECH_FINAL</th>
+                    <th scope="col">ESTADO</th>
+                    <th scope="col">VEHICULOS</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let empresa of listaEmpresasServicio | paginate: { itemsPerPage: 10, currentPage: paginaActual, id:'allReport' }; let i = index"
+                    class="table-barra " title="Click para ver detalle empresa">
+                    <th scope="row">{{ i + (paginaActual - 1) * 10 + 1 }}</th>
+                    <td>{{ empresa.expediente }}</td>
+                    <td class="text-start">{{ empresa.razon_social }}</td>
+                    <td>{{ empresa.ruc }}</td>
+                    <td>{{ empresa.nombres }} {{ empresa.ap_paterno }} {{ empresa.ap_materno }}</td>
+                 
+                    <td>{{ empresa.documento}}</td>
+                    <td>{{ empresa.departamento}}</td>
+                    <td>{{ empresa.distrito}}</td>
+                    <td>{{ empresa.provincia}}</td>
+                    <td>{{ empresa.tipo_servicio }}</td>
+                    <td>{{ empresa.fecha_inicial | date:'dd/MM/yyyy' }}</td>
+                    <td>{{ empresa.fecha_final | date:'dd/MM/yyyy' }}</td>
+                    <td>{{ empresa.estado }}</td>
+
+                    <td>
+                        <div class="table-responsive_sub" style="overflow-x: auto; white-space: nowrap;">
+                            <table class="table table-bordered table-striped">
+                                <thead class="thead-light bg-secondary text-white table-success">
+                                    <tr>
+                                        <th>Placa</th>
+                                        <th>Modelo</th>
+                                        <th>Marca</th>
+                                        <th>Categoria</th>
+                                        <th>Año</th>
+                                        <th>Peso Neto(Tn)</th>
+                                        <th>Carga(Tn)</th>
+                                        <th>Carroseria</th>
+                                        <th>Modalidad</th>
+                                        <th>Nro Part Reg</th>
+                                        <th>Condicion</th>
+                                        <th>nro chasis</th>
+                                        <th>nro asientos</th>
+                                        <th>serie</th>
+                                        <th>color</th>
+                                        <th>itienerario</th>
+                                        <th>Fecha Inicio</th>
+                                        <th>Fecha Final</th>
+                                    </tr>
+                                </thead>
+                                
+                                <tr *ngFor="let vehiculo of obtenerVehiculosPorEmpresa(empresa.id_empresa_servicio)">
+                                    <td>{{ vehiculo.placa }}</td>
+                                    <td>{{ vehiculo.modelo }}</td>
+                                    <td>{{ vehiculo.marca }}</td>
+                                    <td>{{ vehiculo.categoria }}</td>
+                                    <td>{{ vehiculo.anio_fabricacion }}</td>
+                                    <td>{{ vehiculo.peso }}</td>
+                                    <td>{{ vehiculo.carga }}</td>
+                                    <td>{{ vehiculo.carroceria }}</td>
+                                    <td>{{ vehiculo.modalidad }}</td>
+                                    <td>{{ vehiculo.nro_part_reg }}</td>
+                                    <td>{{ vehiculo.estado }}</td>
+                                    <td>{{ vehiculo.nro_chasis }}</td>
+                                    <td>{{ vehiculo.nro_asientos }}</td>
+                                    <td>{{ vehiculo.serie }}</td>
+                                    <td>{{ vehiculo.color }}</td>
+                                    <td>{{ vehiculo.itinerario }}</td>
+                                    <td>{{ vehiculo.fecha_inicial | date: 'dd/MM/yyyy' }}</td>
+                                    <td>{{ vehiculo.fecha_final | date: 'dd/MM/yyyy' }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
