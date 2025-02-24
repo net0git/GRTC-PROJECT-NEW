@@ -130,7 +130,7 @@ class UsuarioController {
                 const { nombre_usuario, password } = req.body;
                 if (!nombre_usuario || !password) {
                     res.status(400).json({ error: 'Debe proporcionar nombre de usuario y contraseña.' });
-                    return;
+                    return; // Asegúrate de retornar después de cada res.status()
                 }
                 // Verificar si el usuario existe
                 const usuarioQuery = 'SELECT id_usuario, password, nombre_usuario, id_persona , rol, estado FROM t_usuario WHERE nombre_usuario = $1';
@@ -149,6 +149,7 @@ class UsuarioController {
                 const esPasswordCorrecto = yield (0, encryptor_1.comparar)(password, usuario.password);
                 if (!esPasswordCorrecto) {
                     res.status(401).json({ error: 'Contraseña incorrecta.' });
+                    return; // Agrega el return aquí para evitar continuar con el código
                 }
                 // Si todo está correcto, responder con datos del usuario
                 res.json({

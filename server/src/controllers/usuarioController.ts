@@ -108,37 +108,37 @@ class UsuarioController {
         try {
             // Validación de los datos de entrada
             const { nombre_usuario, password } = req.body;
-
+    
             if (!nombre_usuario || !password) {
                 res.status(400).json({ error: 'Debe proporcionar nombre de usuario y contraseña.' });
-                return;
+                return; // Asegúrate de retornar después de cada res.status()
             }
-
+    
             // Verificar si el usuario existe
             const usuarioQuery = 'SELECT id_usuario, password, nombre_usuario, id_persona , rol, estado FROM t_usuario WHERE nombre_usuario = $1';
             const usuarioResult = await db.query(usuarioQuery, [nombre_usuario]);
-
+    
             if (usuarioResult.rows.length !== 1) {
-                res.status(404).json({ error: 'Usuario no encontrado.'});
+                res.status(404).json({ error: 'Usuario no encontrado.' });
                 return;
             }
-
+    
             const usuario = usuarioResult.rows[0];
-
+    
             // Verificar estado del usuario
             if (usuario.estado !== 'ACTIVO') {
                 res.status(403).json({ error: 'El usuario no está activo.' });
                 return;
             }
-
+    
             // Comparar contraseñas
             const esPasswordCorrecto = await comparar(password, usuario.password);
-
+    
             if (!esPasswordCorrecto) {
                 res.status(401).json({ error: 'Contraseña incorrecta.' });
-
+                return; // Agrega el return aquí para evitar continuar con el código
             }
-
+    
             // Si todo está correcto, responder con datos del usuario
             res.json({
                 success: true,
@@ -147,12 +147,13 @@ class UsuarioController {
                 nombre_usuario: usuario.nombre_usuario,
                 rol: usuario.rol,
             });
-
+    
         } catch (error) {
             console.error('Error fatal al validar el login:', error);
             res.status(500).json({ error: 'Error interno del servidor.' });
         }
     }
+    
 
     public async ModificarUsuarioDatos(req: Request, res: Response): Promise<void> {
         try {

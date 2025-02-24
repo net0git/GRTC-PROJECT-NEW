@@ -25,6 +25,7 @@ import { ModInfraestructuraComponent } from './infraestructure/pages/infraestruc
 import { ModInfraestructuraCertificadoComponent } from './infraestructure/pages/infraestructura/mod-infraestructura-certificado/mod-infraestructura-certificado.component';
 import { ModInfraestructuraResolucionComponent } from './infraestructure/pages/infraestructura/mod-infraestructura-resolucion/mod-infraestructura-resolucion.component';
 import { CrearInfraestructuraComponent } from './infraestructure/pages/infraestructura/crear-infraestructura/crear-infraestructura.component';
+import { authGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
   {
@@ -50,8 +51,6 @@ export const routes: Routes = [
   { path: 'principal/mod-empresa-servicio/:id_empresa_servicio', component: ModEmpresaServicioComponent },
   { path: 'principal/mod-empresa-servicio-resolucion/:id_empresa_servicio/:id_resolucion', component: ModEmpresaServicioResolucionComponent },
   { path: 'principal/mod-empresa-servicio-resolucion/:id_empresa_servicio', component: ModEmpresaServicioResolucionComponent },
-
-
 
   { path: 'principal/consultas-tuc', component: ConsultasTucComponent },
 

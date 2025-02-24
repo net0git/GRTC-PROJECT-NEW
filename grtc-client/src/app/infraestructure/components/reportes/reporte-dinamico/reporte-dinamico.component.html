@@ -1,47 +1,58 @@
 <div class="container-fluid m-4">
 
-    <div *ngFor="let popover of popovers; let i = index" class="popover-container">
+    <div *ngFor="let popover of popoversColumn; let i = index" class="popover-container">
         <!-- Checkbox controlado con ngModel -->
         <input type="checkbox" [id]="'popover' + (i + 1)" class="popover-toggle" [(ngModel)]="popover.isOpen">
-    
+
         <!-- Etiqueta que actúa como el botón para abrir/cerrar el popover -->
         <label [for]="'popover' + (i + 1)" class="popover-btn" [attr.aria-expanded]="popover.isOpen ? 'true' : 'false'">
-            {{popover.title}}: 
-            <span>{{ getSelectedCount(popover.options) === 0 ? 'Todos' : getSelectedCount(popover.options) + ' seleccionados' }}</span>
+            {{popover.title}}:
+            <span>{{ getSelectedCount(popover.options) === 0 ? 'Todos' : getSelectedCount(popover.options) + 'seleccionados' }}</span>
             <i class="bi bi-caret-down-fill mx-1"></i>
         </label>
-    
+
         <!-- Contenido del popover que se muestra cuando isOpen es true -->
         <div class="popover-content" *ngIf="popover.isOpen" (click)="preventClosePopover($event)">
             <div class="m-2">
                 <div class="mx-2">
                     <div *ngFor="let option of popover.options" class="form-check">
-                        <input class="form-check-input" type="checkbox" [(ngModel)]="option.selected">
+                        <input class="form-check-input" type="checkbox" [(ngModel)]="option.selected" >
                         <label class="form-check-label" [for]="option.id">{{option.label}}</label>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <button class="btn-primary btn btn-sm  px-4 " (click)="getSelectedOptions()">filtrar</button>
-    <!-- <div class="popover-container">
-        <input type="checkbox" id="popover11" class="popover-toggle">
-        <label for="popover11" class="popover-btn">Popover 1</label>
-        <div class="popover-content">Este es el contenido del popover 1.</div>
-      </div>
-      
-      <div class="popover-container">
-        <input type="checkbox" id="popover22" class="popover-toggle">
-        <label for="popover22" class="popover-btn">Popover 2</label>
-        <div class="popover-content">Este es el contenido del popover 2.</div>
-      </div> -->
+
+    <div *ngFor="let popover of popoversData; let i = index" class="popover-container">
+        <!-- Checkbox controlado con ngModel -->
+        <input type="checkbox" [id]="'popover' + (i + 3)" class="popover-toggle" [(ngModel)]="popover.isOpen">
+
+        <!-- Etiqueta que actúa como el botón para abrir/cerrar el popover -->
+        <label [for]="'popover' + (i + 3)" class="popover-btn" [attr.aria-expanded]="popover.isOpen ? 'true' : 'false'">
+            {{popover.title}}:
+            <span>{{ getSelectedCount(popover.options) === 0 ? 'Todos' : getSelectedCount(popover.options) + 'seleccionados' }}</span>
+            <i class="bi bi-caret-down-fill mx-1"></i>
+        </label>
+
+        <!-- Contenido del popover que se muestra cuando isOpen es true -->
+        <div class="popover-content" *ngIf="popover.isOpen" (click)="preventClosePopover($event)">
+            <div class="m-2">
+                <div class="mx-2">
+                    <div *ngFor="let option of popover.options" class="form-check">
+                        <input class="form-check-input" type="checkbox" [(ngModel)]="option.selected" (change)="filterData()" >
+                        <label class="form-check-label" [for]="option.id">{{option.label}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="d-flex justify-content-between align-items-center">
         <button class="btn btn-success " (click)="ExporToExcel()"><i class="bi bi-file-earmark-excel-fill"></i>
             Descargar</button>
-        <pagination-controls [id]="'allReport'" (pageChange)="paginaActual = $event" previousLabel="Anterior" class=" mx-4"
-            nextLabel="Siguiente">
+        <pagination-controls [id]="'allReport'" (pageChange)="paginaActual = $event" previousLabel="Anterior"
+            class=" mx-4" nextLabel="Siguiente">
         </pagination-controls>
     </div>
 
@@ -51,18 +62,17 @@
                 <tr>
                     <th scope="col">Nro</th>
                     <th scope="col">EXP</th>
-                    <th scope="col">RAZON SOCIAL</th>
-                    <th scope="col">RUC</th>
-                    <th scope="col">REPRESENTANTE</th>
-                    <th scope="col">DOCUMENTO</th>
-                    <th scope="col">DEPARTAMENTO</th>
-                    <th scope="col">DISTRITO</th>         
-                    <th scope="col">PROVINCIA</th>
-                    <th scope="col">TIPO DE TRANSPORTE</th>
-                    <th scope="col">FECH_INICIO</th>
-                    <th scope="col">FECH_FINAL</th>
-                    <th scope="col">ESTADO</th>
-                    <th scope="col">VEHICULOS</th>
+                    <th *ngIf="shouldShowColumnEmpresa('Razon Social')">RAZON SOCIAL</th>
+                    <th *ngIf="shouldShowColumnEmpresa('Ruc')">RUC</th>
+                    <th *ngIf="shouldShowColumnEmpresa('Representante')">REPRESENTANTE</th>
+                    <th *ngIf="shouldShowColumnEmpresa('Departamento')">DEPARTAMENTO</th>
+                    <th *ngIf="shouldShowColumnEmpresa('Provincia')">PROVINCIA</th>
+                    <th *ngIf="shouldShowColumnEmpresa('Distrito')">DISTRITO</th>
+                    <th *ngIf="shouldShowColumnEmpresa('tipo servicio')">TIPO SERVICIO</th>
+                    <th *ngIf="shouldShowColumnEmpresa('Fecha inicio')">FECHA INICIO</th>
+                    <th *ngIf="shouldShowColumnEmpresa('Fecha fin')">FECHA FINAL</th>
+                    <th *ngIf="shouldShowColumnEmpresa('estado')" >ESTADO</th>
+                    <th *ngIf="shouldShowColumnEmpresa('vehiculos')">VEHICULOS</th>
                 </tr>
             </thead>
 
@@ -71,64 +81,65 @@
                     class="table-barra " title="Click para ver detalle empresa">
                     <th scope="row">{{ i + (paginaActual - 1) * 10 + 1 }}</th>
                     <td>{{ empresa.expediente }}</td>
-                    <td class="text-start">{{ empresa.razon_social }}</td>
-                    <td>{{ empresa.ruc }}</td>
-                    <td>{{ empresa.nombres }} {{ empresa.ap_paterno }} {{ empresa.ap_materno }}</td>
-                 
-                    <td>{{ empresa.documento}}</td>
-                    <td>{{ empresa.departamento}}</td>
-                    <td>{{ empresa.distrito}}</td>
-                    <td>{{ empresa.provincia}}</td>
-                    <td>{{ empresa.tipo_servicio }}</td>
-                    <td>{{ empresa.fecha_inicial | date:'dd/MM/yyyy' }}</td>
-                    <td>{{ empresa.fecha_final | date:'dd/MM/yyyy' }}</td>
-                    <td>{{ empresa.estado }}</td>
+                    <td *ngIf="shouldShowColumnEmpresa('Razon Social')">{{ empresa.razon_social }}</td>
+                    <td *ngIf="shouldShowColumnEmpresa('Ruc')">{{ empresa.ruc }}</td>
+                    <td *ngIf="shouldShowColumnEmpresa('Representante')">{{ empresa.nombres }} {{ empresa.ap_paterno }}
+                        {{
+                        empresa.ap_materno }}</td>
+                    <td *ngIf="shouldShowColumnEmpresa('Departamento')">{{ empresa.departamento }}</td>
+                    <td *ngIf="shouldShowColumnEmpresa('Provincia')">{{ empresa.provincia }}</td>
+                    <td *ngIf="shouldShowColumnEmpresa('Distrito')">{{ empresa.distrito }}</td>
+                    <td *ngIf="shouldShowColumnEmpresa('tipo servicio')">{{ empresa.tipo_servicio }}</td>
+                    <td *ngIf="shouldShowColumnEmpresa('Fecha inicio')">{{ empresa.fecha_inicial | date :'dd/MM/yyyy' }}</td>
+                    <td *ngIf="shouldShowColumnEmpresa('Fecha fin')">{{ empresa.fecha_final | date }}</td>
+                    <td *ngIf="shouldShowColumnEmpresa('estado')">{{ empresa.estado }}</td>
 
-                    <td>
+                    <td *ngIf="shouldShowColumnEmpresa('vehiculos')">
                         <div class="table-responsive_sub" style="overflow-x: auto; white-space: nowrap;">
                             <table class="table table-bordered table-striped">
                                 <thead class="thead-light bg-secondary text-white table-success">
                                     <tr>
-                                        <th>Placa</th>
-                                        <th>Modelo</th>
-                                        <th>Marca</th>
-                                        <th>Categoria</th>
-                                        <th>Año</th>
-                                        <th>Peso Neto(Tn)</th>
-                                        <th>Carga(Tn)</th>
-                                        <th>Carroseria</th>
-                                        <th>Modalidad</th>
-                                        <th>Nro Part Reg</th>
-                                        <th>Condicion</th>
-                                        <th>nro chasis</th>
-                                        <th>nro asientos</th>
-                                        <th>serie</th>
-                                        <th>color</th>
-                                        <th>itienerario</th>
-                                        <th>Fecha Inicio</th>
-                                        <th>Fecha Final</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Placa')">Placa</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Marca')">Marca</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Modelo')">Modelo</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Categoria')">Categoria</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Año')">Año</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Peso Neto(Tn)')">Peso Neto(Tn)</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Carga Util(Tn)')">Carga Util(Tn)</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Carroceria')">Carroceria</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Modalidad')">Modalidad</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Nro Part Reg')">Nro Part Reg</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Estado')">Estado</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Nro Chasis')">Nro Chasis</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Nro Asientos')">Nro Asientos</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Serie')">Serie</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Color')">Color</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Itinerario')">Itinerario</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Fecha inicial')">Fecha inicio</th>
+                                        <th *ngIf="shouldShowVehicleColumn('Fecha final')">Fecha final</th>
                                     </tr>
                                 </thead>
-                                
+
                                 <tr *ngFor="let vehiculo of obtenerVehiculosPorEmpresa(empresa.id_empresa_servicio)">
-                                    <td>{{ vehiculo.placa }}</td>
-                                    <td>{{ vehiculo.modelo }}</td>
-                                    <td>{{ vehiculo.marca }}</td>
-                                    <td>{{ vehiculo.categoria }}</td>
-                                    <td>{{ vehiculo.anio_fabricacion }}</td>
-                                    <td>{{ vehiculo.peso }}</td>
-                                    <td>{{ vehiculo.carga }}</td>
-                                    <td>{{ vehiculo.carroceria }}</td>
-                                    <td>{{ vehiculo.modalidad }}</td>
-                                    <td>{{ vehiculo.nro_part_reg }}</td>
-                                    <td>{{ vehiculo.estado }}</td>
-                                    <td>{{ vehiculo.nro_chasis }}</td>
-                                    <td>{{ vehiculo.nro_asientos }}</td>
-                                    <td>{{ vehiculo.serie }}</td>
-                                    <td>{{ vehiculo.color }}</td>
-                                    <td>{{ vehiculo.itinerario }}</td>
-                                    <td>{{ vehiculo.fecha_inicial | date: 'dd/MM/yyyy' }}</td>
-                                    <td>{{ vehiculo.fecha_final | date: 'dd/MM/yyyy' }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Placa')">{{ vehiculo.placa }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Marca')">{{ vehiculo.marca }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Modelo')">{{ vehiculo.modelo }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Categoria')">{{ vehiculo.categoria }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Año')">{{ vehiculo.anio_fabricacion }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Peso Neto(Tn)')">{{ vehiculo.peso }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Carga Util(Tn)')">{{ vehiculo.carga }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Carroceria')">{{ vehiculo.carroceria }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Modalidad')">{{ vehiculo.modalidad }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Nro Part Reg')">{{ vehiculo.nro_part_reg }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Estado')">{{ vehiculo.estado }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Nro Chasis')">{{ vehiculo.nro_chasis }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Nro Asientos')">{{ vehiculo.nro_asientos }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Serie')">{{ vehiculo.serie }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Color')">{{ vehiculo.color }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Itinerario')">{{ vehiculo.itinerario }}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Fecha inicial')">{{ vehiculo.fecha_inicial | date : 'dd/mm/yyyy'}}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Fecha final')">{{ vehiculo.fecha_final | date }}
+                                    </td>
                                 </tr>
                             </table>
                         </div>
