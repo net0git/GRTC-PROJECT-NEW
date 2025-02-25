@@ -4,6 +4,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ConductorService } from '../../../services/remoto/conductor/conductor.service';
 import * as XLSX from 'xlsx';
 import { ListaTotalConductorResponse } from '../../../../domain/dto/ConductorResponse.dto';
+import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
 
 @Component({
   selector: 'app-reporte-conductores',
@@ -14,7 +15,7 @@ import { ListaTotalConductorResponse } from '../../../../domain/dto/ConductorRes
 })
 export class ConductoresComponent implements OnInit {
 
-  constructor(private conductorService: ConductorService) { }
+  constructor(private conductorService: ConductorService, private credencialesService: CredencialesService) { }
   listaConductores: ListaTotalConductorResponse[] = []; listaConductoresTemp: ListaTotalConductorResponse[] = [];
   paginaActual: number = 1;
 
@@ -24,6 +25,13 @@ export class ConductoresComponent implements OnInit {
   
   ngOnInit(): void {
     this.listarConductores()
+    this.verPerfil();
+  }
+  disableInvitado='display: block';
+  verPerfil(){
+    if(this.credencialesService.isInvitado()){
+      this.disableInvitado='display: none';
+    }
   }
 
   listarConductores() {

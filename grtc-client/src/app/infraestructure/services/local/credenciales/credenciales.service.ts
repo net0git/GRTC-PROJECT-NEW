@@ -6,6 +6,7 @@ import { UsuarioModel } from '../../../../domain/models/usuario.model';
 })
 export class CredencialesService {
 
+
   private usuario: UsuarioModel = {
     id_usuario: 1,
     id_persona: 1,
@@ -30,6 +31,20 @@ export class CredencialesService {
       nombre_usuario: '',
       rol: '',
     };
+  }
+
+  // Método para verificar si el usuario es EDITOR
+  isAdministrador(): boolean {
+    return this.usuario.rol === 'ADMINISTRADOR';
+  }
+
+  isEditor(): boolean {
+    return this.usuario.rol === 'EDITOR';
+  }
+
+  // Método para verificar si el usuario es INVITADO
+  isInvitado(): boolean {
+    return this.usuario.rol === 'INVITADO';
   }
 
 }

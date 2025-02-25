@@ -3,6 +3,7 @@ import { ListaInfraestructuraResponse } from '../../../../domain/dto/Infraestruc
 import { InfraestructuraService } from '../../../../infraestructure/services/remoto/infraestructura/infraestructura.service';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -20,9 +21,16 @@ export class InfraestructuraComponent implements OnInit {
   cantidad_er_tipo2:number=0;
   cantidad_er_tipo3:number=0;
 
-  constructor(private infraestructuraService:InfraestructuraService){}
+  constructor(private infraestructuraService:InfraestructuraService, private credencialesService: CredencialesService){}
   ngOnInit(): void {
     this.listarInfraestructura()
+    this.verPerfil();
+  }
+  disableInvitado='display: block';
+  verPerfil(){
+    if(this.credencialesService.isInvitado()){
+      this.disableInvitado='display: none';
+    }
   }
 
   cambiarPagina(event: number) {

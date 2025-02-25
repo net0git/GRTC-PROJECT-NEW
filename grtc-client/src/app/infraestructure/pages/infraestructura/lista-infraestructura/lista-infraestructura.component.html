@@ -23,7 +23,7 @@
                 <div class="card rounded shadow border-2 ">
                     <div class="card-header py-3 d-flex justify-content-between align-items-center ">
                         <button type="button" class="btn btn-success mx-4 "
-                            (click)="crearInfraestructura()">+add</button>
+                            (click)="crearInfraestructura()" [style]="disableInvitado">+add</button>
 
                         <input type="text" class="form-control " name="buscar"
                             placeholder="BUSCAR POR EXP/INFRAESTRUCTURA/DIRECCION" (input)="buscarEnObjeto($event)">

@@ -4,6 +4,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { VehiculoService } from '../../../../infraestructure/services/remoto/vehiculo/vehiculo.service';
 import * as XLSX from 'xlsx';
 import { ListaVehiculosDetalleResponse } from '../../../../domain/dto/VehiculoResponse.dto';
+import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
 
 @Component({
   selector: 'app-reporte-vehiculos',
@@ -20,10 +21,17 @@ export class VehiculosComponent implements OnInit {
   cantidad_v_estudiantes: number = 0;
   cantidad_v_trabajadores: number = 0;
   paginaActual: number = 1;
-  constructor(private vehiculoService: VehiculoService) { }
+  constructor(private vehiculoService: VehiculoService, private credencialesService: CredencialesService) { }
 
   ngOnInit(): void {
     this.listarVehiculos()
+    this.verPerfil();
+  }
+  disableInvitado='display: block';
+  verPerfil(){
+    if(this.credencialesService.isInvitado()){
+      this.disableInvitado='display: none';
+    }
   }
 
   cambiarPagina(event: number) {

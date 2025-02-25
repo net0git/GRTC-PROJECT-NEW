@@ -1,10 +1,11 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ReporteService } from '../../../services/remoto/reporte/reporte.service';
 import { ListaEmpresaServicioReporteResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
 import { ListaVehiculosDetalleResponse, ListaVehiculosDetallReporteResponse } from '../../../../domain/dto/VehiculoResponse.dto';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -14,7 +15,9 @@ import * as XLSX from 'xlsx';
   templateUrl: './reporte-dinamico.component.html',
   styleUrl: './reporte-dinamico.component.css'
 })
-export class ReporteDinamicoComponent {
+export class ReporteDinamicoComponent implements OnInit {
+
+  
 
   getSelectedCount(options: any[]): number {
     // Filtra las opciones seleccionadas y devuelve su cantidad
@@ -67,7 +70,7 @@ export class ReporteDinamicoComponent {
   ];
 
   popoversData = [
-    
+
     {
       title: 'Tipo de Servicio',
       isOpen: false,
@@ -87,20 +90,8 @@ export class ReporteDinamicoComponent {
         { label: 'Inactivo', id: 'flexCheckChecked', selected: false }
       ]
     }
-   
-  ];
-  // getSelectedOptions(): void {
-  //   const selectedOptions = this.popovers
-  //     .map(popover => ({
-  //       category: popover.title,
-  //       selectedItems: popover.options
-  //         .filter(option => option.selected)
-  //         .map(option => option.label)
-  //     }))
-  //     .filter(popover => popover.selectedItems.length > 0); // Filtra los vacíos
 
-  //   console.log(selectedOptions);
-  // }
+  ];
 
   // Método que se activa al hacer clic en cualquier parte del componente
   togglePopover(event: MouseEvent, index: number): void {
@@ -142,22 +133,27 @@ export class ReporteDinamicoComponent {
 
 
 
-  listaEmpresasServicio: ListaEmpresaServicioReporteResponse[] = [];   listaEmpresasServicioTemp: ListaEmpresaServicioReporteResponse[] = []; 
-  listaVehiculos: ListaVehiculosDetallReporteResponse[] = []; 
+  listaEmpresasServicio: ListaEmpresaServicioReporteResponse[] = []; listaEmpresasServicioTemp: ListaEmpresaServicioReporteResponse[] = [];
+  listaVehiculos: ListaVehiculosDetallReporteResponse[] = [];
 
   paginaActual: number = 1;
 
-  constructor(private reporteService: ReporteService) { }
+  constructor(private reporteService: ReporteService, private credencialesService: CredencialesService) { }
 
 
 
   ngOnInit(): void {
     this.listarEmpresasSevicios()
     this.listarVehiculos()
-
+    this.verPerfil();
   }
 
-
+  disableInvitado='display: block';
+  verPerfil(){
+    if(this.credencialesService.isInvitado()){
+      this.disableInvitado='display: none';
+    }
+  }
 
   cambiarPagina(event: number) {
     this.paginaActual = event;
@@ -203,70 +199,77 @@ export class ReporteDinamicoComponent {
       }
     })
   }
-  
 
   ExporToExcel(): void {
     let wb: XLSX.WorkBook = XLSX.utils.book_new();
     let dataToExport: any[] = [];
-  
-    // Obtener opciones seleccionadas
+
+    // Obtener si "vehiculos" en "Empresa Servicio" está seleccionado
+    const exportarVehiculos = this.popoversColumn
+      .find(popover => popover.title === "Empresa Servicio")
+      ?.options.find(option => option.label === "vehiculos")?.selected || false;
+
+    // Obtener opciones seleccionadas (sin eliminar "vehiculos" antes)
     const selectedOptions = this.popoversColumn.map(popover => ({
       category: popover.title,
-      selectedItems: popover.options.filter(option => option.selected).map(option => option.label)
-    }));
-  
-    // Verificar si "vehiculos" en "Empresa Servicio" está seleccionado
-    const exportarVehiculos = selectedOptions.find(opt => opt.category === "Empresa Servicio")
-      ?.selectedItems.includes("vehiculos");
-  
+      selectedItems: popover.options
+        .filter(option => option.selected) // No excluir "vehiculos" aquí
+        .map(option => option.label)
+    })).filter(popover => popover.selectedItems.length > 0); // Filtra categorías vacías
+
     // Obtener las columnas seleccionadas dinámicamente
     let selectedColumns = selectedOptions
       .flatMap(opt => opt.selectedItems)
       .filter(col => exportarVehiculos || !this.isVehiculoColumn(col)); // Excluir columnas de vehículos si no se exportan
-  
-    // CABECERA con solo columnas seleccionadas
-    dataToExport.push(["Nro", ...selectedColumns]);
-  
+
+    // CABECERA con solo columnas seleccionadas (sin incluir "vehiculos")
+    dataToExport.push(["Nro", ...selectedColumns.filter(col => col !== "vehiculos")]);
+
+
     // RECORRER EMPRESAS
     this.listaEmpresasServicio.forEach((empresa, index) => {
       let rowEmpresa: any[] = [index + 1]; // Primera columna: índice
       let vehiculos = exportarVehiculos ? this.obtenerVehiculosPorEmpresa(empresa.id_empresa_servicio) : [];
-  
+
       // LLENAR DATOS DE EMPRESA SEGÚN OPCIONES SELECCIONADAS
       selectedColumns.forEach(col => {
         rowEmpresa.push(this.getEmpresaData(empresa, col));
       });
-  
+
       // AÑADIR FILA DE EMPRESA
       dataToExport.push(rowEmpresa);
-  
-      // AGREGAR VEHÍCULOS SOLO SI LA OPCIÓN "vehiculos" ESTÁ SELECCIONADA
+
+      // AGREGAR VEHÍCULOS SOLO SI "vehiculos" ESTÁ SELECCIONADO
       if (exportarVehiculos && vehiculos.length > 0) {
         vehiculos.forEach(vehiculo => {
-          let rowVehiculo: any[] = [""];
+           let rowVehiculo: any[] = []; // Primera columna vacía para alinear
           selectedColumns.forEach(col => {
             rowVehiculo.push(this.getVehiculoData(vehiculo, col));
           });
           dataToExport.push(rowVehiculo);
         });
       }
+
+      // 🔥 Solo agregar fila vacía si "vehiculos" está seleccionado
+      if (exportarVehiculos) {
+        dataToExport.push([]); // Fila separadora
+      }
     });
-  
+
     // CREAR HOJA DE EXCEL
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(dataToExport);
-  
+
     // AUTOAJUSTE DEL ANCHO DE COLUMNAS
     ws["!cols"] = selectedColumns.map(() => ({ wch: 15 })); // Ajuste dinámico
-  
+
     // AÑADIR HOJA AL LIBRO
     XLSX.utils.book_append_sheet(wb, ws, "Reporte Empresas");
-  
+
     // DESCARGAR EXCEL
     XLSX.writeFile(wb, "reporte_empresas_servicio.xlsx");
   }
-  
-  // FUNCIONES AUXILIARES
-  
+
+
   // Determinar si una columna pertenece a "Vehículo"
   isVehiculoColumn(column: string): boolean {
     const columnasVehiculos = [
@@ -276,7 +279,7 @@ export class ReporteDinamicoComponent {
     ];
     return columnasVehiculos.includes(column);
   }
-  
+
   // Obtener datos de empresa según la columna
   getEmpresaData(empresa: any, col: string): any {
     switch (col) {
@@ -290,11 +293,11 @@ export class ReporteDinamicoComponent {
       case 'Fecha fin': return empresa.fecha_final;
       case 'estado': return empresa.estado;
       case 'tipo servicio': return empresa.tipo_servicio;
-      case 'vehiculos': return "Con vehículos";
+      // case 'vehiculos': return "Con vehículos";
       default: return "";
     }
   }
-  
+
   // Obtener datos de vehículo según la columna
   getVehiculoData(vehiculo: any, col: string): any {
     switch (col) {
@@ -319,29 +322,29 @@ export class ReporteDinamicoComponent {
       default: return "";
     }
   }
-  
-  
-  
-  
-  
+
+
+
+
+
 
   // ExporToExcel(): void {
   //   let wb: XLSX.WorkBook = XLSX.utils.book_new();
   //   let dataToExport: any[] = [];
-  
+
   //   // Obtener columnas seleccionadas
   //   const selectedColumns = this.popoversColumn.flatMap(popover =>
   //     popover.options.filter(option => option.selected).map(option => option.label)
   //   );
-  
+
   //   // CABECERA DINÁMICA SEGÚN OPCIONES SELECCIONADAS
   //   dataToExport.push(["Nro", ...selectedColumns]);
-  
+
   //   // RECORRER EMPRESAS Y VEHÍCULOS
   //   this.listaEmpresasServicio.forEach((empresa, index) => {
   //     let rowEmpresa: any[] = [index + 1]; // Primera columna: índice
   //     let vehiculos = this.obtenerVehiculosPorEmpresa(empresa.id_empresa_servicio);
-  
+
   //     // LLENAR DATOS SEGÚN OPCIONES SELECCIONADAS
   //     selectedColumns.forEach(col => {
   //       switch (col) {
@@ -359,10 +362,10 @@ export class ReporteDinamicoComponent {
   //         default: rowEmpresa.push(""); break; // Espacios vacíos si no hay coincidencia
   //       }
   //     });
-  
+
   //     // AÑADIR FILA DE EMPRESA
   //     dataToExport.push(rowEmpresa);
-  
+
   //     // AGREGAR VEHÍCULOS DEBAJO DE LA EMPRESA
   //     if (vehiculos.length > 0) {
   //       vehiculos.forEach(vehiculo => {
@@ -393,24 +396,24 @@ export class ReporteDinamicoComponent {
   //         dataToExport.push(rowVehiculo);
   //       });
   //     }
-  
+
   //     // FILA VACÍA PARA SEPARAR EMPRESAS
   //     dataToExport.push([]);
   //   });
-  
+
   //   // CREAR HOJA DE EXCEL
   //   const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(dataToExport);
-  
+
   //   // AUTOAJUSTE DEL ANCHO DE COLUMNAS
   //   ws["!cols"] = selectedColumns.map(() => ({ wch: 15 })); // Ajuste dinámico
-  
+
   //   // AÑADIR HOJA AL LIBRO
   //   XLSX.utils.book_append_sheet(wb, ws, "Reporte Empresas");
-  
+
   //   // DESCARGAR EXCEL
   //   XLSX.writeFile(wb, "reporte_empresas_servicio.xlsx");
   // }
-  
+
 
 
   // ExporToExcel(): void {
@@ -512,14 +515,14 @@ export class ReporteDinamicoComponent {
                   return true;
               }
             });
-          
+
           default:
             return true;
         }
       });
     });
 
-    this.listaEmpresasServicio = filteredEmpresas; 
+    this.listaEmpresasServicio = filteredEmpresas;
   }
 
 
@@ -547,7 +550,7 @@ export class ReporteDinamicoComponent {
   // -----------------------------------------------------------------------------------------------------------
   // Función para normalizar el texto de búsqueda
 
- 
+
 
   getSelectedColumnsVehiculos() {
     return this.popoversColumn
@@ -561,7 +564,7 @@ export class ReporteDinamicoComponent {
   }
 
 
-  
+
   shouldShowVehicleColumn(columnName: string): boolean {
     const selectedColumns = this.getSelectedColumnsVehiculos();
     return selectedColumns.some(popover => popover.selectedItems.includes(columnName));

@@ -6,6 +6,7 @@ import { ListaEmpresaServicioResponse } from '../../../../domain/dto/EmpresaServ
 import { EmpresaServicioService } from '../../../services/remoto/empresas-servicio/empresa-servicio.service';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
 
 
 
@@ -18,6 +19,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 })
 export class ListaEmpresaServicioComponent implements OnInit {
 
+  disableInvitado='display: block';
+
   listaEmpresasServicio: ListaEmpresaServicioResponse[] = [];
   listaEmpresasServicioTemp: ListaEmpresaServicioResponse[] = [];
   p: number = 1;
@@ -25,10 +28,19 @@ export class ListaEmpresaServicioComponent implements OnInit {
   cantidad_t_turismo:number=0;
   cantidad_t_estudiantes:number=0;
   cantidad_t_trabajadores:number=0;
-  constructor(private router: Router, private empresaServicioService: EmpresaServicioService) { }
+  constructor(private router: Router, private empresaServicioService: EmpresaServicioService, private credencialesService: CredencialesService) { }
 
   ngOnInit(): void {
     this.listarEmpresaServicio()
+    this.verPerfil();
+  }
+
+  //disableInvitado='display: block';
+
+  verPerfil(){
+    if(this.credencialesService.isInvitado()){
+      this.disableInvitado='display: none';
+    }
   }
 
   listarEmpresaServicio() {

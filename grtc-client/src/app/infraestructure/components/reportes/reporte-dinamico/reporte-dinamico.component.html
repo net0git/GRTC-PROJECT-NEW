@@ -7,7 +7,8 @@
         <!-- Etiqueta que actúa como el botón para abrir/cerrar el popover -->
         <label [for]="'popover' + (i + 1)" class="popover-btn" [attr.aria-expanded]="popover.isOpen ? 'true' : 'false'">
             {{popover.title}}:
-            <span>{{ getSelectedCount(popover.options) === 0 ? 'Todos' : getSelectedCount(popover.options) + 'seleccionados' }}</span>
+            <span>{{ getSelectedCount(popover.options) === 0 ? 'Todos' : getSelectedCount(popover.options) +
+                'seleccionados' }}</span>
             <i class="bi bi-caret-down-fill mx-1"></i>
         </label>
 
@@ -16,7 +17,7 @@
             <div class="m-2">
                 <div class="mx-2">
                     <div *ngFor="let option of popover.options" class="form-check">
-                        <input class="form-check-input" type="checkbox" [(ngModel)]="option.selected" >
+                        <input class="form-check-input" type="checkbox" [(ngModel)]="option.selected">
                         <label class="form-check-label" [for]="option.id">{{option.label}}</label>
                     </div>
                 </div>
@@ -31,7 +32,8 @@
         <!-- Etiqueta que actúa como el botón para abrir/cerrar el popover -->
         <label [for]="'popover' + (i + 3)" class="popover-btn" [attr.aria-expanded]="popover.isOpen ? 'true' : 'false'">
             {{popover.title}}:
-            <span>{{ getSelectedCount(popover.options) === 0 ? 'Todos' : getSelectedCount(popover.options) + 'seleccionados' }}</span>
+            <span>{{ getSelectedCount(popover.options) === 0 ? 'Todos' : getSelectedCount(popover.options) +
+                'seleccionados' }}</span>
             <i class="bi bi-caret-down-fill mx-1"></i>
         </label>
 
@@ -40,7 +42,8 @@
             <div class="m-2">
                 <div class="mx-2">
                     <div *ngFor="let option of popover.options" class="form-check">
-                        <input class="form-check-input" type="checkbox" [(ngModel)]="option.selected" (change)="filterData()" >
+                        <input class="form-check-input" type="checkbox" [(ngModel)]="option.selected"
+                            (change)="filterData()">
                         <label class="form-check-label" [for]="option.id">{{option.label}}</label>
                     </div>
                 </div>
@@ -49,8 +52,11 @@
     </div>
 
     <div class="d-flex justify-content-between align-items-center">
-        <button class="btn btn-success " (click)="ExporToExcel()"><i class="bi bi-file-earmark-excel-fill"></i>
-            Descargar</button>
+        <div>
+            <button class="btn btn-success " (click)="ExporToExcel()" [style]="disableInvitado"><i
+                    class="bi bi-file-earmark-excel-fill"></i>
+                Descargar</button>
+        </div>
         <pagination-controls [id]="'allReport'" (pageChange)="paginaActual = $event" previousLabel="Anterior"
             class=" mx-4" nextLabel="Siguiente">
         </pagination-controls>
@@ -71,7 +77,7 @@
                     <th *ngIf="shouldShowColumnEmpresa('tipo servicio')">TIPO SERVICIO</th>
                     <th *ngIf="shouldShowColumnEmpresa('Fecha inicio')">FECHA INICIO</th>
                     <th *ngIf="shouldShowColumnEmpresa('Fecha fin')">FECHA FINAL</th>
-                    <th *ngIf="shouldShowColumnEmpresa('estado')" >ESTADO</th>
+                    <th *ngIf="shouldShowColumnEmpresa('estado')">ESTADO</th>
                     <th *ngIf="shouldShowColumnEmpresa('vehiculos')">VEHICULOS</th>
                 </tr>
             </thead>
@@ -90,7 +96,8 @@
                     <td *ngIf="shouldShowColumnEmpresa('Provincia')">{{ empresa.provincia }}</td>
                     <td *ngIf="shouldShowColumnEmpresa('Distrito')">{{ empresa.distrito }}</td>
                     <td *ngIf="shouldShowColumnEmpresa('tipo servicio')">{{ empresa.tipo_servicio }}</td>
-                    <td *ngIf="shouldShowColumnEmpresa('Fecha inicio')">{{ empresa.fecha_inicial | date :'dd/MM/yyyy' }}</td>
+                    <td *ngIf="shouldShowColumnEmpresa('Fecha inicio')">{{ empresa.fecha_inicial | date :'dd/MM/yyyy' }}
+                    </td>
                     <td *ngIf="shouldShowColumnEmpresa('Fecha fin')">{{ empresa.fecha_final | date }}</td>
                     <td *ngIf="shouldShowColumnEmpresa('estado')">{{ empresa.estado }}</td>
 
@@ -137,7 +144,8 @@
                                     <td *ngIf="shouldShowVehicleColumn('Serie')">{{ vehiculo.serie }}</td>
                                     <td *ngIf="shouldShowVehicleColumn('Color')">{{ vehiculo.color }}</td>
                                     <td *ngIf="shouldShowVehicleColumn('Itinerario')">{{ vehiculo.itinerario }}</td>
-                                    <td *ngIf="shouldShowVehicleColumn('Fecha inicial')">{{ vehiculo.fecha_inicial | date : 'dd/mm/yyyy'}}</td>
+                                    <td *ngIf="shouldShowVehicleColumn('Fecha inicial')">{{ vehiculo.fecha_inicial |
+                                        date : 'dd/mm/yyyy'}}</td>
                                     <td *ngIf="shouldShowVehicleColumn('Fecha final')">{{ vehiculo.fecha_final | date }}
                                     </td>
                                 </tr>

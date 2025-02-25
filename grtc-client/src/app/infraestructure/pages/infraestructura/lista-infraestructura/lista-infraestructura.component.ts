@@ -6,6 +6,7 @@ import { InfraestructuraService } from '../../../services/remoto/infraestructura
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Router } from '@angular/router';
+import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
 
 @Component({
   selector: 'app-lista-infraestructura',
@@ -23,10 +24,17 @@ export class ListaInfraestructuraComponent implements OnInit {
   cantidad_er_tipo2:number=0;
   cantidad_er_tipo3:number=0;
 
-  constructor(private infraestructuraService:InfraestructuraService, private router:Router) { }
+  constructor(private infraestructuraService:InfraestructuraService, private router:Router, private credencialesService: CredencialesService) { }
 
   ngOnInit(): void {
     this.listarInfraestructura()
+    this.verPerfil();
+  }
+  disableInvitado='display: block';
+  verPerfil(){
+    if(this.credencialesService.isInvitado()){
+      this.disableInvitado='display: none';
+    }
   }
 
   listarInfraestructura(){

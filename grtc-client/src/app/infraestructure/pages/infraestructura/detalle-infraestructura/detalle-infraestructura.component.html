@@ -14,7 +14,7 @@
                         </div>
                     </div>
                     <div class="">
-                        <i class="bi bi-gear icon-custom_gear" title="Modificar datos de la Empresa" (click)="modificarInfraestructura()"></i>
+                        <i class="bi bi-gear icon-custom_gear" title="Modificar datos de la Empresa" (click)="modificarInfraestructura()" [style]="disableInvitado"></i>
                     </div>
                 </div>
                 <hr>
@@ -58,7 +58,7 @@
                                     <div class="container mt-4">
                                         <div class="d-flex justify-content-between">
                                             <p class="subtitulo_menu mt-4">Resoluciones</p>
-                                            <button class="my-button_ingreso_resolucion" (click)="agregarResolucion()"> <i class="bi bi-arrow-down-square" ></i> agregar Resolucion</button>
+                                            <button class="my-button_ingreso_resolucion" (click)="agregarResolucion()"  [style]="disableInvitado"> <i class="bi bi-arrow-down-square" ></i> agregar Resolucion</button>
                                         </div>
                                         <table class="table table-bordered table-striped">
                                             <thead>
@@ -69,7 +69,7 @@
                                                     <th>Tomo</th>
                                                     <th>Resolución</th>
                                                     <th>Descripcion</th>
-                                                    <th >Mod</th>
+                                                    <th [style]="disableInvitado">Mod</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -80,7 +80,7 @@
                                                     <td>{{resolucion.tomo_resolucion}}</td>
                                                     <td class="text-primary text_documento" (click)=" verDocumento(resolucion.documento)" >{{resolucion.nombre_resolucion}}</td>
                                                     <td>{{resolucion.descripcion}}</td>
-                                                    <td> <i class="bi bi-pencil-square hand_cursor" (click)="editarResolucion(resolucion.id_resolucion)"></i></td>
+                                                    <td [style]="disableInvitado"> <i class="bi bi-pencil-square hand_cursor" (click)="editarResolucion(resolucion.id_resolucion)" ></i></td>
                                                 </tr>
 
                                             </tbody>
@@ -89,7 +89,7 @@
                                     <div class="container">
                                         <div class="d-flex justify-content-between">
                                             <p class="subtitulo_menu mt-4">Certificados</p>
-                                            <button class="my-button_ingreso_resolucion" (click)="agregarCertificado()"> <i
+                                            <button class="my-button_ingreso_resolucion" (click)="agregarCertificado()" [style]="disableInvitado"> <i
                                                     class="bi bi-arrow-down-square" ></i> agregar Certificado</button>
                                         </div>
                                         <table class="table table-bordered table-striped">
@@ -100,7 +100,7 @@
                                                     <th>Año</th>
                                                     <th>Tomo</th>
                                                     <th>Certificado</th>
-                                                    <th >Mod</th>
+                                                    <th [style]="disableInvitado" >Mod</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -110,7 +110,7 @@
                                                     <td>{{certificado.anio_certificado}}</td>
                                                     <td>{{certificado.tomo_certificado}}</td>
                                                     <td class="text-primary text_documento" (click)="verDocumentoCertificado(certificado.documento)">{{certificado.nombre_certificado}}</td>
-                                                    <td><i class="bi bi-pencil-square hand_cursor" (click)="editarCertificado(certificado.id_certificado)"></i></td>
+                                                    <td [style]="disableInvitado"><i class="bi bi-pencil-square hand_cursor" (click)="editarCertificado(certificado.id_certificado)"></i></td>
                                                    
                                                 </tr>
                                             </tbody>

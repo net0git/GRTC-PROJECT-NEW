@@ -1,8 +1,9 @@
 <div class="card rounded shadow border-2 mb-4 mt-2 mx-3">
     <div class="card-header d-flex justify-content-between align-items-center ">
-        
-            <input type="text" class="form-control mx-2 " id="yearInput" name="buscar" placeholder="BUSCAR POR AÑO EJEMPLO: YYYY YYYY,YYYY,YYYY YYYY-YYYY" appSoloNumerosGuionComa 
-            [(ngModel)]="anioFormato"   >
+
+        <input type="text" class="form-control mx-2 " id="yearInput" name="buscar"
+            placeholder="BUSCAR POR AÑO EJEMPLO: YYYY YYYY,YYYY,YYYY YYYY-YYYY" appSoloNumerosGuionComa
+            [(ngModel)]="anioFormato">
 
 
 
@@ -14,55 +15,57 @@
         <div class="table-responsive px-4">
 
             <div class="form-group ">
-             
-                   
 
-                    <table class="table text-center  table-hover " id="excel-table">
-                        <thead class="thead-ligth bg-secondary text-white table-success">
-                            <tr>
-                                <th scope="col">Nro</th>
-                                <th scope="col">EXP</th>
-                                <th scope="col">EMPRESA</th>    
-                                <th scope="col">RUC</th>
-                                <th scope="col">TIPO</th>
-                                <th scope="col">FECH_INICIO</th>
-                                <th scope="col">FECH_FINAL</th>
-                                <th scope="col">ESTADO</th>
-                                <th scope="col">INDICADOR</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr
-                                *ngFor="let empresa of listaEmpresasServicio | paginate: { itemsPerPage: 10, currentPage: paginaActual, id: 'empresas-servicio-pagination' }; let i = index">
 
-                                <th scope="row">{{ i + (paginaActual - 1) * 10 + 1 }}</th>
-                                <td>{{empresa.expediente}}</td>
-                                <td class="text-start text-limit ">{{empresa.empresa}}</td>
-                                <td>{{empresa.ruc}}</td>
-                                <td>{{empresa.tipo_servicio}}</td>
-                                <td>{{empresa.fecha_inicial| date:'dd/MM/yyyy'}}</td>
-                                <td>{{empresa.fecha_final| date:'dd/MM/yyyy'}}</td>
-                                <td>{{empresa.estado}}</td>
-                                <td>
 
-                                    <div class="progress progress-sm  mt-2">
-                                        <div class="progress-bar" [ngClass]="{ 
+                <table class="table text-center  table-hover " id="excel-table">
+                    <thead class="thead-ligth bg-secondary text-white table-success">
+                        <tr>
+                            <th scope="col">Nro</th>
+                            <th scope="col">EXP</th>
+                            <th scope="col">EMPRESA</th>
+                            <th scope="col">RUC</th>
+                            <th scope="col">TIPO</th>
+                            <th scope="col">FECH_INICIO</th>
+                            <th scope="col">FECH_FINAL</th>
+                            <th scope="col">ESTADO</th>
+                            <th scope="col">INDICADOR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let empresa of listaEmpresasServicio | paginate: { itemsPerPage: 10, currentPage: paginaActual, id: 'empresas-servicio-pagination' }; let i = index">
+
+                            <th scope="row">{{ i + (paginaActual - 1) * 10 + 1 }}</th>
+                            <td>{{empresa.expediente}}</td>
+                            <td class="text-start text-limit ">{{empresa.empresa}}</td>
+                            <td>{{empresa.ruc}}</td>
+                            <td>{{empresa.tipo_servicio}}</td>
+                            <td>{{empresa.fecha_inicial| date:'dd/MM/yyyy'}}</td>
+                            <td>{{empresa.fecha_final| date:'dd/MM/yyyy'}}</td>
+                            <td>{{empresa.estado}}</td>
+                            <td>
+
+                                <div class="progress progress-sm  mt-2">
+                                    <div class="progress-bar" [ngClass]="{ 
                                   'bg-info bg-opacity-50': empresa.estado === 'Activo',
                                   'bg-secondary  bg-opacity-50': empresa.estado === 'Inactivo',
                                   'bg-warning bg-opacity-75': empresa.estado === 'Alerta'
                                 }" role="progressbar" [style.width]="empresa.porcentaje + '%'" aria-valuemin="0"
-                                            aria-valuemax="100">
-                                        </div>
+                                        aria-valuemax="100">
                                     </div>
-                                </td>
+                                </div>
+                            </td>
 
-                            </tr>
-                        </tbody>
-                    </table>
-               
+                        </tr>
+                    </tbody>
+                </table>
+
                 <div class="d-flex justify-content-between">
-                    <button class="btn btn-success mb-2" (click)="ExporToExcel()"><i
-                            class="bi bi-file-earmark-excel-fill" ></i> Descargar</button>
+                    <div>
+                        <button class="btn btn-success mb-2" (click)="ExporToExcel()" [style]="disableInvitado"><i
+                                class="bi bi-file-earmark-excel-fill"></i> Descargar</button>
+                    </div>
                     <pagination-controls [id]="'empresas-servicio-pagination'" (pageChange)="paginaActual = $event"
                         previousLabel="Anterior" nextLabel="Siguiente">
                     </pagination-controls>

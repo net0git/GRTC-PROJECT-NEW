@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ReporteService } from '../../../../infraestructure/services/remoto/reporte/reporte.service';
+import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -18,10 +19,16 @@ export class VehiculosRutaComponent implements OnInit {
 
   paginaActual: number = 1;
 
-  constructor(private reporteService: ReporteService) { }
+  constructor(private reporteService: ReporteService, private credencialesService: CredencialesService) { }
   ngOnInit(): void {
     this.CantidadVehiculosRuta()
-
+    this.verPerfil();
+  }
+  disableInvitado='display: block';
+  verPerfil(){
+    if(this.credencialesService.isInvitado()){
+      this.disableInvitado='display: none';
+    }
   }
 
   cambiarPagina(event: number) {

@@ -6,7 +6,7 @@ import { ListaUsuariosResponse } from '../../../../domain/dto/UsuariosResponse.d
 import { NavegadorComponent } from '../../../shared/components/navegador/navegador.component';
 import { SubnavegadorComponent } from '../../../shared/components/subnavegador/subnavegador.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-
+import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
 
 
 
@@ -19,7 +19,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 })
 export class ListaUsuarioComponent implements OnInit {
 
-  constructor(private usuarioService: UsuarioService, private router: Router) { }
+  constructor(private usuarioService: UsuarioService, private router: Router, private credencialesService: CredencialesService) { }
 
   listaUsuarios:ListaUsuariosResponse[]=[];
   listaUsuariosTemp:ListaUsuariosResponse[]=[];
@@ -28,6 +28,14 @@ export class ListaUsuarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.ObtenerListaUsuarios()
+    this.verPerfil();
+  }
+
+  disableInvitado='display: block';
+  verPerfil(){
+    if(this.credencialesService.isInvitado()){
+      this.disableInvitado='display: none';
+    }
   }
 
 

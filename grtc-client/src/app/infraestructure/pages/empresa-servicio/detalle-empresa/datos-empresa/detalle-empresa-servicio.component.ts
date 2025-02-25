@@ -127,10 +127,22 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     private activatedRoute: ActivatedRoute, 
     private resolucionService: ResolucionService) { }
 
+  disableInvitado='display: block';
+
+
   ngOnInit(): void {
     this.detalleEmpresa();
     this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`/doc/error_carga.pdf`);
+    this.verPerfil();
   }
+
+  //disableInvitado='display: block';
+  verPerfil(){
+    if(this.credencialesService.isInvitado()){
+      this.disableInvitado='display: none';
+    }
+  }
+
 
   //datos del collapse para la tabla de vehiculos----------------------------------------
   isExpanded: boolean[] = [];

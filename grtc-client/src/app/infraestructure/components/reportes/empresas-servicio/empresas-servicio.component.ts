@@ -3,6 +3,7 @@ import { EmpresaServicioService } from '../../../services/remoto/empresas-servic
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ListaEmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
+import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -23,13 +24,19 @@ export class EmpresasServicioComponent implements OnInit {
 
   cantidadEmpresas: any = []; //cantidad de empresas por servicio
 
-  disableInvitado = ''//variable temporal para cambiar el estado del html
 
   paginaActual: number = 1;
-  constructor(private empresaServicioService: EmpresaServicioService) { }
+  constructor(private empresaServicioService: EmpresaServicioService, private credencialesService: CredencialesService) { }
   ngOnInit(): void {
     this.listarEmpresasSevicios()
     console.log('entro al ngOnInit')
+    this.verPerfil();
+  }
+  disableInvitado='display: block';
+  verPerfil(){
+    if(this.credencialesService.isInvitado()){
+      this.disableInvitado='display: none';
+    }
   }
 
   selectedButton: number | null = null; // Índice del botón seleccionado

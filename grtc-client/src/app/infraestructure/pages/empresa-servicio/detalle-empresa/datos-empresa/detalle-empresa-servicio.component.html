@@ -12,8 +12,8 @@
                         <p class="subtitulo_menu">{{dataEmpresaDetalle.tipo_servicio}} </p>
                     </div>
                 </div>
-                <div class="">
-                    <i class="bi bi-gear icon-custom_gear" title="Modificar datos de la Empresa" (click)="modificarEmpresa()"></i>
+                <div >
+                    <i class="bi bi-gear icon-custom_gear" title="Modificar datos de la Empresa" (click)="modificarEmpresa()" [style]="disableInvitado"></i>
                 </div>
             </div>
             <hr>
@@ -97,7 +97,7 @@
                                 <div class="container mt-4">
                                     <div class="d-flex justify-content-between">
                                         <p class="subtitulo_menu mt-4">Resoluciones</p>
-                                        <button class="my-button_ingreso_resolucion" (click)="agregarResolucion()"> <i
+                                        <button class="my-button_ingreso_resolucion" (click)="agregarResolucion()" [style]="disableInvitado"> <i
                                                 class="bi bi-arrow-down-square"></i> agregar Resolucion</button>
                                     </div>
                                     
@@ -110,7 +110,7 @@
                                                 <th>Tomo</th>
                                                 <th>Resolución</th>
                                                 <th>Descipción</th>
-                                                <th>Mod</th>
+                                                <th [style]="disableInvitado">Mod</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -121,7 +121,7 @@
                                                 <td>{{resolucion.tomo_resolucion}}</td>
                                                 <td class="text-primary text_documento" (click)="obternerResolucionById(resolucion.id_resolucion)">{{resolucion.nombre_resolucion}}</td>
                                                 <td>{{resolucion.descripcion}}</td>
-                                                <td> <i class="bi bi-pencil-square hand_cursor" (click)="editarResolucion(resolucion.id_resolucion)"></i></td>
+                                                <td  [style]="disableInvitado" > <i class="bi bi-pencil-square hand_cursor" (click)="editarResolucion(resolucion.id_resolucion)"></i></td>
                                             </tr>
 
                                         </tbody>
@@ -131,7 +131,7 @@
                             <!-- Contenido de la Sección 2: conductores -->
                             <div class="tab-pane fade" id="section2">
                                 <div class="d-flex mb-2">
-                                    <button type="button" class="btn btn-primary" (click)="modificarConductores()">+add <i
+                                    <button type="button" class="btn btn-primary" (click)="modificarConductores()" [style]="disableInvitado">+add <i
                                             class="bi bi-nut"></i></button>
                                 </div>
                                 <table class="table text-center  table-hover">
@@ -164,7 +164,7 @@
                             <!-- Contenido de la Sección 3: Arrendamiento -->
                             <div class="tab-pane fade" id="section3">
                                 <div class="d-flex mb-2">
-                                    <button type="button" class="btn btn-primary" (click)="modificarArrendamiento()">+add <i
+                                    <button type="button" class="btn btn-primary" (click)="modificarArrendamiento()" [style]="disableInvitado">+add <i
                                             class="bi bi-nut"></i></button>
                                 </div>
                                 <table class="table text-center  table-hover">
@@ -199,7 +199,7 @@
                             <!-- Contenido de la Sección 4: Itinerario -->
                             <div class="tab-pane fade" id="section4">
                                 <div class="d-flex mb-2">
-                                    <button type="button" class="btn btn-primary" (click)="modificarItinerario()">+add <i
+                                    <button type="button" class="btn btn-primary" (click)="modificarItinerario()" [style]="disableInvitado">+add <i
                                             class="bi bi-nut"></i></button>
                                 </div>
                                 <table class="table text-center  table-hover">
@@ -240,7 +240,7 @@
                             <!-- Contenido de la Sección 5: Vehiculos -->
                             <div class="tab-pane fade" id="section5">
                                 <div class="d-flex mb-2">
-                                    <button type="button" class="btn btn-primary" (click)="modificarVehiculos()">+add <i
+                                    <button type="button" class="btn btn-primary" (click)="modificarVehiculos()" [style]="disableInvitado">+add <i
                                             class="bi bi-nut"></i></button>
 
                                 </div>
@@ -254,7 +254,7 @@
                                         <col style="width: 10%;">
                                         <col style="width: 10%;">
                                         <col style="width: 10%;">
-                                        <col style="width: 10%;">
+                                        <col style="width: 10%;" >
                                     </colgroup>
                                     <thead class="text-white table-success">
                                         <tr>
@@ -299,7 +299,7 @@
                                             </td>
 
                                             <!-- <td ><i class="bi bi-filetype-pdf icon-custom-pdf" (click)="openModal(vehiculo)"></i></td> -->
-                                            <td><button class="btn btn-secondary btn-sm" (click)="DarBajaVehiculo(vehiculo)"><i class="bi bi-arrow-down-circle-fill"></i> Baja</button></td>
+                                            <td ><button class="btn btn-secondary btn-sm" (click)="DarBajaVehiculo(vehiculo)" [style]="disableInvitado"><i class="bi bi-arrow-down-circle-fill"></i> Baja</button></td>
 
                                         </tr>
 
@@ -360,7 +360,7 @@
 
                                                             <div class="d-flex justify-content-center mt-2">
                                                                 <button type="button"
-                                                                    class="btn btn-success  button-full-width" (click)="CrearElementoTuc(vehiculo)">GenerarTuc
+                                                                    class="btn btn-success  button-full-width" (click)="CrearElementoTuc(vehiculo)" [style]="disableInvitado">GenerarTuc
                                                                     <i class="bi bi-nut"></i></button>
 
                                                             </div>
@@ -471,7 +471,7 @@
         
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-          <button type="button" class="btn btn-primary" (click)="modificarDuplicadosTUC()">Guardar Cambios</button>
+          <button type="button" class="btn btn-primary" (click)="modificarDuplicadosTUC()" [style]="disableInvitado">Guardar Cambios</button>
         </div>
       </div>
     </div>

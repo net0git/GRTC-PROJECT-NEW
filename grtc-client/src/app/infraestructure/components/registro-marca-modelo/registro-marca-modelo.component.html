@@ -25,12 +25,12 @@
             <div class="row  d-flex  mt-3">
                 <div class="col  d-flex justify-content-end">
                     <p *ngIf="mostrarMensajeMarca" class="mx-4 text-success"> Marca creada !!</p>
-                    <button type="button" class="btn btn-primary"  (click)="CrearMarca()">
+                    <button type="button" class="btn btn-primary"  (click)="CrearMarca()" [style]="disableInvitado">
                         Crear Marca
                     </button>
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control" name="marca" placeholder="ingrese marca" id="marcaForm" [(ngModel)]="dataMarca.nombre_marca">
+                    <input type="text" class="form-control" name="marca" placeholder="ingrese marca" id="marcaForm" [(ngModel)]="dataMarca.nombre_marca" [style]="disableInvitado">
                 </div>
             </div>
         </div>
@@ -61,12 +61,12 @@
                 <div   class="col d-flex justify-content-end ">
                     <p *ngIf="mostrarMensajeModelo" class="mx-4 text-success"> Modelo creado !!</p>
                     <button  type="button" class="btn btn-primary"
-                        (click)="CrearModelo()">
+                        (click)="CrearModelo()" [style]="disableInvitado">
                         Crear Modelo
                     </button>
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control" name="modelo" placeholder="ingrese modelo" id="modeloForm" [(ngModel)]="dataModelo.nombre_modelo">
+                    <input type="text" class="form-control" name="modelo" placeholder="ingrese modelo" id="modeloForm" [(ngModel)]="dataModelo.nombre_modelo" [style]="disableInvitado">
                 </div>
             </div>
         </div>

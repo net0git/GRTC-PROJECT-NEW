@@ -6,6 +6,7 @@ import { MarcaModel } from '../../../domain/models/Marca.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModeloModel } from '../../../domain/models/Modelo.model';
+import { CredencialesService } from '../../services/local/credenciales/credenciales.service';
 
 @Component({
   selector: 'app-registro-marca-modelo',
@@ -36,12 +37,18 @@ export class RegistroMarcaModeloComponent implements OnInit {
   }
   
 
-  constructor(private vehiculoService: VehiculoService) { }
+  constructor(private vehiculoService: VehiculoService, private credencialesService: CredencialesService) { }
 
   ngOnInit(): void {
     console.log('RegistroMarcaModeloComponent inicializado');
     this.ListarMarcas();
-
+    this.verPerfil();
+  }
+  disableInvitado='display: block';
+  verPerfil(){
+    if(this.credencialesService.isInvitado()){
+      this.disableInvitado='display: none';
+    }
   }
 
   CrearMarca() {

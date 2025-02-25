@@ -38,7 +38,9 @@
         </table>
       </div>
       <div class="d-flex justify-content-between">
-        <button class="btn btn-success mb-2" (click)="ExporToExcel()"><i class="bi bi-file-earmark-excel-fill"></i> Descargar</button>
+        <div >
+          <button class="btn btn-success mb-2" (click)="ExporToExcel()" [style]="disableInvitado"><i class="bi bi-file-earmark-excel-fill"></i> Descargar</button>
+        </div>
         <pagination-controls (pageChange)="paginaActual = $event" previousLabel="Anterior" extLabel="Siguiente" id="conductores-pagination"></pagination-controls>
       </div>
     </div>

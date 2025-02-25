@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavegadorComponent } from '../../shared/components/navegador/navegador.component';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { Router } from '@angular/router';
+import { CredencialesService } from '../../services/local/credenciales/credenciales.service';
+
 
 @Component({
   selector: 'app-principal',
@@ -12,10 +14,17 @@ import { Router } from '@angular/router';
 })
 export class PrincipalComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  disableInvitado='display: block';
+
+  constructor(private router: Router, private credencialesService: CredencialesService, ) { }
 
   ngOnInit(): void {
-
+    this.verPerfil()
+  }
+  verPerfil(){
+    if(this.credencialesService.isEditor() || this.credencialesService.isInvitado()){
+      this.disableInvitado='display: none';
+    }
   }
 
   empresas_por_servicio() {

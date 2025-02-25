@@ -49,6 +49,14 @@ export class DetalleInfraestructuraComponent implements OnInit {
   ngOnInit(): void {
     this.detalleInfraestructura()
     this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`/doc/error_carga.pdf`);
+    this.verPerfil();
+  }
+
+  disableInvitado='display: block';
+  verPerfil(){
+    if(this.credencialesService.isInvitado()){
+      this.disableInvitado='display: none';
+    }
   }
 
   detalleInfraestructura() {

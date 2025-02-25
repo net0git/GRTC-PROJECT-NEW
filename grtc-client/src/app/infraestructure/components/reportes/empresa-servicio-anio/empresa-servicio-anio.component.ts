@@ -7,6 +7,7 @@ import { Validators } from '../../../../../../public/utils/validators';
 import { SoloNumerosGuionComaDirective } from '../../../directives/solo-numeros-guion-coma.directive';
 import { FormsModule } from '@angular/forms';
 import * as XLSX from 'xlsx';
+import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
 
 @Component({
   selector: 'app-reporte-empresa-servicio-anio',
@@ -24,10 +25,17 @@ export class EmpresaServicioAnioComponent implements OnInit {
 
   anioFormato:string =''
 
-  constructor(private empresaServicioService: EmpresaServicioService, ) { }
+  constructor(private empresaServicioService: EmpresaServicioService, private credencialesService: CredencialesService, ) { }
 
   ngOnInit(): void {
     this.listarEmpresasSevicios()
+    this.verPerfil();
+  }
+  disableInvitado='display: block';
+  verPerfil(){
+    if(this.credencialesService.isInvitado()){
+      this.disableInvitado='display: none';
+    }
   }
 
   cambiarPagina(event: number) {

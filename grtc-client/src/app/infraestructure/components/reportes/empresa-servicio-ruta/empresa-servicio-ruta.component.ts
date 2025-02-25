@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ReporteService } from '../../../../infraestructure/services/remoto/reporte/reporte.service';
+import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
 
 @Component({
   selector: 'app-reporte-empresa-servicio-ruta',
@@ -17,10 +18,18 @@ export class EmpresaServicioRutaComponent implements OnInit {
 
   paginaActual: number = 1;
 
-  constructor(private reporteService: ReporteService) { }
+  constructor(private reporteService: ReporteService, private credencialesService: CredencialesService) { }
   ngOnInit(): void {
     
     this.CantidadEmpresasRuta()
+    this.verPerfil();
+  }
+  
+  disableInvitado='display: block';
+  verPerfil(){
+    if(this.credencialesService.isInvitado()){
+      this.disableInvitado='display: none';
+    }
   }
 
   cambiarPagina(event: number) {

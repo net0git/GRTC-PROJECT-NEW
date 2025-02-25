@@ -47,7 +47,7 @@
       <div class="card-body px-5 bg-white rounded">
 
         <div class="d-flex justify-content-between">
-          <button class="btn btn-success mb-2" (click)="ExporToExcel()"><i class="bi bi-file-earmark-excel-fill"></i>
+          <button class="btn btn-success mb-2" (click)="ExporToExcel()" [style]="disableInvitado"><i class="bi bi-file-earmark-excel-fill"></i>
             Descargar</button>
           <pagination-controls [id]="'vehiculo-ruta-pagination'" (pageChange)="paginaActual = $event"
             previousLabel="Anterior" nextLabel="Siguiente">
