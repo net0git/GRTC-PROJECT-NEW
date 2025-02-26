@@ -114,15 +114,16 @@
     <div class="modal-dialog modal-fullscreen" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <p class="subtitulo_menu text-white">reporte a medida</p>
-          <button type="button" class="btn-close " (click)="closeModal()" aria-label="Close"></button>
+          <button type="button" class="btn btn-secondary m-0 py-1" (click)="closeModal()" aria-label="Close">Cerrar</button>
+          <p class="subtitulo_menu text-white mx-4">reporte a medida</p>
+         
         </div>
         <div class="modal-body text-start m-0 p-0">
            <app-reporte-dinamico></app-reporte-dinamico>
         </div>
-        <!-- <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
-        </div> -->
+        <div class="modal-footer p-1">
+          <button type="button" class="btn btn-secondary btn-sm mx-4" (click)="closeModal()">Cerrar</button>
+        </div>
       </div>
     </div>
 </div>

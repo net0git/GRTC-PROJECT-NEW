@@ -6,12 +6,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
+import { SoloNumerosGuionComaDirective } from '../../../directives/solo-numeros-guion-coma.directive';
 import * as XLSX from 'xlsx';
+import { Validators } from '../../../../../../public/utils/validators';
 
 @Component({
   selector: 'app-reporte-dinamico',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxPaginationModule],
+  imports: [CommonModule, FormsModule, NgxPaginationModule, SoloNumerosGuionComaDirective],
   templateUrl: './reporte-dinamico.component.html',
   styleUrl: './reporte-dinamico.component.css'
 })
@@ -60,8 +62,8 @@ export class ReporteDinamicoComponent implements OnInit {
         { label: 'Nro Chasis', id: 'flexCheckChecked', selected: false },
         { label: 'Nro Asientos', id: 'flexCheckChecked', selected: false },
         { label: 'Serie', id: 'flexCheckChecked', selected: false },
-        { label: 'color', id: 'flexCheckChecked', selected: false },
-        { label: 'itienerario', id: 'flexCheckChecked', selected: false },
+        { label: 'Color', id: 'flexCheckChecked', selected: false },
+        { label: 'Itinerario', id: 'flexCheckChecked', selected: false },
         { label: 'Fecha inicial', id: 'flexCheckChecked', selected: false },
         { label: 'Fecha final', id: 'flexCheckChecked', selected: false }
 
@@ -137,6 +139,8 @@ export class ReporteDinamicoComponent implements OnInit {
   listaVehiculos: ListaVehiculosDetallReporteResponse[] = [];
 
   paginaActual: number = 1;
+  anioFormato:string =''
+  disableInvitado='display: block';
 
   constructor(private reporteService: ReporteService, private credencialesService: CredencialesService) { }
 
@@ -148,7 +152,67 @@ export class ReporteDinamicoComponent implements OnInit {
     this.verPerfil();
   }
 
-  disableInvitado='display: block';
+  buscarEmpresasAnio() {
+    // Obtener el valor del input
+    const input = this.anioFormato.trim();
+  
+    // Validar el formato
+    if (Validators.anioCompuesto.test(input)) {
+      // Extraer los años del input
+      const años = this.obtenerAnios(input);
+      
+      // Filtrar las empresas que coincidan con los años
+      const empresasFiltradas = this.listaEmpresasServicio.filter(empresa => {
+        // Obtener el año de la fecha_inicial de la empresa
+        const añoInicial = new Date(empresa.fecha_inicial).getFullYear();
+      
+        // Verificar si algún año de la búsqueda coincide con el año de fecha_inicial
+        return años.includes(añoInicial);
+      });
+  
+      // Mostrar las empresas filtradas
+      if (empresasFiltradas.length > 0) {
+        console.log("Empresas encontradas:", empresasFiltradas);
+        this.listaEmpresasServicio = empresasFiltradas;
+      } else {
+        alert("No se encontraron empresas para los años proporcionados.");
+      }
+  
+    } else {
+      alert("Formato incorrecto. Asegúrate de ingresar los años correctamente.");
+    }
+  }
+
+  limpiarBusqueda(){
+    this.listaEmpresasServicio = this.listaEmpresasServicioTemp;
+    this.anioFormato = "";
+  }
+
+  obtenerAnios(input: string): number[] {
+    // Formato "2006"
+    if (!input.includes("-") && !input.includes(",")) {
+      return [parseInt(input)];
+    }
+    
+    // Formato "2006-2008"
+    if (input.includes("-")) {
+      const [inicio, fin] = input.split("-");
+      const años = [];
+      for (let i = parseInt(inicio); i <= parseInt(fin); i++) {
+        años.push(i);
+      }
+      return años;
+    }
+  
+    // Formato "2006,2007,2008"
+    if (input.includes(",")) {
+      return input.split(",").map(año => parseInt(año));
+    }
+  
+    return [];
+  }
+
+  
   verPerfil(){
     if(this.credencialesService.isInvitado()){
       this.disableInvitado='display: none';
@@ -275,7 +339,7 @@ export class ReporteDinamicoComponent implements OnInit {
     const columnasVehiculos = [
       "Placa", "Marca", "Modelo", "Categoria", "Año", "Peso Neto(Tn)", "Carga Util(Tn)",
       "Carroceria", "Modalidad", "Nro Part Reg", "Estado", "Nro Chasis", "Nro Asientos",
-      "Serie", "color", "itinerario", "Fecha inicial", "Fecha final"
+      "Serie", "Color", "Itinerario", "Fecha inicial", "Fecha final"
     ];
     return columnasVehiculos.includes(column);
   }
@@ -315,8 +379,8 @@ export class ReporteDinamicoComponent implements OnInit {
       case 'Nro Chasis': return vehiculo.nro_chasis;
       case 'Nro Asientos': return vehiculo.nro_asientos;
       case 'Serie': return vehiculo.serie;
-      case 'color': return vehiculo.color;
-      case 'itinerario': return vehiculo.itinerario;
+      case 'Color': return vehiculo.color;
+      case 'Itinerario': return vehiculo.itinerario;
       case 'Fecha inicial': return vehiculo.fecha_inicial;
       case 'Fecha final': return vehiculo.fecha_final;
       default: return "";

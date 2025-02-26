@@ -177,6 +177,13 @@
     margin: 0px;
 
 }
+/*  */
+#exampleModalCenter .modal-body{
+    /* background-color: #176091; */
+    /* background-color: #fdfdfb;
+  */
+
+}
 
 #modalEmpresasServicio .modal-dialog {
     max-width: 95%;

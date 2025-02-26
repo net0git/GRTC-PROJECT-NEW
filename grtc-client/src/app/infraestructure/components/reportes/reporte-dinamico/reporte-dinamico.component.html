@@ -51,11 +51,19 @@
         </div>
     </div>
 
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex justify-content-between align-items-center mb-2">
         <div>
             <button class="btn btn-success " (click)="ExporToExcel()" [style]="disableInvitado"><i
                     class="bi bi-file-earmark-excel-fill"></i>
                 Descargar</button>
+        </div>
+
+        <div class="d-flex justify-content-center" style="width: 65%;">
+            <input type="text" class="form-control mx-2 " id="yearInput" name="buscar"
+                placeholder="BUSCAR POR AÑO EJEMPLO: YYYY YYYY,YYYY,YYYY YYYY-YYYY" appSoloNumerosGuionComa
+                [(ngModel)]="anioFormato">
+            <button type="button" class="btn btn-success mx-2" (click)="buscarEmpresasAnio()">buscar </button>
+            <button class="btn btn-info" (click)="limpiarBusqueda()">limpiar</button>
         </div>
         <pagination-controls [id]="'allReport'" (pageChange)="paginaActual = $event" previousLabel="Anterior"
             class=" mx-4" nextLabel="Siguiente">
