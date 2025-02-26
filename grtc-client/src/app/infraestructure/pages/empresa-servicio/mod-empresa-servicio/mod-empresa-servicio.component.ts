@@ -99,13 +99,21 @@ export class ModEmpresaServicioComponent implements OnInit {
   }
 
   // ------------------------------------------------
-
+  actualizarFechaFinal() {
+    if (this.dataEmpresaServicio.fecha_inicial) {
+      let fechaInicio = new Date(this.dataEmpresaServicio.fecha_inicial);
+      fechaInicio.setFullYear(fechaInicio.getFullYear() + 10); // Sumamos 10 años
+      this.dataEmpresaServicio.fecha_final = fechaInicio.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+    }
+  }
+  
   ObtenerEmpresaServicio() {
     const params = this.activatedRoute.snapshot.params;
     this.empresaServicioService.ObtenerEmpresaServicio(params['id_empresa_servicio']).subscribe({
       next: (data: EmpresaServicioResponse) => {
         this.dataEmpresaServicio =  data;
         this.dataEmpresaServicio.fecha_inicial = FechaConFormato(this.dataEmpresaServicio.fecha_inicial);
+        this.dataEmpresaServicio.fecha_final = FechaConFormato(this.dataEmpresaServicio.fecha_final);
         console.log(data)
       },
       error: (err) => {

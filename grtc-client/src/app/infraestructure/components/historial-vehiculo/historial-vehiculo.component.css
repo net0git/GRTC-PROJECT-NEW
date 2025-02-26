@@ -1,0 +1,43 @@
+.panel {
+    /* background-color: #cfc9c913; */
+    background-color: #f5f4f42f !important;
+    /* background-color:  #eaf0f794 !important; */
+}
+
+.contenedor {
+    margin: 1.2% 4%;
+
+}
+
+/* menu listado de resportes */
+.menu-listado-reportes {
+    box-sizing: border-box;
+    background-color: #F6F4EE;
+    padding: 20px;
+    border-radius: 16px;
+}
+
+.menu-listado-reportes .titulo {
+   
+    font-size: 1rem;
+    font-weight: 600;
+    color: #6E7A89;
+}
+
+.menu-listado-reportes .lista {
+    margin: 10px 0;
+}
+
+.menu-listado-reportes .lista .item .name {
+    display: inline-block;
+    padding: 0 0 0 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #434343;
+}
+
+/* titulo reporte */
+.icon-title-container {
+    display: flex;
+    align-items: center;
+}

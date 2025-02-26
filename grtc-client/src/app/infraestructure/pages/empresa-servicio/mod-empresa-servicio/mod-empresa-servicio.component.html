@@ -1,6 +1,7 @@
 <div class="panel">
     <app-navegador></app-navegador>
-    <app-subnavegador [ruta]="'/principal/detalle-empresa-servicio/'+dataEmpresaServicio.id_empresa_servicio"></app-subnavegador>
+    <app-subnavegador
+        [ruta]="'/principal/detalle-empresa-servicio/'+dataEmpresaServicio.id_empresa_servicio"></app-subnavegador>
 
     <div class="container-fluid">
         <div class="encabezado_pages">
@@ -54,9 +55,9 @@
                         <div class="form-group">
                             <label for="telefono_empresa" class="form-label mt-3">Telefono:</label>
                             <input type="text" class="form-control" name="telefono_empresa"
-                                [(ngModel)]="dataEmpresa.telefono" appSoloNumerosGuion >
+                                [(ngModel)]="dataEmpresa.telefono" appSoloNumerosGuion>
                         </div>
-                        <div class="form-group mb-4">
+                        <div class="form-group">
 
                             <div class="row">
                                 <div class="col-sm-4">
@@ -91,19 +92,29 @@
                                     </select>
                                 </div>
                             </div>
-                            
-                            <div class="mb-1">
-                                <label for="fecha_empresa" class="form-label mt-3">Fecha de Autorización:</label>
-                                <input id="fecha_empresa" type="date" class="form-control" name="fecha_resolucion"
-                                    [(ngModel)]="dataEmpresaServicio.fecha_inicial">
-                            </div>
-                            <div class="form-group">
-                                <label for="expediente_empresa" class="form-label mt-3">Expediente:</label>
-                                <input id="expediente_empresa" type="text" class="form-control"
-                                    name="expediente_empresa" [(ngModel)]="dataEmpresaServicio.expediente"
-                                    inputmode="uppercase">
-                            </div>
                         </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="fecha_empresa_inicial" class="form-label mt-3">Fecha de Autorización/renovación:</label>
+                                    <input id="fecha_empresa_inicial" type="date" class="form-control" name="fecha_inicial"
+                                        [(ngModel)]="dataEmpresaServicio.fecha_inicial" (change)="actualizarFechaFinal()">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="fecha_empresa_finalización" class="form-label mt-3">Fecha de Finalización:</label>
+                                    <input id="fecha_empresa_finalización" type="date" class="form-control" name="fecha_finalización"
+                                        [(ngModel)]="dataEmpresaServicio.fecha_final">
+                                </div>
+
+                            </div>
+                            
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="expediente_empresa" class="form-label mt-3">Expediente:</label>
+                            <input id="expediente_empresa" type="text" class="form-control" name="expediente_empresa"
+                                [(ngModel)]="dataEmpresaServicio.expediente" inputmode="uppercase">
+                        </div>
+
                         <!-- DATOS DEL REPRESENTANTE DE LA EMPRESA -->
                         <h4 class="subtitulo_empresa">REPRESENTANTE LEGAL:</h4>
                         <div class="form-group">
@@ -141,7 +152,8 @@
 
                                 <div class="col-sm-6">
                                     <input id="documento_id" type="text" class="form-control" name="documento_id"
-                                        [(ngModel)]="dataPersona.documento" appSoloNumeros [attr.maxlength]="dataPersona.tipo_doc === 'CE' ? 12 : (dataPersona.tipo_doc === 'DNI' ? 8 : null)">
+                                        [(ngModel)]="dataPersona.documento" appSoloNumeros
+                                        [attr.maxlength]="dataPersona.tipo_doc === 'CE' ? 12 : (dataPersona.tipo_doc === 'DNI' ? 8 : null)">
                                 </div>
                             </div>
                         </div>
@@ -155,7 +167,8 @@
                 </form>
 
                 <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-warning" (click)="ModificarDatosFormulario()">Modificar</button>
+                    <button type="button" class="btn btn-warning"
+                        (click)="ModificarDatosFormulario()">Modificar</button>
                     <br>
                 </div>
             </div>
