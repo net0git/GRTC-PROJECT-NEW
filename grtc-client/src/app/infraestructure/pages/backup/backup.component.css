@@ -1,0 +1,23 @@
+.fondo-volver{
+    background-color: #73bced2c;
+}
+
+.panel-backup{
+    box-sizing: border-box;
+    border-radius: 16px;
+    border: 1px solid #B9EACE;
+    padding: 20px;
+    background-color: #E1F6EA;
+    color: #227243;
+}
+
+.btn-warning-backup{
+    background-color: #FCF0D3;
+    color: #C28E0E;
+    border: 1px solid #FAE5B3;
+    box-shadow: 1px 1px 3px 0 #D5DDE5;
+}
+
+.btn-warning-backup:hover{
+    background-color: #fadb92;
+}

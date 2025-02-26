@@ -8,6 +8,9 @@
     margin: 1.2% 4%;
 
 }
+.text-gold{
+    color: #997c2e;
+}
 
 /* menu listado de resportes */
 .menu-listado-reportes {
@@ -21,7 +24,8 @@
    
     font-size: 1rem;
     font-weight: 600;
-    color: #6E7A89;
+    color: #806a25;
+    /* color: #6E7A89; */
 }
 
 .menu-listado-reportes .lista {
@@ -33,7 +37,8 @@
     padding: 0 0 0 8px;
     font-size: 1rem;
     font-weight: 500;
-    color: #434343;
+ 
+     color: #434343; 
 }
 
 /* titulo reporte */

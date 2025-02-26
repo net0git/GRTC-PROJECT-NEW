@@ -25,7 +25,9 @@ import { ModInfraestructuraComponent } from './infraestructure/pages/infraestruc
 import { ModInfraestructuraCertificadoComponent } from './infraestructure/pages/infraestructura/mod-infraestructura-certificado/mod-infraestructura-certificado.component';
 import { ModInfraestructuraResolucionComponent } from './infraestructure/pages/infraestructura/mod-infraestructura-resolucion/mod-infraestructura-resolucion.component';
 import { CrearInfraestructuraComponent } from './infraestructure/pages/infraestructura/crear-infraestructura/crear-infraestructura.component';
+import { BackupComponent } from './infraestructure/pages/backup/backup.component';
 import { authGuard } from './guard/auth.guard';
+
 
 export const routes: Routes = [
   {
@@ -67,6 +69,10 @@ export const routes: Routes = [
   { path: 'principal/busqueda-historial', component: BusquedaHistorialComponent },
   { path: 'principal/resolucion', component: ResolucionComponent },
   { path: 'principal/panel-reportes', component: ReporteComponent },
+
+  { path: 'principal/backup', component:BackupComponent},
+
+
 
   { path: '**', redirectTo: '/login' }
 ];
