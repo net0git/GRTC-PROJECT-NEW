@@ -29,7 +29,7 @@ export class CrearInfraestructuraComponent implements OnInit {
   currentStep: number = 1;
   progressValue = ((1) / 3) * 100;
   pdfUrl: SafeResourceUrl | null = null;
-
+  desabilitarButtonCrearInfraestructura: boolean = false;
   dataInfraestructura: InfraestructuraModel = {
     id_infraestructura: 0,
     id_tipo_infraestructura: 0,
@@ -122,6 +122,7 @@ export class CrearInfraestructuraComponent implements OnInit {
   }
 
   validarDatosFormularioResolucion() {
+    this.desabilitarButtonCrearInfraestructura = true;
     const erroresValidacion = crear_infraestructura_resolucion_vf(this.dataResolucion);
     if (erroresValidacion.length > 0) {
       let errorMensaje = '';

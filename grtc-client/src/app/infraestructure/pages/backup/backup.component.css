@@ -11,6 +11,15 @@
     color: #227243;
 }
 
+.panel-metadata{
+    box-sizing: border-box;
+    border-radius: 16px;
+    border: 1px solid #b9ceea;
+    padding: 20px;
+    background-color: #e1f1f6;
+    color: #225572;
+}
+
 .btn-warning-backup{
     background-color: #FCF0D3;
     color: #C28E0E;

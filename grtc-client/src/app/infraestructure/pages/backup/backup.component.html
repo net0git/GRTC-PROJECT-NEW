@@ -1,25 +1,72 @@
-<div class="panel" >
+<div class="panel">
     <app-navegador></app-navegador>
     <div class="fondo-volver container-fluid">
         <div class=" flex aling-items-center justify-content-center text-center">
             <p class="mt-3" style="color:gray">sistema de gestion de archivo GRTCC 2.0.0</p>
-        </div>   
+        </div>
     </div>
 
     <div class="container" style="width: 50%;">
         <div class="encabezado_pages d-flex justify-content-start m-4">
-            <i class="bi bi-database-fill icon-custom-encabezado" ></i>
+            <i class="bi bi-database-fill icon-custom-encabezado"></i>
             <div class="text-start">
                 <p class="titulo_menu mb-0">Backup</p>
-                <p>Exporte todo el contenido a un único archivo zip</p>
+                <p>Exporte todo el contenido a un único archivo sql</p>
             </div>
         </div>
         <div class="panel-backup">
-            <p>El Sistema de Gestión de Archivos de la Gerencia Regional de Transporte y Comunicaciones del Cusco 
-                es una aplicación que permite gestionar los archivos. Como administrador, puedes realizar una copia de seguridad completa del sistema. 
-                Este proceso puede tardar varios minutos en completarse, por lo que se recomienda tener paciencia mientras se ejecuta la operación.</p>
-                
-                <button  class="btn btn-warning-backup btn-sm"><i class="bi bi-database"></i>  BACKUP GRTCC-BD 2.0.0</button>
+            <p>El Sistema de Gestión de Archivos de la Gerencia Regional de Transporte y Comunicaciones del Cusco
+                es una aplicación que permite gestionar los archivos. Como administrador, puedes realizar una copia de
+                seguridad completa del sistema.
+                Este proceso puede tardar varios minutos en completarse, por lo que se recomienda tener paciencia
+                mientras se ejecuta la operación.</p>
+
+                <div class="d-flex align-items-center" *ngIf="isDownloading">
+                    <!-- Spinner de Bootstrap -->
+                    <div class="spinner-border spinner-border-sm me-2" role="status">
+                    
+                    </div>
+                    <!-- Texto al lado del spinner -->
+                    <p class="mb-0">Generando el backup, por favor espere...</p>
+                  </div>
+
+            <div *ngIf="downloadMessage">
+                <p>{{ downloadMessage }}</p>
+            </div>
+            <button *ngIf="!isDownloading" class="btn btn-warning-backup btn-sm" (click)="descargarBackup()"><i
+                    class="bi bi-database"></i> BACKUP GRTCC-BD 2.0.0</button>
+        </div>
+    </div>
+
+    <div class="container mt-4 opacity-50" style="width: 50%;">
+        <div class="encabezado_pages d-flex justify-content-start m-4">
+            <i class="bi  bi-disc-fill icon-custom-encabezado"></i>
+            <div class="text-start">
+                <p class="titulo_menu mb-0">Metadata</p>
+                <p>Exporte todo el contenido a un único archivo zip</p>
+            </div>
+        </div>
+        <div class="panel-metadata " >
+            <p>El Sistema de Gestión de Archivos de la Gerencia Regional de Transporte y Comunicaciones del Cusco
+                es una aplicación que permite gestionar los archivos. Como administrador, puedes realizar una copia de
+                seguridad completa del sistema.
+                Este proceso puede tardar varios minutos en completarse, por lo que se recomienda tener paciencia
+                mientras se ejecuta la operación.</p>
+
+                <div class="d-flex align-items-center" *ngIf="isDownloading">
+                    <!-- Spinner de Bootstrap -->
+                    <div class="spinner-border spinner-border-sm me-2" role="status">
+                    
+                    </div>
+                    <!-- Texto al lado del spinner -->
+                    <p class="mb-0">Generando el backup, por favor espere...</p>
+                  </div>
+
+            <div *ngIf="downloadMessage">
+                <p>{{ downloadMessage }}</p>
+            </div>
+            <button *ngIf="!isDownloading" class="btn btn-warning-backup btn-sm" (click)="descargarBackup()"><i
+                    class="bi bi-database"></i> BACKUP GRTCC-BD 2.0.0</button>
         </div>
     </div>
 </div>

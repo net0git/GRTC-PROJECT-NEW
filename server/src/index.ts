@@ -18,6 +18,7 @@ import tucRuotes from './routes/tucRoutes'
 import infraestructuraRoutes from './routes/infraestructuraRoutes';
 import certificadoRoutes from './routes/certificadoRoutes';
 import reporteRoutes from './routes/reporteRoutes';
+import backupRoutes from './routes/backupRoutes';
 
 
 class Server{
@@ -53,6 +54,7 @@ class Server{
         this.app.use('/',tucRuotes);
         this.app.use('/',infraestructuraRoutes);
         this.app.use('/',reporteRoutes);
+        this.app.use('/',backupRoutes)
         
         
     }

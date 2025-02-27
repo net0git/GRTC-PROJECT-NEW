@@ -22,6 +22,7 @@ const tucRoutes_1 = __importDefault(require("./routes/tucRoutes"));
 const infraestructuraRoutes_1 = __importDefault(require("./routes/infraestructuraRoutes"));
 const certificadoRoutes_1 = __importDefault(require("./routes/certificadoRoutes"));
 const reporteRoutes_1 = __importDefault(require("./routes/reporteRoutes"));
+const backupRoutes_1 = __importDefault(require("./routes/backupRoutes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -52,6 +53,7 @@ class Server {
         this.app.use('/', tucRoutes_1.default);
         this.app.use('/', infraestructuraRoutes_1.default);
         this.app.use('/', reporteRoutes_1.default);
+        this.app.use('/', backupRoutes_1.default);
     }
     star() {
         this.app.listen(this.app.get('port'), () => {
