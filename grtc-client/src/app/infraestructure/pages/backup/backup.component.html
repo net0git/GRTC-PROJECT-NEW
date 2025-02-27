@@ -53,19 +53,10 @@
                 Este proceso puede tardar varios minutos en completarse, por lo que se recomienda tener paciencia
                 mientras se ejecuta la operación.</p>
 
-                <div class="d-flex align-items-center" *ngIf="isDownloading">
-                    <!-- Spinner de Bootstrap -->
-                    <div class="spinner-border spinner-border-sm me-2" role="status">
-                    
-                    </div>
-                    <!-- Texto al lado del spinner -->
-                    <p class="mb-0">Generando el backup, por favor espere...</p>
-                  </div>
+               
 
-            <div *ngIf="downloadMessage">
-                <p>{{ downloadMessage }}</p>
-            </div>
-            <button *ngIf="!isDownloading" class="btn btn-warning-backup btn-sm" (click)="descargarBackup()"><i
+           
+            <button  class="btn btn-warning-backup btn-sm" ><i
                     class="bi bi-database"></i> BACKUP GRTCC-BD 2.0.0</button>
         </div>
     </div>
