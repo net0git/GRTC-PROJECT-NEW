@@ -23,7 +23,7 @@ export class ListaEmpresaServicioComponent implements OnInit {
 
   listaEmpresasServicio: ListaEmpresaServicioResponse[] = [];
   listaEmpresasServicioTemp: ListaEmpresaServicioResponse[] = [];
-  p: number = 1;
+  paginaActual: number = 1;
   cantidad_t_personas:number=0;
   cantidad_t_turismo:number=0;
   cantidad_t_estudiantes:number=0;
@@ -61,7 +61,7 @@ export class ListaEmpresaServicioComponent implements OnInit {
   }
   
   filtrarEmpresa(id: number) {
-    this.p = 1;
+    this.paginaActual = 1;
     this.listaEmpresasServicio = this.listaEmpresasServicioTemp.filter((empresa: { id_tipo_servicio: number; }) => empresa.id_tipo_servicio == id);
 
   }
@@ -101,7 +101,7 @@ export class ListaEmpresaServicioComponent implements OnInit {
   }
 
   restaurarEmpresas() {
-    this.p = 1;
+    this.paginaActual = 1;
     this.listaEmpresasServicio = this.listaEmpresasServicioTemp;
      (<HTMLSelectElement>document.getElementById('tipo_doc_table')).value = '';
   }
@@ -128,20 +128,42 @@ export class ListaEmpresaServicioComponent implements OnInit {
     });
   }
   
+  //  buscarEnObjeto(event: any) {
+  
+  //     const textoBusqueda = event.target.value.toLowerCase();
+  //     this.listaInfraestructura = this.listaInfraestructuraTemp.filter((objeto: ListaInfraestructuraResponse) => {
+  //       const expediente = objeto.expediente ? objeto.expediente.toLowerCase() : '';
+  //       const infraestructura = objeto.nombre_infraestructura ? objeto.nombre_infraestructura.toLowerCase() : '';
+  //       const direccion = objeto.direccion ? objeto.direccion.toLowerCase() : '';
+  
+  //       return expediente.includes(textoBusqueda) ||
+  //       infraestructura.includes(textoBusqueda) ||
+  //       direccion.includes(textoBusqueda) 
+  //     });
+  //   }
   buscarEnObjeto(event: any) {
-
+    this.paginaActual = 1;
     const textoBusqueda = event.target.value.toLowerCase();
     this.listaEmpresasServicio = this.listaEmpresasServicioTemp.filter((objeto: ListaEmpresaServicioResponse) => {
-      const expediente = objeto.expediente ? objeto.expediente.toLowerCase() : '';
       const empresa = objeto.empresa ? objeto.empresa.toLowerCase() : '';
       const ruc = objeto.ruc ? objeto.ruc.toLowerCase() : '';
-      const estado = objeto.estado ? objeto.estado.toLowerCase() : '';
-
-      return expediente.includes(textoBusqueda) ||
-        empresa.includes(textoBusqueda) ||
-        ruc.includes(textoBusqueda) ||
-        estado.includes(textoBusqueda)
+      
+      return empresa.includes(textoBusqueda) ||
+        ruc.includes(textoBusqueda) 
     });
+    // const textoBusqueda = event.target.value.toLowerCase();
+    // this.listaEmpresasServicio = this.listaEmpresasServicioTemp.filter((objeto: ListaEmpresaServicioResponse) => {
+    //   const expediente = objeto.expediente ? objeto.expediente.toLowerCase() : '';
+    //   const empresa = objeto.empresa ? objeto.empresa.toLowerCase() : '';
+    //   const ruc = objeto.ruc ? objeto.ruc.toLowerCase() : '';
+    //   const estado = objeto.estado ? objeto.estado.toLowerCase() : '';
+
+    //   return expediente.includes(textoBusqueda) ||
+    //     empresa.includes(textoBusqueda) ||
+    //     ruc.includes(textoBusqueda) ||
+    //     estado.includes(textoBusqueda)
+    // });
+
   }
 
   crearEmpresaServicio() {
