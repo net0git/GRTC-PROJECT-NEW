@@ -100,7 +100,7 @@ export function crear_empresa_servicio_empresa_vf(dataEmpresa: EmpresaModel, dat
   if (!dataEmpresa.direccion) {
     errorValidacion.push({ campo: 'Direccion Empresa', mensaje: 'Campo no válido' });
   }
-  if (dataEmpresa.correo.length > 0) {
+  if (dataEmpresa.correo && dataEmpresa.correo.trim().length > 0) {
     if (!Validators.validarCorreo(dataEmpresa.correo)) {
       errorValidacion.push({ campo: 'Correo del representante', mensaje: 'Campo no válido' });
     }
@@ -129,7 +129,7 @@ export function crear_empresa_servicio_representante_vf(dataPersona: PersonaMode
       errorValidacion.push({ campo: 'telefono representante', mensaje: 'Campo no válido' });
     }
   }
-  if (dataPersona.correo != '') {
+  if (dataPersona.correo && dataPersona.correo.trim().length > 0) {
     if (!Validators.validarCorreo(dataPersona.correo)) {
       errorValidacion.push({ campo: 'Correo del representante', mensaje: 'Campo no válido' });
     }
