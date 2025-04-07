@@ -191,7 +191,8 @@ class ReporteController {
                             (tdr.origen IS NOT NULL AND tdr.origen <> '') 
                             AND (tdr.destino IS NOT NULL AND tdr.destino <> '')
                     ) AS subconsulta
-                    GROUP BY origen_ruta, destino_ruta;`;
+                    GROUP BY origen_ruta, destino_ruta
+                    ORDER BY origen_ruta;`;
                 const tuc = yield database_1.default.query(consulta);
                 if (tuc && tuc['rows'].length > 0) {
                     res.json(tuc['rows']);
