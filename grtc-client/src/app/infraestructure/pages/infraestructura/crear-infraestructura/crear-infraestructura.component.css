@@ -22,3 +22,19 @@
     box-shadow: 0  .125rem .25rem   rgba(0, 0, 0, .075) !important;
     
   }
+
+
+  /* boton registro */
+.btn-registro {
+  /* background-color: #8b55d1; */
+ 
+  border-radius: 5px;
+  border-color: #8b55d1;
+
+}
+.btn-registro:hover{
+  background-color: #7530cf;
+  border-radius: 5px;
+  border-color: #7530cf;
+  color: white;
+}

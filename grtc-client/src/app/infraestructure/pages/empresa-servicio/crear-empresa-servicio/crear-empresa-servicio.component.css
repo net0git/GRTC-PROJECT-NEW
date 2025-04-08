@@ -30,3 +30,17 @@
   opacity: 1;
   cursor: pointer;
 }
+
+/* boton registro */
+.btn-registro {
+  /* background-color: #8b55d1; */
+  border-radius: 5px;
+  border-color: #8b55d1;
+  /* color: white; */
+}
+.btn-registro:hover{
+  background-color: #7530cf;
+  border-radius: 5px;
+  border-color: #7530cf;
+  color: white;
+}

@@ -945,6 +945,10 @@ export class CrearEmpresaServicioComponent implements OnInit {
   }
 
   async RegistrarEmpresaServicio() {
+    if (this.lista_vehiculos.length == 0) {
+      alert('debe registrar por lo menos un vehiculo')
+      return;
+    }
 
     this.desabilitarButtonCrearEmpresa = true
     await this.crearPersonaRepresentante();

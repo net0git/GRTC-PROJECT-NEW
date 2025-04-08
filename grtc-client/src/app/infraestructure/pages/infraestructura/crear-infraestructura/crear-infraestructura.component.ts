@@ -151,7 +151,6 @@ export class CrearInfraestructuraComponent implements OnInit {
     }
 
   validarDatosFormularioResolucion() {
-    this.desabilitarButtonCrearInfraestructura = true;
     const erroresValidacion = crear_infraestructura_resolucion_vf(this.dataResolucion);
     if (erroresValidacion.length > 0) {
       let errorMensaje = '';
@@ -161,6 +160,7 @@ export class CrearInfraestructuraComponent implements OnInit {
       alert(errorMensaje)
     } else {
       this.mostrarDatos()
+      this.desabilitarButtonCrearInfraestructura = true;
       this.crearInfraestructura()
       this.finalizarCreacionInfraestructura()
     }
