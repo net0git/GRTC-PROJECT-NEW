@@ -22,7 +22,7 @@
                                 <select id="tipo_infraestructura" name="tipo_infraestructura"
                                     class="form-control form-select"
                                     [(ngModel)]="dataInfraestructura.id_tipo_infraestructura">
-                                    <option value=0 disabledd selected>TIPO INFRAESTRUCTURA </option>
+                                    <option value=0 disabled selected>TIPO INFRAESTRUCTURA </option>
                                     <option value=1>TERMINAL TERRESTRE</option>
                                     <option value=2>ESTACION DE RUTA TIPO I</option>
                                     <option value=3>ESTACION DE RUTA TIPO II</option>
@@ -180,10 +180,13 @@
                                     </div>
                                     <div class="mb-2">
                                         <label for="titulo" class="form-label  mb-0">Titulo resolución:</label>
-
-                                        <input type="text" name="nombre_resolucion"
+                                        <div>
+                                            <input type="text" name="nombre_resolucion"
                                             class="form-control form-control-sm"
                                             [(ngModel)]="dataResolucion.nombre_resolucion" >
+                                            
+                                        </div>
+                                       
                                     </div>
                                     <div class="mb-2">
                                         <label for="nro_resolucion" class="form-label  mb-0">Nro resolución</label>

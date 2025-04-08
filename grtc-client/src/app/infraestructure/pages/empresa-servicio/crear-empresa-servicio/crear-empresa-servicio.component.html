@@ -257,10 +257,22 @@
                                         </div>
                                         <div class="mb-2">
                                             <label for="titulo" class="form-label  mb-0">Titulo resolución:</label>
-
-                                            <input type="text" name="nombre_resolucion"
-                                                class="form-control form-control-sm"
-                                                [(ngModel)]="dataResolucion.nombre_resolucion">
+                                            <div style="display: flex; align-items: center; gap: 8px;">
+                                                <input type="text" name="nombre_resolucion"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="dataResolucion.nombre_resolucion">
+                                              
+                                                <img class="hand_cursor"
+                                                     src="/icon/sistema/lupa.png" 
+                                                     width="32px" alt="logo"
+                                                     title="buscar">
+                                              
+                                                <img class="hand_cursor"
+                                                     src="/icon/sistema/actualizar.png" 
+                                                     width="32px" alt="logo"
+                                                     title="limpiar">
+                                              </div>
+                                            
                                         </div>
                                         <div class="mb-2">
                                             <label for="nro_resolucion" class="form-label  mb-0">Nro resolución</label>
