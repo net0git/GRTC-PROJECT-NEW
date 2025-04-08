@@ -61,7 +61,7 @@ export class ResolucionService {
 
   ModificarResolucion(id_resolucion:number,cuerpo_resolucion:ResolucionModel):Observable<ModificarResolucionMessageResponse>{
     cuerpo_resolucion.nombre_resolucion=cuerpo_resolucion.nombre_resolucion.trim().toUpperCase()
-    cuerpo_resolucion.descripcion=cuerpo_resolucion.descripcion.trim().toUpperCase()
+    // cuerpo_resolucion.descripcion=cuerpo_resolucion.descripcion.trim().toUpperCase()
     return this.http.put<ModificarResolucionMessageResponse>(this.api_uri_resolucion+`/modificar/${id_resolucion}`,cuerpo_resolucion)
   }
 

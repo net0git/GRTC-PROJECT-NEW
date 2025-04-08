@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { fileToBase64 } from '../../../../../../public/utils/pdfFunctions';
 import { crear_infraestructura_representante_vf, crear_infraestructura_resolucion_vf, crear_infraestructura_vf } from '../../../../infraestructure/validatorForm/infraestructrua.validator';
 import { CrearInfraestructuraResponse } from '../../../../domain/dto/InfraestructuraResponse.dto';
-import { CrearResolucionInfraestructuraMessageResponse, CrearResolucionMessageResponse } from '../../../../domain/dto/ResolucionResponse.dto';
+import { CrearResolucionInfraestructuraMessageResponse, CrearResolucionMessageResponse, VerificarResolucionByNombreResponse } from '../../../../domain/dto/ResolucionResponse.dto';
 import { ResolucionInfraestructuraModel } from '../../../../domain/models/ResolucionInfraestructura.model';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -30,6 +30,7 @@ export class CrearInfraestructuraComponent implements OnInit {
   progressValue = ((1) / 3) * 100;
   pdfUrl: SafeResourceUrl | null = null;
   desabilitarButtonCrearInfraestructura: boolean = false;
+  deshabilitarFormResolucion: boolean = true;
   dataInfraestructura: InfraestructuraModel = {
     id_infraestructura: 0,
     id_tipo_infraestructura: 0,
@@ -66,7 +67,7 @@ export class CrearInfraestructuraComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer, private ubigeoService:UbigeoService, private infraestructuraService: InfraestructuraService, private resolucionService:ResolucionService, private router: Router,) { }
 
   ngOnInit(): void {
-    this.currentStep = 1;
+    
     this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`/doc/error_carga.pdf`);
     this.ListaDepartamentos();
   }
@@ -120,6 +121,34 @@ export class CrearInfraestructuraComponent implements OnInit {
       this.nextStep()
     }
   }
+
+  buscarResolucionPorNombre(){
+      this.resolucionService.VerificarResolucionByNombre(this.dataResolucion.nombre_resolucion).subscribe({
+        next:(res:VerificarResolucionByNombreResponse)=>{
+          if(res.existe){
+            alert('La resolucion ya existe')
+          }
+          else{ 
+            this.deshabilitarFormResolucion=false
+          }
+        },
+        error:(err)=>{
+          console.error('Error al buscar resolucion por nombre:',err)
+        },
+        complete:()=>{  
+          console.log('Proceso de busqueda de resolucion por nombre completado')
+        }
+       })
+    }
+
+    ReiniciarFormularioResolucion(){
+      this.dataResolucion.nombre_resolucion='',
+      this.dataResolucion.anio_resolucion='',
+      this.dataResolucion.tomo_resolucion=null,
+      this.dataResolucion.fecha_resolucion='',
+      this.dataResolucion.descripcion=''
+      this.deshabilitarFormResolucion=true
+    }
 
   validarDatosFormularioResolucion() {
     this.desabilitarButtonCrearInfraestructura = true;

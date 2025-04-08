@@ -72,7 +72,7 @@ declare var bootstrap: any;
 export class CrearEmpresaServicioComponent implements OnInit {
 
   private myModal: any;
-  currentStep: number = 3;
+  currentStep: number = 1;
   progressValue = ((1) / 7) * 100;
   pdfUrl: SafeResourceUrl | null = null;
   lista_itinerarios: ListaItinerarioResponse[] = [];

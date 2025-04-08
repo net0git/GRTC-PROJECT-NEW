@@ -173,9 +173,6 @@ export function crear_empresa_servicio_resolucion_vf(dataResolucion: ResolucionM
   if (!dataResolucion.fecha_resolucion) {
     errorValidacion.push({ campo: 'fecha de resolución', mensaje: 'Campo requerido' })
   }
-  if (!dataResolucion.descripcion) {
-    errorValidacion.push({ campo: 'descripción', mensaje: 'Campo requerido' })
-  }
 
   return errorValidacion
 

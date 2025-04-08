@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 import { SweetAlert } from '../../../shared/animated-messages/sweetAlert';
 import { crear_empresa_servicio_resolucion_vf } from '../../../validatorForm/empresaServicio.validator';
 
+
 @Component({
   selector: 'app-mod-empresa-servicio-resolucion',
   standalone: true,
@@ -70,6 +71,7 @@ export class ModEmpresaServicioResolucionComponent implements OnInit {
         this.dataEmpresaServicioResolucion.id_empresa_servicio =
           params['id_empresa_servicio'];
         this.modificar = true;
+        this.titulo = 'MODIFICAR RESOLUCIÓN';
       } else {
         const unsafeUrl = 'doc/error_carga.pdf'; // Cambiar la ruta si es necesario
         this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
@@ -125,7 +127,9 @@ export class ModEmpresaServicioResolucionComponent implements OnInit {
     } 
   }
 
+
   CrearResolucion() {
+  
     this.resolucionService.CrearResolucion(this.dataResolucion).subscribe({
       next: (data: any) => {
         console.log(data);
@@ -134,8 +138,12 @@ export class ModEmpresaServicioResolucionComponent implements OnInit {
         this.dataEmpresaServicioResolucion.id_empresa_servicio =
           params['id_empresa_servicio'];
       },
-      error: (err: any) => {
-        console.log(err);
+      error: (err:any) => {
+        if (err.status === 409) {
+          alert('El nombre de la resolución ya está en uso.');
+        } else {
+          alert('Ocurrió un error al crear la resolución.');
+        }
       },
       complete: () => {
         console.log('completo');
@@ -175,8 +183,12 @@ export class ModEmpresaServicioResolucionComponent implements OnInit {
         next: (data: any) => {
           console.log(data);
         },
-        error: (err: any) => {
-          console.log(err);
+        error: (err:any) => {
+          if (err.status === 409) {
+            alert('El nombre de la resolución ya está en uso.');
+          } else {
+            alert('Ocurrió un error al modificar la resolución.');
+          }
         },
         complete: () => {
           console.log('completo');

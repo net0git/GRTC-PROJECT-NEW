@@ -28,8 +28,13 @@ class ResoucionController {
                 const valores = [nro_resolucion, anio_resolucion, fecha_resolucion, nombre_resolucion, tomo_resolucion, documento, descripcion];
                 database_1.default.query(consulta, valores, (error, resultado) => {
                     if (error) {
-                        console.error('Error al insertar resolucion:', error);
-                        res.status(500).json({ error: 'Error interno del servidor' });
+                        console.error('Error al insertar resolución:', error);
+                        if (error.code === '23505') {
+                            res.status(409).json({ text: 'Ya existe una resolución con ese nombre' });
+                        }
+                        else {
+                            res.status(500).json({ error: 'Error al insertar la resolución' });
+                        }
                     }
                     else {
                         const idResolucion = resultado.rows[0]['id_resolucion']; // ID se encuentra en la primera fila
@@ -79,7 +84,7 @@ class ResoucionController {
                     VALUES ($1, $2);
             `;
                 const valores = [id_infraestructura, id_resolucion];
-                database_1.default.query(consulta, valores, (error, resultado) => {
+                database_1.default.query(consulta, valores, (error) => {
                     if (error) {
                         console.error('Error al insertar resolucion a la infraestructura:', error);
                     }
@@ -271,10 +276,16 @@ class ResoucionController {
                 database_1.default.query(consulta, valores, (error) => {
                     if (error) {
                         console.error('Error al modificar resolucion:', error);
+                        if (error.code === '23505') {
+                            res.status(409).json({ text: 'Ya existe una resolución con ese nombre' });
+                        }
+                        else {
+                            res.status(500).json({ text: 'Error al modificar resolución' });
+                        }
                     }
                     else {
-                        console.log('resolucion modificado correctamente');
-                        res.json({ text: 'La resolucion se modifico correctamente' });
+                        console.log('Resolución modificada correctamente');
+                        res.status(200).json({ text: 'La resolución se modificó correctamente' });
                     }
                 });
             }

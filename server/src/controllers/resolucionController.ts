@@ -18,8 +18,12 @@ class ResoucionController {
 
             db.query(consulta, valores, (error, resultado) => {
                 if (error) {
-                    console.error('Error al insertar resolucion:', error);
-                    res.status(500).json({ error: 'Error interno del servidor' });
+                    console.error('Error al insertar resolución:', error);
+                    if ((error as any).code === '23505') {
+                        res.status(409).json({ text: 'Ya existe una resolución con ese nombre' });
+                    } else {
+                        res.status(500).json({ error: 'Error al insertar la resolución' });
+                    }
                 } else {
                     const idResolucion = resultado.rows[0]['id_resolucion']; // ID se encuentra en la primera fila
                     console.log('datos de certificado en BD:', idResolucion);
@@ -50,6 +54,7 @@ class ResoucionController {
                     res.json({ text: 'La resolucion se asocio correctamente' });
                 }
             });
+            
 
         } catch (error) {
             console.error('Error al crear resolucion:', error);
@@ -68,7 +73,7 @@ class ResoucionController {
 
             const valores = [id_infraestructura, id_resolucion];
 
-            db.query(consulta, valores, (error, resultado) => {
+            db.query(consulta, valores, (error) => {
                 if (error) {
                     console.error('Error al insertar resolucion a la infraestructura:', error);
                 } else {
@@ -256,9 +261,15 @@ class ResoucionController {
             db.query(consulta, valores, (error) => {
                 if (error) {
                     console.error('Error al modificar resolucion:', error);
+            
+                    if ((error as any).code === '23505') {
+                        res.status(409).json({ text: 'Ya existe una resolución con ese nombre' });
+                    } else {
+                        res.status(500).json({ text: 'Error al modificar resolución' });
+                    }
                 } else {
-                    console.log('resolucion modificado correctamente');
-                    res.json({ text: 'La resolucion se modifico correctamente' });
+                    console.log('Resolución modificada correctamente');
+                    res.status(200).json({ text: 'La resolución se modificó correctamente' });
                 }
             });
         } catch (error) {
