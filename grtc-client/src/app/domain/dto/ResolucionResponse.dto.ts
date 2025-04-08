@@ -53,3 +53,7 @@ export interface ModificarResolucionMessageResponse{
   text:string
 }
 
+export interface VerificarResolucionByNombreResponse{
+  existe:boolean
+}
+

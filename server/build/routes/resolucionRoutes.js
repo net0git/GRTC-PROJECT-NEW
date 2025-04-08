@@ -19,6 +19,7 @@ class TucRoutes {
         this.router.get('/api/resolucion/lista/empresa/:id_empresa_servicio', resolucionController_1.default.ObtenerResolucionesDeEmpresaServicio);
         this.router.get('/api/resolucion/lista/infraestructura/:id_infraestructura', resolucionController_1.default.ObtnerResolucionesDeInfraestructura);
         this.router.put('/api/resolucion/modificar/:id_resolucion', resolucionController_1.default.ModificarResolucion);
+        this.router.get('/api/resolucion/verificar/:nombre_resolucion', resolucionController_1.default.VerificarResolucionByNombre);
     }
 }
 const tucRoutes = new TucRoutes;

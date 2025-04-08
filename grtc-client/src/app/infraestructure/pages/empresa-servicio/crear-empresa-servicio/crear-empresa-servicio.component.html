@@ -260,17 +260,18 @@
                                             <div style="display: flex; align-items: center; gap: 8px;">
                                                 <input type="text" name="nombre_resolucion"
                                                        class="form-control form-control-sm"
-                                                       [(ngModel)]="dataResolucion.nombre_resolucion">
+                                                       [(ngModel)]="dataResolucion.nombre_resolucion"
+                                                       [disabled]="!deshabilitarFormResolucion">
                                               
-                                                <img class="hand_cursor"
+                                                <img class="resolucion-icon"
                                                      src="/icon/sistema/lupa.png" 
                                                      width="32px" alt="logo"
-                                                     title="buscar">
+                                                     title="buscar" (click)="buscarResolucionPorNombre()">
                                               
-                                                <img class="hand_cursor"
+                                                <img class="resolucion-icon"
                                                      src="/icon/sistema/actualizar.png" 
                                                      width="32px" alt="logo"
-                                                     title="limpiar">
+                                                     title="limpiar" (click)="ReiniciarFormularioResolucion()">
                                               </div>
                                             
                                         </div>
@@ -278,33 +279,41 @@
                                             <label for="nro_resolucion" class="form-label  mb-0">Nro resolución</label>
                                             <input type="text" name="nro_resolucion"
                                                 class="form-control form-control-sm"
-                                                [(ngModel)]="dataResolucion.nro_resolucion" appSoloNumeros
-                                                maxlength="8">
+                                                [(ngModel)]="dataResolucion.nro_resolucion" 
+                                                appSoloNumeros
+                                                maxlength="6"
+                                                [disabled]="deshabilitarFormResolucion">
                                         </div>
                                         <div class="mb-2">
                                             <label for="anio_resolucion" class="form-label  mb-0">Año</label>
                                             <input type="text" name="anio_resolucion"
                                                 class="form-control form-control-sm"
-                                                [(ngModel)]="dataResolucion.anio_resolucion" appSoloNumeros
-                                                maxlength="4">
+                                                [(ngModel)]="dataResolucion.anio_resolucion" 
+                                                appSoloNumeros
+                                                maxlength="4"
+                                                [disabled]="deshabilitarFormResolucion">
                                         </div>
                                         <div class="mb-2">
                                             <label for="tomo_resolucion" class="form-label  mb-0">Tomo</label>
                                             <input type="text" name="tomo_resolucion"
                                                 class="form-control form-control-sm"
-                                                [(ngModel)]="dataResolucion.tomo_resolucion" appSoloNumeros
-                                                maxlength="2">
+                                                [(ngModel)]="dataResolucion.tomo_resolucion" 
+                                                appSoloNumeros
+                                                maxlength="2"
+                                                [disabled]="deshabilitarFormResolucion">
                                         </div>
                                         <div class=" mb-2">
                                             <label for="fecha_resolucion" class="form-label   mb-0">Fecha</label>
                                             <input type="date" class="form-control form-control-sm"
-                                                name="fecha_resolucion" [(ngModel)]="dataResolucion.fecha_resolucion">
+                                                name="fecha_resolucion" 
+                                                [(ngModel)]="dataResolucion.fecha_resolucion" 
+                                                [disabled]="deshabilitarFormResolucion">
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="documento_pdf" class="form-label  mb-0">Descripcion</label>
                                             <textarea class="form-control" name="descripcion" rows="3"
-                                                [(ngModel)]="dataResolucion.descripcion"></textarea>
+                                                [(ngModel)]="dataResolucion.descripcion" [disabled]="deshabilitarFormResolucion"></textarea>
                                         </div>
                                     </form>
                                 </div>

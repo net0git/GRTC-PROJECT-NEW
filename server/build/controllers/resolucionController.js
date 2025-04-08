@@ -209,6 +209,30 @@ class ResoucionController {
             }
         });
     }
+    VerificarResolucionByNombre(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { nombre_resolucion } = req.params;
+                const consulta = `
+                SELECT 
+                    *
+                FROM d_resolucion 
+                WHERE nombre_resolucion = $1
+            `;
+                const resolucion = yield database_1.default.query(consulta, [nombre_resolucion]);
+                if (resolucion && resolucion['rows'].length > 0) {
+                    res.json({ existe: true });
+                }
+                else {
+                    res.json({ existe: false });
+                }
+            }
+            catch (error) {
+                console.error('Error al obtener resoluciones:', error);
+                res.status(500).json({ error: 'Error interno del servidor' });
+            }
+        });
+    }
     ObtnerResolucionesDeInfraestructura(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

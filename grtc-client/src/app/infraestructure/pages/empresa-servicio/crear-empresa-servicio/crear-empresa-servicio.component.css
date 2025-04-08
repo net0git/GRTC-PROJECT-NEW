@@ -1,28 +1,32 @@
-.panel{
-    background-color:  #f8f9fa !important;
+.panel {
+  background-color: #f8f9fa !important;
 }
+
 .vertical-center {
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    height: 100%;
-    margin: auto;
-    padding: auto;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  height: 100%;
+  margin: auto;
+  padding: auto;
 }
 
 /* contenedor */
-.contenedor{
-    margin: 0px 10%;
+.contenedor {
+  margin: 0px 10%;
 }
 
+.card {
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
 
+}
 
+/* iconos de resolucion */
+.resolucion-icon {
+  opacity: 0.7;
+}
 
-  .card{
-    box-shadow: 0  .125rem .25rem   rgba(0, 0, 0, .075) !important;
-    
-  }
-
-
-
-
+.resolucion-icon:hover {
+  opacity: 1;
+  cursor: pointer;
+}

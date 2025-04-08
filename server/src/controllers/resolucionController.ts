@@ -194,6 +194,30 @@ class ResoucionController {
         }
     }
 
+    public async VerificarResolucionByNombre(req: Request, res: Response): Promise<void> {
+        try {
+            const { nombre_resolucion } = req.params;
+            const consulta = `
+                SELECT 
+                    *
+                FROM d_resolucion 
+                WHERE nombre_resolucion = $1
+            `;
+            const resolucion = await db.query(consulta, [nombre_resolucion]);
+    
+            if (resolucion && resolucion['rows'].length > 0) {
+                res.json({ existe: true });
+            } else {
+                res.json({ existe: false });
+            }
+    
+        } catch (error) {
+            console.error('Error al obtener resoluciones:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+    }
+    
+
     public async ObtnerResolucionesDeInfraestructura(req: Request, res: Response): Promise<void> {
         try {
             const { id_infraestructura } = req.params;
@@ -242,6 +266,7 @@ class ResoucionController {
             res.status(500).json({ text: 'Error interno del servidor' });
         }
     }
+
 }
 const resolucionController = new ResoucionController();
 export default resolucionController;

@@ -35,7 +35,7 @@ import { SoloLetrasGuionDirective } from '../../../directives/solo-letras-guion.
 import { crear_empresa_servicio_empresa_vf, crear_empresa_servicio_vehiculo_vf, crear_empresa_servicio_representante_vf, crear_empresa_servicio_resolucion_vf, crear_empresa_servicio_itinerario_vf, crear_empresa_servicio_arrendamiento_vf, crear_empresa_servicio_conductor_vf } from '../../../../infraestructure/validatorForm/empresaServicio.validator';
 import { lastValueFrom } from 'rxjs';
 import { CrearPersonaMessageResponse } from '../../../../domain/dto/PersonasResponse.dto';
-import { CrearResolucionEmpresaServicioMessageResponse, CrearResolucionMessageResponse } from '../../../../domain/dto/ResolucionResponse.dto';
+import { CrearResolucionEmpresaServicioMessageResponse, CrearResolucionMessageResponse, VerificarResolucionByNombreResponse } from '../../../../domain/dto/ResolucionResponse.dto';
 import { ResolucionService } from '../../../services/remoto/resolucion/resolucion.service';
 import { ResolucionEmpresaModel } from '../../../../domain/models/ResolucionEmpresa.model';
 import { ItinerarioService } from '../../../services/remoto/itinerario/itinerario.service';
@@ -72,7 +72,7 @@ declare var bootstrap: any;
 export class CrearEmpresaServicioComponent implements OnInit {
 
   private myModal: any;
-  currentStep: number = 1;
+  currentStep: number = 3;
   progressValue = ((1) / 7) * 100;
   pdfUrl: SafeResourceUrl | null = null;
   lista_itinerarios: ListaItinerarioResponse[] = [];
@@ -98,6 +98,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
   deshabilitarFormRepresentante = true
   deshabilitarFormVehiculo = true
   desabilitarButtonCrearEmpresa = false
+  deshabilitarFormResolucion = true
 
   dataPersonaRepresentante: PersonaModel = {
     id_persona: 0,
@@ -136,7 +137,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
   dataResolucion: ResolucionModel = {
     id_resolucion: 0,
     anio_resolucion: '',
-    descripcion: '',
+    descripcion: 'AUTORIZACIÓN',
     documento: '',
     fecha_resolucion: '',
     nombre_resolucion: '',
@@ -294,7 +295,7 @@ export class CrearEmpresaServicioComponent implements OnInit {
       }
     })
   }
-  listarModelos(id_marca: number): Promise<void> {
+  async listarModelos(id_marca: number): Promise<void> {
     return lastValueFrom(this.vehiculoService.ObtenerModelosPorMarca(id_marca)).then((data: ListarModelosResponse[]) => {
       this.lista_modelos = data;
     }).catch(err => {
@@ -339,8 +340,34 @@ export class CrearEmpresaServicioComponent implements OnInit {
     } else {
       this.nextStep()
     }
+  }
 
+  buscarResolucionPorNombre(){
+    this.resolucionService.VerificarResolucionByNombre(this.dataResolucion.nombre_resolucion).subscribe({
+      next:(res:VerificarResolucionByNombreResponse)=>{
+        if(res.existe){
+          alert('La resolucion ya existe')
+        }
+        else{ 
+          this.deshabilitarFormResolucion=false
+        }
+      },
+      error:(err)=>{
+        console.error('Error al buscar resolucion por nombre:',err)
+      },
+      complete:()=>{  
+        console.log('Proceso de busqueda de resolucion por nombre completado')
+      }
+     })
+  }
 
+  ReiniciarFormularioResolucion(){
+    this.dataResolucion.nombre_resolucion='',
+    this.dataResolucion.anio_resolucion='',
+    this.dataResolucion.tomo_resolucion=null,
+    this.dataResolucion.fecha_resolucion='',
+    this.dataResolucion.descripcion='AUTORIZACIÓN'
+    this.deshabilitarFormResolucion=true
   }
 
   validarDatosFormularioResolucion() {

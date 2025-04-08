@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CrearResolucionEmpresaServicioMessageResponse, CrearResolucionInfraestructuraMessageResponse, CrearResolucionMessageResponse, ListaResolucionResponse, ModificarResolucionMessageResponse, ResolucionBusquedaResponse, ResolucionResponse } from '../../../../domain/dto/ResolucionResponse.dto';
+import { CrearResolucionEmpresaServicioMessageResponse, CrearResolucionInfraestructuraMessageResponse, CrearResolucionMessageResponse, ListaResolucionResponse, ModificarResolucionMessageResponse, ResolucionBusquedaResponse, ResolucionResponse, VerificarResolucionByNombreResponse } from '../../../../domain/dto/ResolucionResponse.dto';
 import { environment } from '../../../../../../environments/environment';
 import { ResolucionModel } from '../../../../domain/models/Resolucion.model';
 import { ResolucionEmpresaModel } from '../../../../domain/models/ResolucionEmpresa.model';
@@ -26,6 +26,7 @@ export class ResolucionService {
         // this.router.get('/api/resolucion/lista/infraestructura/:id_infraestructura',resolucionController.ObtnerResolucionesDeInfraestructura)
         // this.router.put('/api/resolucion/modificar/:id_resolucion',resolucionController.ModificarResolucion)
        // this.router.get('/api/resolucion/busqueda/:nro_resolucion/:anio_resolucion',resolucionController.ObtenerResolucionPorNroAnio)
+       // this.router.get('/api/resolucion/verificar/:nombre_resolucion',resolucionController.VerificarResolucionByNombre)
 
 
   CrearResolucion(cuerpo_resolucion:ResolucionModel):Observable<CrearResolucionMessageResponse>{
@@ -62,6 +63,10 @@ export class ResolucionService {
     cuerpo_resolucion.nombre_resolucion=cuerpo_resolucion.nombre_resolucion.trim().toUpperCase()
     cuerpo_resolucion.descripcion=cuerpo_resolucion.descripcion.trim().toUpperCase()
     return this.http.put<ModificarResolucionMessageResponse>(this.api_uri_resolucion+`/modificar/${id_resolucion}`,cuerpo_resolucion)
+  }
+
+  VerificarResolucionByNombre(nombre_resolucion:string):Observable<VerificarResolucionByNombreResponse>{
+    return this.http.get<VerificarResolucionByNombreResponse>(this.api_uri_resolucion+'/verificar/'+nombre_resolucion)
   }
 
 

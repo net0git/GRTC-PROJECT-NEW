@@ -21,6 +21,7 @@ class TucRoutes{
         this.router.get('/api/resolucion/lista/empresa/:id_empresa_servicio',resolucionController.ObtenerResolucionesDeEmpresaServicio)
         this.router.get('/api/resolucion/lista/infraestructura/:id_infraestructura',resolucionController.ObtnerResolucionesDeInfraestructura)
         this.router.put('/api/resolucion/modificar/:id_resolucion',resolucionController.ModificarResolucion)
+        this.router.get('/api/resolucion/verificar/:nombre_resolucion',resolucionController.VerificarResolucionByNombre)
     }
 }
 
