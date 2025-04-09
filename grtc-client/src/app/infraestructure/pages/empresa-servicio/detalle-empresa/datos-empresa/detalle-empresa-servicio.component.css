@@ -201,5 +201,113 @@
   margin-top: 10px;
 }
 
+/* boton notas */
+.doc-chat-popper {
+  position: fixed;
+  z-index: 9999;
+  bottom: 20px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: #176091;
+  color: #fff;
+}
 
- 
+/* .message-panel {
+  
+    position: fixed;
+    z-index: 9999;
+    bottom: 90px;
+    right: 30px;
+    width: 460px;
+    height: 660px;
+    border-radius: 2%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #D5DDE5;
+    border: 6px solid #c1c4c7;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.50);
+
+}
+  */
+
+  .message-panel {
+    
+    position: fixed;
+    z-index: 9999;
+    bottom: 90px;
+    right: 30px;
+    width: 400px;
+    height: 700px;
+    border-radius: 2%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* flex-direction: row; */
+    /* justify-content: center; */
+    align-items: center;
+    background-color: #D5DDE5;
+    border: 6px solid #c1c4c7;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0,0.75);
+  
+    overflow-y: auto;
+    flex: 1;
+  
+
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none; 
+
+    font-size: 0.9rem;
+
+  }
+
+   /* Scroll personalizado para paneles de navegación */
+.message-panel::-webkit-scrollbar {
+  width: 7px;
+}
+
+.message-panel::-webkit-scrollbar-thumb {
+  background-color: #b7bbb877;
+  border-radius: 10px;
+}
+
+.message-panel::-webkit-scrollbar-track {
+  background: #e9ecef;
+}
+  
+  /* 🔽 Clase cuando está visible */
+  .message-panel.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  /* 🔽 Clase cuando está oculto (mantiene en DOM, pero invisible) */
+  .message-panel.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* card note */
+  /* .card_panel{
+    margin: 0px ;
+    width: 100%;
+  } */
+  .card-note {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin-top: 1.2rem;
+    
+  }

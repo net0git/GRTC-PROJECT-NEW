@@ -6,9 +6,26 @@
     /* overflow-y: hidden; */
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
     
     
  }
+
+ /* Scroll personalizado para paneles de navegación */
+.panel::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  .panel::-webkit-scrollbar-thumb {
+    background-color: #b7bbb877;
+    border-radius: 10px;
+  }
+  
+  .panel::-webkit-scrollbar-track {
+    background: #e9ecef;
+  }
+
+
 
 .icon-custom {
     

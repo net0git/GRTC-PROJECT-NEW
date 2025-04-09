@@ -44,6 +44,10 @@ declare var bootstrap: any;
   styleUrl: './detalle-empresa-servicio.component.css'
 })
 export class DetalleEmpresaServicioComponent implements OnInit {
+  mostrar: boolean = false;
+
+ 
+
 
   pdfUrl: SafeResourceUrl | null = null;
   dataEmpresaDetalle: DetalleEmpresaServicioResponse = {
@@ -135,6 +139,34 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`/doc/error_carga.pdf`);
     this.verPerfil();
   }
+
+   //------------------------------------------------- 
+
+  
+  notasList: any[] = [
+    {
+      usuario: "juan.perez",
+      fecha: "2025-04-09T10:30:00",
+      contenido: "Primera nota de prueba."
+    },
+    {
+      usuario: "ana.gomez",
+      fecha: "2025-04-09T11:15:00",
+      contenido: "Segunda nota, con otro contenido."
+    },
+    {
+      usuario: "juan.perez",
+      fecha: "2025-04-09T10:30:00",
+      contenido: "Primera nota de prueba."
+    },
+    {
+      usuario: "ana.gomez",
+      fecha: "2025-04-09T11:15:00",
+      contenido: "Segunda nota, con otro contenido."
+    }
+  ];
+
+  // ------------------------------------------------
 
   //disableInvitado='display: block';
   verPerfil(){

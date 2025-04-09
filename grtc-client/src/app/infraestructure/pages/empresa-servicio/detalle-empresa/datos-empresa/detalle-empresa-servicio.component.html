@@ -12,8 +12,9 @@
                         <p class="subtitulo_menu">{{dataEmpresaDetalle.tipo_servicio}} </p>
                     </div>
                 </div>
-                <div >
-                    <i class="bi bi-gear icon-custom_gear" title="Modificar datos de la Empresa" (click)="modificarEmpresa()" [style]="disableInvitado"></i>
+                <div>
+                    <i class="bi bi-gear icon-custom_gear" title="Modificar datos de la Empresa"
+                        (click)="modificarEmpresa()" [style]="disableInvitado"></i>
                 </div>
             </div>
             <hr>
@@ -22,7 +23,8 @@
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" id="section1-tab" data-bs-toggle="tab" href="#section1">Datos Empresa</a>
+                                <a class="nav-link active" id="section1-tab" data-bs-toggle="tab" href="#section1">Datos
+                                    Empresa</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="section2-tab" data-bs-toggle="tab"
@@ -82,14 +84,16 @@
                                     <li><strong>Distrito:</strong> {{dataEmpresaDetalle.distrito}}</li>
                                     <li><strong>Provincia:</strong> {{dataEmpresaDetalle.provincia}}</li>
                                     <li><strong>Departamento:</strong> {{dataEmpresaDetalle.departamento}}</li>
-                                    <li><strong>Periodo de vigencia:</strong> {{dataEmpresaDetalle.fecha_inicial| date:'dd/MM/yyyy'}} - {{dataEmpresaDetalle.fecha_final| date:'dd/MM/yyyy'}}</li>
+                                    <li><strong>Periodo de vigencia:</strong> {{dataEmpresaDetalle.fecha_inicial|
+                                        date:'dd/MM/yyyy'}} - {{dataEmpresaDetalle.fecha_final| date:'dd/MM/yyyy'}}</li>
                                     <li><strong>Representante legal:</strong> {{dataEmpresaDetalle.representante_legal}}
 
                                 </ul>
                                 <div class="text-start panel-resolucion">
 
-                                    <button class="my-button_resolucion" type="button" (click)="obtenerResolucionAutorizacion()"><i
-                                            class="bi bi-filetype-pdf icon-custom-pdf" > </i> ver resolucion </button>
+                                    <button class="my-button_resolucion" type="button"
+                                        (click)="obtenerResolucionAutorizacion()"><i
+                                            class="bi bi-filetype-pdf icon-custom-pdf"> </i> ver resolucion </button>
                                     <button class="my-button_reporte" (click)="generarReportePDF()"><i
                                             class="bi bi-clipboard-data icon-custom-pdf"></i> Generar Reporte</button>
 
@@ -97,10 +101,11 @@
                                 <div class="container mt-4">
                                     <div class="d-flex justify-content-between">
                                         <p class="subtitulo_menu mt-4">Resoluciones</p>
-                                        <button class="my-button_ingreso_resolucion" (click)="agregarResolucion()" [style]="disableInvitado"> <i
-                                                class="bi bi-arrow-down-square"></i> agregar Resolucion</button>
+                                        <button class="my-button_ingreso_resolucion" (click)="agregarResolucion()"
+                                            [style]="disableInvitado"> <i class="bi bi-arrow-down-square"></i> agregar
+                                            Resolucion</button>
                                     </div>
-                                    
+
                                     <table class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
@@ -119,9 +124,13 @@
                                                 <td>{{resolucion.nro_resolucion}}</td>
                                                 <td>{{resolucion.anio_resolucion}}</td>
                                                 <td>{{resolucion.tomo_resolucion}}</td>
-                                                <td class="text-primary text_documento" (click)="obternerResolucionById(resolucion.id_resolucion)">{{resolucion.nombre_resolucion}}</td>
+                                                <td class="text-primary text_documento"
+                                                    (click)="obternerResolucionById(resolucion.id_resolucion)">
+                                                    {{resolucion.nombre_resolucion}}</td>
                                                 <td>{{resolucion.descripcion}}</td>
-                                                <td  [style]="disableInvitado" > <i class="bi bi-pencil-square hand_cursor" (click)="editarResolucion(resolucion.id_resolucion)"></i></td>
+                                                <td [style]="disableInvitado"> <i
+                                                        class="bi bi-pencil-square hand_cursor"
+                                                        (click)="editarResolucion(resolucion.id_resolucion)"></i></td>
                                             </tr>
 
                                         </tbody>
@@ -131,8 +140,8 @@
                             <!-- Contenido de la Sección 2: conductores -->
                             <div class="tab-pane fade" id="section2">
                                 <div class="d-flex mb-2">
-                                    <button type="button" class="btn btn-primary" (click)="modificarConductores()" [style]="disableInvitado">+add <i
-                                            class="bi bi-nut"></i></button>
+                                    <button type="button" class="btn btn-primary" (click)="modificarConductores()"
+                                        [style]="disableInvitado">+add <i class="bi bi-nut"></i></button>
                                 </div>
                                 <table class="table text-center  table-hover">
                                     <thead class="thead-ligth bg-secondary text-white table-success">
@@ -155,7 +164,8 @@
                                             <td>{{item.documento}}</td>
                                             <td>{{item.nro_licencia}}</td>
                                             <td>{{item.categoria}}</td>
-                                            <td><i class="bi bi-trash3-fill" (click)="eliminarElementoConductor(item)"></i> </td>
+                                            <td><i class="bi bi-trash3-fill"
+                                                    (click)="eliminarElementoConductor(item)"></i> </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -164,8 +174,8 @@
                             <!-- Contenido de la Sección 3: Arrendamiento -->
                             <div class="tab-pane fade" id="section3">
                                 <div class="d-flex mb-2">
-                                    <button type="button" class="btn btn-primary" (click)="modificarArrendamiento()" [style]="disableInvitado">+add <i
-                                            class="bi bi-nut"></i></button>
+                                    <button type="button" class="btn btn-primary" (click)="modificarArrendamiento()"
+                                        [style]="disableInvitado">+add <i class="bi bi-nut"></i></button>
                                 </div>
                                 <table class="table text-center  table-hover">
                                     <thead class="thead-ligth bg-secondary text-white table-success">
@@ -190,7 +200,8 @@
                                             <td>{{item.direccion}}</td>
                                             <td>{{item.fecha_inicio | date:'dd/MM/yyyy'}}</td>
                                             <td>{{item.fecha_fin | date:'dd/MM/yyyy'}}</td>
-                                            <td><i class="bi bi-trash3-fill" (click)="eliminarElementoArrendamiento(item)"></i> </td>
+                                            <td><i class="bi bi-trash3-fill"
+                                                    (click)="eliminarElementoArrendamiento(item)"></i> </td>
 
                                         </tr>
                                     </tbody>
@@ -199,8 +210,8 @@
                             <!-- Contenido de la Sección 4: Itinerario -->
                             <div class="tab-pane fade" id="section4">
                                 <div class="d-flex mb-2">
-                                    <button type="button" class="btn btn-primary" (click)="modificarItinerario()" [style]="disableInvitado">+add <i
-                                            class="bi bi-nut"></i></button>
+                                    <button type="button" class="btn btn-primary" (click)="modificarItinerario()"
+                                        [style]="disableInvitado">+add <i class="bi bi-nut"></i></button>
                                 </div>
                                 <table class="table text-center  table-hover">
                                     <colgroup>
@@ -231,7 +242,8 @@
                                             <td>{{item.destino}}</td>
                                             <td>{{item.itinerario}}</td>
                                             <td>{{item.frecuencia}}</td>
-                                            <td><i class="bi bi-trash3-fill" (click)="eliminarElementoItinerario(item)"></i> </td>
+                                            <td><i class="bi bi-trash3-fill"
+                                                    (click)="eliminarElementoItinerario(item)"></i> </td>
 
                                         </tr>
                                     </tbody>
@@ -240,8 +252,8 @@
                             <!-- Contenido de la Sección 5: Vehiculos -->
                             <div class="tab-pane fade" id="section5">
                                 <div class="d-flex mb-2">
-                                    <button type="button" class="btn btn-primary" (click)="modificarVehiculos()" [style]="disableInvitado">+add <i
-                                            class="bi bi-nut"></i></button>
+                                    <button type="button" class="btn btn-primary" (click)="modificarVehiculos()"
+                                        [style]="disableInvitado">+add <i class="bi bi-nut"></i></button>
 
                                 </div>
                                 <table class="table text-center  table-hover">
@@ -254,7 +266,7 @@
                                         <col style="width: 10%;">
                                         <col style="width: 10%;">
                                         <col style="width: 10%;">
-                                        <col style="width: 10%;" >
+                                        <col style="width: 10%;">
                                     </colgroup>
                                     <thead class="text-white table-success">
                                         <tr>
@@ -290,16 +302,15 @@
                                                     [style.color]="vehiculo.id_tuc !== null ? '#007bff' : '#6c757d' "
                                                 ></i> -->
 
-                                                <img  *ngIf="vehiculo.id_tuc !== null" 
-                                                class="hand_cursor"
-                                                src="/icon/empresa/tuc/tuc_2.png" 
-                                                width="32px"  alt="logo"
-                                                title="TUC asigado"
-                                                (click)="openModal(vehiculo)">
+                                                <img *ngIf="vehiculo.id_tuc !== null" class="hand_cursor"
+                                                    src="/icon/empresa/tuc/tuc_2.png" width="32px" alt="logo"
+                                                    title="TUC asigado" (click)="openModal(vehiculo)">
                                             </td>
 
                                             <!-- <td ><i class="bi bi-filetype-pdf icon-custom-pdf" (click)="openModal(vehiculo)"></i></td> -->
-                                            <td ><button class="btn btn-secondary btn-sm" (click)="DarBajaVehiculo(vehiculo)" [style]="disableInvitado"><i class="bi bi-arrow-down-circle-fill"></i> Baja</button></td>
+                                            <td><button class="btn btn-secondary btn-sm"
+                                                    (click)="DarBajaVehiculo(vehiculo)" [style]="disableInvitado"><i
+                                                        class="bi bi-arrow-down-circle-fill"></i> Baja</button></td>
 
                                         </tr>
 
@@ -360,7 +371,9 @@
 
                                                             <div class="d-flex justify-content-center mt-2">
                                                                 <button type="button"
-                                                                    class="btn btn-success  button-full-width" (click)="CrearElementoTuc(vehiculo)" [style]="disableInvitado">GenerarTuc
+                                                                    class="btn btn-success  button-full-width"
+                                                                    (click)="CrearElementoTuc(vehiculo)"
+                                                                    [style]="disableInvitado">GenerarTuc
                                                                     <i class="bi bi-nut"></i></button>
 
                                                             </div>
@@ -395,18 +408,18 @@
                                         </tr>
                                     </thead>
 
-                                    <tbody >
-                                  <tr *ngFor="let item of listaHistorialVehicular, index as i"  >
-                                    
-                                   <th scope="row">{{i+1}}</th>
-                                     <td>{{item.placa}}</td>
-                                    <td>{{item.condicion}}</td>
-                                    <td>{{item.nombre_resolucion}}</td>
-                                    <td>{{item.ruta}}</td>
-                                 
+                                    <tbody>
+                                        <tr *ngFor="let item of listaHistorialVehicular, index as i">
 
-                                  </tr> 
-                                </tbody>
+                                            <th scope="row">{{i+1}}</th>
+                                            <td>{{item.placa}}</td>
+                                            <td>{{item.condicion}}</td>
+                                            <td>{{item.nombre_resolucion}}</td>
+                                            <td>{{item.ruta}}</td>
+
+
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -426,53 +439,87 @@
     </div>
 
 </div>
+<div [ngClass]="{ 'visible': mostrar, 'hidden': !mostrar }" class="message-panel shadow-lg">
+    <div *ngFor="let item of notasList" style="width: 88%;">
+        <div class="card-note">
+            <div class="d-flex justify-content-between align-items-center my-0">
+                <h5 class="mt-0">{{item.usuario}}</h5>
+                <p class="text-muted mb-1">{{item.fecha}}</p>
+            </div>
+            <p>{{item.contenido}}</p>
+            <div class="d-flex justify-content-end m-0">
+                <i class="bi bi-x-circle m-0" ></i>
+            </div>
+            
+        </div>
 
+    </div>
+
+    <div class="mb-3" style="width: 88%;">
+        <label class="form-label mb-1 mt-3">Nota:</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+        <div class="d-flex justify-content-end mt-2">
+            <button class="btn btn-success btn-sm">+ Add</button>
+        </div>
+    </div>
+    
+</div>
+<!-- Boton de notas -->
+<div class="doc-chat-popper" data-ember-action="" data-ember-action-4992="4992" (click)="mostrar = !mostrar">
+
+    <i *ngIf="!mostrar" class="bi bi-chat-square-text-fill" style="font-size: 1.5rem;"></i>
+    <i *ngIf="mostrar" class="bi bi-x-lg" style="font-size: 1.2rem;"></i>
+</div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-            <div class="bg-secondary custom-width">
-                <h5 class="modal-title m-2 text-white" id="exampleModalLongTitle">N° de impresion: {{dataTuc.nro_impresion}}</h5>
-                <h4 class="modal-title m-2 text-white" id="exampleModalLongTitle2">TUC: {{dataTuc.nro_tuc}}</h4>
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="bg-secondary custom-width">
+                    <h5 class="modal-title m-2 text-white" id="exampleModalLongTitle">N° de impresion:
+                        {{dataTuc.nro_impresion}}</h5>
+                    <h4 class="modal-title m-2 text-white" id="exampleModalLongTitle2">TUC: {{dataTuc.nro_tuc}}</h4>
+                </div>
+
+                <!-- <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button> -->
             </div>
-          
-          <!-- <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button> -->
+            <div class="modal-body text-start">
+                <ul>
+                    <li><strong>PLACA:</strong> {{dataTuc.placa}}</li>
+                    <li><strong>RAZON SOCIAL:</strong> {{dataTuc.razon_social}}</li>
+                    <li><strong>AÑO DE FABRICACIÓN:</strong> {{dataTuc.anio_fabricacion}}</li>
+                    <li><strong>MARCA:</strong> {{dataTuc.marca}}</li>
+
+                    <li><strong>MODALIDAD:</strong> {{dataTuc.modalidad}}</li>
+                    <li><strong>PARTIDA REGISTRAL:</strong> {{dataTuc.nro_part_reg}}</li>
+                    <li><strong>RESOLUCIÓN:</strong> {{dataTuc.nombre_resolucion}}</li>
+                    <li><strong>CONDICIÓN:</strong> {{dataTuc.condicion}}</li>
+                    <li><strong>COLOR:</strong> {{dataTuc.color}}</li>
+                    <li><strong>N° CHASIS:</strong> {{dataTuc.nro_chasis}}</li>
+
+                    <li><strong>N° ASIENTOS:</strong> {{dataTuc.nro_asientos}}</li>
+                    <li><strong>CARGA:</strong> {{dataTuc.carga}}</li>
+                    <li><strong>PESO:</strong> {{dataTuc.peso}}</li>
+                    <li><strong>FECHA EXPED:</strong> {{dataTuc.fecha_exp | date:'dd-MM-yyyy'}}</li>
+                    <li><strong>FECHA VENCI:</strong> {{dataTuc.fecha_ven | date:'dd-MM-yyyy'}}</li>
+
+                    <li><strong>RUTA AUTORIZADA A OPERAR:</strong> {{dataTuc.ruta}}</li>
+                </ul>
+                <hr>
+                <label class="mx-2 mb-2">copias:</label>
+                <div class="mb-3">
+                    <textarea name="tuc_copia" placeholder="Descripción" class="form-control" rows="4"
+                        [(ngModel)]="dataTuc.copia"></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+                <button type="button" class="btn btn-primary" (click)="modificarDuplicadosTUC()"
+                    [style]="disableInvitado">Guardar Cambios</button>
+            </div>
         </div>
-        <div class="modal-body text-start">
-            <ul>
-                <li><strong>PLACA:</strong> {{dataTuc.placa}}</li>
-                <li><strong>RAZON SOCIAL:</strong> {{dataTuc.razon_social}}</li>
-                <li><strong>AÑO DE FABRICACIÓN:</strong> {{dataTuc.anio_fabricacion}}</li>
-                <li><strong>MARCA:</strong> {{dataTuc.marca}}</li>
-              
-                <li><strong>MODALIDAD:</strong> {{dataTuc.modalidad}}</li>
-                <li><strong>PARTIDA REGISTRAL:</strong> {{dataTuc.nro_part_reg}}</li>
-                <li><strong>RESOLUCIÓN:</strong> {{dataTuc.nombre_resolucion}}</li>
-                <li><strong>CONDICIÓN:</strong> {{dataTuc.condicion}}</li>
-                <li><strong>COLOR:</strong> {{dataTuc.color}}</li>
-                <li><strong>N° CHASIS:</strong> {{dataTuc.nro_chasis}}</li>
-  
-                <li><strong>N° ASIENTOS:</strong> {{dataTuc.nro_asientos}}</li>
-                <li><strong>CARGA:</strong> {{dataTuc.carga}}</li>
-                <li><strong>PESO:</strong> {{dataTuc.peso}}</li>
-                <li><strong>FECHA EXPED:</strong> {{dataTuc.fecha_exp | date:'dd-MM-yyyy'}}</li>
-                <li><strong>FECHA VENCI:</strong> {{dataTuc.fecha_ven | date:'dd-MM-yyyy'}}</li>
-  
-                <li><strong>RUTA AUTORIZADA A OPERAR:</strong> {{dataTuc.ruta}}</li>
-              </ul>
-              <hr>
-              <label class="mx-2 mb-2">copias:</label>
-              <div class="mb-3">
-                <textarea name="tuc_copia" placeholder="Descripción" class="form-control" rows="4" [(ngModel)]="dataTuc.copia" ></textarea>
-              </div>
-        </div>
-        
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-          <button type="button" class="btn btn-primary" (click)="modificarDuplicadosTUC()" [style]="disableInvitado">Guardar Cambios</button>
-        </div>
-      </div>
     </div>
 </div>
