@@ -21,12 +21,14 @@ export class InfraestructuraComponent implements OnInit {
   cantidad_er_tipo2:number=0;
   cantidad_er_tipo3:number=0;
 
+  disableInvitado='display: block';
+
   constructor(private infraestructuraService:InfraestructuraService, private credencialesService: CredencialesService){}
   ngOnInit(): void {
     this.listarInfraestructura()
     this.verPerfil();
   }
-  disableInvitado='display: block';
+  
   verPerfil(){
     if(this.credencialesService.isInvitado()){
       this.disableInvitado='display: none';

@@ -5,12 +5,13 @@ import { LoginService } from '../../../services/remoto/login/login.service';
 import { CredencialesService } from '../../../services/local/credenciales/credenciales.service';
 import { UsuarioModel } from '../../../../domain/models/usuario.model';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-navegador',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './navegador.component.html',
   styleUrl: './navegador.component.css'
 })

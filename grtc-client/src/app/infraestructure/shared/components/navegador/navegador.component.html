@@ -15,10 +15,10 @@
                     <a class="nav-link" routerLink="/principal/lista-empresas-servicio"><i class="bi bi-building icon-custom" title="empresas"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/principal/reportes"><i class="bi bi-graph-up-arrow icon-custom"  title="reportes"></i></a>
+                    <a class="nav-link" routerLink="/principal/panel-reportes"><i class="bi bi-graph-up-arrow icon-custom"  title="reportes"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/principal/busqueda"><i class="bi bi-search icon-custom"  title="busqueda"></i></a>
+                    <a class="nav-link" routerLink="/principal/busqueda-historial"><i class="bi bi-search icon-custom"  title="busqueda"></i></a>
                 </li>
             </ul>
         </div>
@@ -50,7 +50,7 @@
                         <i style="color: rgb(211, 180, 7);" class="bi  bi-info-circle icon-custom mx-2" title="infromacion del sistema"></i>
                     </a>
                 </li>
-                <li class="nav-item"  >
+                <li *ngIf="credenciales.rol=='ADMINISTRADOR'" class="nav-item">
                     <!-- principal/backup -->
                     <a class="nav-link" routerLink="/principal/backup">
                         <i  class="bi bi-database-fill icon-custom mx-2" title="infromacion del sistema" title="crear copia de seguridad"></i>

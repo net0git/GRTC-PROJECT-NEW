@@ -106,7 +106,7 @@
                     <td *ngIf="shouldShowColumnEmpresa('tipo servicio')">{{ empresa.tipo_servicio }}</td>
                     <td *ngIf="shouldShowColumnEmpresa('Fecha inicio')">{{ empresa.fecha_inicial | date :'dd/MM/yyyy' }}
                     </td>
-                    <td *ngIf="shouldShowColumnEmpresa('Fecha fin')">{{ empresa.fecha_final | date }}</td>
+                    <td *ngIf="shouldShowColumnEmpresa('Fecha fin')">{{ empresa.fecha_final | date :'dd/MM/yyyy' }}</td>
                     <td *ngIf="shouldShowColumnEmpresa('estado')">{{ empresa.estado }}</td>
 
                     <td *ngIf="shouldShowColumnEmpresa('vehiculos')">
@@ -154,8 +154,8 @@
                                     <td *ngIf="shouldShowVehicleColumn('Itinerario')">{{ vehiculo.itinerario }}</td>
                                     <td *ngIf="shouldShowVehicleColumn('Fecha inicial')">{{ vehiculo.fecha_inicial |
                                         date : 'dd/mm/yyyy'}}</td>
-                                    <td *ngIf="shouldShowVehicleColumn('Fecha final')">{{ vehiculo.fecha_final | date }}
-                                    </td>
+                                    <td *ngIf="shouldShowVehicleColumn('Fecha final')">{{ vehiculo.fecha_final | date : 'dd/mm/yyyy'}}</td>
+                                   
                                 </tr>
                             </table>
                         </div>

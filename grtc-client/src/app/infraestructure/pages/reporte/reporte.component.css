@@ -177,13 +177,19 @@
     margin: 0px;
 
 }
-/*  */
-#exampleModalCenter .modal-body{
-    /* background-color: #176091; */
-    /* background-color: #fdfdfb;
-  */
 
+.modal-header{
+    background-color: #176091;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
+.modal-header .subtitulo_menu {
+    color: #F8F9FA !important;
+}
+.modal-header .btn-close{
+    color: #F8F9FA !important;
+}
+
 
 #modalEmpresasServicio .modal-dialog {
     max-width: 95%;
