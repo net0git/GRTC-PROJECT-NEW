@@ -19,6 +19,7 @@ class EmpresaServicioRoutes{
         this.router.put('/api/empresaservicio/:id_empresa_servicio',empresaServicioController.ModificarEmpresaServicio)  
         this.router.get('/api/empresaservicio/:id_tipo_servicio/:empresa_ruc',empresaServicioController.BuscarEmpresaPorRuc_TipoServicio)
         this.router.post('/api/empresaservicio/:placa',empresaServicioController.ObtenerEmpresaByPlacaVehiculo)
+        this.router.put('/api/empresaservicio/notas/:id_empresa_servicio',empresaServicioController.ModificarNotasEmpresaServicio)
         }
         
        

@@ -18,6 +18,7 @@ class EmpresaServicioRoutes {
         this.router.put('/api/empresaservicio/:id_empresa_servicio', empresaServicioController_1.default.ModificarEmpresaServicio);
         this.router.get('/api/empresaservicio/:id_tipo_servicio/:empresa_ruc', empresaServicioController_1.default.BuscarEmpresaPorRuc_TipoServicio);
         this.router.post('/api/empresaservicio/:placa', empresaServicioController_1.default.ObtenerEmpresaByPlacaVehiculo);
+        this.router.put('/api/empresaservicio/notas/:id_empresa_servicio', empresaServicioController_1.default.ModificarNotasEmpresaServicio);
     }
 }
 const empresaServicioRoutes = new EmpresaServicioRoutes;

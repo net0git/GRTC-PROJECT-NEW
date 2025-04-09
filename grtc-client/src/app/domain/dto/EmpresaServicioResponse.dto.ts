@@ -56,7 +56,7 @@ export interface DetalleEmpresaServicioResponse {
   expediente: string;               // Expediente asociado al servicio
   estado: string;  // Estado del servicio
   porcentaje: number;               // Porcentaje de avance del servicio
-
+  notas: string; // notas de la empresa por servicio
 }
 
 export interface EmpresaServicioResponse {
@@ -74,4 +74,8 @@ export interface modificarEmpresaServicioResponse{
 
 export interface crearEmpresaServicioResponse{
   id_empresa_servicio: number
+}
+
+export interface modificarNotasEmpresaServicioResponse{
+  text:string
 }

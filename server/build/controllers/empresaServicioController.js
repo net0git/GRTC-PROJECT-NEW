@@ -109,8 +109,10 @@ class EmpresaServicioController {
                                 ts.denominacion as tipo_servicio ,
                                 ts.id_tipo_servicio,
                                 te.* ,CONCAT(pe.nombres,' ',pe.ap_paterno,' ',pe.ap_materno) AS representante_legal, 
-                                tes.expediente, tes.fecha_inicial, 
+                                tes.expediente, 
+                                tes.fecha_inicial, 
                                 tes.fecha_final,
+                                tes.notas,
                                 CASE
                                     WHEN CURRENT_DATE < tes.fecha_final - INTERVAL '6 months' THEN 'Activo'
                                     WHEN CURRENT_DATE >= tes.fecha_final - INTERVAL '6 months' AND CURRENT_DATE <= tes.fecha_final THEN 'Alerta'
@@ -223,6 +225,33 @@ class EmpresaServicioController {
             }
             catch (error) {
                 console.error('Error al obtener empresa:', error);
+                res.status(500).json({ error: 'Error interno del servidor' });
+            }
+        });
+    }
+    ModificarNotasEmpresaServicio(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_empresa_servicio } = req.params;
+                const { notas } = req.body;
+                const consulta = `
+                UPDATE t_empresa_servicio 
+                    SET  notas=$1
+                WHERE id_empresa_servicio=$2
+                `;
+                const valores = [notas, id_empresa_servicio];
+                database_1.default.query(consulta, valores, (error) => {
+                    if (error) {
+                        console.error('Error al modificar notas de empresa por servicio:', error);
+                    }
+                    else {
+                        console.log('Las notas de la empresa por servicio se  modificado correctamente');
+                        res.status(200).json({ text: 'Las notas de la empresa por servicio se modifico correctamente' });
+                    }
+                });
+            }
+            catch (error) {
+                console.error('Error fatal al modificar notas de la empresa por servicio:', error);
                 res.status(500).json({ error: 'Error interno del servidor' });
             }
         });

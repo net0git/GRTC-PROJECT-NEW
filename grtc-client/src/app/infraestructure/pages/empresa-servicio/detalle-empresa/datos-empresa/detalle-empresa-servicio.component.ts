@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavegadorComponent } from '../../../../shared/components/navegador/navegador.component';
 import { SubnavegadorComponent } from '../../../../shared/components/subnavegador/subnavegador.component';
-import { DetalleEmpresaServicioResponse } from '../../../../../domain/dto/EmpresaServicioResponse.dto';
+import { DetalleEmpresaServicioResponse, modificarNotasEmpresaServicioResponse } from '../../../../../domain/dto/EmpresaServicioResponse.dto';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { EmpresaServicioService } from '../../../../services/remoto/empresas-servicio/empresa-servicio.service';
 import { ResolucionService } from '../../../../services/remoto/resolucion/resolucion.service';
@@ -69,7 +69,8 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     fecha_final: new Date(),         // Fecha final inicializada con la fecha actual
     expediente: '',                  // Expediente inicializado como cadena vacía
     estado: '',                      // Estado inicializado como cadena vacía
-    porcentaje: 0                    // Porcentaje inicializado como 0
+    porcentaje: 0,                    // Porcentaje inicializado como 0
+    notas: ''                        // Notas de empresas por servicio
   };
 
   dataTuc: TUCModel = {
@@ -166,6 +167,7 @@ export class DetalleEmpresaServicioComponent implements OnInit {
     }
   ];
 
+
   // ------------------------------------------------
 
   //disableInvitado='display: block';
@@ -192,6 +194,11 @@ export class DetalleEmpresaServicioComponent implements OnInit {
       next: (res: DetalleEmpresaServicioResponse) => {
         this.dataEmpresaDetalle = res;
         console.log(this.dataEmpresaDetalle);
+        if(this.dataEmpresaDetalle.notas == null){
+          this.notasList = [];
+        }else{
+          this.notasList = JSON.parse(this.dataEmpresaDetalle.notas);
+        }
       },
       error: (err) => {
         console.error('Error al obtener detalle de empresa:', err);
@@ -206,6 +213,46 @@ export class DetalleEmpresaServicioComponent implements OnInit {
         this.listarHistorialVehicular(this.dataEmpresaDetalle.id_empresa_servicio);
       }
     });
+  }
+ // 
+
+  agregarNotasEmpresa() {
+    let nota: any = {
+      usuario: this.credencialesService.credenciales.nombre_usuario,
+      fecha: new Date().toISOString().slice(0, 19),
+      contenido: ((<HTMLInputElement>document.getElementById('text_area_nota')).value).toUpperCase()
+    };
+      this.notasList.push(nota);
+      
+      this.empresaServicioService.ModificarNotasEmpresaServicio(this.dataEmpresaDetalle.id_empresa_servicio, JSON.stringify(this.notasList)).subscribe({
+        next: (res: modificarNotasEmpresaServicioResponse) => {
+          console.log(res)
+        },
+        error: (err) => {
+          console.error('Error al modificar notas de empresa por servicio:', err);
+        },
+        complete: () => {
+          console.log('Notas de empresa modificadas correctamente');
+          (<HTMLInputElement>document.getElementById('text_area_nota')).value = '';
+        }
+      })
+  }
+
+  eliminarNotaEmpresa(index_notaList: number) {
+    this.notasList.splice(index_notaList, 1);
+    this.empresaServicioService.ModificarNotasEmpresaServicio(this.dataEmpresaDetalle.id_empresa_servicio, JSON.stringify(this.notasList)).subscribe({
+      next: (res: modificarNotasEmpresaServicioResponse) => {
+        console.log(res)
+      },
+      error: (err) => {
+        console.error('Error al modificar notas de empresa por servicio:', err);
+      },
+      complete: () => {
+        console.log('Notas de empresa modificadas correctamente');
+        (<HTMLInputElement>document.getElementById('text_area_nota')).value = '';
+      }
+    })
+
   }
 
   listarResolucionesEmpresaServicio(id_empresa_servicio: number) {
