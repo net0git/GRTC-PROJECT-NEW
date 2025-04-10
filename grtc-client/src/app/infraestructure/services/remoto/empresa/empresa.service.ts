@@ -22,8 +22,11 @@ export class EmpresaService {
     return this.http.get<EmpresaResponse>(`${this.api_uri_empresa}/${id_empresa}`);
   } 
 
-  ModificarEmpresa(id_empresa:number,cuerpo_empresa:any):Observable<modificarEmpresaResponse>{
+  ModificarEmpresa(id_empresa:number,cuerpo_empresa:EmpresaModel):Observable<modificarEmpresaResponse>{
     cuerpo_empresa.id_empresa=id_empresa
+    cuerpo_empresa.razon_social=cuerpo_empresa.razon_social.trim().toUpperCase()
+    cuerpo_empresa.direccion=cuerpo_empresa.direccion.trim().toUpperCase()
+    cuerpo_empresa.correo?cuerpo_empresa.correo.trim().toLowerCase(): null
     return this.http.put<modificarEmpresaResponse>(`${this.api_uri_empresa}/${id_empresa}`,cuerpo_empresa)
   }
 
@@ -34,7 +37,7 @@ export class EmpresaService {
   crearEmpresa(cuerpo_empresa:EmpresaModel):Observable<CrearEmpresaMessageResponse>{
     cuerpo_empresa.razon_social=cuerpo_empresa.razon_social.trim().toUpperCase()
     cuerpo_empresa.direccion=cuerpo_empresa.direccion.trim().toUpperCase()
-    cuerpo_empresa.correo=cuerpo_empresa.correo.trim().toLowerCase()
+    cuerpo_empresa.correo?cuerpo_empresa.correo.trim().toLowerCase(): null
     return this.http.post<CrearEmpresaMessageResponse>(`${this.api_uri_empresa}`,cuerpo_empresa)
   }
 

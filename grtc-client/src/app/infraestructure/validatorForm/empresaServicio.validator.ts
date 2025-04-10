@@ -12,16 +12,12 @@ import { ConductorModel } from '../../domain/models/Conductor.model';
 
 export function mod_empresa_servicio_vf(dataPersona: PersonaModel, dataEmpresa: EmpresaModel, dataEmpresaServicio: EmpresaServicioModel): ErrorValidacion[] {
   const errorValidacion: ErrorValidacion[] = [];
-  if (dataEmpresa.correo.length > 0) {
+  if (dataEmpresa.correo !=null && dataEmpresa.correo !='') {
     if (!Validators.validarCorreo(dataEmpresa.correo)) {
       errorValidacion.push({ campo: 'Correo Empresa', mensaje: 'Campo no válido' });
     }
   }
-  if (dataEmpresa.telefono.length > 0) {
-    if (!Validators.validarTelefono(dataEmpresa.telefono)) {
-      errorValidacion.push({ campo: 'Telefono Empresa', mensaje: 'Campo no válido' });
-    }
-  }
+ 
   if (!dataEmpresa.direccion) {
     errorValidacion.push({ campo: 'Direccion Empresa', mensaje: 'Campo no válido' });
   }
@@ -54,10 +50,10 @@ export function mod_empresa_servicio_vf(dataPersona: PersonaModel, dataEmpresa: 
   
   if (dataPersona.telefono.length > 0) {
     if (!Validators.validarTelefono(dataPersona.telefono)) {
-      errorValidacion.push({ campo: 'telefono representante', mensaje: 'Campo no válido' });
+      errorValidacion.push({ campo: 'Telefono representante', mensaje: 'Campo no válido' });
     }
   }
-  if (dataPersona.correo.length > 0) {
+  if (dataPersona.correo != null && dataPersona.correo !== '') {
     if (!Validators.validarCorreo(dataPersona.correo)) {
       errorValidacion.push({ campo: 'Correo del representante', mensaje: 'Campo no válido' });
     }
