@@ -58,7 +58,10 @@
     right:0;
     width: 50%;
     height: 100%;
-    background-color: rgb(66, 133, 244); /* azul */
+    background-color: rgba(54, 130, 223, 0.952);
+    /* background-color: rgb(66, 133, 244); */
+    /* background-color: rgb(58, 116, 209); */
+    /* background-color: #176091 !important; */
     z-index: 0;
     box-shadow: -10px 10px 30px rgba(31, 30, 30, 0.616);
     
