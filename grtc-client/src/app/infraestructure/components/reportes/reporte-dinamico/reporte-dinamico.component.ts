@@ -32,15 +32,15 @@ export class ReporteDinamicoComponent implements OnInit {
       isOpen: false,
       options: [
         { label: 'Razon Social', id: 'flexCheckDefault', selected: true },
-        { label: 'Ruc', id: 'flexCheckChecked', selected: false },
+        { label: 'Ruc', id: 'flexCheckChecked', selected: true },
         { label: 'Representante', id: 'flexCheckChecked', selected: false },
         { label: 'Departamento', id: 'flexCheckChecked', selected: false },
         { label: 'Provincia', id: 'flexCheckChecked', selected: false },
         { label: 'Distrito', id: 'flexCheckChecked', selected: false },
-        { label: 'Fecha inicio', id: 'flexCheckChecked', selected: false },
-        { label: 'Fecha fin', id: 'flexCheckChecked', selected: false },
+        { label: 'Fecha inicio', id: 'flexCheckChecked', selected: true },
+        { label: 'Fecha fin', id: 'flexCheckChecked', selected: true },
         { label: 'estado', id: 'flexCheckChecked', selected: false },
-        { label: 'tipo servicio', id: 'flexCheckChecked', selected: false },
+        { label: 'tipo servicio', id: 'flexCheckChecked', selected: true },
         { label: 'vehiculos', id: 'flexCheckChecked', selected: false }
       ]
     },
@@ -152,36 +152,7 @@ export class ReporteDinamicoComponent implements OnInit {
     this.verPerfil();
   }
 
-  buscarEmpresasAnio() {
-    // Obtener el valor del input
-    const input = this.anioFormato.trim();
-  
-    // Validar el formato
-    if (Validators.anioCompuesto.test(input)) {
-      // Extraer los años del input
-      const años = this.obtenerAnios(input);
-      
-      // Filtrar las empresas que coincidan con los años
-      const empresasFiltradas = this.listaEmpresasServicio.filter(empresa => {
-        // Obtener el año de la fecha_inicial de la empresa
-        const añoInicial = new Date(empresa.fecha_inicial).getFullYear();
-      
-        // Verificar si algún año de la búsqueda coincide con el año de fecha_inicial
-        return años.includes(añoInicial);
-      });
-  
-      // Mostrar las empresas filtradas
-      if (empresasFiltradas.length > 0) {
-        console.log("Empresas encontradas:", empresasFiltradas);
-        this.listaEmpresasServicio = empresasFiltradas;
-      } else {
-        alert("No se encontraron empresas para los años proporcionados.");
-      }
-  
-    } else {
-      alert("Formato incorrecto. Asegúrate de ingresar los años correctamente.");
-    }
-  }
+ 
 
   limpiarBusqueda(){
     this.listaEmpresasServicio = this.listaEmpresasServicioTemp;
@@ -387,157 +358,41 @@ export class ReporteDinamicoComponent implements OnInit {
     }
   }
 
-
-
-
-
-
-  // ExporToExcel(): void {
-  //   let wb: XLSX.WorkBook = XLSX.utils.book_new();
-  //   let dataToExport: any[] = [];
-
-  //   // Obtener columnas seleccionadas
-  //   const selectedColumns = this.popoversColumn.flatMap(popover =>
-  //     popover.options.filter(option => option.selected).map(option => option.label)
-  //   );
-
-  //   // CABECERA DINÁMICA SEGÚN OPCIONES SELECCIONADAS
-  //   dataToExport.push(["Nro", ...selectedColumns]);
-
-  //   // RECORRER EMPRESAS Y VEHÍCULOS
-  //   this.listaEmpresasServicio.forEach((empresa, index) => {
-  //     let rowEmpresa: any[] = [index + 1]; // Primera columna: índice
-  //     let vehiculos = this.obtenerVehiculosPorEmpresa(empresa.id_empresa_servicio);
-
-  //     // LLENAR DATOS SEGÚN OPCIONES SELECCIONADAS
-  //     selectedColumns.forEach(col => {
-  //       switch (col) {
-  //         case 'Razon Social': rowEmpresa.push(empresa.razon_social); break;
-  //         case 'Ruc': rowEmpresa.push(empresa.ruc); break;
-  //         case 'Representante': rowEmpresa.push(`${empresa.nombres} ${empresa.ap_paterno} ${empresa.ap_materno}`); break;
-  //         case 'Departamento': rowEmpresa.push(empresa.departamento); break;
-  //         case 'Provincia': rowEmpresa.push(empresa.provincia); break;
-  //         case 'Distrito': rowEmpresa.push(empresa.distrito); break;
-  //         case 'Fecha inicio': rowEmpresa.push(empresa.fecha_inicial); break;
-  //         case 'Fecha fin': rowEmpresa.push(empresa.fecha_final); break;
-  //         case 'estado': rowEmpresa.push(empresa.estado); break;
-  //         case 'tipo servicio': rowEmpresa.push(empresa.tipo_servicio); break;
-  //         case 'vehiculos': rowEmpresa.push(vehiculos.length > 0 ? "Con vehículos" : "Sin vehículos"); break;
-  //         default: rowEmpresa.push(""); break; // Espacios vacíos si no hay coincidencia
-  //       }
-  //     });
-
-  //     // AÑADIR FILA DE EMPRESA
-  //     dataToExport.push(rowEmpresa);
-
-  //     // AGREGAR VEHÍCULOS DEBAJO DE LA EMPRESA
-  //     if (vehiculos.length > 0) {
-  //       vehiculos.forEach(vehiculo => {
-  //         let rowVehiculo: any[] = [""];
-  //         selectedColumns.forEach(col => {
-  //           switch (col) {
-  //             case 'Placa': rowVehiculo.push(vehiculo.placa); break;
-  //             case 'Marca': rowVehiculo.push(vehiculo.marca); break;
-  //             case 'Modelo': rowVehiculo.push(vehiculo.modelo); break;
-  //             case 'Categoria': rowVehiculo.push(vehiculo.categoria); break;
-  //             case 'Año': rowVehiculo.push(vehiculo.anio_fabricacion); break;
-  //             case 'Peso Neto(Tn)': rowVehiculo.push(vehiculo.peso); break;
-  //             case 'Carga Util(Tn)': rowVehiculo.push(vehiculo.carga); break;
-  //             case 'Carroceria': rowVehiculo.push(vehiculo.carroceria); break;
-  //             case 'Modalidad': rowVehiculo.push(vehiculo.modalidad); break;
-  //             case 'Nro Part Reg': rowVehiculo.push(vehiculo.nro_part_reg); break;
-  //             case 'Estado': rowVehiculo.push(vehiculo.estado); break;
-  //             case 'Nro Chasis': rowVehiculo.push(vehiculo.nro_chasis); break;
-  //             case 'Nro Asientos': rowVehiculo.push(vehiculo.nro_asientos); break;
-  //             case 'Serie': rowVehiculo.push(vehiculo.serie); break;
-  //             case 'color': rowVehiculo.push(vehiculo.color); break;
-  //             case 'itinerario': rowVehiculo.push(vehiculo.itinerario); break;
-  //             case 'Fecha inicial': rowVehiculo.push(vehiculo.fecha_inicial); break;
-  //             case 'Fecha final': rowVehiculo.push(vehiculo.fecha_final); break;
-  //             default: rowVehiculo.push(""); break;
-  //           }
-  //         });
-  //         dataToExport.push(rowVehiculo);
-  //       });
-  //     }
-
-  //     // FILA VACÍA PARA SEPARAR EMPRESAS
-  //     dataToExport.push([]);
-  //   });
-
-  //   // CREAR HOJA DE EXCEL
-  //   const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(dataToExport);
-
-  //   // AUTOAJUSTE DEL ANCHO DE COLUMNAS
-  //   ws["!cols"] = selectedColumns.map(() => ({ wch: 15 })); // Ajuste dinámico
-
-  //   // AÑADIR HOJA AL LIBRO
-  //   XLSX.utils.book_append_sheet(wb, ws, "Reporte Empresas");
-
-  //   // DESCARGAR EXCEL
-  //   XLSX.writeFile(wb, "reporte_empresas_servicio.xlsx");
-  // }
-
-
-
-  // ExporToExcel(): void {
-  //   let wb: XLSX.WorkBook = XLSX.utils.book_new();
-  //   let dataToExport: any[] = [];
-
-  //   // CABECERA
-  //   dataToExport.push([
-  //     "Nro", "EXP", "EMPRESA", "RUC", "TIPO DE TRANSPORTE", "FECH_INICIO", "FECH_FINAL", "ESTADO",
-  //     "Placa", "Modelo", "Marca", "Fecha Inicio", "Fecha Final"
-  //   ]);
-
-  //   // RECORRER EMPRESAS Y VEHÍCULOS
-  //   this.listaEmpresasServicio.forEach((empresa, index) => {
-  //     let vehiculos = this.obtenerVehiculosPorEmpresa(empresa.id_empresa_servicio);
-
-  //     // FILA DE EMPRESA (SIN VEHÍCULOS AÚN)
-  //     dataToExport.push([
-  //       index + 1, empresa.expediente, empresa.razon_social, empresa.ruc, empresa.tipo_servicio,
-  //       empresa.fecha_inicial, empresa.fecha_final, empresa.estado,
-  //       "", "", "", "", "" // Espacios vacíos para alinear
-  //     ]);
-
-  //     // AGREGAR VEHÍCULOS DEBAJO DE SU EMPRESA
-  //     if (vehiculos.length > 0) {
-  //       vehiculos.forEach(vehiculo => {
-  //         dataToExport.push([
-  //           "", "", "", "", "", "", "", "", // Espacios vacíos para no repetir empresa
-  //           vehiculo.placa, vehiculo.modelo, vehiculo.marca, vehiculo.fecha_inicial, vehiculo.fecha_final
-  //         ]);
-  //       });
-  //     } else {
-  //       // SI NO HAY VEHÍCULOS, MOSTRAR "SIN VEHÍCULOS"
-  //       dataToExport.push(["", "", "", "", "", "", "", "", "Sin vehículos", "", "", "", ""]);
-  //     }
-
-  //     // FILA VACÍA PARA SEPARACIÓN ENTRE EMPRESAS
-  //     dataToExport.push([]);
-  //   });
-
-  //   // CREAR HOJA DE EXCEL
-  //   const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(dataToExport);
-
-  //   // AUTOAJUSTE DEL ANCHO DE COLUMNAS
-  //   ws["!cols"] = [
-  //     { wch: 5 }, { wch: 10 }, { wch: 30 }, { wch: 15 }, { wch: 20 },
-  //     { wch: 15 }, { wch: 15 }, { wch: 12 }, { wch: 12 }, { wch: 12 },
-  //     { wch: 12 }, { wch: 15 }, { wch: 15 }
-  //   ];
-
-  //   // AÑADIR HOJA AL LIBRO
-  //   XLSX.utils.book_append_sheet(wb, ws, "Reporte Empresas");
-
-  //   // DESCARGAR EXCEL
-  //   XLSX.writeFile(wb, "reporte_empresas_servicio.xlsx");
-  // }
-
-
+  buscarEmpresasAnio() {
+    // Obtener el valor del input
+    
+    const input = this.anioFormato.trim();
+    this.limpiarBusqueda()
+    this.anioFormato= input
+    // Validar el formato
+    if (Validators.anioCompuesto.test(input)) {
+      // Extraer los años del input
+      const años = this.obtenerAnios(input);
+      
+      // Filtrar las empresas que coincidan con los años
+      const empresasFiltradas = this.listaEmpresasServicioTemp.filter(empresa => {
+        // Obtener el año de la fecha_inicial de la empresa
+        const añoInicial = new Date(empresa.fecha_inicial).getFullYear();
+      
+        // Verificar si algún año de la búsqueda coincide con el año de fecha_inicial
+        return años.includes(añoInicial);
+      });
+  
+      // Mostrar las empresas filtradas
+      if (empresasFiltradas.length > 0) {
+        console.log("Empresas encontradas:", empresasFiltradas);
+        this.listaEmpresasServicio = empresasFiltradas;
+      } else {
+        alert("No se encontraron empresas para los años proporcionados.");
+      }
+  
+    } else {
+      alert("Formato incorrecto. Asegúrate de ingresar los años correctamente.");
+    }
+  }
   // -------------------------------
   filterData(): void {
+    this.paginaActual=1
     const selectedOptions = this.popoversData
       .map(popover => ({
         category: popover.title,
@@ -586,7 +441,39 @@ export class ReporteDinamicoComponent implements OnInit {
       });
     });
 
-    this.listaEmpresasServicio = filteredEmpresas;
+    const input = this.anioFormato.trim();
+    // this.limpiarBusqueda()
+    this.anioFormato= input
+    // Validar el formato
+    if(input!=''){
+      if ( Validators.anioCompuesto.test(input)) {
+        // Extraer los años del input
+        const años = this.obtenerAnios(input);
+        
+        // Filtrar las empresas que coincidan con los años
+        const empresasFiltradas = filteredEmpresas.filter(empresa => {
+          // Obtener el año de la fecha_inicial de la empresa
+          const añoInicial = new Date(empresa.fecha_inicial).getFullYear();
+        
+          // Verificar si algún año de la búsqueda coincide con el año de fecha_inicial
+          return años.includes(añoInicial);
+        });
+    
+        // Mostrar las empresas filtradas
+        if (empresasFiltradas.length > 0) {
+          console.log("Empresas encontradas:", empresasFiltradas);
+          this.listaEmpresasServicio = empresasFiltradas;
+        } else {
+          alert("No se encontraron empresas para los años proporcionados.");
+        }
+    
+      } else {
+        alert("Formato incorrecto. Asegúrate de ingresar los años correctamente.");
+      }
+    }else{
+      this.listaEmpresasServicio = filteredEmpresas
+    }
+    
   }
 
 
