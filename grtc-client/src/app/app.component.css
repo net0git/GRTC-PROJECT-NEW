@@ -1,0 +1,10 @@
+.license-message
+{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    color: rgba(161, 158, 156, 0.568);
+    font-size: 1.5rem;
+    font-weight: bold;
+    
+}

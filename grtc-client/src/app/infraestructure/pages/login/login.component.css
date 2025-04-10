@@ -2,7 +2,11 @@
     background-color: #eeeeeec0;  
 }
 .card{
-    box-shadow: 0 0 10px rgba(70, 69, 69, 0.13);
+    /* box-shadow: 0 0 10px rgba(70, 69, 69, 0.13); */
+    box-shadow: -15px 25px 25px rgba(31, 30, 30, 0.438);
+    border: none;
+    border-radius: none;
+
 }
 
 .section-login::before {
@@ -46,3 +50,25 @@
         border-bottom-right-radius: .3rem;
     }
 }
+
+
+.blue-background {
+    position: absolute;
+    top: 0;
+    right:0;
+    width: 50%;
+    height: 100%;
+    background-color: rgb(66, 133, 244); /* azul */
+    z-index: 0;
+    box-shadow: -10px 10px 30px rgba(31, 30, 30, 0.616);
+    
+  }
+  .card {
+    z-index: 1;
+  }
+
+  @media (max-width: 991.98px) {
+    .blue-background {
+      display: none !important;
+    }
+  }
