@@ -36,7 +36,7 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'login', component: LoginComponent },
-  { path: 'principal', component: PrincipalComponent },
+  { path: 'principal', component: PrincipalComponent, canActivate: [authGuard]},
 
   { path: 'principal/lista-usuarios', component: ListaUsuarioComponent, canActivate: [authGuard] },
   { path: 'principal/form-usuario', component: FormUsuarioComponent, canActivate: [authGuard] },
