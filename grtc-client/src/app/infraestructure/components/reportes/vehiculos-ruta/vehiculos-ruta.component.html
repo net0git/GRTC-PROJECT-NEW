@@ -72,7 +72,7 @@
             <tbody>
               <tr
                 *ngFor="let item of listaVehiculosRutaOrigen | paginate: { itemsPerPage: 13, currentPage: paginaActual, id: 'vehiculo-ruta-pagination' }; let i = index">
-                <th scope="row">{{i+1}}</th>
+                <th scope="row">{{ i + (paginaActual - 1) * 10 + 1 }}</th>
                 <td>{{item.origen_ruta}}</td>
                 <td>{{item.destino_ruta}}</td>
                 <td>{{item.placa_vehiculo}}</td>
