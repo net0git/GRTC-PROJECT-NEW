@@ -14,8 +14,6 @@ export class EmpresaServicioService {
   api_uri_empresa_servicio=`${environment.urlApi}/empresaservicio`
   constructor(private http: HttpClient) { }
 
-  // this.router.put('/api/empresaservicio/notas/:id_empresa_servicio',empresaServicioController.ModificarNotasEmpresaServicio)
-
   crearEmpresaServicio(cuerpo_empresa_servicio: EmpresaServicioModel): Observable<crearEmpresaServicioResponse> {
     return this.http.post<crearEmpresaServicioResponse>(`${this.api_uri_empresa_servicio}`, cuerpo_empresa_servicio)
   }
