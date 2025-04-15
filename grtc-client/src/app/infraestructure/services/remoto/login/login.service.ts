@@ -13,7 +13,7 @@ import { environment } from '../../../../../../environments/environment';
 })
 export class LoginService {
   private isAuthenticated = false;
-  // private url_api_login = 'http://localhost:4000/api/usuario/login';
+  
    private url_api_login = `${environment.urlApi}/usuario/login`;
 
   constructor(
