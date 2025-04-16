@@ -11,7 +11,7 @@ import { environment } from '../../../../../../environments/environment';
   providedIn: 'root'
 })
 export class PersonaService {
-api_uri_persona=`${environment.urlApi}/api/persona`
+api_uri_persona=`${environment.urlApi}/persona`
   constructor(private http:HttpClient) { }
 
   validarPersonaForm(cuerpo_persona: PersonaModel): ErrorValidacion[] {

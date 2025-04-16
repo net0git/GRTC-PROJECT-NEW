@@ -42,7 +42,7 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-success mb-2" [style]="disableInvitado"><i
                                 class="bi bi-file-earmark-excel-fill"></i> Descargar</button>
-                        <pagination-controls [id]="'vehiculo-ruta-pagination'" (pageChange)="paginaActual = $event"
+                        <pagination-controls [id]="'empresa-ruta-pagination'" (pageChange)="paginaActualEmpresaRuta = $event"
                             previousLabel="Anterior" nextLabel="Siguiente">
                         </pagination-controls>
                     </div>
@@ -65,8 +65,8 @@
 
                         <tbody>
                             <tr
-                                *ngFor="let item of listaVehiculosRutaOrigen| paginate: { itemsPerPage: 13, currentPage: paginaActual, id: 'vehiculo-ruta-pagination' }; index as i">
-                                <th scope="row">{{ i + (paginaActual - 1) * 10 + 1 }}</th>
+                                *ngFor="let item of listaVehiculosRutaOrigen| paginate: { itemsPerPage: 13, currentPage: paginaActualEmpresaRuta, id: 'empresa-ruta-pagination' }; index as i">
+                                <th scope="row">{{ i + (paginaActualEmpresaRuta - 1) * 13 + 1 }}</th>
                                 <td>{{item.origen_ruta}}</td>
                                 <td>{{item.destino_ruta}}</td>
                                 <td>{{item.nombre_empresa}}</td>
