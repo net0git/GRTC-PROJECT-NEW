@@ -48,7 +48,7 @@ export const routes: Routes = [
   { path: 'principal/detalle-empresa-servicio/:id_empresa_servicio', component: DetalleEmpresaServicioComponent, canActivate: [authGuard] },
   { path: 'principal/detalle-empresa-servicio/conductores/:id_empresa_servicio', component: ConductoresComponent, canActivate: [authGuard] },
   { path: 'principal/detalle-empresa-servicio/arrendamiento/:id_empresa_servicio', component: ArrendamientoComponent, canActivate: [authGuard] },
-  { path: 'principal/detalle-empresa-servicio/vehiculos/:id_empresa_servicio', component: VehiculosComponent, canActivate: [authGuard] },
+  { path: 'principal/detalle-empresa-servicio/vehiculos/:id_empresa_servicio', component: VehiculosComponent},
   { path: 'principal/detalle-empresa-servicio/itineario/:id_empresa_servicio', component: ItinerarioComponent, canActivate: [authGuard] },
   { path: 'principal/mod-empresa-servicio/:id_empresa_servicio', component: ModEmpresaServicioComponent, canActivate: [authGuard] },
   { path: 'principal/mod-empresa-servicio-resolucion/:id_empresa_servicio/:id_resolucion', component: ModEmpresaServicioResolucionComponent, canActivate: [authGuard] },

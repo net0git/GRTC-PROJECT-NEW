@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environment';
 import { Observable } from 'rxjs';
-import { crearEmpresaServicioResponse, DetalleEmpresaServicioResponse, ListaEmpresaServicioResponse, modificarEmpresaServicioResponse, modificarNotasEmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
+import { crearEmpresaServicioResponse, EmpresaServicioDetalleResponse, ListaEmpresaServicioResponse, modificarEmpresaServicioResponse, modificarNotasEmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
 import { EmpresaServicioResponse } from '../../../../domain/dto/EmpresaServicioResponse.dto';
 import { EmpresaServicioModel } from '../../../../domain/models/EmpresaServicio.model';
 
@@ -24,8 +24,8 @@ export class EmpresaServicioService {
     return this.http.get<ListaEmpresaServicioResponse[]>(this.api_uri_empresa_servicio)
   }
 
-  DetalleEmpresaServicio(id_empresa_servicio:number):Observable<DetalleEmpresaServicioResponse>{
-    return this.http.get<DetalleEmpresaServicioResponse>(this.api_uri_empresa_servicio+'/detalle/'+id_empresa_servicio)
+  OtenerDetalleEmpresaServicio(id_empresa_servicio:number):Observable<EmpresaServicioDetalleResponse>{
+    return this.http.get<EmpresaServicioDetalleResponse>(this.api_uri_empresa_servicio+'/detalle/'+id_empresa_servicio)
   }
 
   ObtenerEmpresaServicio(id_empresa_servicio:number):Observable<EmpresaServicioResponse>{

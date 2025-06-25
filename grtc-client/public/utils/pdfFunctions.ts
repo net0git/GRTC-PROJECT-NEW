@@ -5,7 +5,7 @@ import { formatDate } from '@angular/common';
 import { jsPDF } from "jspdf";
 import autoTable from 'jspdf-autotable'
 import { ListaVehiculosDetalleResponse } from '../../src/app/domain/dto/VehiculoResponse.dto';
-import { DetalleEmpresaServicioResponse } from '../../src/app/domain/dto/EmpresaServicioResponse.dto';
+import { EmpresaServicioDetalleResponse } from '../../src/app/domain/dto/EmpresaServicioResponse.dto';
 import { ListaResolucionResponse } from '../../src/app/domain/dto/ResolucionResponse.dto';
 
 import { PDFDocument, rgb } from 'pdf-lib';
@@ -118,7 +118,7 @@ export async function ShowDocumentoPdfMarcado(
 
 export function generatePDFreporte(
   lista_vehiculos: ListaVehiculosDetalleResponse[],
-  empresa_detalle: DetalleEmpresaServicioResponse,
+  empresa_detalle: EmpresaServicioDetalleResponse,
   resoluciones_empresa_servicio: ListaResolucionResponse[],
   nombre_usuario: string,
   sanitizer: DomSanitizer) {

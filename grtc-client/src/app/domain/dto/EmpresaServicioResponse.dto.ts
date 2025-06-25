@@ -36,7 +36,7 @@ export interface ListaEmpresaServicioResponse {
 
 }
 
-export interface DetalleEmpresaServicioResponse {
+export interface EmpresaServicioDetalleResponse {
   id_empresa_servicio: number;      // ID del servicio
   id_tipo_servicio: number;         // ID del tipo de servicio
   tipo_servicio: string;            // Denominación del tipo de servicio

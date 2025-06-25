@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavegadorComponent } from '../../../../shared/components/navegador/navegador.component';
 import { SubnavegadorComponent } from '../../../../shared/components/subnavegador/subnavegador.component';
-import { DetalleEmpresaServicioResponse, modificarNotasEmpresaServicioResponse } from '../../../../../domain/dto/EmpresaServicioResponse.dto';
+import { EmpresaServicioDetalleResponse, modificarNotasEmpresaServicioResponse } from '../../../../../domain/dto/EmpresaServicioResponse.dto';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { EmpresaServicioService } from '../../../../services/remoto/empresas-servicio/empresa-servicio.service';
 import { ResolucionService } from '../../../../services/remoto/resolucion/resolucion.service';
@@ -50,7 +50,7 @@ export class DetalleEmpresaServicioComponent implements OnInit {
 
 
   pdfUrl: SafeResourceUrl | null = null;
-  dataEmpresaDetalle: DetalleEmpresaServicioResponse = {
+  dataEmpresaDetalle: EmpresaServicioDetalleResponse = {
     id_empresa_servicio: 0,          // ID inicializado como 0
     id_tipo_servicio: 0,             // ID del tipo de servicio inicializado como 0
     tipo_servicio: '',               // Tipo de servicio inicializado como cadena vacía
@@ -190,8 +190,8 @@ export class DetalleEmpresaServicioComponent implements OnInit {
 
   detalleEmpresa() {
     const params = this.activatedRoute.snapshot.params
-    this.empresaServicioService.DetalleEmpresaServicio(params['id_empresa_servicio']).subscribe({
-      next: (res: DetalleEmpresaServicioResponse) => {
+    this.empresaServicioService.OtenerDetalleEmpresaServicio(params['id_empresa_servicio']).subscribe({
+      next: (res: EmpresaServicioDetalleResponse) => {
         this.dataEmpresaDetalle = res;
         console.log(this.dataEmpresaDetalle);
         if(this.dataEmpresaDetalle.notas == null){

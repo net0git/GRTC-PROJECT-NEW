@@ -21,6 +21,8 @@ import { SoloLetrasGuionDirective } from '../../../../directives/solo-letras-gui
 import { HistorialVehicularModel } from '../../../../../domain/models/HistorialVehicular.model';
 import { HistorialVehicularService } from '../../../../services/remoto/historial-vehicular/historial-vehicular.service';
 import { RegistroMarcaModeloComponent } from '../../../../components/registro-marca-modelo/registro-marca-modelo.component';
+import { EmpresaServicioService } from '../../../../services/remoto/empresas-servicio/empresa-servicio.service';
+import { EmpresaServicioDetalleResponse } from '../../../../../domain/dto/EmpresaServicioResponse.dto';
 
 declare var bootstrap: any;
 
@@ -50,6 +52,7 @@ export class VehiculosComponent implements OnInit {
   lista_itinerarios: ListaItinerarioResponse[] = [];
 
   private myModal: any;
+  deshabilitarFormVehiculo:boolean=true
 
   dataVehiculo: VehiculoModel = {
 
@@ -82,8 +85,17 @@ export class VehiculosComponent implements OnInit {
   idMarcaSeleccionada: number = 0;
   idModeloSeleccionado: number = 0;
   modificar: boolean = false;
+  empresaService: any;
 
-  constructor(private historialVehicularService: HistorialVehicularService, private sweetAlert: SweetAlert, private itinerarioService: ItinerarioService, private resolucionService: ResolucionService, private vehiculoService: VehiculoService, private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private historialVehicularService: HistorialVehicularService, 
+    private sweetAlert: SweetAlert, 
+    private itinerarioService: ItinerarioService, 
+    private resolucionService: ResolucionService, 
+    private vehiculoService: VehiculoService, 
+    private activatedRoute: ActivatedRoute,
+    private empresaServicioService:EmpresaServicioService
+    ) { }
 
   ngOnInit(): void {
     this.listarVehiculos()
@@ -112,7 +124,9 @@ export class VehiculosComponent implements OnInit {
     })
   }
 
-  listarModelos(id_marca: number) {
+
+
+ async listarModelos(id_marca: number):Promise<void> {
     this.vehiculoService.ObtenerModelosPorMarca(id_marca).subscribe({
       next: (data: ListarModelosResponse[]) => {
         this.lista_modelos = data
@@ -151,7 +165,7 @@ export class VehiculosComponent implements OnInit {
     this.dataVehiculo.modelo = this.lista_modelos.find(x => x.id_modelo == this.idModeloSeleccionado)?.nombre_modelo || '';
   }
 
-  obternerDatosVehiculo(vehiculo: any) {
+  obternerDatosTipoVehiculo(vehiculo: any) {
     if (!vehiculo) {
       console.error('El objeto vehiculo es inválido:', vehiculo);
       return;
@@ -168,6 +182,7 @@ export class VehiculosComponent implements OnInit {
           this.lista_modelos = data;
           this.idModeloSeleccionado = this.lista_modelos.find(x => x.nombre_modelo == vehiculo.modelo)?.id_modelo || 0;
           this.onModeloSeleccionado();
+          this.deshabilitarFormVehiculo=false
         },
         error: (err) => {
           console.error('Error al obtener modelos:', err);
@@ -178,6 +193,58 @@ export class VehiculosComponent implements OnInit {
     this.modificar = true
 
   }
+
+buscarVehiculoPorPlaca() {
+  if (this.dataVehiculo.placa == '') {
+    alert('Ingrese un placa de vehiculo')
+  } else {
+    this.vehiculoService.ObtererVehiculoPorPlaca(this.dataVehiculo.placa).subscribe({
+      next: (data: VehiculoModel) => {
+        console.log(data)
+      
+          if(data.id_empresa_servicio !=null){
+
+            this.ObtenerEmpresaServicioDetalle(data.id_empresa_servicio)
+            
+          }
+          else{
+            this.dataVehiculo = data
+            this.deshabilitarFormVehiculo = false
+            console.log(this.dataVehiculo);
+            this.idMarcaSeleccionada = this.lista_marcas.find(x => x.nombre_marca == this.dataVehiculo.marca)?.id_marca || 0;
+            if (this.idMarcaSeleccionada > 0) {
+              this.listarModelos(this.idMarcaSeleccionada).then(() => {
+                this.idModeloSeleccionado = this.lista_modelos.find(x => x.nombre_modelo == this.dataVehiculo.modelo)?.id_modelo || 0;
+            //   console.log('modelo:' + this.idModeloSeleccionado);
+              });
+            }
+          }
+          
+          
+      },
+      error: (error) => {
+        console.log('error al obtener vehiculo', error)
+        this.deshabilitarFormVehiculo = false
+      },
+      complete: () => { console.log('otención con exito de vehiculo') },
+    })
+  }
+
+}
+
+ObtenerEmpresaServicioDetalle(id_empresa_servicio: number) {
+    this.empresaServicioService.OtenerDetalleEmpresaServicio(id_empresa_servicio).subscribe({
+      next: (data: EmpresaServicioDetalleResponse) => {
+        this.sweetAlert.MensajeSimpleIcon('Vehiculo encontrado en :', data.razon_social)
+      },
+      error: (err:any) => {
+        console.log('error al obtener empresa por ruc', err)
+
+      },
+      complete: () => { console.log('otención con exito de empresa por ruc') },
+    })
+  }
+
 
   GuardarDatosFormulario() {
     if (this.modificar) {
@@ -319,6 +386,7 @@ export class VehiculosComponent implements OnInit {
     this.idModeloSeleccionado = 0;
 
     this.modificar = false
+    this.deshabilitarFormVehiculo=true
   }
 
 }
