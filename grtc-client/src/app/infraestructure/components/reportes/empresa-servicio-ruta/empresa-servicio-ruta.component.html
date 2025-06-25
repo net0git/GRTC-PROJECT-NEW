@@ -21,7 +21,8 @@
                         </thead>
 
                         <tbody>
-                            <tr *ngFor="let item of nroEmpresasRuta, index as i" (click)="ObtenerEmpresasPorRutaOrigenDestino(item.origen_ruta,item.destino_ruta)">
+                            <tr *ngFor="let item of nroEmpresasRuta, index as i"
+                                (click)="ObtenerEmpresasPorRutaOrigenDestino(item.origen_ruta,item.destino_ruta)">
                                 <th scope="row">{{i+1}}</th>
                                 <td>{{item.origen_ruta}}</td>
                                 <td>{{item.destino_ruta}}</td>
@@ -36,42 +37,17 @@
     <div class="col-lg-8 col-md-12 col-sm-12">
         <div class="card rounded shadow border-2  ">
 
-            <div class="card-header  ">
-
-                <div class="py-3 d-flex justify-content-between align-items-center">
-
-                    <select class="form-control mx-2">
-                        <option value=""> Seleccione Origen de Ruta</option>
-                    
-                    </select>
-
-                    <select class="form-control mr-2">
-                        <option value=""> Seleccione Destino de Ruta</option>
-                     
-                    </select>
-                    <div>
-                        <button class="btn btn-info mx-2" ><i class="bi bi-funnel">
-                            </i> </button>
-                    </div>
-                    <div>
-                        <button class="btn btn-secondary" ><i
-                                class="bi bi-arrow-clockwise"></i></button>
-                    </div>
-
-                </div>
-
-            </div>
             <div class="card-body px-5 bg-white rounded">
-                <div class="row mb-3">
-                    <div class="col-md-2" >
-                        <button class="btn btn-success" [style]="disableInvitado"><i
-                                class="bi bi-file-earmark-excel-fill" ></i> Descargar</button>
+             
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-success mb-2" [style]="disableInvitado"><i
+                                class="bi bi-file-earmark-excel-fill"></i> Descargar</button>
+                        <pagination-controls [id]="'empresa-ruta-pagination'" (pageChange)="paginaActualEmpresaRuta = $event"
+                            previousLabel="Anterior" nextLabel="Siguiente">
+                        </pagination-controls>
                     </div>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" name="buscar" placeholder="BUSCAR POR EMPRESA"
-                           >
-                    </div>
-                </div>
+                  
+    
 
 
                 <div class="table-responsive">
@@ -88,8 +64,9 @@
                         </thead>
 
                         <tbody>
-                            <tr *ngFor="let item of listaVehiculosRutaOrigen, index as i">
-                                <th scope="row">{{i+1}}</th>
+                            <tr
+                                *ngFor="let item of listaVehiculosRutaOrigen| paginate: { itemsPerPage: 13, currentPage: paginaActualEmpresaRuta, id: 'empresa-ruta-pagination' }; index as i">
+                                <th scope="row">{{ i + (paginaActualEmpresaRuta - 1) * 13 + 1 }}</th>
                                 <td>{{item.origen_ruta}}</td>
                                 <td>{{item.destino_ruta}}</td>
                                 <td>{{item.nombre_empresa}}</td>

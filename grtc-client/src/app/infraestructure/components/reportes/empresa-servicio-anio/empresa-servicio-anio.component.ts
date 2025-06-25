@@ -43,6 +43,7 @@ export class EmpresaServicioAnioComponent implements OnInit {
   }
 
   listarEmpresasSevicios() {
+    
     this.empresaServicioService.listarEmpresasServicio().subscribe({
       next: (res: ListaEmpresaServicioResponse[]) => {
         this.listaEmpresasServicio = res
@@ -59,6 +60,7 @@ export class EmpresaServicioAnioComponent implements OnInit {
   }
 
   buscarEmpresas() {
+    this.paginaActual = 1;
     // Obtener el valor del input
     const input = this.anioFormato.trim();
     

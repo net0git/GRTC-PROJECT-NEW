@@ -12,12 +12,7 @@ export class ArrendamientoService {
 
   api_url_arrendamiento = `${environment.urlApi}/arrendamiento`;
   constructor( private http: HttpClient) { }
-// this.router.get('/api/arrendamiento/:id_empresa_servicio',arrendamientoController.ObtenerContratoArrendamientoPorEmpresa)
-// this.router.get('/api/arrendamiento',arrendamientoController.ListaArrendamientos)
-// this.router.get('/api/arrendamiento/:id_empresa_servicio',arrendamientoController.ObtenerContratoArrendamientoPorEmpresa)
-// this.router.post('/api/arrendamiento',arrendamientoController.CrearContratoArrendamiento)
-// this.router.put('/api/arrendamiento/:id_contrato',arrendamientoController.ModificarContratoArrendamiento) 
-// this.router.delete('/api/arrendamiento/:id_contrato',arrendamientoController.EliminarContratoArrendamiento)   
+  
   ListarArrendamientoByEmpresaServicio(id_empresa_servicio:number):Observable<ListaArrendamientoResponse[]>{
     return this.http.get<ListaArrendamientoResponse[]>(this.api_url_arrendamiento+'/'+id_empresa_servicio)
   }

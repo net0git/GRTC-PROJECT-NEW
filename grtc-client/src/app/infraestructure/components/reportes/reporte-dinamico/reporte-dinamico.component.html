@@ -59,11 +59,11 @@
         </div>
 
         <div class="d-flex justify-content-center" style="width: 65%;">
-            <input type="text" class="form-control mx-2 " id="yearInput" name="buscar"
+            <!-- <input type="text" class="form-control mx-2 " id="yearInput" name="buscar"
                 placeholder="BUSCAR POR AÑO INICIAL EJEMPLO: YYYY YYYY,YYYY,YYYY YYYY-YYYY" appSoloNumerosGuionComa
                 [(ngModel)]="anioFormato">
             <button type="button" class="btn btn-success mx-2" (click)="buscarEmpresasAnio()">buscar </button>
-            <button class="btn btn-info" (click)="limpiarBusqueda()">limpiar</button>
+            <button class="btn btn-info" (click)="limpiarBusqueda()">limpiar</button> -->
         </div>
         <pagination-controls [id]="'allReport'" (pageChange)="paginaActual = $event" previousLabel="Anterior"
             class=" mx-4" nextLabel="Siguiente">
@@ -95,7 +95,7 @@
                     class="table-barra " title="Click para ver detalle empresa">
                     <th scope="row">{{ i + (paginaActual - 1) * 10 + 1 }}</th>
                     <td>{{ empresa.expediente }}</td>
-                    <td *ngIf="shouldShowColumnEmpresa('Razon Social')">{{ empresa.razon_social }}</td>
+                    <td class="text-start" *ngIf="shouldShowColumnEmpresa('Razon Social')">{{ empresa.razon_social }}</td>
                     <td *ngIf="shouldShowColumnEmpresa('Ruc')">{{ empresa.ruc }}</td>
                     <td *ngIf="shouldShowColumnEmpresa('Representante')">{{ empresa.nombres }} {{ empresa.ap_paterno }}
                         {{

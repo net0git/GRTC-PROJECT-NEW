@@ -9,6 +9,7 @@ import { CredencialesService } from '../../../services/local/credenciales/creden
 import { SoloNumerosGuionComaDirective } from '../../../directives/solo-numeros-guion-coma.directive';
 import * as XLSX from 'xlsx';
 import { Validators } from '../../../../../../public/utils/validators';
+import { FechaConFormato_ddMMyyyy } from '../../../../../../public/utils/formateDate';
 
 @Component({
   selector: 'app-reporte-dinamico',
@@ -324,8 +325,8 @@ export class ReporteDinamicoComponent implements OnInit {
       case 'Departamento': return empresa.departamento;
       case 'Provincia': return empresa.provincia;
       case 'Distrito': return empresa.distrito;
-      case 'Fecha inicio': return empresa.fecha_inicial;
-      case 'Fecha fin': return empresa.fecha_final;
+      case 'Fecha inicio': return FechaConFormato_ddMMyyyy(empresa.fecha_inicial) ;
+      case 'Fecha fin': return FechaConFormato_ddMMyyyy(empresa.fecha_final) ;
       case 'estado': return empresa.estado;
       case 'tipo servicio': return empresa.tipo_servicio;
       // case 'vehiculos': return "Con vehículos";
@@ -352,8 +353,8 @@ export class ReporteDinamicoComponent implements OnInit {
       case 'Serie': return vehiculo.serie;
       case 'Color': return vehiculo.color;
       case 'Itinerario': return vehiculo.itinerario;
-      case 'Fecha inicial': return vehiculo.fecha_inicial;
-      case 'Fecha final': return vehiculo.fecha_final;
+      case 'Fecha inicial': return FechaConFormato_ddMMyyyy(vehiculo.fecha_inicial);
+      case 'Fecha final': return FechaConFormato_ddMMyyyy(vehiculo.fecha_final);
       default: return "";
     }
   }

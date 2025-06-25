@@ -11,12 +11,7 @@ import { CertificadoInfraestructuraModel } from '../../../../domain/models/Certi
 export class CertificadoService {
 
   api_uri_certificado=`${environment.urlApi}/certificado`
-
-  // this.router.get('/api/certificado/lista/infraestructura/:id_infraestructura',certificadoController.ObtnerCertificadosDeInfraestructura)
-  // this.router.get('/api/certificado/detalle/:id_certificado',certificadoController.ObtnerCertificadoById)
-  // this.router.post('/api/certificado',certificadoController.CrearCertificado)
-  // this.router.post('/api/certificado/asociar/infraestructura',certificadoController.AsociarCertificadoInfraestructura)
-  // this.router.put('/api/certificado/:id_certificado',certificadoController.ModificarCertificado)  
+ 
   constructor(private http: HttpClient) { }
 
   listarCertificadosInfraestructura(id_infraestructura:number):Observable<ListaCertificadoResponse[]>{

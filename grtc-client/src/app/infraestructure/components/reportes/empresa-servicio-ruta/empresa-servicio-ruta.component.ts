@@ -16,7 +16,7 @@ export class EmpresaServicioRutaComponent implements OnInit {
   nroEmpresasRuta: any=[];
   listaVehiculosRutaOrigen: any=[];
 
-  paginaActual: number = 1;
+  paginaActualEmpresaRuta: number = 1;
 
   constructor(private reporteService: ReporteService, private credencialesService: CredencialesService) { }
   ngOnInit(): void {
@@ -33,7 +33,7 @@ export class EmpresaServicioRutaComponent implements OnInit {
   }
 
   cambiarPagina(event: number) {
-    this.paginaActual = event;
+    this.paginaActualEmpresaRuta = event;
   }
 
   CantidadEmpresasRuta():void{
@@ -52,7 +52,7 @@ export class EmpresaServicioRutaComponent implements OnInit {
   }
 
   ObtenerEmpresasPorRutaOrigenDestino(origen: string, destino: string){
-    this.paginaActual=1
+    this.paginaActualEmpresaRuta=1
     this.reporteService.ObtenerEmpresasPorRutaOrigenDestino(origen, destino).subscribe({
       next: (data: any) => {
         console.log(data);

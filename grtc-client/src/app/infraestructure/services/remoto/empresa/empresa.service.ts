@@ -11,11 +11,7 @@ import { EmpresaModel } from '../../../../domain/models/Empresa.model';
 export class EmpresaService {
 
   constructor( private http: HttpClient) { }
-  // this.router.get('/api/empresa',empresaController.listarEmpresas)
-  // this.router.get('/api/empresa/:id_empresa',empresaController.ObtenerEmpresaDetalle)
-  // this.router.get('/api/empresa/ruc/:ruc_empresa',empresaController.ObtenerEmpresaPorRuc)
-  // this.router.post('/api/empresa',empresaController.CrearEmpresa)
-  // this.router.put('/api/empresa/:id_empresa',empresaController.ModificarEmpresa) 
+
   api_uri_empresa=`${environment.urlApi}/empresa`
 
   ObtenerEmpresa(id_empresa:number): Observable<EmpresaResponse>{

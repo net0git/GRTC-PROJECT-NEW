@@ -17,18 +17,6 @@ export class ResolucionService {
 
   constructor(private http: HttpClient) { }
 
-        // this.router.post('/api/resolucion',resolucionController.CrearResolucion)
-        // this.router.get('/api/resolucion/:id_resolucion',resolucionController.ObtenerResolucionById)
-        // this.router.post('/api/resolucion/empresa',resolucionController.CrearResolucionEmpresaServicio)
-        // this.router.post('/api/resolucion/infraestructura',resolucionController.CrearResolucionInfraestructura)  
-        // this.router.get('/api/resolucion/:nro_resolucion/:anio_resolucion',resolucionController.ObtenerResolucionPorNroAnio)
-        // this.router.get('/api/resolucion/lista/empresa/:id_empresa_servicio',resolucionController.ObtenerResolucionesDeEmpresaServicio)
-        // this.router.get('/api/resolucion/lista/infraestructura/:id_infraestructura',resolucionController.ObtnerResolucionesDeInfraestructura)
-        // this.router.put('/api/resolucion/modificar/:id_resolucion',resolucionController.ModificarResolucion)
-       // this.router.get('/api/resolucion/busqueda/:nro_resolucion/:anio_resolucion',resolucionController.ObtenerResolucionPorNroAnio)
-       // this.router.get('/api/resolucion/verificar/:nombre_resolucion',resolucionController.VerificarResolucionByNombre)
-
-
   CrearResolucion(cuerpo_resolucion:ResolucionModel):Observable<CrearResolucionMessageResponse>{
     cuerpo_resolucion.nombre_resolucion=cuerpo_resolucion.nombre_resolucion.trim().toUpperCase()
     cuerpo_resolucion.descripcion=cuerpo_resolucion.descripcion.trim().toUpperCase()

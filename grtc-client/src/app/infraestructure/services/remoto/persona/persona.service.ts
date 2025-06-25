@@ -4,13 +4,14 @@ import { PersonaModel } from '../../../../domain/models/Persona.model';
 import { CrearPersonaMessageResponse, ModificarPersonaMessageResponse, EliminarPersonaMessageResponse } from '../../../../domain/dto/PersonasResponse.dto';
 import { Observable, throwError } from 'rxjs';
 import { ErrorValidacion } from '../../../../domain/dto/ErrorValidacion.dto';
+import { environment } from '../../../../../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class PersonaService {
-api_uri_persona='http://localhost:4000/api/persona'
+api_uri_persona=`${environment.urlApi}/persona`
   constructor(private http:HttpClient) { }
 
   validarPersonaForm(cuerpo_persona: PersonaModel): ErrorValidacion[] {

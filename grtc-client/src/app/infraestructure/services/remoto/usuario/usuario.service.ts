@@ -13,7 +13,6 @@ import { ModificarDatosUsuarioResponse, ModificarPasswordUsuarioResponse } from 
 })
 export class UsuarioService {
 
-  // api_uri_usuario='http://localhost:4000/api/usuario'
   api_uri_usuario=`${environment.urlApi}/usuario`
   constructor( private http: HttpClient) { }
 
