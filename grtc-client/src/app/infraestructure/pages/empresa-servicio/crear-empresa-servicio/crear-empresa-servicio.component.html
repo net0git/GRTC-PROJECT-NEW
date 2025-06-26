@@ -859,7 +859,7 @@
                                                         <label for="marca"
                                                             class="form-label d-flex justify-content-between align-items-center">
                                                             <span>Marca:</span>
-                                                            <i class="bi bi-pencil-square"
+                                                            <i *ngIf="!deshabilitarFormVehiculo" class="bi bi-pencil-square"
                                                                 title="agregar marca y modelo"
                                                                 (click)="openModal()"></i>
                                                         </label>
